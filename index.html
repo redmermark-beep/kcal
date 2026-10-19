@@ -284,62 +284,140 @@ body.kb-open .tabbar{transform:translateX(-50%) translateY(140%);opacity:0}
 .key svg{width:26px;height:20px}
 .key[hidden]{visibility:hidden;display:grid!important}
 
-/* ---------- sheets, menus, toast (same surfaces as the list) ---------- */
-.scrim{position:fixed;inset:0;z-index:39;background:rgba(0,0,0,0);transition:background-color .3s}
-.scrim.show{background:rgba(0,0,0,.16)}
-.sheet{position:fixed;z-index:41;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;background:var(--bg);border-radius:32px 32px 0 0;
+/* ---------- sheets, menus, toast: built from the main screen's parts (pill left, label right, capsules, soft lift) ---------- */
+.scrim{position:fixed;inset:0;z-index:39;background:rgba(0,0,0,0);transition:background-color .35s}
+.scrim.show{background:rgba(0,0,0,.12)}
+.sheet{position:fixed;z-index:41;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;background:var(--bg);border-radius:34px 34px 0 0;
   padding:8px max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) max(16px,env(safe-area-inset-left,0px));
-  transform:translateY(105%);transition:transform .5s var(--spring);box-shadow:0 -10px 50px rgba(0,0,0,.10);max-height:88vh;overflow:auto;overscroll-behavior:contain;box-sizing:border-box}
+  transform:translateY(105%);transition:transform .55s var(--spring);box-shadow:0 0 2px rgba(0,0,0,.06),0 -12px 52px rgba(0,0,0,.10);max-height:88vh;overflow:auto;overscroll-behavior:contain;box-sizing:border-box}
 .sheet.show{transform:none}
-.grab{width:36px;height:5px;border-radius:3px;background:rgba(0,0,0,.14);margin:0 auto 14px}
-.sheet h3{margin:0 0 16px;font-size:20px;line-height:22px;font-weight:510;letter-spacing:-.4px;display:flex;align-items:center;gap:8px}
-.sheet h3 .x{margin-left:auto;width:30px;height:30px;border-radius:15px;background:var(--fill-6);display:grid;place-items:center}
-.sheet h3 .x svg{width:12px;height:12px}
-.cap{font-size:12px;line-height:14px;font-weight:590;color:var(--ink-50);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px;display:flex;gap:6px}
-.cap .r{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:400}
-.card{background:var(--card);border-radius:14px;padding:0 12px}
-.field{display:flex;align-items:center;gap:12px;min-height:50px;font-size:16px;letter-spacing:-.32px}
-.field+.field{box-shadow:inset 0 1px 0 var(--line)}
+.grab{width:36px;height:5px;border-radius:3px;background:rgba(0,0,0,.12);margin:0 auto 16px}
+.sheet h3{margin:0 0 18px;font-size:20px;line-height:24px;font-weight:510;letter-spacing:-.4px;display:flex;align-items:center;gap:8px}
+.sheet h3 .x{margin-left:auto;flex:none;width:40px;height:24px;border-radius:12px;background:var(--fill-6);display:grid;place-items:center;transition:transform .2s var(--spring)}
+.sheet h3 .x:active{transform:scale(.9)}
+.sheet h3 .x svg{width:10px;height:10px}
+.cap{font-size:13px;line-height:16px;font-weight:510;color:var(--ink-50);margin:24px 0 10px;display:flex;gap:6px;letter-spacing:-.1px}
+.cap .r{margin-left:auto;font-weight:400}
+.card{display:flex;flex-direction:column;gap:10px}
+.field{display:flex;align-items:center;gap:12px;min-height:34px;font-size:16px;letter-spacing:-.32px}
 .field>label,.field>.fl{flex:1;min-width:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .field .hint{display:block;font-size:12px;line-height:14px;color:var(--ink-50);letter-spacing:0}
-.inp{flex:none;display:flex;align-items:center;gap:2px;height:34px;padding:0 10px;border-radius:10px;background:var(--fill-6);font-family:var(--mono);font-size:15px;font-weight:600;transition:background-color .2s}
-.inp:focus-within{background:var(--fill-8);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.6)}
-.inp input{width:62px;border:0;background:none;padding:0;font:inherit;text-align:right;color:var(--ink);outline:none;-webkit-user-select:text;user-select:text;font-variant-numeric:tabular-nums}
+.inp{order:-1;flex:none;display:flex;align-items:center;gap:2px;min-width:96px;box-sizing:border-box;height:34px;padding:0 10px;border-radius:10px;background:var(--fill-6);font-family:var(--mono);font-size:14px;font-weight:600;transition:background-color .2s,box-shadow .2s}
+.inp:focus-within{background:var(--card);box-shadow:var(--lift)}
+.inp input{width:56px;border:0;background:none;padding:0;font:inherit;text-align:left;color:var(--ink);outline:none;-webkit-user-select:text;user-select:text;font-variant-numeric:tabular-nums}
 .inp input::placeholder{color:var(--ink-28)}
-.inp .u{color:var(--ink-50);font-weight:600}
-.inp input[type=date]{width:auto;min-width:120px;text-align:right;-webkit-appearance:none;appearance:none}
-.field input.txt{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:16px;color:var(--ink);outline:none;-webkit-user-select:text;user-select:text;text-align:left;padding:0}
-.field input.txt::placeholder{color:var(--ink-28)}
-.calc{font-family:var(--mono);font-weight:600;font-size:15px}
-.sbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:50px;border-radius:14px;font-size:17px;font-weight:510;margin-top:10px;transition:transform .2s var(--spring),opacity .2s,background-color .2s}
+.inp .u{color:var(--ink-40);font-weight:600}
+.inp input[type=date]{width:auto;min-width:120px;-webkit-appearance:none;appearance:none}
+.calc{order:-1;flex:none;display:flex;align-items:center;min-width:96px;box-sizing:border-box;height:34px;padding:0 10px;border-radius:10px;background:var(--fill-3);font-family:var(--mono);font-weight:600;font-size:14px}
+.tfield{display:flex;align-items:center;height:46px;padding:0 14px;border-radius:12px;background:var(--fill-6);transition:background-color .2s,box-shadow .2s}
+.tfield:focus-within{background:var(--card);box-shadow:var(--lift)}
+.tfield input{flex:1;min-width:0;border:0;background:none;padding:0;font:inherit;font-size:17px;letter-spacing:-.3px;color:var(--ink);outline:none;-webkit-user-select:text;user-select:text}
+.tfield input::placeholder{color:var(--ink-28)}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:50px;border-radius:25px;font-size:17px;font-weight:510;letter-spacing:-.3px;margin-top:12px;transition:transform .25s var(--spring),opacity .2s,background-color .2s}
+.card+.sbtn,.seg+.sbtn,.note+.sbtn,.tfield+.sbtn,p+.sbtn{margin-top:26px}
 .sbtn:active{transform:scale(.97);opacity:.85}
 .sbtn.primary{background:#000;color:#fff}
 .sbtn.plain{background:var(--fill-6)}
-.sbtn.danger{background:var(--red-fill);color:var(--red)}
+.sbtn.danger{background:var(--fill-6);color:var(--red)}
 .btnrow{display:flex;gap:8px}
-.btnrow .sbtn{flex:1}
+.btnrow .sbtn{flex:1;height:44px;font-size:16px}
 .note{font-size:14px;line-height:19px;color:var(--ink-50);margin:0 0 8px}
-.menu{position:fixed;z-index:50;min-width:240px;max-width:calc(100vw - 32px);background:var(--card);border-radius:14px;box-shadow:var(--lift),0 0 0 .5px rgba(0,0,0,.05);padding:4px 0;overflow:hidden;
-  transform-origin:var(--ox,0) var(--oy,0);animation:menuIn .38s var(--spring)}
-.menu.out{animation:menuOut .18s var(--ease) forwards}
-@keyframes menuIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
-@keyframes menuOut{to{opacity:0;transform:scale(.85)}}
-.mi{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:0 14px 0 12px;font-size:16px;letter-spacing:-.32px;text-align:left}
-.mi:active{background:var(--fill-6)}
-.mi .ck{width:16px;flex:none}
+.menu{position:fixed;z-index:50;min-width:250px;max-width:calc(100vw - 32px);box-sizing:border-box;padding:6px;border-radius:22px;
+  background:rgba(250,250,250,.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);backdrop-filter:blur(24px) saturate(1.8);
+  box-shadow:0 0 0 .5px rgba(0,0,0,.06),0 0 2px rgba(0,0,0,.06),0 14px 52px rgba(0,0,0,.14);
+  transform-origin:var(--ox,0) var(--oy,0);animation:menuIn .42s var(--spring)}
+.menu.out{animation:menuOut .2s var(--ease) forwards}
+@keyframes menuIn{from{opacity:0;transform:scale(.55);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes menuOut{to{opacity:0;transform:scale(.9);filter:blur(4px)}}
+.mi{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;padding:0 12px 0 10px;border-radius:15px;font-size:16px;letter-spacing:-.32px;text-align:left;transition:background-color .15s}
+.mi:active{background:rgba(0,0,0,.06)}
+.mi .ck{width:18px;flex:none;display:grid;place-items:center}
+.mi .ck svg{width:13px;height:13px}
 .mi .ml{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mi .mr{color:var(--ink-50);font-family:var(--mono);font-size:12px;font-weight:600}
+.mi .mr{color:var(--ink-40);font-family:var(--mono);font-size:12px;font-weight:600}
 .mi.danger{color:var(--red)}
 .mi[disabled]{opacity:.35;pointer-events:none}
-.mlab{padding:8px 14px 2px 38px;font-size:12px;line-height:14px;font-weight:590;color:var(--ink-50);text-transform:uppercase;letter-spacing:.5px}
-.msep{height:1px;margin:4px 0;background:var(--line)}
+.mlab{padding:8px 12px 4px 36px;font-size:13px;line-height:16px;font-weight:510;color:var(--ink-50)}
+.msep{height:1px;margin:6px 12px;background:var(--line)}
 .toast{position:fixed;z-index:60;left:50%;bottom:calc(max(20px,calc(env(safe-area-inset-bottom,0px) - 12px)) + 76px);transform:translate(-50%,24px) scale(.96);opacity:0;
-  display:flex;align-items:center;gap:12px;background:var(--card);box-shadow:var(--lift);color:var(--ink);font-size:14px;line-height:18px;padding:10px 14px;border-radius:14px;
+  display:flex;align-items:center;gap:12px;color:var(--ink);font-size:14px;line-height:18px;padding:11px 16px;border-radius:22px;
+  background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(24px) saturate(1.6);backdrop-filter:blur(24px) saturate(1.6);box-shadow:0 0 0 .5px rgba(0,0,0,.05),0 8px 32px rgba(0,0,0,.10);
   transition:transform .45s var(--spring),opacity .25s;white-space:nowrap;max-width:calc(100vw - 32px);pointer-events:none}
 .toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
 .toast .tm{overflow:hidden;text-overflow:ellipsis}
-.toast button{font-weight:590;padding:4px 10px;margin:-4px -6px -4px 0;border-radius:8px;background:var(--fill-6)}
+.toast button{font-weight:590;height:28px;padding:0 12px;margin:-4px -8px -4px 0;border-radius:14px;background:var(--fill-6)}
 body.kb-open .toast{bottom:356px}
+
+/* ---------- meal: header and list title stay put, only the list scrolls ---------- */
+body.tab-meal .plan{position:sticky;top:0;z-index:15;background:var(--bg)}
+body.tab-meal .mhead{position:sticky;top:var(--hh,0px);z-index:14;background:var(--bg);padding-bottom:10px;transition:box-shadow .25s}
+body.tab-meal .mhead.stuck{box-shadow:0 1px 0 var(--line)}
+body.tab-meal #list{margin-top:6px}
+body.tab-meal .plan,body.tab-meal .mhead{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
+body.tab-budget .plan{display:none}
+
+/* ---------- measure hero ---------- */
+.mhero{display:none;margin-top:22px}
+body.tab-measure #bigRow,body.tab-measure #bars{display:none}
+body.tab-measure .mhero{display:block}
+.mh-top{display:flex;align-items:baseline;gap:6px}
+.mh-w{font-size:40px;line-height:40px;font-weight:510;letter-spacing:-.9px;font-variant-numeric:tabular-nums}
+.mh-u{font-size:20px;color:var(--ink-50);font-weight:510;letter-spacing:-.3px}
+.mh-chip{margin-left:auto;align-self:center;display:flex;align-items:center;height:28px;padding:0 10px;border-radius:10px;background:var(--fill-6);font-family:var(--mono);font-size:13px;font-weight:600;transition:color .3s}
+.mh-chip.in{color:var(--blue)}
+.mh-sub{margin-top:8px;font-size:13px;line-height:17px;color:var(--ink-50)}
+.mh-track{position:relative;height:6px;border-radius:3px;background:rgba(0,0,0,.1);margin-top:20px}
+.mh-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#000;width:var(--p,0%);transition:width .8s var(--spring)}
+.mh-dot{position:absolute;top:50%;left:var(--p,0%);width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#000;box-shadow:0 0 0 3px var(--bg);transition:left .8s var(--spring)}
+.mh-track.at .mh-dot{background:var(--blue)}
+.mh-ends{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;line-height:14px;color:var(--ink-50);font-variant-numeric:tabular-nums}
+.mh-ends b{color:var(--ink);font-family:var(--mono);font-weight:600}
+
+/* ---------- measure log: weeks of weigh-ins on cards ---------- */
+#mlog{margin-top:6px}
+.lweek{display:flex;align-items:baseline;margin:20px 4px 8px;font-size:13px;line-height:16px;font-weight:510;color:var(--ink-50)}
+.lweek .r{margin-left:auto;font-weight:500;font-variant-numeric:tabular-nums}
+.lweek .r b{font-family:var(--mono);font-weight:600;color:var(--ink)}
+.lcard{list-style:none;margin:0;padding:0 14px;background:var(--card);border-radius:16px;overflow:hidden;isolation:isolate}
+.lrow{min-height:0}
+.lrow .rc{align-items:center;gap:10px;padding:11px 0;background:var(--card)}
+.lrow+.lrow::after,.brow+.brow::after{content:"";position:absolute;z-index:2;left:0;right:0;top:0;height:1px;background:var(--line);pointer-events:none}
+.lrow .ld{font-size:16px;line-height:20px;letter-spacing:-.32px}
+.lrow .lx{font-size:12px;line-height:14px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .pill{order:2;min-width:0;height:30px;padding:0 8px;margin-right:-8px;background:none;font-size:16px;font-weight:600}
+.lrow.editing .pill{background:var(--fill-6)}
+.lrow .ldl{order:1;flex:none;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-40);font-variant-numeric:tabular-nums}
+.lrow .acts{top:50%;bottom:auto;margin-top:-17px}
+.lrow::before{display:none}
+
+/* ---------- budget ---------- */
+#secBudget{padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+.bud-top{display:flex;align-items:center;gap:8px;height:24px}
+.bud-top h1{margin:0;font-size:20px;line-height:22px;font-weight:510;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bud-top .mtitle svg{width:12px;height:12px;margin-left:4px}
+.bud-top .dots{margin-left:auto}
+.bud-hero{margin-top:22px}
+.bh-num{display:flex;align-items:baseline;gap:6px;font-size:40px;line-height:40px;font-weight:510;letter-spacing:-.9px;font-variant-numeric:tabular-nums}
+.bh-u{font-size:20px;color:var(--ink-50);letter-spacing:-.3px}
+.bh-sub{margin-top:8px;font-size:13px;line-height:17px;color:var(--ink-50)}
+#bseg{margin-top:20px}
+.bcap{display:flex;align-items:baseline;margin:26px 4px 8px;font-size:13px;line-height:16px;font-weight:510;color:var(--ink-50)}
+.bcap .r{margin-left:auto;font-weight:500}
+.bcap button{margin-left:auto;font-size:13px;font-weight:590;color:var(--ink)}
+.bcard{list-style:none;margin:0;padding:0 14px;background:var(--card);border-radius:16px;isolation:isolate}
+.brow{min-height:0}
+.brow::before{display:none}
+.brow .rc{align-items:center;gap:12px;padding:12px 0}
+.bchk{position:relative;flex:none;width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.28);display:grid;place-items:center;transition:background-color .25s,box-shadow .25s,transform .3s var(--spring)}
+.bchk::after{content:"";position:absolute;inset:-10px}
+.bchk:active{transform:scale(.88)}
+.bchk svg{width:13px;height:13px;opacity:0;transform:scale(.4);transition:opacity .2s,transform .4s var(--spring)}
+.bcard.done .bchk{background:#000;box-shadow:none}
+.bcard.done .bchk svg{opacity:1;transform:none}
+.bcard.done .name,.bcard.done .amt{color:var(--ink-40)}
+.brow .amt{font-size:15px}
+.brow.muted .amt,.brow.muted .name{color:var(--ink-40)}
+.bfoot{margin:22px 4px 0;font-size:13px;line-height:18px;color:var(--ink-50)}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -370,10 +448,17 @@ body.kb-open .toast{bottom:356px}
       <div class="macro"><div class="mlabel"><span class="cur">0</span><span class="sl">/</span><span class="goal">0</span> <span class="lbl">fat</span></div><div class="track"><div class="win"></div><div class="mark"></div></div></div>
       <div class="macro"><div class="mlabel"><span class="cur">0</span><span class="sl">/</span><span class="goal">0</span> <span class="lbl">carbs</span></div><div class="track"><div class="win"></div><div class="mark"></div></div></div>
     </div>
+    <div class="mhero" id="mHero">
+      <div class="mh-top"><span class="mh-w" id="mhW">—</span><span class="mh-u">kg</span><span class="mh-chip" id="mhRate">—</span></div>
+      <div class="mh-sub" id="mhSub"></div>
+      <div class="mh-track" id="mhTrack"><i class="mh-fill"></i><i class="mh-dot"></i></div>
+      <div class="mh-ends" id="mhEnds"></div>
+    </div>
+    <div class="divider" id="divider"></div>
   </header>
-  <div class="divider" id="divider"></div>
 
   <section class="tabsec" id="secMeal">
+    <div class="mhead" id="mhead">
     <div class="list-head">
       <button class="mtitle" id="planTitle" aria-label="Meal plans"><h2 id="planName">Favorite meal</h2><svg class="pchev" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="dots" id="planBtn" aria-label="Meal plans"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
@@ -388,6 +473,7 @@ body.kb-open .toast{bottom:356px}
       <svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-opacity=".5" stroke-width="2.4"/><path d="M19 19L24 24" stroke="black" stroke-opacity=".5" stroke-width="2.4" stroke-linecap="round"/></svg>
       <input id="q" type="search" placeholder="Search products" autocomplete="off" enterkeyhint="search">
       <button id="qCancel">Cancel</button>
+    </div>
     </div>
     <ul class="list slist" id="list" data-list="meal"></ul>
     <button class="zhead" id="zHead" hidden></button>
@@ -405,17 +491,18 @@ body.kb-open .toast{bottom:356px}
       <h2>Log</h2>
       <div class="tools"><button class="ibtn" id="addEntryBtn2" aria-label="Add measurement"><svg viewBox="0 0 28 28" fill="none"><path d="M14 4V24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/><path d="M24 14H4.00002" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button></div>
     </div>
-    <ul class="list slist" id="mlog" data-list="log"></ul>
+    <div id="mlog"></div>
     <div id="moreBox"></div>
   </section>
 
   <section class="tabsec" id="secBudget" hidden>
-    <div class="list-head">
-      <button class="mtitle" id="budPlanBtn" aria-label="Choose meal plan"><h2 id="budPlan">Пробы</h2><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="per" id="bper"><button data-v="7">7D</button><button data-v="15">15D</button><button data-v="30">30D</button></div>
+    <div class="bud-top">
+      <button class="mtitle" id="budPlanBtn" aria-label="Choose meal plan"><h1 id="budPlan">Пробы</h1><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="dots" id="budMore" aria-label="Shopping options"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
     </div>
-    <ul class="list slist" id="blist" data-list="bud"></ul>
-    <div class="foot" id="budFoot"></div>
+    <div class="bud-hero"><div class="bh-num"><span id="bhVal">0</span><span class="bh-u" id="bhCur">RSD</span></div><div class="bh-sub" id="bhSub"></div></div>
+    <div class="seg" id="bseg" data-v="15"><i class="thumb"></i><button data-v="7">7 days</button><button data-v="15">15 days</button><button data-v="30">30 days</button></div>
+    <div id="bcards"></div>
   </section>
 </div>
 
@@ -470,20 +557,18 @@ const ICON = {
   ok: '<svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#235FD0" stroke-width="2"/><path d="M4.4 7.2l1.8 1.9 3.5-3.8" stroke="#235FD0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   spark: '<svg viewBox="0 0 14 14" fill="none"><path d="M7 1.5v3M7 9.5v3M1.5 7h3M9.5 7h3M3.2 3.2l1.6 1.6M9.2 9.2l1.6 1.6M10.8 3.2L9.2 4.8M4.8 9.2l-1.6 1.6" stroke="black" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/></svg>'
 };
-/* Haptics: Android has navigator.vibrate; iOS Safari (18+) ticks when a switch-style checkbox toggles, so we toggle a hidden one. */
+/* Haptics: Android has navigator.vibrate. iOS Safari (17.4+/18) gives a system tick when a switch-style
+   checkbox is toggled by a click on its label, so we build that label, click it, and throw it away. */
 const haptic = (() => {
-  let last = 0, lab = null;
+  let last = 0;
+  const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   return () => {
-    const now = performance.now(); if (now - last < 35) return; last = now;
+    const now = performance.now(); if (now - last < 30) return; last = now;
     try {
-      if (navigator.vibrate && !/iP(hone|ad|od)/.test(navigator.userAgent)) { navigator.vibrate(8); return; }
-      if (!lab) {
-        const i = document.createElement('input'); i.type = 'checkbox'; i.setAttribute('switch', ''); i.id = 'hx-switch'; i.tabIndex = -1; i.setAttribute('aria-hidden', 'true');
-        lab = document.createElement('label'); lab.htmlFor = 'hx-switch'; lab.setAttribute('aria-hidden', 'true');
-        for (const el of [i, lab]) Object.assign(el.style, { position: 'fixed', left: '-9999px', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
-        document.body.append(i, lab);
-      }
-      lab.click();
+      if (!ios && navigator.vibrate) { navigator.vibrate(10); return; }
+      const label = document.createElement('label'); label.setAttribute('aria-hidden', 'true'); label.style.display = 'none';
+      const input = document.createElement('input'); input.type = 'checkbox'; input.setAttribute('switch', ''); label.appendChild(input);
+      document.head.appendChild(label); label.click(); label.remove();
     } catch (e) {}
   };
 })();
@@ -683,30 +768,10 @@ function setBar(i, b) {
 function renderHeader() {
   const g = goal(), t = totals();
   $('#goalName').textContent = g.name;
-  const plain = S.ui.tab === 'budget';
-  $('#bigRow').classList.toggle('plain', plain); $('#bars').classList.toggle('plain', plain);
-  if (plain) {
-    $('#bCur').classList.remove('over');
-    const b = budget(), days = S.ui.bdays;
-    $('#bUnit').textContent = S.ui.cur;
-    tween('bc', $('#bCur'), b.total, money);
-    setBar(0, { label: 'per day', cur: b.total / days, fc: money });
-    setBar(1, { label: 'packs', cur: b.packs, fc: v => String(r0(v)) });
-    setBar(2, { label: 'per 1k kcal', cur: t.k ? b.total / days / t.k * 1000 : null, fc: money });
-    return;
-  }
+  if (S.ui.tab === 'budget') return;
+  $('#bigRow').classList.remove('plain'); $('#bars').classList.remove('plain');
   if (S.ui.tab === 'measure') {
-    const w = latest('w'), st = weightStats();
-    $('#bUnit').textContent = 'kg';
-    tween('bc', $('#bCur'), w, v => v.toFixed(1)); tween('bg', $('#bGoal'), g.tw, v => v.toFixed(1));
-    let ratio = 0, done = false;
-    if (w != null) { const span = g.tw - g.sw; done = Math.abs(w - g.tw) <= .3; ratio = Math.abs(span) < .05 ? (done ? 1 : 0) : (w - g.sw) / span; }
-    renderRing(Math.min(ratio, 1), done);
-    const rf = v => (v < -0.0049 ? '−' : '') + Math.abs(v).toFixed(2);
-    setBar(0, { label: 'kg/wk', cur: st.rate, goal: g.rate, tol: .1, fc: rf, fg: rf });
-    setBar(1, { label: '% fat', cur: latest('bf'), goal: g.tbf, tol: 1, fc: v => v.toFixed(1) });
-    setBar(2, { label: 'kcal', cur: t.k, goal: g.k, tol: g.rng && g.rng.k ? (g.rng.k[1] - g.rng.k[0]) / 2 : g.k * .02, overRed: true });
-    $('#bCur').classList.remove('over');
+    renderMHero();
   } else {
     $('#bUnit').textContent = 'kcal';
     const tolOf = k => g.rng && g.rng[k] ? (g.rng[k][1] - g.rng[k][0]) / 2 : g[k] * (k === 'k' ? .02 : .05);
@@ -722,6 +787,29 @@ function renderHeader() {
     [['p', 'protein'], ['f', 'fat'], ['c', 'carbs']].forEach(([k, l], i) => setBar(i, { label: l, cur: t[k], goal: g[k], tol: tolOf(k), overRed: true }));
     $('#bCur').classList.toggle('over', t.k - g.k > tolOf('k'));
   }
+}
+
+function renderMHero() {
+  const g = goal(), w = latest('w'), st = weightStats(), bf = latest('bf');
+  tween('mw', $('#mhW'), w, v => v.toFixed(1));
+  const chip = $('#mhRate'), hold = g.type === 'maintain' || g.type === 'recomp' || Math.abs(g.rate) < .01;
+  const ok = st.rate != null && Math.abs(st.rate - g.rate) <= (hold ? .1 : Math.max(.08, Math.abs(g.rate) * .4));
+  chip.textContent = st.rate != null ? `${sgn(st.rate)} kg/wk` : 'no pace yet'; chip.classList.toggle('in', ok);
+  let sub;
+  if (st.rate == null) sub = 'Log a week of weigh-ins to see your pace.';
+  else {
+    const now = Math.abs(st.rate) < .02 ? 'Holding steady' : `${st.rate > 0 ? 'Gaining' : 'Losing'} ${Math.abs(st.rate).toFixed(2)} kg a week`;
+    sub = hold ? `${now} · ${esc(g.name)} wants it flat` : `${now} · ${esc(g.name)} aims for ${sgn(g.rate)}`;
+  }
+  if (bf != null) sub += `<br>Body fat ${bf.toFixed(1)}%${g.tbf ? ` · target ${g.tbf}%` : ''}`;
+  $('#mhSub').innerHTML = sub;
+  const tr = $('#mhTrack'), span = g.tw - g.sw, cur = st.trend ?? w;
+  let pct = 0, at = false;
+  if (cur != null) { at = Math.abs(cur - g.tw) <= .3; pct = Math.abs(span) < .05 ? (at ? 1 : .5) : Math.max(0, Math.min(1, (cur - g.sw) / span)); }
+  tr.style.setProperty('--p', (pct * 100).toFixed(1) + '%'); tr.classList.toggle('at', at);
+  const left = cur != null ? g.tw - cur : null;
+  const mid = left == null ? '' : at ? 'at goal' : Math.abs(span) < .05 ? `${Math.abs(left).toFixed(1)} kg off` : `<b>${Math.abs(left).toFixed(1)} kg</b> to go`;
+  $('#mhEnds').innerHTML = `<span><b>${g.sw.toFixed(1)}</b> start</span><span>${mid}</span><span>goal <b>${g.tw.toFixed(1)}</b></span>`;
 }
 
 /* ================= meal list ================= */
@@ -844,7 +932,7 @@ document.addEventListener('pointerdown', e => {
 }, true);
 document.addEventListener('pointerdown', e => {
   if (e.button !== 0 || G || drag || precise || swallow) return;
-  const lst = e.target.closest('.slist'); if (!lst || e.target.closest('.acts')) return;
+  const lst = e.target.closest('.slist'); if (!lst || e.target.closest('.acts, .bchk')) return;
   const item = e.target.closest('[data-id]'); if (!item) return;
   const actEl = e.target.closest('[data-act]');
   G = { list: lst.dataset.list, id: item.dataset.id, el: item, host: e.target.closest('.row, .ghead'),
@@ -983,7 +1071,8 @@ function updateTarget() {
 function autoScroll() {
   if (!drag) return;
   const edge = 90, h = innerHeight; let v = 0;
-  if (drag.y < edge) v = -Math.ceil((edge - drag.y) / 6); else if (drag.y > h - edge - 60) v = Math.ceil((drag.y - (h - edge - 60)) / 6);
+  const top = stickTop() + edge;
+  if (drag.y < top) v = -Math.ceil((top - drag.y) / 6); else if (drag.y > h - edge - 60) v = Math.ceil((drag.y - (h - edge - 60)) / 6);
   if (v) { const b = scrollY; scrollBy(0, v); if (scrollY !== b) updateTarget(); }
   drag.raf = requestAnimationFrame(autoScroll);
 }
@@ -1024,7 +1113,7 @@ function merge(src, tgt) {
 let precise = null;
 function openPrecise(id, rowEl, y, holding) {
   const r = find(id); if (!r) return;
-  const e = r.e, pr = rowEl.querySelector('.pill').getBoundingClientRect(), top0 = Math.max(0, $('#divider').getBoundingClientRect().bottom);
+  const e = r.e, pr = rowEl.querySelector('.pill').getBoundingClientRect(), top0 = Math.max(0, S.ui.tab === 'meal' ? mhead.getBoundingClientRect().bottom : $('#divider').getBoundingClientRect().bottom);
   const ov = document.createElement('div'); ov.className = 'precise'; ov.style.setProperty('--ptop', top0 + 'px');
   ov.innerHTML = `<div class="pcard" style="left:${pr.left + 4}px;top:${pr.top - top0}px"><div class="wheel">${'<i></i>'.repeat(13)}</div>
     <div class="pvals"><div class="pg"></div><div class="pn">${esc(e.name)}</div>
@@ -1117,7 +1206,7 @@ function openKeypad(kind, id) {
   if (el) {
     const r = el.getBoundingClientRect(), limit = innerHeight - 340 - 24;
     if (r.bottom > limit) scrollBy({ top: r.bottom - limit + 8, behavior: RM ? 'auto' : 'smooth' });
-    else if (r.top < 60) scrollBy({ top: r.top - 80, behavior: RM ? 'auto' : 'smooth' });
+    else if (r.top < Math.max(60, stickTop() + 8)) scrollBy({ top: r.top - Math.max(80, stickTop() + 16), behavior: RM ? 'auto' : 'smooth' });
   }
 }
 function commitKeypad(close = true) {
@@ -1232,7 +1321,7 @@ function segHTML(id, opts, v) { return `<div class="seg" id="${id}" data-v="${v}
 function segBind(seg, fn) { seg.addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return; segSet(seg, b.dataset.v); fn && fn(b.dataset.v); }); }
 const fnum = (id, label, val, unit, ph = '0', hint = '') =>
   `<div class="field"><label for="${id}">${label}${hint ? `<span class="hint">${hint}</span>` : ''}</label><span class="inp"><input id="${id}" inputmode="decimal" value="${val ?? ''}" placeholder="${ph}" autocomplete="off">${unit ? `<span class="u">${unit}</span>` : ''}</span></div>`;
-const ftxt = (id, val, ph) => `<div class="field"><input class="txt" id="${id}" value="${esc(val || '')}" placeholder="${esc(ph || '')}" autocomplete="off" aria-label="${esc(ph || 'Name')}"></div>`;
+const ftxt = (id, val, ph) => `<div class="tfield"><input id="${id}" value="${esc(val || '')}" placeholder="${esc(ph || '')}" autocomplete="off" aria-label="${esc(ph || 'Name')}"></div>`;
 const val = (s, id) => numIn(s.querySelector('#' + id).value);
 function nudge(el) { const f = el.closest('.field') || el; f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); }
 
@@ -1312,8 +1401,8 @@ function switchPlan(id) {
   ghostOff(); save();
   S.active = id; applyGrams(plan()); save();
   if (RM) return renderAll(false);
-  (S.ui.tab === 'budget' ? $('#blist') : list).animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(-12px)' }], { duration: 140, easing: EASE }).onfinish = () => {
-    renderAll(false); const L = S.ui.tab === 'budget' ? $('#blist') : list; L.animate([{ opacity: 0, transform: 'translateX(12px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: SPRING });
+  (S.ui.tab === 'budget' ? $('#bcards') : list).animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(-12px)' }], { duration: 140, easing: EASE }).onfinish = () => {
+    renderAll(false); const L = S.ui.tab === 'budget' ? $('#bcards') : list; L.animate([{ opacity: 0, transform: 'translateX(12px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: SPRING });
   };
 }
 function planMenu(anchor) {
@@ -1419,28 +1508,45 @@ function budget() {
   return { rows, total: rows.reduce((s, r) => s + (r.cost || 0), 0), packs: rows.reduce((s, r) => s + (r.packs || 0), 0), unused };
 }
 const qty = (e, g) => isPc(e) ? `${r0(g / e.uw)} pc` : g >= 1000 ? `${r1(g / 1000)} ${U(e) === 'ml' ? 'l' : 'kg'}` : `${r0(g)} ${U(e)}`;
-function renderBudget() {
-  const b = budget(), bl = $('#blist');
-  $('#budPlan').textContent = plan().name; perSet($('#bper'), String(S.ui.bdays));
-  if (!b.rows.length) { bl.innerHTML = `<li class="empty"><b>Nothing to buy</b>${esc(plan().name)} has no portions yet.</li>`; }
-  else bl.innerHTML = b.rows.map(r => {
-    const e = r.e, sub = [`<span>${qty(e, r.need)}</span>`];
-    if (e.pk) sub.push(`<span><i>pack</i> ${qty(e, e.pk)}</span>`);
-    if (e.pr) sub.push(`<span><i>×</i>${money(e.pr)}</span>`);
-    const muted = r.cost == null;
-    return `<li class="row${muted ? ' muted' : ''}" data-id="${e.id}"><div class="rc">
-      <span class="pill">${r.packs != null ? r.packs + '×' : '—'}</span>
-      <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${sub.join('')}${muted ? `<span>${e.pk ? 'add price' : 'add pack & price'}</span>` : ''}</div></div>
-      <div class="amt">${muted ? '' : money(r.cost)}</div></div></li>`;
-  }).join('');
-  $('#budFoot').innerHTML = `${b.unused ? `${b.unused} products are at 0 in ${esc(plan().name)}. ` : ''}Prices in <button id="curBtn">${esc(S.ui.cur)}</button>`;
-  $('#curBtn').addEventListener('click', () => nameSheet('Currency', S.ui.cur, 'Save', v => { S.ui.cur = v; save(); renderHeader(); renderBudget(); }));
-}
 function perSet(el, v) { el.querySelectorAll('button').forEach(b => { const on = b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); }
-$('#bper').addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return;
-  S.ui.bdays = +b.dataset.v; save(); perSet($('#bper'), b.dataset.v);
-  const before = snapRects($('#blist')); renderHeader(); renderBudget(); playFlip(before, {}, $('#blist')); });
+const CHK_W = '<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const bought = () => (S.ui.bought ||= {});
+function renderBudget() {
+  const b = budget(), days = S.ui.bdays, cur = esc(S.ui.cur), B = bought();
+  $('#budPlan').textContent = plan().name; $('#bhCur').textContent = S.ui.cur;
+  const seg = $('#bseg'); if (seg.dataset.v !== String(days) || !seg.querySelector('.on')) requestAnimationFrame(() => segSet(seg, String(days)));
+  const todo = b.rows.filter(r => !B[r.e.id]), done = b.rows.filter(r => B[r.e.id]);
+  const sum = rs => rs.reduce((s, r) => s + (r.cost || 0), 0), left = sum(todo), inCart = sum(done);
+  tween('bh', $('#bhVal'), left, money);
+  $('#bhSub').textContent = !b.rows.length ? 'Nothing planned yet'
+    : !todo.length ? `All in the cart · ${money(b.total)} ${S.ui.cur} for ${days} days`
+    : inCart ? `left to buy · ${money(inCart)} already in the cart` : `for ${days} days · about ${money(b.total / days)} a day`;
+  const row = r => {
+    const e = r.e, muted = r.cost == null, bits = [];
+    if (r.packs != null) bits.push(`<span>${r.packs} × ${qty(e, e.pk)}</span>`); else bits.push(`<span>${qty(e, r.need)}</span>`);
+    if (e.pr) bits.push(`<span><i>${money(e.pr)}</i> each</span>`); else bits.push(`<span>${e.pk ? 'add price' : 'add pack & price'}</span>`);
+    return `<li class="row brow${muted ? ' muted' : ''}" data-id="${e.id}"><div class="rc">
+      <button class="bchk" data-chk="${e.id}" aria-label="${esc(e.name)}: ${B[e.id] ? 'in cart' : 'to buy'}" aria-pressed="${!!B[e.id]}">${CHK_W}</button>
+      <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${bits.join('')}</div></div>
+      <div class="amt">${muted ? '' : money(r.cost)}</div></div></li>`;
+  };
+  let h = '';
+  if (!b.rows.length) h = `<div class="empty"><b>Nothing to buy</b>${esc(plan().name)} has no portions yet.</div>`;
+  if (todo.length) h += `<div class="bcap">To buy<span class="r">${todo.length}</span></div><ul class="bcard slist" data-list="bud">${todo.map(row).join('')}</ul>`;
+  if (done.length) h += `<div class="bcap">In the cart<button id="budClear">Uncheck all</button></div><ul class="bcard done slist" data-list="bud">${done.map(row).join('')}</ul>`;
+  const miss = b.rows.filter(r => r.cost == null).length;
+  h += `<p class="bfoot">${miss ? `${miss} without a price aren’t counted. ` : ''}${b.unused ? `${b.unused} products are at 0 in ${esc(plan().name)}. ` : ''}Prices in ${cur}.</p>`;
+  $('#bcards').innerHTML = h;
+  const cl = $('#budClear'); if (cl) cl.addEventListener('click', () => budFlip(() => { S.ui.bought = {}; }));
+}
+function budFlip(fn) { const root = $('#bcards'), before = snapRects(root); fn(); save(); renderBudget(); playFlip(before, {}, root); }
+$('#bcards').addEventListener('click', e => { const c = e.target.closest('[data-chk]'); if (!c) return;
+  haptic(); const id = c.dataset.chk; budFlip(() => { const B = bought(); if (B[id]) delete B[id]; else B[id] = 1; }); });
+segBind($('#bseg'), v => { S.ui.bdays = +v; haptic(); budFlip(() => {}); });
 $('#budPlanBtn').addEventListener('click', () => planMenu($('#budPlanBtn')));
+$('#budMore').addEventListener('click', () => menu($('#budMore'), [
+  { label: 'Uncheck all', disabled: !Object.keys(bought()).length, do: () => budFlip(() => { S.ui.bought = {}; }) },
+  { label: 'Currency', right: S.ui.cur, do: () => nameSheet('Currency', S.ui.cur, 'Save', v => { S.ui.cur = v; save(); renderBudget(); }) }]));
 
 /* ================= measure ================= */
 const mlog = $('#mlog'), chart = $('#chart');
@@ -1497,19 +1603,32 @@ function logPill(e) {
   if (editing && editing.kind === 'w' && editing.id === e.id) return fieldHTML(editing.buf, e.w != null ? e.w.toFixed(1) : '0.0', 'kg');
   return e.w != null ? e.w.toFixed(1) + 'kg' : '—';
 }
+const wkStart = t => { const d = new Date(t); return new Date(d.getFullYear(), d.getMonth(), d.getDate() - (d.getDay() + 6) % 7).getTime(); };
+function weekLabel(ws) {
+  const tw = wkStart(dnum(todayISO()));
+  if (ws === tw) return 'This week';
+  if (ws === wkStart(tw - 3 * DAY)) return 'Last week';
+  const a = new Date(ws), b = new Date(ws + 6.5 * DAY);
+  return a.getMonth() === b.getMonth() ? `${a.getDate()}–${b.getDate()} ${b.toLocaleDateString('en-GB', { month: 'short' })}` : `${shortDate(ws)} – ${shortDate(b.getTime())}`;
+}
 function renderLog() {
   swOpen = null;
   const rows = logSorted().reverse();
-  if (!rows.length) { mlog.innerHTML = `<li class="empty"><b>No measurements yet</b>Tap + to log your weight.</li>`; $('#moreBox').innerHTML = ''; return; }
-  const ws = rows.filter(e => e.w != null);
-  mlog.innerHTML = rows.slice(0, S.ui.logN).map((e, i) => {
-    const prev = ws.find(x => x.d < e.d), bf = bfOf(e), bits = [];
-    if (e.w != null && prev) bits.push(`<span>${sgn(e.w - prev.w, 1)}</span>`);
-    if (bf != null) bits.push(`<span><i>fat</i> ${bf.toFixed(1)}%</span>`);
-    const nc = CIRC.filter(([k]) => e.circ && e.circ[k]).length; if (nc) bits.push(`<span><i>+${nc} sizes</i></span>`);
-    return `<li class="row${e.w == null ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}">${ACTS}
-      <div class="rc"><button class="pill" data-act="pill" aria-label="Weight ${fmtDate(e.d)}">${logPill(e)}</button>
-      <div class="info" data-act="info"><div class="name">${fmtDate(e.d)}</div><div class="mac">${bits.join('') || '<span>first entry</span>'}</div></div></div></li>`;
+  if (!rows.length) { mlog.innerHTML = `<div class="empty"><b>No measurements yet</b>Tap + to log your weight.</div>`; $('#moreBox').innerHTML = ''; return; }
+  const ws = rows.filter(e => e.w != null), shown = rows.slice(0, S.ui.logN), weeks = [];
+  shown.forEach(e => { const k = wkStart(dnum(e.d)); let w = weeks[weeks.length - 1]; if (!w || w.k !== k) weeks.push(w = { k, rows: [] }); w.rows.push(e); });
+  mlog.innerHTML = weeks.map(w => {
+    const wv = w.rows.filter(e => e.w != null), avg = wv.length ? wv.reduce((s, e) => s + e.w, 0) / wv.length : null;
+    return `<div class="lweek">${weekLabel(w.k)}${avg != null ? `<span class="r">avg <b>${avg.toFixed(1)}</b> kg</span>` : ''}</div>
+    <ul class="lcard slist" data-list="log">${w.rows.map(e => {
+      const prev = ws.find(x => x.d < e.d), bf = bfOf(e), bits = [];
+      if (bf != null) bits.push(`fat ${bf.toFixed(1)}%`);
+      const nc = CIRC.filter(([k]) => e.circ && e.circ[k]).length; if (nc) bits.push(`${nc} size${nc > 1 ? 's' : ''}`);
+      const dl = e.w != null && prev ? sgn(e.w - prev.w, 1) : '';
+      return `<li class="row lrow${e.w == null ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}">${ACTS}
+        <div class="rc"><div class="info" data-act="info"><div class="ld">${fmtDate(e.d)}</div>${bits.length ? `<div class="lx">${bits.join(' · ')}</div>` : ''}</div>
+        <span class="ldl">${dl}</span><button class="pill" data-act="pill" aria-label="Weight ${fmtDate(e.d)}">${logPill(e)}</button></div></li>`;
+    }).join('')}</ul>`;
   }).join('');
   $('#moreBox').innerHTML = rows.length > S.ui.logN ? `<button class="more" id="moreBtn">Show ${Math.min(14, rows.length - S.ui.logN)} more</button>` : '';
   const mb = $('#moreBtn'); if (mb) mb.addEventListener('click', () => { S.ui.logN += 14; save(); const b = snapRects(mlog); renderLog(); playFlip(b, {}, mlog); });
@@ -1634,7 +1753,7 @@ function syncTabs() {
 function switchTab(tab) {
   if (S.ui.tab !== tab) haptic();
   if (S.ui.tab === tab) return scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' });
-  if (editing) commitKeypad(); swClose(false);
+  if (editing) commitKeypad(); swClose(false); if (precise) { precise.holding = false; precise.close(); }
   const from = secOf(S.ui.tab), dir = TABS.indexOf(tab) > TABS.indexOf(S.ui.tab) ? 1 : -1;
   const go = () => {
     S.ui.tab = tab; save(); syncTabs();
@@ -1642,7 +1761,7 @@ function switchTab(tab) {
     if (RM) return;
     const to = secOf(tab);
     to.animate([{ opacity: 0, transform: `translateX(${16 * dir}px)` }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
-    ['#bigRow', '#bars'].forEach((s, i) => $(s).animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: i * 40, easing: SPRING, fill: 'backwards' }));
+    ['#bigRow', '#bars', '#mHero'].forEach((s, i) => $(s).animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: i * 40, easing: SPRING, fill: 'backwards' }));
   };
   if (RM) return go();
   from.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-16 * dir}px)` }], { duration: 130, easing: EASE, fill: 'forwards' }).onfinish = () => { from.getAnimations().forEach(a => a.cancel()); go(); };
@@ -1666,6 +1785,15 @@ $('#searchBtn').addEventListener('click', () => { const s = $('#search'); if (s.
 $('#q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); renderMeal(true); });
 $('#qCancel').addEventListener('click', () => { query = ''; $('#q').value = ''; $('#q').blur(); const b = snapRects(); $('#search').hidden = true; renderList(); playFlip(b); });
 let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (S.ui.tab === 'measure') drawChart(false); }, 150); });
+
+/* ---- meal: the plan header and list title stay put ---- */
+const mhead = $('#mhead'), hdr = document.querySelector('header.plan');
+const setHH = () => document.documentElement.style.setProperty('--hh', hdr.offsetHeight + 'px');
+if (window.ResizeObserver) new ResizeObserver(setHH).observe(hdr); setHH();
+const stickTop = () => S.ui.tab === 'meal' ? mhead.getBoundingClientRect().bottom : 0;
+let stuckRaf = 0;
+addEventListener('scroll', () => { if (stuckRaf) return; stuckRaf = requestAnimationFrame(() => { stuckRaf = 0;
+  if (S.ui.tab === 'meal') mhead.classList.toggle('stuck', scrollY > 2 && list.getBoundingClientRect().top < mhead.getBoundingClientRect().bottom + 4); }); }, { passive: true });
 
 /* ================= boot ================= */
 syncTabs(); renderAll(false); $('#planName').textContent = plan().name;
