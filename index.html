@@ -1,0 +1,1679 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Kcal Meal</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Kcal">
+<meta name="theme-color" content="#e5e5e5">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAdWklEQVR4nO2de7QU1Z3vf7+9q6qrq7r79DkHDMhDIxAFjNEImTVRQeLzXqP3ZpYDKiqJIwlmMk7izE0yWcFHMssxWZMszSSBXDPxxkTUMZOVREXinYigztwgPiIIElCQR0DOOZzTz+p67P27f+zmeBQKq5pzqD5Yn8UfLmy6q6u/tX+//Xtt3LNnD6SkHA6W9AWktC+pOFJCScWREkoqjpRQUnGkhJKKIyWUVBwpoaTiSAklFUdKKKk4UkJJxZESSiqOlFBScaSEkoojJZRUHCmhpOJICSUVR0ooqThSQknFkRJKKo6UUFJxpISSiiMllFQcKaGk4kgJJRVHSiipOFJCScWREkoqjpRQUnGkhJKKIyWUVBwpoaTiSAklFUdKKKk4UkJJxZESSiqOlFC0pC+gLSA65K8QMIELaS/ed+IgAiJQYkAEIOAcNP4OfSCAJAhk8/XqbwAB32eKeV+IQ1LzN+YMMjpqHDQGgOgHhAjVBpVqkjFs6gBBEmQ06MwxSaBzYIiBpECAH1AggAAQgb0PZHI8i0NpgiFkDTQ0AMCyI3f2BnsPyNf3BX0V+cc/BUTQUxY9JcmHeF9Sgm3i5LGaL2jaeK07z6aM08Z38hO7eNFGztEPqOFRII9zleDxN6SWCCQBQzANzOjY8Oj1fcHGnf7Lb/gbd/r7+kXZoUCAJNI4AoHGQePv/oWlJE8AAgQSgEjjaJs4tsBOnaCf+UH9wyfpp07QOmzmB+R4JCQwBDzuVHJciUNS0yJYGXR92LY3eG6zu3aT9+ouv1KXAGBoaGjIWfOHbLoZB12Qd6Feg82XgJTgB+QGICVlDZwyXjtnembODGPmZL2QZQ2fHI8QgB1H+7/jRBzKglgZNA3c3StWb3BXvuBs2hWU61LXMGugshpDvdEWGDQikqDhkeuTaeAp47SLPmJeclbm1Am6kFRtENBxIpFRLw4CEAKsDJo6vvKmv/IF54kX3F29waAmlJUZdpQdGVRJ0WYXnGFeNss8Z7qBCBWHjgN3ZHSLQ0jQOHRYbPOu4L6naqtebJTqMmcyQxspTRyKUkkgoepIneOfn2Z85gJ7zsxMw6O6Sxo/FtcwQoxWcajfvmiz3opYscZZsba+vyQ6LKYxEHS4oNbIo1apikO6BpfPzt5woT19ojZQk1KOViszKsUhJGR0NHV49PnGsieqr+0JOiymcRAy6SsD4AwkQakmxxT4ok9Yi+ZZGR2rDeKjUB+jTxyBgA4b9/bL7/yq8ujzDUMDK4NCtO5mjgQaBy+Acl3Onmr8w5X5j55iDNQlwCjzQkaTOJSxKNrsqQ3ubQ+W9vTJoo3HzLeICyJwBhWHdA5fuiK/6BOW65MXwChaQkaNOKQEXQOd47JVtWWrqpxB1sBAJH1Z7wVnICSU6vLy2dml8/NFm1WcUeOljg5xCAlWBks1+dWflVZvcIs2U7mxUQECcAb9NXnKOO1b13ecdYrRX5WjQh+jYI0TEmwT+yryr380sPoVtzvP2taUHBYCCCR05tjOHnHT8oF1W73OHLaD7/yetLs4AgEdFm5805//7b4Nb/rdBTYSpgQBEN/xZ9gJBORMrLv0me8dePhZpyvHRNvbxLbOygoJxRy+/Ia/ZNlAxZG2OWxOxmCeTDm5gQQp31GroXMAePs1RxN0H0TIZgHA0hVlIrhmrnWgItvZP21fcShropRRbUgrc7RL8WBWTEhwPPICICJdQyLozLGMBpKaBWCS4EBFSoJANF+jqkBwSGlIa0gCxsDO4K0PlgFgwbnZgVr7+qdtKg4pwcpgb1nefO9AxTlaZah1wg+g2iBJkM/i1PHaGSfrE7v5h07UGINJYzTbRCkBABBBSNr+liCCN94K9vSJDTv97ftEf1VKUmUAzStsDSJABDuDt64oj+/i807P9FXa1D9tx90KEWgcag366x8NbHjTt83WlcEYAEHdIz+AsR3srFP082dmZk7WJ4/l+SwiohAEAJ4AOcTFRQRDQwDQGAJC3aW9B8SWPcGzm93/t8Xb3ScAwMqg2qa2eGEIvgDbxB98rnjGSXp7hlDbVBxZA5cs71/9ituyB8oQAKHiEEeYPkn7y3Osc04zJnRzzsALwPVJ/a7KzzjUA1W2gw6+laFhRgdE6CnJl7b7jzznrPujV3NlPstalghj4LjUXWAP/V13dx7doO3ip20nDiGhK8fufrR696OV7nwrylC+Rc0lKeHcGcb159uzpuq2yRxPen6LFaCDm2edg5XBQMBre4KHnqk/vr5Rc6lgIbXki2gcSjWaM9NYtqTT8ajdasnaSxxCQsHCta96Ny3vzxrYwu1mDKSEiiOnT9QXX2x/cpZJAHV32Cr5VEkYImQNNHVct8374crqc5s9XQNTb8X8aQz6qvKLl+e/eHnuQLW9Ni9tJA4i0DU4UKVrvtPXV6Hm9iEOylPRON54kX3DhZadwbIzUnVZattiZ5AzeGx9459/VdnXLzvsVjbbiOB4tPymzvNmGOV6GzkfbXMhAJLA1Nl3flXZ0ydNoxVl9FflpLH8x1/o/NIVOSIo1YnhSNVSMATOoO5RxaErPmY++Hfdc2YafRXZQgwNERjAXf9eVtvaRIpRDku7iENIKNr46PPOo887RRtjRQ+VD9FXkZfNyv78S11nT9F7y5LgWOQ/lfj6q9SdZ8uWdH7x8rzjUiDiKVJKsEzcsif4wePVfJa1T2agLcSh9q69FVr2RNXQ4rkaiEAENZduvMj+7g0ddgZV2vNY+nYaBzeguke3/I/cNxcWdA6NmN5lIKBosUf+s/78Vs/OYMtBlOGlLcQhJBQttmJN/bU9gZXB6I+OUkbdpdsWFG5dUKg65ItkCiYYAkPoKcn551o/+nxnd54JEc++MAYNH364ssoZtEnXZfLiUC0Fm3YHK9bWOiwWy+FHAMej268qXHu+1VOSyBIOFWgc9g+Ic2cYf3NZrubKWBcjJOSz+NwW77H1jUK2LdK2yYtDEpg63ve72v6SjOWOaRz6a/L6edZ186zesjzGpuSwSAk5k+3cL+5fXTf1GEvgIBzh3idrNRUwTdr5SFgcKhj6ypv+qhcbsZYNtTe5fHb2K3+Rb5PchNqKewF94d6BLXuCTPw4jcoobd7tP/5CI2eieJ+LQxJYGVy5vlGqx4j/MAa1Bk0Zpy2dX3B9SnzBUBCAoeOdv6is3+Z12C06lQSgcfz17x0/pssyEiQpDiIwNNjVK5540cmZUbdwiCAlaBy+ubCjM4dekPxNBAAhoTvPvv3LysPP1luL+iukBDuDL+/w/2uLlzMT3rYkKQ5JYGXY6o3url6hetSiwBAqjrzxotyfn9ou8cRAQNHGnz9dv391vSt3tLVqiOD59NjzDkNM1rAkeWsZguvTyvWOrkW9C4xB3aXpE/W/utAeqLVFJkIpY91W/5v/Vjb1Yfg5JYFtsmc3uW/2BBk9yYBpYneXJGR02LY32Lw7yBqR108CIWHxxbaVASGTNygqU7hpV3Dzvf2cNfu2jxIi0Dn0lOW6rX7WSDJgmpg4JIBpsOde86IvAIxBtUHnzjA+OcssO8kbFElgaNBfpa/9vNRfJSN+pjAMAmCIazY0pEwyj5/YDWYIDY/WbmwYkW2Kyq9ed75NkHwMgAg4A87w5nv7N+0KCtZwhq2IIJvBl7b7O+N4Y8NOMuJo2pR9wabINoUxcDyaPkGbPVWvuZR43zoBmDp+89/K67b6xZYy9Ud6cwKdw/6SSNayJHOPJUBGZ6/uDMqRwxsI4AX0l+datskSz0sFArpy7P7V9Z8/XR92ZQzl5Te8kXrrCCT5AEb/5ojgCzihg3/8NMPx4uUshp1AQHeePfys8+1fVrrz8ZJB0Re85vOzy684iW3KkvlYzqBcl6/u9DM6i3JvEcFx6axT9IndPNmol0qPrX/du/MXZSPmxhURag2K6ECQBEODnT3izR6R0VvvhDgaEhCHykG8NSD3DgidR3ItEUASzT3d5KyVwtLhQkjImbizV3x++YAXkB7HVeQMGh7NnZmJ3mnBEaoNeuOtQD9kEuaxISFxcNzbL1R8M8r9FRIKFps5WXN9mZQhVBvXUp2+/NPSQE2aeozYtsahtywvOtP84ZJid54FgjDK10AQkna8JThLJlSahDgANIav7wsCEWkTjwy8ACZ180nKpiShDiJAgKzB7nio/MI2Lx+n3oIzqDo0e5rxtSvzhoYzJuleQFG+hLpRb0S+UcNOMs8hIvRVZMQdGgNwffnhk/WCxYQEOtjZfCwhgoLFbn+otPKFxpg4fVYq3j+mwL63uFiwmBfQrKlG9MIThnCgKoKEdmcJiAMRvID+uMfXedTVUhJM7NaIQErgCLoGGgdJIOSxUImaQvbAmvoDa+qxmg9Ug27BYvcsLo4pMMeVBHBiNzd4JM+JCAwdd/WKvorUk6hKT2blYBjjqxKBruG0EzUrAwULHY8OVKhcJ8vAoo2cjawnHwgYU2ArX3Bvf6hUsFi84mcA16el8wuzpxpVhzSOnk+Tunl3nkUv15CU2O4sgS57hlBpUG+c0RQcIaPDky+7Dz1T3/qnoO6SpuHJJ/ALzjD/+9lmhzVSsxzVxvWFbd4dD5WzRrxZU5xBb1neuqBw+WxTVTEOHusRHYZQbVBvWXbaWnDMK8OOtThUF0KpSvtLUo+2ugoJuSze/Zvqhjd9SZDRgSES0d4DYu2r7gNrav90XceZH9RLw13bISWYOg7U6Ms/LZXqMhen2V/jMFCj6863rp9n9deaVYxq0HHRxoljeO8bvv5eTRgqfVNxaH9JzpgIDe9YLyGJmRWNRc2dKcu9abefM7HDQkNDjYOuQS6L3Xm2Y79Ysqz/5e1HNanhUAYLQj+/vH9nr4irjL6KnDPDuOPqgjpKYejbZnTMxWm/iHWvhpfk6jlivl4VcysPVP2REgIB+SxWHLr53oHe8jBM/xl6ebqGd/6isv712BvXikNnTzHuWtTR8OlQj6GFaXdJhf2STm5GJmwFDsTQGUCUNYZBH4GEsQW27Inag8/EKwhlCF4AnTb71vUdnTbz2m/kRixGjTiOwJDpYf3VxtHqIxDQaeP9q+vLVlXHxFGGcimEpHsWF086gVfCy5FGi2ASqucY7kGizbmD29/WR2v726EFoTGqkADgYFHB0vmFj03TjzCmmCjeJKAEh64mk1uJ65RFQf2uSh/qXIu47/+uglAtTkGoxqC3LG+6NHfdPKu/dvg1Q5Xw9Fbk9v1BRo8aB8voaA/3vYrIsRaHWns7czhpDFcndw4jyiKs3+Z94+GylWEYJ9QmCfRWC0I5g/4aXTfPuulSu7cstSPf1MgrweC9mjwC9yoKiZmVEaqe8psBzcbXHyjlMhhRH80TRnX8yk8HNu70YxWEahwqDn1smr50fsELjtR+p9LRf+oXAzWKviwJmdg5Moml7KeeqAVyRDoZlX1ZsaZ+64NlO5o+CCBr4G0Pltdu8mJ1JamN60kn8HsWF4VsnjR7BDQO+wak41GUXQwi+AFN6uadOXzPdx4JEsvKduf5yGWShISuAouoj8GC0J89Xe+wYuTV4m5cCYAx/MN2T6oKgChfhKBos4gOyrCTRFYWIBA0ZTzXooXPW0OISPoIBHQXWikIRQQCcH26a1HH2VOMI2xcB1Hp+w07fCNaOlrdqFPGaRHzDMNOMitHIGlckefM2E54rJX1PfWhsjbrt3r/1FJBaLkub11QmDPDiDIDQm1V9vWL7fsDI/JKwBAmj+Xvo60sIngBTOjiYwsxMtdwcMcfy/QeQR+D49X/9scDDT9eQagaLrtwrrVwrlWOdvKSJMgabP02v7cctThDSsgaOHW85otkxkwkIw41O/DUCZrrR92hqR2/oaPnx+toOqw+VF6tXKe/vXegtyxjBc1UQehlZ5u3X9VRrsuIP5uat//0hkbE3nlE8ASM7+InjdW8yHdpeElsK8sZnnmKISnqM4EIDY8+Pc/6QJHXGkelD0C1PWHfeLj8/DYv10JB6FRj6YKC40k63Nz0Q1GTSHb3yRe3+9lMJJuiBjFMn6B15ZPZqkBiuxUAT9CHJ+tZI6rbocaZb90b/Mtnix0W82PmtIbqw8pg0Wa3PdhKQajj0ZgCu2dxsWBh9GuQBJbBfrPO2V8SEW0KAgSSzvigkWA3RkL1HAwaHp06QZvyAc31IxWUSwmFLP72pUY+i/csLtbdw2TDj4zSx89W17/9y8pDz9QfWBtv46rKSkwd77mxOKbA6nH6dTmDUl2uetEx9aiNr0JCh8X+7ENGw0usGyOxrKyQULTZOdMz0b88Y+AF8P2V1Ys+krn96nzNJYqvj+4Ce2BN/RsPlwsxZwUjgOfTP1xZmDXNqMYZAKF+5t++7G7ZE2SNSMuGWqJmTtKmjY/68IwEiYlD5TDnzMyYkS2LIMhncdWL7u/+0PjsxfZtV7WiD+XYZvR4Npwz6KvIL/9FfsG52b5yjOGFqixyf0ne9x/VTOThkwjgC5pzuhn95owEyc3nUA/HZG3KuMgPBwFn4Li0fFVtoEYL51jfuLrQmj5iWXGNQ6neLAg9EPNIWLVsrFhb37Q7sKK5oupf5U12zmlJ2hRItthHSChk2QUfMaPfAiEhb+FzW7xVLzaEhAXnZlvTR3Q0Dgeqhy8IfU/UxPvNu4MVa2rFyFNWVSD17Kn6tBO1RnI2BRIfGNfw5SVnmUWbCRk1/EkEBsfv/Kqyr1/WXLp6zgjqgzMo1+n0yfq3FhWdwxWEHhl1Vsa3/r18oBrjrAwEEJIum5WNe0bAsJOkOBDB8eC0CdoFZ2TUYWxRIIKMDnv75W0PljIa9pXlNa3alyPTzKvl8M5rOzpzMTauikBA0WbLVtVWb3Sj1wC8857IhNrrmyRcQ9p8SmZnY009VyVbT21wl62qnVDkbw2IhXOHWR+DBaHfW9w5Y5IWd+BpIKArh6s3uMtWVZvrYjQYguPJi8/KxlpNR4iExaEGBJ5zmnHOaUYlTtxT7YSXPVF96BnnA0W+r3+Y9TG0IDTuucBCQMHCjTuDr9xfijVaYzDrdOXHs7VGwgOMIHFxAAAQIMKnL7AjDnIZiq7hnb8or3/dG1Ngw6gPjUNvRd50ae76eVZ/TGUEAswMlmqq3FDGmgXIEGquvOo8a0JXwgOMmteT8OcDMAYVh+bMzFwxOxtrKLFKnvkB3bRs4OXt/rhOvm9AXDPHamFbMRTVr3b1edZN/83uec+C0HcSCChYWGvQZ5f1b94db/6k2qTMmKgvmmeVk/Y2mpeU9AUANA0tfeZCW2U6oj8xUkJGx2pD3rR84DfrnA908J6yuHau9eVPtXjOhir7mzXF+NqVef+IBaGHEgjoyrPXdgc3/MuBV3b4sWLz0EymwOKL7WZfZyoOhTo7c/pEbdEn7FhnawCAkGAaWHfplp+U7v2/taLNSnW5cG7zhB4eRx+cQbVBk8fyHy7pNDT0Iy/s6hjR7jx7eoN74/f7X9sdxFUGZ1Cq0/kzM20ynFnRHlcBoDEYqMlF8+zZU42KEy8jLyXoHHIm3vlI+ZaflByXDA2Wzi9cM8c6UI48O3tIQWjRxka0qhECCARkdcwaePej1SXL+2su5bMx1wxsNlX8/afyvmiHJaNJu4gDmjYCvnplQefNU59j/FsCSdCVY4+td667u//pja6p413Xdyw4z4piX1ooCAUAdcr1mALb0RMsWd5/96OVrIEaj91JwBmUHfmFy3KnTtAct40OLW+jE6kBQEjotPFf/6P+j4+Uu3OshVlYGoeaSwjwydnmX11onz3VuOVfB+77XX1sByMZuhniDAZq8o6rO66Zk33PjauqVuQMOiy2vyRWrHVWrKn3VWVHS+PP1Xlkl83KfveGjmojUsvCMaO9xAEAkiBv4pd+Unp8vdPZ0sE2DIEASjXZXWDXzrWun2f/7ydrP36yZmVQ/a93vRgResvy05+wb7+6UKqHRheaFawAho6WgaW6/O1Ljfueqm/e5XdYrIUFAw7WtUzs5g/c0m1lIJYzfgxoO3GoHHfdhWu+27ezJ97UlKFwBr6Acl1OGssvOdPsq8hnN3uHdqQ1fGp4tGie/fX5+bpLcLDsTwUn6OB/MARDQ9MAIWFPn/j1usaqFxtb9vgZHa0MCtHKCA11Hpkv6P/c3PXRKXpEW3YsaTtxwMFBwRvf9JcsH6i7pPMW28xRzQ32qebSxG5OAOX62+s2EQDCySfwxRflLv1opurQYEEoAijLomuoMWCIdY/29Yv127zVG9yXtvv7S8LUMWvg0bTAM4SaS7dfVbjqvOxASO91srSjOEC1ROdw3Vb/M987oHNkR3ECkjrp3gsAD86lVwV/k8fySz9qXjHb7MozRDCHlP9Igr6KBIA/9Yl9A+IPO/xXdvjb3xJ9FYkIloGqhf9oUqYah56SXLqg8LlL7N7IW6pjTJuKAw7q4+FnnaUrora8xoIxYAimjoGEk0/gOZMJ1buLICTseEtIooEaNTwSknQNMzrqHABAhju2EeEc+sry2vOt2xYUam57OaFDaV9xgGp5zb/dUsBwOMeYqOOeBDVzbPJg+yoBIIChIaI6iwngYPHY0X84AnAOvWW5cK51x9WF+kiWKR09CcwhjQ5ncKAsr5lrAcCtK8qmWs+HaR6BWiR0BgCgc3xX7KnpkMacwvMen4iAAD0led08646rRraAbVho65VDoao3ntnkffX+UqkmbXMET0YaORgDIaDh0//6VH7RPMvx2l0Z0FYR0jA4g1KN5p2e+cHnit0FVoqZQ28HNA4Nj3xBt19V+NwldvuvGYpRsHIo1MjRtwbkbQ+WntrgFu14w6aTQjku/VU5ZZz2jws7Zk/TB6oUKx2YIKNGHKASsDpyBstW1ZatqiKCnWlrE6MCcRVHXj47+/X5+a4ca8NI1xEYTeIAaAawizZbvcG965eVLXv8DotxltjUrDAYAiCU61S08W8uyy2ca7k+eUG8qfiJM8rEoVAuaqlG33+8+sh/Og2P8hZGn9I3oqiYW92lQML5p2f+/n/mTpug99ckRuvHbytGpTgAQKgajixbv837wcrqc5s9xsDOHFU8+yhR7oXrQ82VMybqiy+2PznL9AXUPYpVa9g+jFZxwME0qZ1BzuCx9Y17n6xt3u1rHFU49ejjmNFhDBDA8ajh0Yld/KrzrEXzLNvEskMAo3j8+SgWh0ISADXLeh9/ofHr3zsvb/e9AGxz2KLdYah0v5BQd0lIOnWCfslZ5pUfz07o5uW6FHKUeRiHMurFoRASNAa2ib6A/9riPfZ845lNbm9ZMoSsgboGMExDxJVLoT7R8cgXlDfZ2VP1y2ZlLzgjU7RZrSFHneMZxnEiDoWq27NNZAg7e8Tvt3pPb3Bf2u73lCQAGRpmdFQmAODtXElYPm8wfQ8HY+tSgifI9UFKKlhs5mR9zgzjnOmZaSdqhoZVRwayuZwcHxxX4lAoO5LRQZ2tsbtXrNvqvfSG/+ouf2ePqDUokMQZqvodQOAI/JB+KiLw5cGcnAQhiTE0dRjfxadP0M/4oP5nHzKmjddMA12fVCz8+FgthnIcikMxpKoPsgYCYMWRO3vE6/uCHfvFG/uCA1W5s1eQhKorqw4NrSBUA146cygkTOzmnTY7ZZw2eSyfOl47eSzvzDPO0PWp4TX77kevy3lkjltxDDLoanAGqiaDMwwEBRL6KpIh9JTl/pLQDh4Jrnq7cyabNJargueMjhpHIgoEuD4FAgiOZ00McvyLYyiD5VsqJKUSeBrHd/X4q6yNKjgN5Nv7HcRm2v19QlvXcww7Kqo9iMrL+OJwZTwHRYAIsTqsjifeX+J4F0P3IymH8n59KFIikIojJZRUHCmhpOJICSUVR0ooqThSQknFkRJKKo6UUFJxpISSiiMllFQcKaGk4kgJJRVHSiipOFJCScWREkoqjpRQUnGkhJKKIyWUVBwpoaTiSAklFUdKKKk4UkJJxZESSiqOlFBScaSEkoojJZRUHCmhpOJICSUVR0ooqThSQknFkRJKKo6UUFJxpISSiiMllFQcKaGk4kgJ5f8DYB2mN9NzmSkAAAAASUVORK5CYII=">
+<link rel="manifest" href="data:application/manifest+json,{"name": "Kcal", "short_name": "Kcal", "display": "standalone", "background_color": "%23e5e5e5", "theme_color": "%23e5e5e5", "start_url": ".", "icons": [{"src": "data:image/png;base64,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", "sizes": "180x180", "type": "image/png"}]}">
+</head>
+<body>
+
+
+<style>
+/* Layout: one phone column (max 430px): shared plan header → divider → tab section (Meal | Measure) → floating tab bar.
+   Tokens mirror Figma file "Jebal", Page 3; new components reuse the same surfaces: grey ground, #f6f6f6 cards r14, rgba pills r10, mono numbers. */
+:root{
+  --bg:#e5e5e5; --ink:#000; --ink-50:rgba(0,0,0,.6); --ink-40:rgba(0,0,0,.55); --ink-28:rgba(0,0,0,.3);
+  --fill-8:rgba(0,0,0,.1); --fill-6:rgba(0,0,0,.07); --fill-3:rgba(0,0,0,.035);
+  --line:rgba(0,0,0,.1); --card:#f6f6f6; --merge:#dddddd; --dot:#cecece;
+  --blue:#235fd0; --win:#9fb3d8;
+  --ghost:#d57b0e; --ghost-ink:#905105; --ghost-fill:rgba(213,123,14,.16); --ghost-fill-0:rgba(213,123,14,.08); --ghost-ink-0:rgba(144,81,4,.5);
+  --red:#d63a2f; --red-fill:rgba(214,58,47,.13);
+  --key-sheet:rgba(209,212,218,.92); --key:#fff; --done:#3478f6;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro",system-ui,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --lift:0 0 2px rgba(0,0,0,.06),0 8px 52px rgba(0,0,0,.10);
+  --spring:cubic-bezier(.3,1.25,.5,1);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:light;
+}
+@supports (transition-timing-function: linear(0, 1)) {
+  :root{ --spring: linear(0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50.1%, 1.015 55%, 1.017 63.9%, 1.001 85.9%, 1); }
+}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+  font-feature-settings:"ss17" 1;overscroll-behavior-y:none}
+body.kb-open{padding-bottom:340px}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;touch-action:manipulation}
+button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:8px}
+svg{display:block}
+[hidden]{display:none!important}
+.per{display:flex;gap:2px;margin-left:auto;flex:none}
+.per button{height:28px;padding:0 8px;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-40);transition:background-color .25s,color .25s}
+.per button.on{background:var(--fill-8);color:var(--ink)}
+.mtitle{display:flex;align-items:center;gap:2px;min-width:0}
+.mtitle svg{width:12px;height:12px;flex:none;margin-left:4px;transition:transform .3s var(--spring)}
+.mtitle:active svg{transform:translateY(2px)}
+.amt{flex:none;align-self:center;font-family:var(--mono);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;padding-left:8px}
+.row.muted .amt,.row.muted .name{color:rgba(0,0,0,.45)}
+.foot{margin-top:24px;font-size:13px;line-height:18px;color:var(--ink-50);text-align:center}
+.foot button{font-weight:590;color:var(--ink);padding:2px 4px}
+#bars.plain .track,#bars.plain .sl,#bars.plain .goal{display:none}
+#bigRow.plain .ring,#bigRow.plain .sl,#bigRow.plain #bGoal{display:none}
+#bigRow .ring{transition:opacity .3s}
+.app{max-width:430px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- plan header ---------- */
+.plan{padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+.title-row{display:flex;align-items:center;gap:8px;height:24px}
+.title-row h1{margin:0;font-size:20px;line-height:22px;font-weight:510;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.title-row .ptype{margin-left:auto;font-size:12px;line-height:12px;font-weight:590;color:var(--ink-50);text-transform:uppercase;letter-spacing:.5px}
+.dots{flex:none;width:40px;height:24px;border-radius:12px;transition:transform .2s var(--ease),opacity .2s}
+.dots:active{transform:scale(.9);opacity:.6}
+.kcal-row{display:flex;align-items:center;gap:8px;height:36px;margin-top:22px}
+.ring{position:relative;width:32px;height:32px;flex:none}
+.ring svg{position:absolute;inset:0;overflow:visible}
+.ring .trk{transition:stroke .35s,stroke-opacity .35s}
+.ring .arc{transition:stroke-dashoffset .8s var(--spring),opacity .3s}
+.ring .lap{transition:stroke-dashoffset .8s var(--spring),opacity .3s}
+.ring .cap{transform-origin:16px 16px;transform-box:view-box;transition:transform .8s var(--spring),opacity .3s}
+.ring .chk{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .45s var(--ease) .15s}
+.ring.done .chk{stroke-dashoffset:0}
+.ring.pop{animation:pop .5s var(--spring)}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.08)}100%{transform:none}}
+.kcal{font-size:36px;line-height:36px;font-weight:510;letter-spacing:-.72px;white-space:nowrap;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.macros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+.mlabel{font-size:12px;line-height:12px;font-weight:590;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.track{position:relative;height:16px;margin-top:6px;border-radius:4px;background:rgba(0,0,0,.1)}
+.track .win{position:absolute;top:0;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:4px;background:var(--win)}
+.track .mark{position:absolute;top:-2px;width:4px;height:20px;border-radius:24px;background:var(--ink);
+  left:clamp(0px,calc(50% + var(--off,0px) - 2px),calc(100% - 4px));transition:left .7s var(--spring),background-color .3s,opacity .3s}
+.track .mark.in{background:var(--blue)}
+.track .mark.none{opacity:0}
+.divider{height:1px;background:var(--line);margin:24px calc(-1 * max(16px,env(safe-area-inset-right,0px))) 0 calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
+
+/* ---------- section heads ---------- */
+.list-head{display:flex;align-items:center;height:28px;margin-top:11px}
+.list-head h2{margin:0;font-size:18px;line-height:20px;font-weight:510;letter-spacing:-.36px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.list-head .dots{margin-left:8px}
+.list-head.sub{margin-top:28px}
+.tools{display:flex;gap:8px;margin-left:auto;padding-left:12px;flex:none}
+.ibtn{position:relative;width:28px;height:28px;flex:none;transition:transform .25s var(--spring),color .3s}
+.ibtn::after{content:"";position:absolute;inset:-6px -4px}
+.ibtn:active{transform:scale(.86)}
+.ibtn svg{width:28px;height:28px}
+#ghostBtn{color:#000}
+body.ghost #ghostBtn{color:var(--ghost);animation:wob .6s var(--spring)}
+@keyframes wob{0%{transform:none}30%{transform:rotate(-12deg) scale(1.15)}60%{transform:rotate(8deg)}100%{transform:none}}
+.search{display:flex;align-items:center;gap:8px;margin-top:14px;height:36px;padding:0 12px;border-radius:10px;background:var(--fill-6);animation:drop .35s var(--spring)}
+.search[hidden]{display:none!important}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:16px;letter-spacing:-.32px;outline:none;color:var(--ink);-webkit-user-select:text;user-select:text}
+.search button{font-size:16px;color:var(--ink-50)}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---------- rows (products, groups, log) ---------- */
+.list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:14px;isolation:isolate}
+.row{position:relative;min-height:34px;touch-action:pan-y}
+.rc{position:relative;z-index:1;display:flex;align-items:flex-end;gap:12px;will-change:transform}
+.row::before{content:"";position:absolute;inset:-4px;border-radius:14px;background:var(--card);box-shadow:var(--lift);
+  opacity:0;transform:scale(.97);transition:opacity .25s,transform .35s var(--spring),background-color .2s;z-index:-1;pointer-events:none}
+.row.lifted::before,.row.editing::before{opacity:1;transform:none}
+.row.editing::before{box-shadow:none}
+.row.merge-target::before{opacity:1;transform:none;background:var(--merge);box-shadow:none}
+.pill{flex:none;display:flex;align-items:center;min-width:64px;height:34px;padding:8px;border-radius:10px;background:var(--fill-6);
+  font-family:var(--mono);font-size:14px;line-height:14px;font-weight:600;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums;
+  transition:background-color .35s,color .35s,transform .3s var(--spring)}
+body.ghost-anim .pill{transition-delay:var(--d,0s),var(--d,0s),0s}
+.pill:active{transform:scale(.94)}
+.lifted .pill,.editing .pill,.group .pill{background:var(--fill-8)}
+.row.zero>.rc>.pill,.group.zero>.ghead>.rc>.pill{background:var(--fill-3);color:rgba(0,0,0,.42)}
+.info{flex:1;min-width:0;display:flex;flex-direction:column;cursor:pointer}
+.name{font-size:16px;line-height:20px;letter-spacing:-.32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .3s}
+.mac{display:flex;gap:8px;font-size:12px;line-height:14px;color:rgba(0,0,0,.78);white-space:nowrap;font-variant-numeric:tabular-nums;font-feature-settings:"ss17" 1,"cv08" 1;overflow:hidden}
+.mac i{font-style:normal;color:rgba(0,0,0,.4);margin-right:1px}
+.row.zero>.rc .name,.group.zero>.ghead .name{color:rgba(0,0,0,.45)}
+.row.zero>.rc .mac,.group.zero>.ghead .mac{color:rgba(0,0,0,.32)}
+.row.zero>.rc .mac i,.group.zero>.ghead .mac i{color:rgba(0,0,0,.25)}
+.slot{visibility:hidden}
+.row.pressing>.rc,.group.pressing{transform:scale(.985);transition:transform .38s var(--ease)}
+body.ghost .pill{background:var(--ghost-fill);color:var(--ghost-ink)}
+body.ghost .row.zero>.rc>.pill,body.ghost .group.zero>.ghead>.rc>.pill{background:var(--ghost-fill-0);color:var(--ghost-ink-0)}
+.caret{display:inline-block;width:1.5px;height:17px;background:currentColor;margin:0 1px;border-radius:1px;animation:blink 1s steps(1) infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:0}}
+.ph{color:rgba(0,0,0,.28)}
+.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+
+/* swipe actions: same pill geometry as the grams pill */
+.acts{position:absolute;z-index:0;right:0;bottom:0;display:flex;gap:6px;opacity:var(--rv,0);transform:scale(calc(.85 + var(--rv,0) * .15));transform-origin:right center;pointer-events:none}
+.sw-open .acts{pointer-events:auto}
+.sa{width:52px;height:34px;border-radius:10px;display:grid;place-items:center;transition:transform .25s var(--spring),background-color .2s}
+.sa:active{transform:scale(.9)}
+.sa svg{width:20px;height:20px}
+.sa.ed{background:var(--fill-8);color:var(--ink)}
+.sa.del{background:var(--red-fill);color:var(--red)}
+
+/* group */
+.group{position:relative;margin:-4px;padding:4px;border-radius:14px;background:var(--card);display:flex;flex-direction:column;gap:4px;touch-action:pan-y;transition:background-color .2s,box-shadow .3s}
+.group.lifted{box-shadow:var(--lift)}
+.group.merge-target{background:var(--merge)}
+.ghead{position:relative}
+.ghead .name{font-weight:510;letter-spacing:-.16px;display:flex;align-items:center;overflow:visible}
+.gname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.chev{position:relative;flex:none;width:24px;height:20px;display:grid;place-items:center}
+.chev::after{content:"";position:absolute;inset:-10px -8px}
+.chev svg{width:12px;height:12px;transition:transform .45s var(--spring)}
+.group:not(.open) .chev svg{transform:rotate(-90deg)}
+.kids{list-style:none;margin:0;padding:0 0 0 16px;display:flex;flex-direction:column;gap:4px;isolation:isolate}
+.kids:empty{display:none}
+.kids .row::after{content:"";position:absolute;left:-12px;top:15px;width:4px;height:4px;border-radius:50%;background:var(--dot)}
+.empty{padding:36px 8px;text-align:center;color:var(--ink-50);font-size:15px;line-height:20px;list-style:none}
+.empty b{display:block;color:var(--ink);font-weight:510;font-size:17px;margin-bottom:4px}
+.drag-clone{position:fixed;z-index:25;margin:0;pointer-events:none;will-change:transform;list-style:none}
+.drag-clone.row::before{opacity:1;transform:none}
+.drag-clone.group{box-shadow:var(--lift)}
+
+/* ---------- layout v2 (main screen redesign) ---------- */
+.kwrap{min-width:0}
+.ksub{display:none}
+.mtitle .pchev{display:none}
+.zhead{display:none}
+body.v2 .mtitle .pchev{display:block}
+body.v2 #planBtn,body.v2 #sortBtn{display:none}
+body.v2.tab-meal #bigRow{height:auto;gap:14px;margin-top:20px;align-items:center}
+body.v2.tab-meal .ring{width:56px;height:56px}
+body.v2.tab-meal .ring svg{width:56px;height:56px}
+body.v2.tab-meal .kcal{font-size:40px;line-height:40px;letter-spacing:-.9px}
+body.v2.tab-meal #bUnit{font-size:20px;letter-spacing:-.3px;color:var(--ink-50);font-weight:510}
+body.v2.tab-meal #bigRow .sl,body.v2.tab-meal #bGoal{display:none}
+body.v2 .mlabel .sl,body.v2 .mlabel .goal{font-weight:500}
+body.v2.tab-meal .ksub{display:block;margin-top:4px;font-size:13px;line-height:16px;color:var(--ink-50);font-variant-numeric:tabular-nums}
+body.v2.tab-meal .macros{margin-top:16px}
+body.v2 .mlabel{font-weight:500;color:var(--ink-50)}
+body.v2 .mlabel .cur{color:var(--ink);font-weight:600}
+body.v2 .tools .ibtn svg{width:24px;height:24px;margin:2px;opacity:.75}
+body.v2 .pill{font-weight:500;min-width:72px;background:var(--fill-6)}
+body.v2 .group{background:transparent}
+body.v2 .group.lifted,body.v2 .drag-clone.group{background:var(--card)}
+body.v2 .group.merge-target{background:var(--merge)}
+body.v2 .group .pill{background:var(--fill-6)}
+body.v2 .zhead{display:flex;align-items:center;gap:6px;margin:28px 0 0;padding:0;height:24px;font-size:13px;font-weight:590;color:var(--ink-50);letter-spacing:.2px}
+body.v2 .zhead svg{width:12px;height:12px;opacity:.6;transition:transform .35s var(--spring)}
+body.v2 .zhead.open svg{transform:rotate(180deg)}
+body.v2 #zlist{margin-top:14px}
+/* ---------- tab sections ---------- */
+.tabsec[hidden]{display:none!important}
+
+/* ---------- measure ---------- */
+.seg{position:relative;display:flex;padding:2px;border-radius:10px;background:var(--fill-6);height:32px;box-sizing:border-box}
+.seg .thumb{position:absolute;top:2px;bottom:2px;border-radius:8px;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 .5px rgba(0,0,0,.04);
+  transition:left .45s var(--spring),width .45s var(--spring)}
+.seg button{position:relative;flex:1;font-size:13px;line-height:28px;font-weight:510;color:var(--ink-50);transition:color .25s}
+.seg button.on{color:var(--ink)}
+#period{margin-top:14px}
+.chart{position:relative;margin-top:14px;height:196px;touch-action:pan-y}
+.chart svg{width:100%;height:100%;overflow:visible}
+.chart .ylab,.chart .xlab{font-family:var(--mono);font-size:10px;fill:var(--ink-40)}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart .pt{fill:var(--ink-28)}
+.chart .trend{fill:none;stroke:#000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chart .path{fill:none;stroke:var(--blue);stroke-width:1.5;stroke-dasharray:3 4;stroke-linecap:round}
+.chart .band{fill:var(--win);opacity:.45}
+.chart .last{fill:#000;stroke:var(--bg);stroke-width:2}
+.chart .hair{stroke:rgba(0,0,0,.25);stroke-width:1}
+.chart .hdot{fill:#000;stroke:var(--bg);stroke-width:2}
+.chart .goal-lab{font-family:var(--mono);font-size:10px;fill:var(--blue)}
+.chart .empty{position:absolute;inset:0;display:grid;place-items:center;padding:0}
+.tip{position:absolute;top:0;pointer-events:none;background:var(--card);border-radius:10px;box-shadow:var(--lift);padding:6px 9px;white-space:nowrap;
+  font-size:12px;line-height:15px;color:var(--ink-50);opacity:0;transform:translateY(4px);transition:opacity .15s,transform .2s var(--spring)}
+.tip.show{opacity:1;transform:none}
+.tip b{display:block;font-family:var(--mono);font-size:14px;line-height:17px;font-weight:600;color:var(--ink)}
+.stats{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+.stats .rc{align-items:flex-end}
+.sug{margin:24px -4px 0;padding:12px;border-radius:14px;background:var(--card);animation:drop .45s var(--spring)}
+.sug-h{display:flex;align-items:center;gap:6px;font-size:12px;line-height:14px;font-weight:590;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-50)}
+.sug-h .sd{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:400}
+.sug-h svg{width:14px;height:14px}
+.sug-t{margin-top:8px;font-size:15px;line-height:20px;letter-spacing:-.2px}
+.sug-t b{font-family:var(--mono);font-weight:600;font-size:14px}
+.sug-b{display:flex;gap:8px;margin-top:12px}
+.sug-b .sbtn{margin:0;height:40px;font-size:15px;border-radius:10px}
+.more{display:block;margin:16px auto 0;height:34px;padding:0 14px;border-radius:10px;background:var(--fill-6);font-size:14px;font-weight:510;color:var(--ink-50)}
+
+/* ---------- tab bar ---------- */
+.tabbar{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:max(20px,calc(env(safe-area-inset-bottom,0px) - 12px));
+  display:flex;align-items:center;gap:16px;height:64px;padding:0 24px;border-radius:80px;background:rgba(255,255,255,.75);
+  -webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.7),0 6px 24px rgba(0,0,0,.04);transition:transform .45s var(--spring),opacity .3s}
+body.kb-open .tabbar{transform:translateX(-50%) translateY(140%);opacity:0}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;line-height:14px;color:var(--ink-40);font-feature-settings:"ss17" 1,"cv08" 1;transition:transform .3s var(--spring),color .3s}
+.tab:active{transform:scale(.9)}
+.tab svg{width:28px;height:28px;opacity:.55;transition:opacity .3s}
+.tab.on{color:var(--ink)}
+.tab.on svg{opacity:1}
+
+/* ---------- precise edit ---------- */
+.precise{position:fixed;z-index:20;left:0;right:0;bottom:0;top:var(--ptop,0px);background:rgba(229,229,229,.1);
+  -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);opacity:0;transition:opacity .3s var(--ease);touch-action:none}
+.precise.show{opacity:1}
+.pcard{position:absolute;display:flex;gap:16px;align-items:flex-start;color:var(--ink)}
+.wheel{position:relative;width:56px;height:62px;margin-top:-5px;flex:none}
+.wheel i{position:absolute;left:0;top:30px;width:56px;height:2px;border-radius:8px;background:#000}
+.pvals{display:flex;flex-direction:column;padding-top:5px}
+.pg{font-family:var(--mono);font-size:22px;line-height:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.pn{font-size:16px;line-height:20px;font-weight:510;letter-spacing:-.16px;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm{margin-top:8px;font-size:14px;line-height:16px;letter-spacing:-.28px;font-variant-numeric:tabular-nums;font-feature-settings:"ss15" 1}
+.pm span{color:var(--ink-40)}
+.pm b{font-weight:400}
+.pmax{margin-top:8px;font-size:12px;line-height:14px;color:var(--ink-50)}
+.pcard.bump{animation:shake .35s}
+
+/* ---------- keypad ---------- */
+.kb{position:fixed;z-index:40;left:0;right:0;bottom:0;background:var(--key-sheet);
+  -webkit-backdrop-filter:blur(30px) saturate(1.4);backdrop-filter:blur(30px) saturate(1.4);
+  border-radius:24px 24px 0 0;padding:0 max(8px,env(safe-area-inset-right,0px)) calc(max(env(safe-area-inset-bottom,0px),34px) + 27px) max(8px,env(safe-area-inset-left,0px));
+  transform:translateY(105%);transition:transform .45s var(--spring)}
+.kb.show{transform:none}
+.kb-in{max-width:430px;margin:0 auto}
+.kb-top{height:53px;display:flex;align-items:center;justify-content:flex-end;padding-right:13px}
+.kb-top button{font-size:17px;color:var(--done);padding:8px}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:7px 6px}
+.key{height:49px;border-radius:8.5px;background:var(--key);box-shadow:0 1px 0 rgba(0,0,0,.28);font-size:25px;line-height:1;font-weight:400;display:grid;place-items:center;transition:background-color .12s,transform .12s}
+.key:active{background:#b5b9c1;transform:scale(.97)}
+.key.bare{background:none;box-shadow:none}
+.key.bare:active{background:rgba(255,255,255,.4)}
+.key svg{width:26px;height:20px}
+.key[hidden]{visibility:hidden;display:grid!important}
+
+/* ---------- sheets, menus, toast (same surfaces as the list) ---------- */
+.scrim{position:fixed;inset:0;z-index:39;background:rgba(0,0,0,0);transition:background-color .3s}
+.scrim.show{background:rgba(0,0,0,.16)}
+.sheet{position:fixed;z-index:41;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;background:var(--bg);border-radius:32px 32px 0 0;
+  padding:8px max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) max(16px,env(safe-area-inset-left,0px));
+  transform:translateY(105%);transition:transform .5s var(--spring);box-shadow:0 -10px 50px rgba(0,0,0,.10);max-height:88vh;overflow:auto;overscroll-behavior:contain;box-sizing:border-box}
+.sheet.show{transform:none}
+.grab{width:36px;height:5px;border-radius:3px;background:rgba(0,0,0,.14);margin:0 auto 14px}
+.sheet h3{margin:0 0 16px;font-size:20px;line-height:22px;font-weight:510;letter-spacing:-.4px;display:flex;align-items:center;gap:8px}
+.sheet h3 .x{margin-left:auto;width:30px;height:30px;border-radius:15px;background:var(--fill-6);display:grid;place-items:center}
+.sheet h3 .x svg{width:12px;height:12px}
+.cap{font-size:12px;line-height:14px;font-weight:590;color:var(--ink-50);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px;display:flex;gap:6px}
+.cap .r{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:400}
+.card{background:var(--card);border-radius:14px;padding:0 12px}
+.field{display:flex;align-items:center;gap:12px;min-height:50px;font-size:16px;letter-spacing:-.32px}
+.field+.field{box-shadow:inset 0 1px 0 var(--line)}
+.field>label,.field>.fl{flex:1;min-width:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.field .hint{display:block;font-size:12px;line-height:14px;color:var(--ink-50);letter-spacing:0}
+.inp{flex:none;display:flex;align-items:center;gap:2px;height:34px;padding:0 10px;border-radius:10px;background:var(--fill-6);font-family:var(--mono);font-size:15px;font-weight:600;transition:background-color .2s}
+.inp:focus-within{background:var(--fill-8);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.6)}
+.inp input{width:62px;border:0;background:none;padding:0;font:inherit;text-align:right;color:var(--ink);outline:none;-webkit-user-select:text;user-select:text;font-variant-numeric:tabular-nums}
+.inp input::placeholder{color:var(--ink-28)}
+.inp .u{color:var(--ink-50);font-weight:600}
+.inp input[type=date]{width:auto;min-width:120px;text-align:right;-webkit-appearance:none;appearance:none}
+.field input.txt{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:16px;color:var(--ink);outline:none;-webkit-user-select:text;user-select:text;text-align:left;padding:0}
+.field input.txt::placeholder{color:var(--ink-28)}
+.calc{font-family:var(--mono);font-weight:600;font-size:15px}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:50px;border-radius:14px;font-size:17px;font-weight:510;margin-top:10px;transition:transform .2s var(--spring),opacity .2s,background-color .2s}
+.sbtn:active{transform:scale(.97);opacity:.85}
+.sbtn.primary{background:#000;color:#fff}
+.sbtn.plain{background:var(--fill-6)}
+.sbtn.danger{background:var(--red-fill);color:var(--red)}
+.btnrow{display:flex;gap:8px}
+.btnrow .sbtn{flex:1}
+.note{font-size:14px;line-height:19px;color:var(--ink-50);margin:0 0 8px}
+.menu{position:fixed;z-index:50;min-width:240px;max-width:calc(100vw - 32px);background:var(--card);border-radius:14px;box-shadow:var(--lift),0 0 0 .5px rgba(0,0,0,.05);padding:4px 0;overflow:hidden;
+  transform-origin:var(--ox,0) var(--oy,0);animation:menuIn .38s var(--spring)}
+.menu.out{animation:menuOut .18s var(--ease) forwards}
+@keyframes menuIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes menuOut{to{opacity:0;transform:scale(.85)}}
+.mi{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:0 14px 0 12px;font-size:16px;letter-spacing:-.32px;text-align:left}
+.mi:active{background:var(--fill-6)}
+.mi .ck{width:16px;flex:none}
+.mi .ml{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mi .mr{color:var(--ink-50);font-family:var(--mono);font-size:12px;font-weight:600}
+.mi.danger{color:var(--red)}
+.mi[disabled]{opacity:.35;pointer-events:none}
+.mlab{padding:8px 14px 2px 38px;font-size:12px;line-height:14px;font-weight:590;color:var(--ink-50);text-transform:uppercase;letter-spacing:.5px}
+.msep{height:1px;margin:4px 0;background:var(--line)}
+.toast{position:fixed;z-index:60;left:50%;bottom:calc(max(20px,calc(env(safe-area-inset-bottom,0px) - 12px)) + 76px);transform:translate(-50%,24px) scale(.96);opacity:0;
+  display:flex;align-items:center;gap:12px;background:var(--card);box-shadow:var(--lift);color:var(--ink);font-size:14px;line-height:18px;padding:10px 14px;border-radius:14px;
+  transition:transform .45s var(--spring),opacity .25s;white-space:nowrap;max-width:calc(100vw - 32px);pointer-events:none}
+.toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.toast .tm{overflow:hidden;text-overflow:ellipsis}
+.toast button{font-weight:590;padding:4px 10px;margin:-4px -6px -4px 0;border-radius:8px;background:var(--fill-6)}
+body.kb-open .toast{bottom:356px}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+
+<div class="app" id="app">
+  <header class="plan">
+    <div class="title-row">
+      <h1 id="goalName">Bulk plan</h1>
+      <button class="dots" id="goalBtn" aria-label="Goal plans"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
+    </div>
+    <div class="kcal-row" id="bigRow">
+      <div class="ring" id="ring" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <defs><filter id="capsh" x="-2" y="-2" width="5" height="5"><feDropShadow dx="-1.8" dy="0" stdDeviation="1.3" flood-color="#000" flood-opacity=".75"/></filter></defs>
+          <circle class="trk" id="trk" cx="16" cy="16" r="14" stroke="#000" stroke-opacity="0.1" stroke-width="4"/>
+          <circle class="arc" id="arc" cx="16" cy="16" r="14" stroke="#000" stroke-width="4" stroke-linecap="round" transform="rotate(-90 16 16)" stroke-dasharray="87.96" stroke-dashoffset="87.96"/>
+          <circle class="lap" id="lap" cx="16" cy="16" r="14" stroke="#000" stroke-width="4" stroke-linecap="round" transform="rotate(-90 16 16)" stroke-dasharray="87.96" stroke-dashoffset="87.96" opacity="0"/>
+          <g class="cap" id="cap" opacity="0"><circle cx="16" cy="2" r="2" fill="#000" filter="url(#capsh)"/></g>
+          <path class="chk" d="M10.5 16.64L14.1 20.5L22.5 11.5" stroke="#235FD0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="kwrap"><div class="kcal"><span id="bCur">0</span><span class="sl">/</span><span id="bGoal">0</span> <span id="bUnit">kcal</span></div><div class="ksub" id="kSub"></div></div>
+    </div>
+    <div class="macros" id="bars">
+      <div class="macro"><div class="mlabel"><span class="cur">0</span><span class="sl">/</span><span class="goal">0</span> <span class="lbl">protein</span></div><div class="track"><div class="win"></div><div class="mark"></div></div></div>
+      <div class="macro"><div class="mlabel"><span class="cur">0</span><span class="sl">/</span><span class="goal">0</span> <span class="lbl">fat</span></div><div class="track"><div class="win"></div><div class="mark"></div></div></div>
+      <div class="macro"><div class="mlabel"><span class="cur">0</span><span class="sl">/</span><span class="goal">0</span> <span class="lbl">carbs</span></div><div class="track"><div class="win"></div><div class="mark"></div></div></div>
+    </div>
+  </header>
+  <div class="divider" id="divider"></div>
+
+  <section class="tabsec" id="secMeal">
+    <div class="list-head">
+      <button class="mtitle" id="planTitle" aria-label="Meal plans"><h2 id="planName">Favorite meal</h2><svg class="pchev" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="dots" id="planBtn" aria-label="Meal plans"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
+      <div class="tools">
+      <button class="ibtn" id="ghostBtn" aria-label="Try-out mode" aria-pressed="false"><svg viewBox="0 0 28 28" fill="none"><path d="M10.9375 14C11.6624 14 12.25 13.4124 12.25 12.6875C12.25 11.9626 11.6624 11.375 10.9375 11.375C10.2126 11.375 9.625 11.9626 9.625 12.6875C9.625 13.4124 10.2126 14 10.9375 14Z" fill="currentColor"/><path d="M17.0625 14C17.7874 14 18.375 13.4124 18.375 12.6875C18.375 11.9626 17.7874 11.375 17.0625 11.375C16.3376 11.375 15.75 11.9626 15.75 12.6875C15.75 13.4124 16.3376 14 17.0625 14Z" fill="currentColor"/><path d="M23 23L20.0003 20.5217L16.9997 23L14 20.5217L11.0003 23L7.99966 20.5217L5 23V13.087C5 10.6769 5.94821 8.36564 7.63604 6.66151C9.32387 4.95737 11.6131 4 14 4C16.3869 4 18.6761 4.95737 20.364 6.66151C22.0518 8.36564 23 10.6769 23 13.087V23Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="ibtn" id="sortBtn" aria-label="Sort"><svg viewBox="0 0 28 28" fill="none"><path d="M3 13H13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20H10" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 19L21 24L26 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24V12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="ibtn" id="searchBtn" aria-label="Search"><svg viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/><path d="M19 19L24 24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button>
+      <button class="ibtn" id="addBtn" aria-label="Add product"><svg viewBox="0 0 28 28" fill="none"><path d="M14 4V24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/><path d="M24 14H4.00002" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button>
+    </div>
+    </div>
+    <div class="search" id="search" hidden>
+      <svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-opacity=".5" stroke-width="2.4"/><path d="M19 19L24 24" stroke="black" stroke-opacity=".5" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Search products" autocomplete="off" enterkeyhint="search">
+      <button id="qCancel">Cancel</button>
+    </div>
+    <ul class="list slist" id="list" data-list="meal"></ul>
+    <button class="zhead" id="zHead" hidden></button>
+    <ul class="list slist" id="zlist" data-list="meal" hidden></ul>
+  </section>
+
+  <section class="tabsec" id="secMeasure" hidden>
+    <div class="list-head">
+      <button class="mtitle" id="metricBtn" aria-label="Choose metric"><h2 id="metricName">Weight</h2><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="per" id="mper"><button data-v="w">1W</button><button data-v="m">1M</button><button data-v="q">3M</button><button data-v="a">ALL</button></div>
+    </div>
+    <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+    <div id="sugBox"></div>
+    <div class="list-head sub">
+      <h2>Log</h2>
+      <div class="tools"><button class="ibtn" id="addEntryBtn2" aria-label="Add measurement"><svg viewBox="0 0 28 28" fill="none"><path d="M14 4V24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/><path d="M24 14H4.00002" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button></div>
+    </div>
+    <ul class="list slist" id="mlog" data-list="log"></ul>
+    <div id="moreBox"></div>
+  </section>
+
+  <section class="tabsec" id="secBudget" hidden>
+    <div class="list-head">
+      <button class="mtitle" id="budPlanBtn" aria-label="Choose meal plan"><h2 id="budPlan">Пробы</h2><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="per" id="bper"><button data-v="7">7D</button><button data-v="15">15D</button><button data-v="30">30D</button></div>
+    </div>
+    <ul class="list slist" id="blist" data-list="bud"></ul>
+    <div class="foot" id="budFoot"></div>
+  </section>
+</div>
+
+<nav class="tabbar" id="tabbar">
+  <button class="tab" data-tab="Budget"><svg viewBox="0 0 28 28" fill="none"><g><path d="M19.6875 14C20.4124 14 21 13.4124 21 12.6875C21 11.9626 20.4124 11.375 19.6875 11.375C18.9626 11.375 18.375 11.9626 18.375 12.6875C18.375 13.4124 18.9626 14 19.6875 14Z" fill="black"/><path d="M12.25 7.875H16.625" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M23.625 4.375H15.75" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M0.875 15.75C0.875 15.0538 1.15156 14.3861 1.64384 13.8938C2.13613 13.4016 2.80381 13.125 3.5 13.125" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M24.5 10.5H24.0997C24.0084 10.2112 23.9025 9.92719 23.7825 9.64906C23.1042 8.08212 21.9823 6.74786 20.555 5.81072C19.1277 4.87358 17.4575 4.37451 15.75 4.375H12.25C9.92936 4.375 7.70376 5.29687 6.06282 6.93782C4.42188 8.57876 3.50001 10.8044 3.50001 13.125C3.49757 15.3122 4.31741 17.4204 5.79688 19.0312L7.22969 23.0442C7.29042 23.2143 7.40228 23.3614 7.54993 23.4654C7.69758 23.5694 7.87379 23.6251 8.05438 23.625H9.44563C9.62622 23.6251 9.80243 23.5694 9.95008 23.4654C10.0977 23.3614 10.2096 23.2143 10.2703 23.0442L10.687 21.875H18.188L18.6047 23.0442C18.6654 23.2143 18.7773 23.3614 18.9249 23.4654C19.0726 23.5694 19.2488 23.6251 19.4294 23.625H20.8206C21.0012 23.6251 21.1774 23.5694 21.3251 23.4654C21.4727 23.3614 21.5846 23.2143 21.6453 23.0442L23.625 17.5H24.5C24.9641 17.5 25.4093 17.3156 25.7374 16.9874C26.0656 16.6592 26.25 16.2141 26.25 15.75V12.25C26.25 11.7859 26.0656 11.3408 25.7374 11.0126C25.4093 10.6844 24.9641 10.5 24.5 10.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>Budget</button>
+  <button class="tab" data-tab="Nutrients"><svg viewBox="0 0 28 28" fill="none"><g><path d="M24.4999 3.5L20.0812 7.91875" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.79173 24.3906C4.6264 24.4779 4.43745 24.51 4.25257 24.4821C4.06769 24.4542 3.89661 24.3678 3.7644 24.2356C3.63219 24.1034 3.54581 23.9323 3.51791 23.7475C3.49002 23.5626 3.52207 23.3736 3.60939 23.2083C3.60939 23.2083 7.00001 12.25 11.4188 7.91876C12.5675 6.77004 14.1255 6.12469 15.75 6.12469C17.3745 6.12469 18.9325 6.77004 20.0813 7.91876C21.23 9.06748 21.8753 10.6255 21.8753 12.25C21.8753 13.8745 21.23 15.4325 20.0813 16.5813C15.75 21 4.79173 24.3906 4.79173 24.3906Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M25.375 7.875H20.0364" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.125 7.96359V2.625" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.25 16.625L15.4984 19.8734" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.4188 7.91876L15.7501 12.25" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>Nutrients</button>
+  <button class="tab on" data-tab="Meal"><svg viewBox="0 0 28 28" fill="none"><path d="M8.75 4.375V9.625" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.75 14V24.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22.75 18.375H16.625C16.625 18.375 16.625 7 22.75 4.375V24.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.25 4.375L4.375 9.625C4.375 10.7853 4.83594 11.8981 5.65641 12.7186C6.47688 13.5391 7.58968 14 8.75 14C9.91032 14 11.0231 13.5391 11.8436 12.7186C12.6641 11.8981 13.125 10.7853 13.125 9.625L12.25 4.375" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Meal</button>
+  <button class="tab" data-tab="Measure"><svg viewBox="0 0 28 28" fill="none"><g><path d="M18.119 2.88165L2.88154 18.1191C2.53983 18.4608 2.53983 19.0149 2.88154 19.3566L8.64412 25.1192C8.98583 25.4609 9.53985 25.4609 9.88156 25.1192L25.119 9.88167C25.4608 9.53996 25.4608 8.98595 25.119 8.64424L19.3565 2.88165C19.0148 2.53994 18.4607 2.53994 18.119 2.88165Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 7L17.5 10.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.5 10.5L14 14" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 14L10.5 17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>Measure</button>
+  <button class="tab" data-tab="Settings"><svg viewBox="0 0 28 28" fill="none"><g><path d="M14 18.375C16.4162 18.375 18.375 16.4162 18.375 14C18.375 11.5838 16.4162 9.625 14 9.625C11.5838 9.625 9.625 11.5838 9.625 14C9.625 16.4162 11.5838 18.375 14 18.375Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.53109 19.4785C4.04763 18.6458 3.67723 17.7524 3.42969 16.8218L5.265 14.5249C5.24422 14.1738 5.24422 13.8217 5.265 13.4706L3.43078 11.1737C3.6779 10.243 4.04754 9.34923 4.53 8.51587L7.45141 8.18774C7.68469 7.92491 7.93342 7.67619 8.19625 7.4429L8.52437 4.52259C9.35654 4.04243 10.2488 3.67499 11.1778 3.42993L13.4747 5.26524C13.8258 5.24446 14.1779 5.24446 14.5291 5.26524L16.8259 3.43103C17.7566 3.67815 18.6504 4.04779 19.4837 4.53024L19.8119 7.45165C20.0747 7.68494 20.3234 7.93366 20.5567 8.19649L23.477 8.52462C23.9605 9.35736 24.3309 10.2508 24.5784 11.1813L22.7431 13.4782C22.7639 13.8294 22.7639 14.1814 22.7431 14.5326L24.5773 16.8295C24.3319 17.7599 23.9642 18.6536 23.4836 19.4873L20.5622 19.8154C20.3289 20.0782 20.0802 20.327 19.8173 20.5602L19.4892 23.4806C18.6565 23.964 17.763 24.3344 16.8325 24.582L14.5356 22.7467C14.1845 22.7674 13.8324 22.7674 13.4812 22.7467L11.1844 24.5809C10.254 24.3355 9.36021 23.9677 8.52656 23.4871L8.19844 20.5657C7.9356 20.3324 7.68688 20.0837 7.45359 19.8209L4.53109 19.4785Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>Settings</button>
+</nav>
+
+<div class="kb" id="kb" aria-hidden="true">
+  <div class="kb-in">
+    <div class="kb-top"><button id="kbDone">Done</button></div>
+    <div class="keys" id="keys">
+      <button class="key" data-k="1">1</button><button class="key" data-k="2">2</button><button class="key" data-k="3">3</button>
+      <button class="key" data-k="4">4</button><button class="key" data-k="5">5</button><button class="key" data-k="6">6</button>
+      <button class="key" data-k="7">7</button><button class="key" data-k="8">8</button><button class="key" data-k="9">9</button>
+      <button class="key bare" data-k="." id="dotKey" hidden>.</button><button class="key" data-k="0">0</button>
+      <button class="key bare" data-k="del" aria-label="Delete"><svg viewBox="0 0 26 20" fill="none"><path d="M8.2 2h14.3A2.5 2.5 0 0 1 25 4.5v11a2.5 2.5 0 0 1-2.5 2.5H8.2a2 2 0 0 1-1.5-.7L1.6 11.3a2 2 0 0 1 0-2.6l5.1-6A2 2 0 0 1 8.2 2Z" stroke="black" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 6.5l7 7M19 6.5l-7 7" stroke="black" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"><span class="tm"></span></div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SPRING = getComputedStyle(document.documentElement).getPropertyValue('--spring').trim() || 'ease-out';
+const EASE = 'cubic-bezier(.2,.8,.2,1)';
+const uid = () => Math.random().toString(36).slice(2, 10);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const r0 = n => Math.round(n);
+const r1 = n => Math.round(n * 10) / 10;
+const KEY = 'kcal-meal.v4';
+const DAY = 864e5;
+const iso = t => { const z = new Date(t); return z.getFullYear() + '-' + String(z.getMonth() + 1).padStart(2, '0') + '-' + String(z.getDate()).padStart(2, '0'); };
+const todayISO = () => iso(Date.now());
+const dnum = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d).getTime(); };
+const fmtDate = s => { const t = dnum(s), td = dnum(todayISO()); if (t === td) return 'Today'; if (td - t === DAY) return 'Yesterday';
+  return new Date(t).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }); };
+const shortDate = t => new Date(t).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+const sgn = (v, d = 2) => (v > 0.0049 ? '+' : v < -0.0049 ? '−' : '±') + Math.abs(v).toFixed(d);
+const numIn = v => { const x = parseFloat(String(v).replace(',', '.')); return isFinite(x) ? x : null; };
+
+const ICON = {
+  pencil: '<svg viewBox="0 0 20 20" fill="none"><path d="M12.6 3.9l3.5 3.5-8.8 8.8-4 .5.5-4 8.8-8.8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M11 5.5l3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>',
+  trash: '<svg viewBox="0 0 20 20" fill="none"><path d="M3.5 5.5h13M8 5.5V3.8h4v1.7M5.2 5.5l.8 10.7h8l.8-10.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 8.6v4.8M11.7 8.6v4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  x: '<svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="black" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  check: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  ok: '<svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#235FD0" stroke-width="2"/><path d="M4.4 7.2l1.8 1.9 3.5-3.8" stroke="#235FD0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  spark: '<svg viewBox="0 0 14 14" fill="none"><path d="M7 1.5v3M7 9.5v3M1.5 7h3M9.5 7h3M3.2 3.2l1.6 1.6M9.2 9.2l1.6 1.6M10.8 3.2L9.2 4.8M4.8 9.2l-1.6 1.6" stroke="black" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/></svg>'
+};
+/* Haptics: Android has navigator.vibrate; iOS Safari (18+) ticks when a switch-style checkbox toggles, so we toggle a hidden one. */
+const haptic = (() => {
+  let last = 0, lab = null;
+  return () => {
+    const now = performance.now(); if (now - last < 35) return; last = now;
+    try {
+      if (navigator.vibrate && !/iP(hone|ad|od)/.test(navigator.userAgent)) { navigator.vibrate(8); return; }
+      if (!lab) {
+        const i = document.createElement('input'); i.type = 'checkbox'; i.setAttribute('switch', ''); i.id = 'hx-switch'; i.tabIndex = -1; i.setAttribute('aria-hidden', 'true');
+        lab = document.createElement('label'); lab.htmlFor = 'hx-switch'; lab.setAttribute('aria-hidden', 'true');
+        for (const el of [i, lab]) Object.assign(el.style, { position: 'fixed', left: '-9999px', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
+        document.body.append(i, lab);
+      }
+      lab.click();
+    } catch (e) {}
+  };
+})();
+const ACTS = `<div class="acts"><button class="sa ed" data-sw="edit" aria-label="Edit">${ICON.pencil}</button><button class="sa del" data-sw="del" aria-label="Delete">${ICON.trash}</button></div>`;
+const XBTN = `<button class="x" data-close aria-label="Close">${ICON.x}</button>`;
+
+/* ================= data ================= */
+function food(name, k, p, f, c) { return { id: uid(), t: 'f', name, g: 0, n: { k, p, f, c } }; }
+function seedMeals() {
+  // the user's own sheet: name, kcal / protein / fat / carbs per 100 g, grams in "Пробы"
+  const F = (name, k, p, f, c, g) => Object.assign(food(name, k, p, f, c), { _g: g || 0 });
+  const shake = [F('Молоко протеин', 43, 6, 1, 4, 500), F('Йогурт греческий', 112, 4, 9, 4, 100), F('Кукурузный крахмал', 356, 0, 0, 88, 200),
+                 F('Несквик', 386, 5, 4, 79, 60), F('Арахис', 629, 26, 53, 5, 25), F('Рапсовое масло', 828, 0, 92, 0, 15)];
+  const group = { id: uid(), t: 'g', name: 'Коктейль', open: true, ch: shake, g: 0, _g: 900 };
+  const items = [group,
+    F('Овсянка', 367, 13, 7, 58, 100), F('Протеин', 376, 86, 2, 4, 90), F('Кола', 44, 0, 0, 11, 1000),
+    F('Банан', 90, 1, 0, 23), F('Курица', 113, 24, 2, 0), F('Яйцо', 140, 11, 10, 1), F('Тапиока', 358, 0, 0, 89),
+    F('Печенье найлепше', 508, 8, 27, 57, 72), F('Рис длинный', 366, 9, 1, 79), F('Мандарины оч.', 50, 1, 0, 12),
+    F('Киви оч.', 61, 1, 1, 15), F('Сок', 51, 0, 0, 12), F('Апельсин', 47, 1, 0, 12)];
+  // units, pack sizes and prices from the sheet's "Г/ед.", "В 1 уп." and "Цена" columns (pack size kept in grams)
+  const EXTRA = { 'Молоко протеин': { pk: 1000, pr: 250 }, 'Йогурт греческий': { pk: 700, pr: 250 }, 'Кукурузный крахмал': { pk: 200 },
+    'Несквик': { pk: 400, pr: 690 }, 'Арахис': { pk: 500, pr: 260 }, 'Овсянка': { pk: 500, pr: 80 }, 'Протеин': { pk: 2700 },
+    'Кола': { unit: 'ml', pk: 2000, pr: 180 }, 'Банан': { pk: 1000, pr: 190 }, 'Курица': { pk: 1000, pr: 730 },
+    'Яйцо': { unit: 'pc', uw: 60, pk: 600, pr: 280 }, 'Тапиока': { pk: 500, pr: 350 }, 'Печенье найлепше': { unit: 'pc', uw: 24, pk: 144, pr: 220 },
+    'Рис длинный': { pk: 500, pr: 300 }, 'Сок': { unit: 'ml' } };
+  walk(items, e => { if (EXTRA[e.name]) Object.assign(e, EXTRA[e.name]); });
+  const g = {}; walk(items, e => { g[e.id] = e._g; delete e._g; });
+  const plans = [{ id: uid(), name: 'Пробы', g }];
+  return { items, plans, active: plans[0].id };
+}
+function seedLog() {
+  let s = 11; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const log = [], N = 63, t0 = dnum(todayISO());
+  for (let i = N; i >= 0; i--) {
+    if (i % 7 !== 0 && rnd() < .22) continue;
+    const day = N - i, e = { id: uid(), d: iso(t0 - i * DAY), w: r1(70.4 + day * 0.017 + (rnd() - .5) * 0.7) };
+    if (i % 7 === 0) {
+      e.sf = { a: r0(9 + day * .012 + rnd()), b: r0(18 + day * .02 + rnd() * 1.4), c: r0(13 + rnd()) };
+      e.circ = { waist: r1(79 + day * .012 + rnd() * .4) };
+      if (i % 14 === 0) { e.circ.arm = r1(35 + day * .01); e.circ.chest = r1(100 + day * .015); }
+    }
+    log.push(e);
+  }
+  return log;
+}
+function seedGoals() {
+  return [
+    { id: uid(), name: 'Bulk plan', type: 'bulk', k: 3000, p: 150, f: 75, c: 433, tw: 76, rate: .25, tbf: 15, sw: 70.4,
+      rng: { k: [2950, 3050], p: [140, 160], f: [70, 80], c: [420, 445] } },
+    { id: uid(), name: 'Summer cut', type: 'cut', k: 2100, p: 170, f: 60, c: 200, tw: 70, rate: -.5, tbf: 11, sw: 72 },
+    { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
+  ];
+}
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false };
+function seed() { const m = seedMeals(), goals = seedGoals();
+  return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
+function migrate(o) {
+  if (!o) return seed();
+  if (o.v === 2 && o.items && o.goals) { o.ui = Object.assign({ ...UI0 }, o.ui || {}); o.log = o.log || []; return o; }
+  if (o.plans && o.plans[0] && o.plans[0].items) { // v1: every plan had its own copy of the list
+    const act = o.plans.find(p => p.id === o.active) || o.plans[0], s = seed();
+    const gmap = p => { const m = {}; walk(p.items, e => m[e.id] = e.g); return m; };
+    s.items = act.items; s.plans = o.plans.map(p => ({ id: p.id, name: p.name, g: gmap(p) })); s.active = act.id;
+    if (o.goal) Object.assign(s.goals[0], { name: o.goal.name, k: o.goal.k, p: o.goal.p, f: o.goal.f, c: o.goal.c });
+    return s;
+  }
+  return seed();
+}
+function walk(arr, fn) { arr.forEach(e => { fn(e); if (e.t === 'g') walk(e.ch, fn); }); }
+let S; try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) { S = null; }
+S = migrate(S);
+let ghostSnap = null;
+const plan = () => S.plans.find(p => p.id === S.active) || S.plans[0];
+const goal = () => S.goals.find(g => g.id === S.goalActive) || S.goals[0];
+const maxOf = g => g.ch.reduce((s, c) => s + c.g, 0);
+function applyGrams(p) {
+  walk(S.items, e => { if (e.t !== 'g') e.g = p.g[e.id] ?? 0; });
+  walk(S.items, e => { if (e.t === 'g') { const mx = maxOf(e); e.g = p.g[e.id] != null ? Math.min(p.g[e.id], mx) : mx; } });
+}
+function syncGrams() { const m = plan().g; walk(S.items, e => m[e.id] = e.g); }
+const save = () => { if (ghostSnap) return; syncGrams(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+applyGrams(plan());
+
+function mac(e) {
+  if (e.t === 'f') return { k: e.n.k * e.g / 100, p: e.n.p * e.g / 100, f: e.n.f * e.g / 100, c: e.n.c * e.g / 100 };
+  const m = { k: 0, p: 0, f: 0, c: 0 }; e.ch.forEach(c => { const x = mac(c); for (const k in m) m[k] += x[k]; });
+  const mx = maxOf(e), r = mx ? Math.min(1, e.g / mx) : 0; for (const k in m) m[k] *= r; return m;
+}
+function totals() { const t = { k: 0, p: 0, f: 0, c: 0 }; S.items.forEach(e => { const m = mac(e); for (const k in t) t[k] += m[k]; }); return t; }
+function planKcal(p) {
+  if (p === plan()) return totals().k;
+  const keep = JSON.stringify(S.items); applyGrams(p); const k = totals().k; S.items = JSON.parse(keep); return k;
+}
+function find(id, arr = S.items, parent = null) {
+  for (let i = 0; i < arr.length; i++) {
+    const e = arr[i]; if (e.id === id) return { e, arr, i, parent };
+    if (e.t === 'g') { const r = find(id, e.ch, e); if (r) return r; }
+  }
+  return null;
+}
+function setGrams(e, v, parent) {
+  if (e.t === 'g') { e.g = Math.max(0, Math.min(maxOf(e), v)); return; }
+  if (parent) { const full = parent.g >= maxOf(parent); e.g = Math.max(0, v); const nm = maxOf(parent); parent.g = full ? nm : Math.min(parent.g, nm); }
+  else e.g = Math.max(0, v);
+}
+function fixGroup(g, arr) { if (g.t !== 'g' || g.ch.length >= 2) return; const i = arr.indexOf(g); if (i >= 0) arr.splice(i, 1, ...g.ch); }
+
+/* ---- body measurements ---- */
+const SITES = { m: [['a', 'Chest'], ['b', 'Abdomen'], ['c', 'Thigh']], f: [['a', 'Triceps'], ['b', 'Suprailiac'], ['c', 'Thigh']] };
+const CIRC = [['waist', 'Waist'], ['chest', 'Chest'], ['hips', 'Hips'], ['arm', 'Arm'], ['thigh', 'Thigh']];
+function bfFrom(sf, body) {
+  if (!sf || !body) return null; const { a, b, c } = sf; if (!(a > 0 && b > 0 && c > 0)) return null;
+  const s = a + b + c, age = body.age || 30;
+  const bd = body.sex === 'f' ? 1.0994921 - 0.0009929 * s + 0.0000023 * s * s - 0.0001392 * age
+                              : 1.10938 - 0.0008267 * s + 0.0000016 * s * s - 0.0002574 * age;
+  return 495 / bd - 450;
+}
+const bfOf = e => bfFrom(e.sf, S.body);
+const sfSum = e => e.sf && e.sf.a > 0 && e.sf.b > 0 && e.sf.c > 0 ? e.sf.a + e.sf.b + e.sf.c : null;
+const METRICS = {
+  w: { label: 'Weight', unit: 'kg', dec: 1, min: .3, get: e => e.w },
+  bf: { label: 'Body fat', unit: '%', dec: 1, min: .3, get: bfOf },
+  sf: { label: 'Skinfolds', unit: 'mm', dec: 0, min: 1, get: sfSum },
+};
+CIRC.forEach(([k, l]) => METRICS[k] = { label: l, unit: 'cm', dec: 1, min: .3, get: e => e.circ && e.circ[k] > 0 ? e.circ[k] : null });
+const logSorted = () => S.log.slice().sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
+function series(key) { const M = METRICS[key]; return logSorted().map(e => ({ t: dnum(e.d), v: M.get(e), e })).filter(p => p.v != null && isFinite(p.v)); }
+function trendOf(pts) { return pts.map(p => { const w = pts.filter(q => q.t <= p.t && q.t > p.t - 7 * DAY); return { t: p.t, v: w.reduce((s, q) => s + q.v, 0) / w.length }; }); }
+const latest = key => { const s = series(key); return s.length ? s[s.length - 1].v : null; };
+function weightStats() {
+  const s = series('w'), now = dnum(todayISO()), win = s.filter(p => p.t > now - 21 * DAY);
+  let rate = null;
+  if (win.length >= 4 && win[win.length - 1].t - win[0].t >= 7 * DAY) {
+    const n = win.length, mx = win.reduce((a, p) => a + p.t, 0) / n, my = win.reduce((a, p) => a + p.v, 0) / n;
+    let num = 0, den = 0; win.forEach(p => { num += (p.t - mx) * (p.v - my); den += (p.t - mx) ** 2; });
+    rate = num / den * 7 * DAY;
+  }
+  const tr = trendOf(s);
+  return { rate, trend: tr.length ? tr[tr.length - 1].v : null };
+}
+function suggestion() {
+  const g = goal(), st = weightStats();
+  if (st.rate == null) return { kind: 'nodata' };
+  let kcal = Math.round((g.rate - st.rate) * 7700 / 7 / 10) * 10;
+  kcal = Math.max(-500, Math.min(500, kcal));
+  return Math.abs(kcal) < 50 ? { kind: 'ok', rate: st.rate } : { kind: 'adj', kcal, rate: st.rate };
+}
+
+/* ================= header ================= */
+const shown = {}, tw = {};
+let instant = false;
+function tween(key, el, to, fmt = v => String(Math.round(v))) {
+  cancelAnimationFrame(tw[key]);
+  if (to == null || !isFinite(to)) { el.textContent = '—'; shown[key] = null; return; }
+  const from = shown[key];
+  if (from == null || instant || RM || from === to) { el.textContent = fmt(to); shown[key] = to; return; }
+  const t0 = performance.now(), d = 520;
+  const step = now => { const x = Math.min(1, (now - t0) / d), k = 1 - Math.pow(1 - x, 3), v = from + (to - from) * k;
+    el.textContent = fmt(x < 1 ? v : to); shown[key] = x < 1 ? v : to; if (x < 1) tw[key] = requestAnimationFrame(step); };
+  tw[key] = requestAnimationFrame(step);
+}
+let wasDone = null, wasOver = null;
+function renderRing(ratio, done) {
+  const C = 87.96, arc = $('#arc'), lap = $('#lap'), cap = $('#cap'), trk = $('#trk'), ring = $('#ring');
+  ratio = isFinite(ratio) ? Math.max(0, ratio) : 0;
+  trk.style.stroke = done ? '#235FD0' : '#000'; trk.style.strokeOpacity = done ? 1 : .1;
+  if (done) { arc.style.opacity = 0; lap.style.opacity = 0; cap.style.opacity = 0; }
+  else if (ratio <= 1) {
+    arc.style.opacity = 1; arc.style.strokeDashoffset = C * (1 - ratio);
+    lap.style.opacity = 0; lap.style.strokeDashoffset = C; cap.style.opacity = 0; cap.style.transform = 'rotate(0deg)';
+  } else { // over the target: the arc runs a second lap over itself, its end casts a shadow
+    const over = Math.min(ratio - 1, .985);
+    arc.style.opacity = S.ui.v2 ? 1 : .3; arc.style.strokeDashoffset = 0;
+    lap.style.opacity = 1; lap.style.strokeDashoffset = C * (1 - over);
+    cap.style.opacity = 1; cap.style.transform = `rotate(${(over * 360).toFixed(1)}deg)`;
+  }
+  ring.classList.toggle('done', done);
+  const over = !done && ratio > 1;
+  if (wasDone === false && done) { haptic(); if (!RM) { ring.classList.remove('pop'); void ring.offsetWidth; ring.classList.add('pop'); } }
+  if (wasOver === false && over) haptic();
+  wasDone = done; wasOver = over;
+}
+function setBar(i, b) {
+  const m = $('#bars').children[i];
+  m.querySelector('.lbl').textContent = b.label;
+  tween('bc' + i, m.querySelector('.cur'), b.cur, b.fc);
+  tween('bg' + i, m.querySelector('.goal'), b.goal, b.fg);
+  const mk = m.querySelector('.mark');
+  if (b.cur == null || b.goal == null || !b.tol) { mk.classList.add('none'); mk.classList.remove('over'); m.querySelector('.cur').classList.remove('over'); return; }
+  mk.classList.remove('none');
+  const dev = (b.cur - b.goal) / b.tol;
+  mk.style.setProperty('--off', (dev * 8).toFixed(1) + 'px');
+  mk.classList.toggle('in', Math.abs(dev) <= 1);
+  const over = !!b.overRed && dev > 1;
+  mk.classList.toggle('over', over); m.querySelector('.cur').classList.toggle('over', over);
+}
+function renderHeader() {
+  const g = goal(), t = totals();
+  $('#goalName').textContent = g.name;
+  const plain = S.ui.tab === 'budget';
+  $('#bigRow').classList.toggle('plain', plain); $('#bars').classList.toggle('plain', plain);
+  if (plain) {
+    $('#bCur').classList.remove('over');
+    const b = budget(), days = S.ui.bdays;
+    $('#bUnit').textContent = S.ui.cur;
+    tween('bc', $('#bCur'), b.total, money);
+    setBar(0, { label: 'per day', cur: b.total / days, fc: money });
+    setBar(1, { label: 'packs', cur: b.packs, fc: v => String(r0(v)) });
+    setBar(2, { label: 'per 1k kcal', cur: t.k ? b.total / days / t.k * 1000 : null, fc: money });
+    return;
+  }
+  if (S.ui.tab === 'measure') {
+    const w = latest('w'), st = weightStats();
+    $('#bUnit').textContent = 'kg';
+    tween('bc', $('#bCur'), w, v => v.toFixed(1)); tween('bg', $('#bGoal'), g.tw, v => v.toFixed(1));
+    let ratio = 0, done = false;
+    if (w != null) { const span = g.tw - g.sw; done = Math.abs(w - g.tw) <= .3; ratio = Math.abs(span) < .05 ? (done ? 1 : 0) : (w - g.sw) / span; }
+    renderRing(Math.min(ratio, 1), done);
+    const rf = v => (v < -0.0049 ? '−' : '') + Math.abs(v).toFixed(2);
+    setBar(0, { label: 'kg/wk', cur: st.rate, goal: g.rate, tol: .1, fc: rf, fg: rf });
+    setBar(1, { label: '% fat', cur: latest('bf'), goal: g.tbf, tol: 1, fc: v => v.toFixed(1) });
+    setBar(2, { label: 'kcal', cur: t.k, goal: g.k, tol: g.rng && g.rng.k ? (g.rng.k[1] - g.rng.k[0]) / 2 : g.k * .02, overRed: true });
+    $('#bCur').classList.remove('over');
+  } else {
+    $('#bUnit').textContent = 'kcal';
+    const tolOf = k => g.rng && g.rng[k] ? (g.rng[k][1] - g.rng[k][0]) / 2 : g[k] * (k === 'k' ? .02 : .05);
+    const ratio = g.k ? t.k / g.k : 0, tk = tolOf('k'), inR = Math.abs(t.k - g.k) <= tk;
+    if (S.ui.v2) { // lead with what matters now: what's left, or how far over
+      const left = g.k - t.k, rg = g.rng && g.rng.k ? `${g.rng.k[0]}–${g.rng.k[1]}` : null;
+      $('#bUnit').textContent = inR ? 'kcal' : left > 0 ? 'kcal left' : 'kcal over';
+      tween('bc', $('#bCur'), inR ? t.k : Math.abs(left));
+      $('#kSub').textContent = inR ? `in range${rg ? ' ' + rg : ''}` : `${r0(t.k)} of ${g.k} kcal${rg ? ` · range ${rg}` : ''}`;
+    } else { $('#bUnit').textContent = 'kcal'; tween('bc', $('#bCur'), t.k); }
+    tween('bg', $('#bGoal'), g.k);
+    renderRing(ratio, inR);
+    [['p', 'protein'], ['f', 'fat'], ['c', 'carbs']].forEach(([k, l], i) => setBar(i, { label: l, cur: t[k], goal: g[k], tol: tolOf(k), overRed: true }));
+    $('#bCur').classList.toggle('over', t.k - g.k > tolOf('k'));
+  }
+}
+
+/* ================= meal list ================= */
+const list = $('#list');
+let editing = null;   // {kind:'g'|'w', id, buf, dec}
+let query = '';
+const U = e => e.unit || 'g';
+const uLab = e => U(e) === 'pc' ? 'pc' : U(e);
+const isPc = e => e.t !== 'g' && U(e) === 'pc' && e.uw > 0;
+const toU = (e, g) => isPc(e) ? Math.round(g / e.uw * 10) / 10 : g;
+const fmtAmt = (e, g) => e.t === 'g' ? `${g}g` : `${toU(e, g)}${uLab(e)}`;
+const money = v => Math.round(v).toLocaleString('ru-RU');
+const macHTML = m => `<span><i>K</i>${r0(m.k)}</span><span><i>P</i>${r0(m.p)}</span><span><i>F</i>${r0(m.f)}</span><span><i>C</i>${r0(m.c)}</span>`;
+function fieldHTML(buf, ph, unit) { return buf ? `${buf}<i class="caret"></i>${unit}` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
+function pillHTML(e) {
+  if (editing && editing.id === e.id) return fieldHTML(editing.buf, e.t === 'g' ? maxOf(e) : toU(e, e.g), e.t === 'g' ? 'g' : uLab(e));
+  return fmtAmt(e, e.g);
+}
+const matches = e => !query || e.name.toLowerCase().includes(query) || (e.t === 'g' && e.ch.some(matches));
+function rowHTML(e, i) {
+  return `<li class="row${e.g === 0 ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">${ACTS}
+    <div class="rc"><button class="pill" data-act="pill" aria-label="${esc(e.name)}, ${e.g} grams">${pillHTML(e)}</button>
+    <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${macHTML(mac(e))}</div></div></div></li>`;
+}
+function groupHTML(e, i) {
+  return `<li class="group${e.open ? ' open' : ''}${e.g === 0 ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">
+    <div class="ghead">${ACTS}<div class="rc"><button class="pill" data-act="pill" aria-label="${esc(e.name)}, ${e.g} of ${maxOf(e)} grams">${pillHTML(e)}</button>
+    <div class="info"><div class="name"><span class="gname" data-act="gname">${esc(e.name)}</span><button class="chev" data-act="chev" aria-label="${e.open ? 'Collapse' : 'Expand'}" aria-expanded="${!!e.open}"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    <div class="mac">${macHTML(mac(e))}</div></div></div></div>
+    <ul class="kids">${e.open ? e.ch.map((c, j) => rowHTML(c, i + j + 1)).join('') : ''}</ul></li>`;
+}
+const zlist = $('#zlist'), zHead = $('#zHead');
+function renderList() {
+  swOpen = null;
+  const items = S.items.filter(matches), v2 = !!S.ui.v2;
+  zHead.hidden = zlist.hidden = true; zlist.innerHTML = '';
+  if (!S.items.length) { list.innerHTML = `<li class="empty"><b>No products yet</b>Tap + to add the first one.</li>`; return; }
+  if (!items.length) { list.innerHTML = `<li class="empty"><b>Nothing found</b>No product matches “${esc(query)}”.</li>`; return; }
+  const html = (arr, o = 0) => arr.map((e, i) => e.t === 'g' ? groupHTML(e, i + o) : rowHTML(e, i + o)).join('');
+  if (!v2) { list.innerHTML = html(items); return; }
+  // eaten first; everything at 0 sits in a folded "not in plan" section
+  const on = items.filter(e => e.g > 0), off = items.filter(e => e.g === 0), open = !!query || S.ui.zeroOpen;
+  list.innerHTML = on.length ? html(on) : `<li class="empty"><b>Nothing in ${esc(plan().name)} yet</b>Set a portion below or tap +.</li>`;
+  if (off.length) {
+    zHead.hidden = false; zHead.classList.toggle('open', open);
+    zHead.innerHTML = `${open ? 'Hide' : 'Show'} ${off.length} not in ${esc(plan().name)}<svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    if (open) { zlist.hidden = false; zlist.innerHTML = html(off, on.length); }
+  }
+}
+zHead.addEventListener('click', () => {
+  haptic(); const before = snapRects($('#secMeal'));
+  S.ui.zeroOpen = !S.ui.zeroOpen; save(); renderList(); playFlip(before, { stagger: true }, $('#secMeal'));
+});
+function snapRects(root = list) { const m = new Map(); root.querySelectorAll('[data-id]').forEach(el => m.set(el.dataset.id, el.getBoundingClientRect())); return m; }
+function playFlip(before, opts = {}, root = list) {
+  if (RM) return;
+  const deltas = new Map();
+  root.querySelectorAll('[data-id]').forEach(el => {
+    const id = el.dataset.id, a = el.getBoundingClientRect(), b = before.get(id);
+    if (opts.skip === id) return;
+    if (!b) { el.animate([{ opacity: 0, transform: 'translateY(-6px) scale(.97)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: SPRING, delay: opts.stagger ? 40 : 0, fill: 'backwards' }); return; }
+    let dx = b.left - a.left, dy = b.top - a.top;
+    const p = el.parentElement.closest('[data-id]'); if (p && deltas.has(p.dataset.id)) { const d = deltas.get(p.dataset.id); dx -= d[0]; dy -= d[1]; }
+    deltas.set(id, [b.left - a.left, b.top - a.top]);
+    if (Math.abs(dx) > .5 || Math.abs(dy) > .5) el.animate([{ transform: `translate(${dx}px,${dy}px)` }, { transform: 'none' }], { duration: 520, easing: SPRING });
+    if (el.classList.contains('group') && a.height - b.height > 1)
+      el.animate([{ clipPath: `inset(0 0 ${a.height - b.height}px 0 round 14px)` }, { clipPath: 'inset(0 0 0 0 round 14px)' }], { duration: 480, easing: SPRING });
+  });
+}
+function renderMeal(flip = true, opts) {
+  const root = $('#secMeal'), before = flip ? snapRects(root) : null;
+  renderList(); renderHeader();
+  $('#planName').textContent = plan().name;
+  if (before) playFlip(before, opts, root);
+}
+function patchRow(id) {
+  const r = find(id); if (!r) return;
+  const upd = e => { const el = $('#secMeal').querySelector(`[data-id="${e.id}"]`); if (!el) return;
+    const host = el.classList.contains('group') ? el.querySelector(':scope>.ghead') : el;
+    host.querySelector(':scope>.rc>.pill').innerHTML = pillHTML(e);
+    host.querySelector(':scope>.rc .mac').innerHTML = macHTML(mac(e));
+    el.classList.toggle('zero', e.g === 0); };
+  upd(r.e); if (r.parent) upd(r.parent);
+  renderHeader();
+}
+const TABS = ['budget', 'meal', 'measure'];
+const secOf = t => $({ meal: '#secMeal', measure: '#secMeasure', budget: '#secBudget' }[t]);
+function renderAll(flip = false) {
+  if (S.ui.tab === 'measure') { renderHeader(); renderMeasure(); }
+  else if (S.ui.tab === 'budget') { renderHeader(); renderBudget(); }
+  else renderMeal(flip);
+}
+
+/* ================= toast ================= */
+let toastT;
+function toast(msg, act) {
+  const t = $('#toast');
+  t.innerHTML = `<span class="tm">${esc(msg)}</span>${act ? `<button>${esc(act.label)}</button>` : ''}`;
+  if (act) t.querySelector('button').addEventListener('click', () => { act.fn(); hideToast(); });
+  t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(hideToast, act ? 5000 : 1900);
+}
+function hideToast() { $('#toast').classList.remove('show'); }
+
+/* ================= gestures: press, long press, swipe ================= */
+let G = null, lockScroll = false, swallow = false, swOpen = null;
+document.addEventListener('touchmove', e => { if (lockScroll) e.preventDefault(); }, { passive: false });
+document.addEventListener('contextmenu', e => { if (e.target.closest('.slist')) e.preventDefault(); });
+const HOLD = 380, HOLD_PILL = 230;
+const actsW = host => host.querySelector(':scope>.acts').offsetWidth + 10;
+function swSet(host, x, anim) {
+  const rc = host.querySelector(':scope>.rc'), acts = host.querySelector(':scope>.acts');
+  rc.style.transition = anim && !RM ? 'transform .45s var(--spring)' : 'none';
+  acts.style.transition = anim && !RM ? 'opacity .3s, transform .45s var(--spring)' : 'none';
+  rc.style.transform = x ? `translateX(${x.toFixed(1)}px)` : '';
+  host.style.setProperty('--rv', Math.min(1, Math.max(0, -x / actsW(host))).toFixed(3));
+}
+function swClose(anim = true) { if (!swOpen) return; const h = swOpen; swOpen = null; h.classList.remove('sw-open'); swSet(h, 0, anim); }
+document.addEventListener('pointerdown', e => {
+  if (swOpen && !e.target.closest('.acts')) { swClose(); swallow = true; }
+}, true);
+document.addEventListener('pointerdown', e => {
+  if (e.button !== 0 || G || drag || precise || swallow) return;
+  const lst = e.target.closest('.slist'); if (!lst || e.target.closest('.acts')) return;
+  const item = e.target.closest('[data-id]'); if (!item) return;
+  const actEl = e.target.closest('[data-act]');
+  G = { list: lst.dataset.list, id: item.dataset.id, el: item, host: e.target.closest('.row, .ghead'),
+        act: actEl ? actEl.dataset.act : 'row', x: e.clientX, y: e.clientY, fired: false, sw: false };
+  if (G.list === 'meal') {
+    const g0 = G; G.pt = setTimeout(() => { if (G === g0 && !G.sw) item.classList.add('pressing'); }, 110);
+    G.timer = setTimeout(() => {
+      if (!G || G.sw) return; clearTimeout(G.pt); G.fired = true; lockScroll = true; item.classList.remove('pressing');
+      haptic(); if (G.act === 'pill') openPrecise(G.id, item, G.y, true); else startDrag(G.id, item, G.x, G.y);
+    }, G.act === 'pill' ? HOLD_PILL : HOLD);
+  }
+});
+window.addEventListener('pointermove', e => {
+  if (G && !G.fired) {
+    const dx = e.clientX - G.x, dy = e.clientY - G.y;
+    if (G.sw) { let x = dx; if (x < -G.w) x = -G.w + (x + G.w) * .3; if (x > 0) x *= .2; G.cx = x; swSet(G.host, x, false);
+      const past = x < -G.w * .45; if (past !== !!G.past) { G.past = past; if (past) haptic(); } return; }
+    if (G.host && G.host.querySelector(':scope>.acts') && dx < -10 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      clearTimeout(G.timer); clearTimeout(G.pt); G.el.classList.remove('pressing');
+      G.sw = true; lockScroll = true; G.w = actsW(G.host); G.cx = 0; return;
+    }
+    if (Math.hypot(dx, dy) > 8) cancelPress();
+    return;
+  }
+  if (drag) moveDrag(e.clientX, e.clientY);
+  else if (precise && precise.holding) precise.move(e.clientY, e.timeStamp);
+}, { passive: true });
+window.addEventListener('pointerup', e => { endPointer(e, false); swallow = false; });
+window.addEventListener('pointercancel', e => { endPointer(e, true); swallow = false; });
+function cancelPress() { if (!G) return; clearTimeout(G.timer); clearTimeout(G.pt); G.el.classList.remove('pressing'); G = null; }
+function endPointer(e, cancelled) {
+  if (G && G.sw) {
+    const g = G; G = null; lockScroll = false;
+    if (!cancelled && g.cx < -g.w * .45) { swOpen = g.host; g.host.classList.add('sw-open'); swSet(g.host, -actsW(g.host), true); }
+    else swSet(g.host, 0, true);
+    return;
+  }
+  if (G && !G.fired) { const g = G; cancelPress(); if (!cancelled) tapAction(g); return; }
+  if (G) { G.el.classList.remove('pressing'); G = null; }
+  lockScroll = false;
+  if (drag) endDrag(cancelled);
+  else if (precise && precise.holding) precise.release(e.timeStamp);
+}
+function tapAction(g) {
+  if (g.list === 'bud') { const r = find(g.id); return r && foodSheet(r.e); }
+  if (g.list === 'log') { const e = S.log.find(x => x.id === g.id); if (!e) return; return g.act === 'pill' ? openKeypad('w', g.id) : entrySheet(e); }
+  const r = find(g.id); if (!r) return;
+  if (g.act === 'pill') return openKeypad('g', g.id);
+  if (r.e.t === 'g' && g.act === 'gname') return groupSheet(r.e);
+  if (r.e.t === 'g') return toggleGroup(r.e);
+  return foodSheet(r.e);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-sw]'); if (!b) return;
+  const lst = b.closest('.slist'), item = b.closest('[data-id]'), host = b.closest('.row, .ghead');
+  if (!lst || !item) return;
+  const id = item.dataset.id;
+  if (b.dataset.sw === 'edit') {
+    swClose();
+    if (lst.dataset.list === 'log') { const en = S.log.find(x => x.id === id); if (en) entrySheet(en); }
+    else { const r = find(id); if (r) (r.e.t === 'g' ? groupSheet(r.e) : foodSheet(r.e)); }
+  } else removeWithUndo(lst.dataset.list, id, host);
+});
+function removeWithUndo(kind, id, host) {
+  haptic();
+  const rc = host.querySelector(':scope>.rc'), acts = host.querySelector(':scope>.acts');
+  swOpen = null; host.classList.remove('sw-open');
+  const go = () => {
+    if (kind === 'log') {
+      const i = S.log.findIndex(x => x.id === id); if (i < 0) return;
+      const [en] = S.log.splice(i, 1); save();
+      const before = snapRects($('#mlog')); renderHeader(); renderMeasure(); playFlip(before, {}, $('#mlog'));
+      toast(`Deleted ${fmtDate(en.d).toLowerCase()}’s entry`, { label: 'Undo', fn: () => { S.log.push(en); save(); renderHeader(); renderMeasure(); } });
+      return;
+    }
+    const r = find(id); if (!r) return;
+    const keep = JSON.stringify(S.items), name = r.e.name;
+    r.arr.splice(r.i, 1);
+    if (r.parent) { r.parent.g = Math.min(r.parent.g, maxOf(r.parent)); fixGroup(r.parent, S.items); }
+    save(); renderMeal(true);
+    toast(`Deleted ${name}`, { label: 'Undo', fn: () => { S.items = JSON.parse(keep); save(); renderMeal(true); } });
+  };
+  if (RM) return go();
+  acts.animate([{ opacity: 1 }, { opacity: 0, transform: 'scale(.8)' }], { duration: 160, fill: 'forwards' });
+  rc.animate([{ transform: rc.style.transform || 'none', opacity: 1 }, { transform: 'translateX(-110%)', opacity: 0 }], { duration: 220, easing: EASE, fill: 'forwards' }).onfinish = go;
+}
+function toggleGroup(gr) {
+  const el = list.querySelector(`[data-id="${gr.id}"]`);
+  if (gr.open && el && !RM) {
+    const h0 = el.getBoundingClientRect().height, h1 = el.querySelector('.ghead').getBoundingClientRect().height + 8;
+    el.classList.remove('open'); el.style.overflow = 'hidden';
+    el.querySelector('.kids').animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-4px)' }], { duration: 180, easing: EASE, fill: 'forwards' });
+    el.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 380, easing: SPRING }).onfinish = () => { gr.open = false; save(); renderList(); renderHeader(); };
+    return;
+  }
+  gr.open = !gr.open; save();
+  const before = snapRects(); renderList(); renderHeader(); playFlip(before, { stagger: true });
+}
+
+/* ================= drag & merge ================= */
+let drag = null;
+function startDrag(id, el, x, y) {
+  let r = find(id);
+  if (r.parent) {
+    const gr = r.parent, gi = S.items.indexOf(gr), full = gr.g >= maxOf(gr);
+    gr.ch.splice(r.i, 1); const nm = maxOf(gr); gr.g = full ? nm : Math.min(gr.g, nm);
+    S.items.splice(gi + 1, 0, r.e); fixGroup(gr, S.items);
+    renderMeal(false); el = list.querySelector(`[data-id="${id}"]`);
+  }
+  const rect = el.getBoundingClientRect(), clone = el.cloneNode(true);
+  clone.classList.add('drag-clone', 'lifted'); clone.classList.remove('pressing');
+  Object.assign(clone.style, { left: rect.left + 'px', top: rect.top + 'px', width: rect.width + 'px', transform: 'scale(1.03)' });
+  document.body.appendChild(clone);
+  if (!RM) clone.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.03)' }], { duration: 260, easing: SPRING });
+  el.classList.add('slot');
+  drag = { id, el, clone, rect, x0: x, y0: y, x, y, target: null, raf: 0 };
+  drag.raf = requestAnimationFrame(autoScroll);
+}
+const siblings = () => [...list.children].filter(n => n.dataset.id && n !== drag.el);
+function moveDrag(x, y) {
+  drag.x = x; drag.y = y;
+  const dx = Math.max(-24, Math.min(24, (x - drag.x0) * .35));
+  drag.clone.style.transform = `translate(${dx}px, ${y - drag.y0}px) scale(1.03)`;
+  updateTarget();
+}
+function updateTarget() {
+  const y = drag.y; let target = null;
+  for (const n of siblings()) { const r = n.getBoundingClientRect(), band = Math.min(14, r.height * .3); if (y > r.top + band && y < r.bottom - band) { target = n; break; } }
+  if (target !== drag.target) { if (drag.target) drag.target.classList.remove('merge-target'); if (target) { target.classList.add('merge-target'); haptic(); } drag.target = target; }
+  if (target) return;
+  let before = null;
+  for (const n of siblings()) { const r = n.getBoundingClientRect(); if (y < r.top + r.height / 2) { before = n; break; } }
+  if (drag.el.nextElementSibling === before || (!before && drag.el === list.lastElementChild)) return;
+  const snap = snapRects(); list.insertBefore(drag.el, before); playFlip(snap, { skip: drag.id }); haptic();
+}
+function autoScroll() {
+  if (!drag) return;
+  const edge = 90, h = innerHeight; let v = 0;
+  if (drag.y < edge) v = -Math.ceil((edge - drag.y) / 6); else if (drag.y > h - edge - 60) v = Math.ceil((drag.y - (h - edge - 60)) / 6);
+  if (v) { const b = scrollY; scrollBy(0, v); if (scrollY !== b) updateTarget(); }
+  drag.raf = requestAnimationFrame(autoScroll);
+}
+function endDrag(cancelled) {
+  const d = drag; drag = null; cancelAnimationFrame(d.raf);
+  const src = find(d.id).e; let landId = d.id;
+  if (d.target && !cancelled) { d.target.classList.remove('merge-target'); landId = merge(src, find(d.target.dataset.id).e); }
+  else if (!cancelled) {
+    const order = [...list.children].map(n => n.dataset.id).filter(Boolean);
+    const vis = S.items.filter(e => order.includes(e.id)).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+    S.items = vis.concat(S.items.filter(e => !order.includes(e.id)));
+  }
+  save();
+  const before = snapRects(); renderList(); renderHeader();
+  const land = list.querySelector(`[data-id="${landId}"]`);
+  playFlip(before, { skip: landId });
+  if (!land) { d.clone.remove(); return; }
+  const lr = land.getBoundingClientRect(), merged = landId !== d.id;
+  land.style.visibility = 'hidden';
+  d.clone.animate([{ transform: d.clone.style.transform, opacity: 1 },
+    { transform: `translate(${lr.left - d.rect.left}px, ${lr.top - d.rect.top}px) scale(${merged ? .96 : 1})`, opacity: merged ? 0 : 1 }],
+    { duration: RM ? 1 : 380, easing: SPRING, fill: 'forwards' }).onfinish = () => {
+      d.clone.remove(); land.style.visibility = '';
+      if (merged && !RM) land.animate([{ transform: 'scale(1.03)' }, { transform: 'none' }], { duration: 480, easing: SPRING });
+    };
+}
+function merge(src, tgt) {
+  const items = S.items, take = e => e.t === 'g' ? e.ch : [e];
+  if (tgt.t === 'g') { const full = tgt.g >= maxOf(tgt); tgt.ch.push(...take(src)); if (full) tgt.g = maxOf(tgt); items.splice(items.indexOf(src), 1); tgt.open = true; toast(`Added to ${tgt.name}`); return tgt.id; }
+  if (src.t === 'g') { const full = src.g >= maxOf(src); src.ch.push(tgt); if (full) src.g = maxOf(src); items.splice(items.indexOf(src), 1); items.splice(items.indexOf(tgt), 1, src); src.open = true; return src.id; }
+  const gr = { id: uid(), t: 'g', name: 'New group', open: true, ch: [src, tgt], g: 0 }; gr.g = maxOf(gr);
+  items.splice(items.indexOf(src), 1); items.splice(items.indexOf(tgt), 1, gr);
+  toast('Group created · tap its name to rename');
+  return gr.id;
+}
+
+/* ================= precise edit ================= */
+let precise = null;
+function openPrecise(id, rowEl, y, holding) {
+  const r = find(id); if (!r) return;
+  const e = r.e, pr = rowEl.querySelector('.pill').getBoundingClientRect(), top0 = Math.max(0, $('#divider').getBoundingClientRect().bottom);
+  const ov = document.createElement('div'); ov.className = 'precise'; ov.style.setProperty('--ptop', top0 + 'px');
+  ov.innerHTML = `<div class="pcard" style="left:${pr.left + 4}px;top:${pr.top - top0}px"><div class="wheel">${'<i></i>'.repeat(13)}</div>
+    <div class="pvals"><div class="pg"></div><div class="pn">${esc(e.name)}</div>
+    <div class="pm"><div><span>K</span><b class="vk"></b></div><div><span>P</span><b class="vp"></b></div><div><span>F</span><b class="vf"></b></div><div><span>C</span><b class="vc"></b></div></div>
+    ${e.t === 'g' ? '<div class="pmax"></div>' : ''}</div></div>`;
+  document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('show'));
+  const card = ov.querySelector('.pcard'), ticks = [...ov.querySelectorAll('.wheel i')];
+  if (!RM) card.animate([{ opacity: 0, transform: 'scale(.92) translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
+  let phase = 0, acc = 0, lastY = y, lastT = performance.now(), vel = 0, raf = 0, moved = false;
+  const paint = () => {
+    const m = mac(e);
+    ov.querySelector('.pg').textContent = fmtAmt(e, e.g) + (isPc(e) ? ` · ${e.g}g` : '');
+    ov.querySelector('.vk').textContent = r0(m.k); ov.querySelector('.vp').textContent = r0(m.p);
+    ov.querySelector('.vf').textContent = r0(m.f); ov.querySelector('.vc').textContent = r0(m.c);
+    const pm = ov.querySelector('.pmax'); if (pm) pm.textContent = `max ${maxOf(e)}g`;
+    ticks.forEach((t, i) => {
+      const a = (i - 6) * 15 + phase, rad = a * Math.PI / 180;
+      if (Math.abs(a) > 90) { t.style.opacity = 0; return; }
+      t.style.transform = `translateY(${(30 * Math.sin(rad)).toFixed(2)}px)`;
+      t.style.opacity = Math.max(.55 * Math.pow(Math.cos(rad), 3), Math.abs(a) < 7.5 ? 1 - Math.abs(a) / 15 : 0).toFixed(3);
+    });
+  };
+  const bump = d => {
+    const lim = e.t === 'g' ? maxOf(e) : 99999;
+    const unit = isPc(e) ? e.uw : 5; let v = e.g + Math.sign(d) * unit * (Math.abs(d) === 50 ? (isPc(e) ? 5 : 10) : Math.abs(d) === 25 ? (isPc(e) ? 2 : 5) : 1);
+    v = Math.round(v / unit) * unit;
+    v = Math.max(0, Math.min(lim, v));
+    if (v === e.g) { if (!card.classList.contains('bump')) { card.classList.add('bump'); setTimeout(() => card.classList.remove('bump'), 360); } return false; }
+    setGrams(e, v, r.parent); return true;
+  };
+  const step = (deg, speed) => {
+    phase += deg; acc += deg;
+    const size = speed > 1.6 ? 50 : speed > .7 ? 25 : 5; let changed = false;
+    while (acc <= -15) { acc += 15; changed = bump(+size) || changed; }
+    while (acc >= 15) { acc -= 15; changed = bump(-size) || changed; }
+    phase = ((phase % 15) + 15 + 7.5) % 15 - 7.5;
+    if (changed) { patchRow(e.id); haptic(); }
+    paint();
+  };
+  const snapBack = () => { const from = phase, t0 = performance.now();
+    const f = now => { const x = Math.min(1, (now - t0) / 220); phase = from * Math.pow(1 - x, 3); paint(); if (x < 1) raf = requestAnimationFrame(f); };
+    raf = requestAnimationFrame(f); };
+  precise = {
+    holding,
+    move(cy, ts) { const dy = cy - lastY, dt = Math.max(1, ts - lastT); lastY = cy; lastT = ts; if (dy) moved = true; vel = dy / dt; step(dy / 30 * 57.2958, Math.abs(vel)); },
+    release() {
+      this.holding = false; save(); let v = vel; cancelAnimationFrame(raf);
+      if (RM || Math.abs(v) < .25) return snapBack();
+      const tick = () => { v *= .94; step(v * 16 / 30 * 57.2958, Math.abs(v)); if (Math.abs(v) > .05) raf = requestAnimationFrame(tick); else { save(); snapBack(); } };
+      raf = requestAnimationFrame(tick);
+    },
+    close() { cancelAnimationFrame(raf); save(); ov.classList.remove('show'); ov.style.pointerEvents = 'none';
+      if (!RM) card.animate([{ opacity: 1 }, { opacity: 0, transform: 'scale(.96)' }], { duration: 200, easing: EASE, fill: 'forwards' });
+      setTimeout(() => ov.remove(), 260); precise = null; renderMeal(true); }
+  };
+  ov.addEventListener('pointerdown', ev => {
+    if (!precise || precise.holding) return;
+    cancelAnimationFrame(raf); moved = false; lastY = ev.clientY; lastT = ev.timeStamp; vel = 0;
+    precise.holding = true; precise.startY = ev.clientY; lockScroll = true; ov.setPointerCapture(ev.pointerId);
+  });
+  ov.addEventListener('pointermove', ev => { if (precise && precise.holding && ov.hasPointerCapture(ev.pointerId)) precise.move(ev.clientY, ev.timeStamp); });
+  ov.addEventListener('pointerup', ev => {
+    if (!precise || precise.startY === undefined) return;
+    if (ov.hasPointerCapture(ev.pointerId)) ov.releasePointerCapture(ev.pointerId);
+    lockScroll = false;
+    if (!moved && Math.abs(ev.clientY - precise.startY) < 6) { precise.holding = false; return precise.close(); }
+    precise.release();
+  });
+  paint();
+}
+
+/* ================= keypad ================= */
+const kb = $('#kb');
+function editTarget() {
+  if (!editing) return null;
+  if (editing.kind === 'w') return S.log.find(x => x.id === editing.id) || null;
+  const r = find(editing.id); return r ? r.e : null;
+}
+function paintEditing() {
+  const el = document.querySelector(`[data-id="${editing.id}"] .pill`), t = editTarget(); if (!el || !t) return;
+  el.innerHTML = editing.kind === 'w' ? fieldHTML(editing.buf, t.w != null ? t.w.toFixed(1) : '0.0', 'kg') : pillHTML(t);
+}
+function openKeypad(kind, id) {
+  if (editing && editing.id !== id) commitKeypad(false);
+  editing = { kind, id, buf: '', dec: kind === 'w' };
+  $('#dotKey').hidden = !editing.dec;
+  document.body.classList.add('kb-open'); kb.classList.add('show'); kb.setAttribute('aria-hidden', 'false');
+  if (kind === 'w') renderMeasure(); else renderMeal(false);
+  const el = document.querySelector(`[data-id="${id}"]`);
+  if (el) {
+    const r = el.getBoundingClientRect(), limit = innerHeight - 340 - 24;
+    if (r.bottom > limit) scrollBy({ top: r.bottom - limit + 8, behavior: RM ? 'auto' : 'smooth' });
+    else if (r.top < 60) scrollBy({ top: r.top - 80, behavior: RM ? 'auto' : 'smooth' });
+  }
+}
+function commitKeypad(close = true) {
+  if (!editing) return;
+  const ed = editing, t = editTarget(); editing = null;
+  if (t && ed.buf !== '') {
+    if (ed.kind === 'w') { const v = numIn(ed.buf); if (v > 0) t.w = r1(v); }
+    else { const n = parseInt(ed.buf, 10); setGrams(t, isPc(t) ? r0(n * t.uw) : n, find(ed.id).parent); }
+  }
+  save();
+  if (close) { kb.classList.remove('show'); kb.setAttribute('aria-hidden', 'true'); document.body.classList.remove('kb-open'); }
+  if (ed.kind === 'w') { renderHeader(); renderMeasure(); } else renderMeal(true);
+}
+function keyPress(k) {
+  if (!editing) return; haptic(); const t = editTarget(); if (!t) return;
+  if (k === 'del') editing.buf = editing.buf.slice(0, -1);
+  else if (k === '.') { if (!editing.dec || editing.buf.includes('.')) return shakeEditing(); editing.buf = (editing.buf || '0') + '.'; }
+  else {
+    const next = (editing.buf === '0' ? '' : editing.buf) + k;
+    if (next.length > 5 || (editing.dec && /\.\d\d/.test(next))) return shakeEditing();
+    if (editing.kind === 'g' && t.t === 'g' && parseInt(next, 10) > maxOf(t)) return shakeEditing(`Max ${maxOf(t)}g for this group`);
+    editing.buf = next;
+  }
+  paintEditing();
+}
+function shakeEditing(msg) {
+  const pill = document.querySelector(`[data-id="${editing.id}"] .pill`);
+  if (pill) { pill.classList.remove('shake'); void pill.offsetWidth; pill.classList.add('shake'); }
+  if (msg) toast(msg);
+}
+$('#keys').addEventListener('pointerdown', e => { const k = e.target.closest('[data-k]'); if (!k) return; e.preventDefault(); keyPress(k.dataset.k); });
+$('#kbDone').addEventListener('click', () => commitKeypad());
+document.addEventListener('pointerdown', e => {
+  if (!editing || e.target.closest('#kb') || e.target.closest(`[data-id="${editing.id}"] .pill`)) return;
+  commitKeypad();
+}, true);
+document.addEventListener('keydown', e => {
+  if (!editing) return;
+  if (/^[0-9]$/.test(e.key)) keyPress(e.key);
+  else if (e.key === '.' || e.key === ',') keyPress('.');
+  else if (e.key === 'Backspace') keyPress('del');
+  else if (e.key === 'Enter' || e.key === 'Escape') commitKeypad();
+});
+
+/* ================= ghost mode ================= */
+function ghostOff() {
+  if (!ghostSnap) return;
+  S.items = JSON.parse(ghostSnap); ghostSnap = null;
+  document.body.classList.remove('ghost'); $('#ghostBtn').setAttribute('aria-pressed', 'false');
+}
+$('#ghostBtn').addEventListener('click', () => {
+  document.body.classList.add('ghost-anim'); clearTimeout(window.__ga); window.__ga = setTimeout(() => document.body.classList.remove('ghost-anim'), 900);
+  if (!ghostSnap) { save(); ghostSnap = JSON.stringify(S.items); document.body.classList.add('ghost'); $('#ghostBtn').setAttribute('aria-pressed', 'true'); toast('Try-out mode · changes are temporary'); }
+  else { ghostOff(); renderMeal(true); toast('Back to your plan'); }
+});
+
+/* ================= menus, sheets, segmented ================= */
+let openMenu = null;
+function menu(anchor, items) {
+  closeMenu();
+  const m = document.createElement('div'); m.className = 'menu'; m.setAttribute('role', 'menu');
+  m.innerHTML = items.map((it, i) => it === '-' ? '<div class="msep"></div>' : it.head ? `<div class="mlab">${esc(it.head)}</div>` :
+    `<button class="mi${it.danger ? ' danger' : ''}" data-i="${i}" role="menuitem" ${it.disabled ? 'disabled' : ''}>
+      <span class="ck">${it.check ? ICON.check : ''}</span><span class="ml">${esc(it.label)}</span>${it.right != null ? `<span class="mr">${esc(it.right)}</span>` : ''}</button>`).join('');
+  document.body.appendChild(m);
+  const a = anchor.getBoundingClientRect(), w = m.offsetWidth, h = m.offsetHeight;
+  const left = Math.min(Math.max(12, a.left), innerWidth - w - 12);
+  let top = a.bottom + 8; if (top + h > innerHeight - 12) top = Math.max(12, a.top - h - 8);
+  m.style.left = left + 'px'; m.style.top = top + 'px';
+  m.style.setProperty('--ox', (a.left + a.width / 2 - left) + 'px'); m.style.setProperty('--oy', (top > a.top ? 0 : h) + 'px');
+  m.addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; const it = items[+b.dataset.i]; closeMenu(); setTimeout(() => it.do(), 60); });
+  const scrim = document.createElement('div'); scrim.style.cssText = 'position:fixed;inset:0;z-index:49';
+  scrim.addEventListener('pointerdown', e => { e.preventDefault(); closeMenu(); });
+  document.body.appendChild(scrim);
+  openMenu = { m, scrim };
+}
+function closeMenu() { if (!openMenu) return; const { m, scrim } = openMenu; openMenu = null; scrim.remove(); m.classList.add('out'); setTimeout(() => m.remove(), 200); }
+
+let openSheet = null;
+function sheet(html, onReady) {
+  closeSheet(true);
+  const scrim = document.createElement('div'); scrim.className = 'scrim';
+  const s = document.createElement('div'); s.className = 'sheet'; s.setAttribute('role', 'dialog');
+  s.innerHTML = `<div class="grab"></div>${html}`;
+  document.body.append(scrim, s);
+  requestAnimationFrame(() => { scrim.classList.add('show'); s.classList.add('show'); });
+  const born = performance.now();
+  scrim.addEventListener('click', () => { if (performance.now() - born > 400) closeSheet(); });
+  s.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closeSheet()));
+  s.querySelectorAll('.field').forEach(f => f.addEventListener('click', ev => { const i = f.querySelector('input'); if (i && ev.target !== i && !ev.target.closest('button')) i.focus(); }));
+  s.querySelectorAll('.seg').forEach(seg => requestAnimationFrame(() => segSet(seg, seg.dataset.v)));
+  let sy = null;
+  s.addEventListener('touchstart', e => { sy = s.scrollTop <= 0 && !e.target.closest('input,.seg') ? e.touches[0].clientY : null; }, { passive: true });
+  s.addEventListener('touchmove', e => { if (sy === null) return; const d = e.touches[0].clientY - sy; if (d > 0) { s.style.transition = 'none'; s.style.transform = `translateY(${d}px)`; } }, { passive: true });
+  s.addEventListener('touchend', e => { if (sy === null) return; const d = e.changedTouches[0].clientY - sy; sy = null; s.style.transition = ''; s.style.transform = ''; if (d > 110) closeSheet(); });
+  openSheet = { s, scrim };
+  if (onReady) onReady(s);
+  return s;
+}
+function closeSheet(fast) {
+  if (!openSheet) return; const { s, scrim } = openSheet; openSheet = null;
+  if (document.activeElement && s.contains(document.activeElement)) document.activeElement.blur();
+  s.classList.remove('show'); scrim.classList.remove('show'); setTimeout(() => { s.remove(); scrim.remove(); }, fast ? 0 : 450);
+}
+function segSet(seg, v) {
+  seg.dataset.v = v;
+  seg.querySelectorAll('button').forEach(b => { b.classList.toggle('on', b.dataset.v === v); b.setAttribute('aria-selected', b.dataset.v === v); });
+  const b = seg.querySelector(`button[data-v="${v}"]`), th = seg.querySelector('.thumb');
+  if (b && th) { th.style.left = b.offsetLeft + 'px'; th.style.width = b.offsetWidth + 'px'; }
+}
+function segHTML(id, opts, v) { return `<div class="seg" id="${id}" data-v="${v}"><i class="thumb"></i>${opts.map(([k, l]) => `<button type="button" data-v="${k}">${l}</button>`).join('')}</div>`; }
+function segBind(seg, fn) { seg.addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return; segSet(seg, b.dataset.v); fn && fn(b.dataset.v); }); }
+const fnum = (id, label, val, unit, ph = '0', hint = '') =>
+  `<div class="field"><label for="${id}">${label}${hint ? `<span class="hint">${hint}</span>` : ''}</label><span class="inp"><input id="${id}" inputmode="decimal" value="${val ?? ''}" placeholder="${ph}" autocomplete="off">${unit ? `<span class="u">${unit}</span>` : ''}</span></div>`;
+const ftxt = (id, val, ph) => `<div class="field"><input class="txt" id="${id}" value="${esc(val || '')}" placeholder="${esc(ph || '')}" autocomplete="off" aria-label="${esc(ph || 'Name')}"></div>`;
+const val = (s, id) => numIn(s.querySelector('#' + id).value);
+function nudge(el) { const f = el.closest('.field') || el; f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); }
+
+/* ---- product / group sheets ---- */
+function foodSheet(e, isNew) {
+  const n = e ? e.n : { k: '', p: '', f: '', c: '' }, unit0 = e ? U(e) : 'g';
+  const ul = u => u === 'pc' ? 'pc' : u;
+  sheet(`<h3>${isNew ? 'New product' : 'Product'}${XBTN}</h3>
+    <div class="card">${ftxt('fName', e && e.name, 'Product name')}</div>
+    <div class="cap">Counted in</div>${segHTML('fU', [['g', 'Grams'], ['ml', 'Millilitres'], ['pc', 'Pieces']], unit0)}
+    <div class="card" id="fUwBox" style="margin-top:8px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>
+    ${isNew ? `<div class="cap">Daily amount in ${esc(plan().name)}</div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
+    <div class="cap">Per 100 g<span class="r">kcal fills in from macros</span></div>
+    <div class="card">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'Calories', isNew ? '' : n.k, 'kcal', '0')}</div>
+    <div class="cap">Shopping<span class="r">optional · for Budget</span></div>
+    <div class="card">${fnum('fPk', 'Pack size', e && e.pk ? toU(e, e.pk) : '', ul(unit0), '—')}${fnum('fPr', 'Price per pack', e && e.pr, esc(S.ui.cur), '—')}</div>
+    <button class="sbtn primary" id="fSave">${isNew ? 'Add to the list' : 'Save'}</button>
+    ${isNew ? '' : '<div class="btnrow"><button class="sbtn plain" id="fDup">Duplicate</button><button class="sbtn danger" id="fDel">Delete</button></div>'}`, s => {
+    const seg = s.querySelector('#fU');
+    const setU = u => { s.querySelector('#fUwBox').hidden = u !== 'pc';
+      ['fG', 'fPk'].forEach(id => { const i = s.querySelector('#' + id); if (i) i.parentElement.querySelector('.u').textContent = ul(u); }); };
+    segBind(seg, v => { setU(v); if (v === 'pc') setTimeout(() => s.querySelector('#fUw').focus(), 50); });
+    const kIn = s.querySelector('#fK'), auto = () => { const p = val(s, 'fP') || 0, f = val(s, 'fF') || 0, c = val(s, 'fC') || 0; kIn.placeholder = r0(p * 4 + f * 9 + c * 4); };
+    ['fP', 'fF', 'fC'].forEach(id => s.querySelector('#' + id).addEventListener('input', auto)); auto();
+    const read = () => { const p = val(s, 'fP') || 0, f = val(s, 'fF') || 0, c = val(s, 'fC') || 0, k = val(s, 'fK'); return { p, f, c, k: k != null ? k : r0(p * 4 + f * 9 + c * 4) }; };
+    s.querySelector('#fSave').addEventListener('click', () => {
+      const name = s.querySelector('#fName').value.trim();
+      if (!name) { nudge(s.querySelector('#fName')); return s.querySelector('#fName').focus(); }
+      const unit = seg.dataset.v, uw = val(s, 'fUw');
+      if (unit === 'pc' && !(uw > 0)) { nudge(s.querySelector('#fUw')); return s.querySelector('#fUw').focus(); }
+      const toG = v => v == null ? null : unit === 'pc' ? r0(v * uw) : r0(v);
+      const pk = toG(val(s, 'fPk')), pr = val(s, 'fPr');
+      const props = { name, n: read(), unit, uw: unit === 'pc' ? uw : undefined, pk: pk > 0 ? pk : undefined, pr: pr > 0 ? pr : undefined };
+      if (isNew) {
+        S.items.unshift({ id: uid(), t: 'f', g: toG(val(s, 'fG') || 0), ...props });
+        query = ''; $('#q').value = ''; scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' });
+        toast(`${name} added to all meal plans`);
+      } else { const r = find(e.id); if (r) Object.assign(r.e, props); }
+      save(); closeSheet(); renderAll(true);
+    });
+    if (!isNew) {
+      s.querySelector('#fDup').addEventListener('click', () => { const r = find(e.id); if (!r) return closeSheet();
+        const c = JSON.parse(JSON.stringify(r.e)); c.id = uid(); c.g = 0; r.arr.splice(r.i + 1, 0, c); save(); closeSheet(); renderAll(true); });
+      s.querySelector('#fDel').addEventListener('click', () => { closeSheet(); const host = list.querySelector(`[data-id="${e.id}"]`);
+        if (host && S.ui.tab === 'meal') removeWithUndo('meal', e.id, host);
+        else { const r = find(e.id); if (r) { const keep = JSON.stringify(S.items); r.arr.splice(r.i, 1); if (r.parent) fixGroup(r.parent, S.items); save(); renderAll(true);
+          toast(`Deleted ${e.name}`, { label: 'Undo', fn: () => { S.items = JSON.parse(keep); save(); renderAll(true); } }); } } });
+    }
+  });
+}
+function groupSheet(g) {
+  sheet(`<h3>Group${XBTN}</h3><div class="card">${ftxt('gName', g.name, 'Group name')}</div>
+    <div class="cap">${g.ch.length} products<span class="r">${g.g} of ${maxOf(g)} g eaten</span></div>
+    <div class="card">${g.ch.map(c => `<div class="field"><span class="fl">${esc(c.name)}</span><span class="calc">${c.g}g</span></div>`).join('')}</div>
+    <button class="sbtn primary" id="gSave">Save</button>
+    <div class="btnrow"><button class="sbtn plain" id="gUn">Ungroup</button><button class="sbtn danger" id="gDel">Delete</button></div>`, s => {
+    s.querySelector('#gSave').addEventListener('click', () => { g.name = s.querySelector('#gName').value.trim() || g.name; save(); closeSheet(); renderMeal(true); });
+    s.querySelector('#gUn').addEventListener('click', () => { const r = find(g.id); r.arr.splice(r.i, 1, ...g.ch); save(); closeSheet(); renderMeal(true); });
+    s.querySelector('#gDel').addEventListener('click', () => { closeSheet(); const el = list.querySelector(`[data-id="${g.id}"] > .ghead`); if (el) removeWithUndo('meal', g.id, el); });
+  });
+}
+function nameSheet(title, value, cta, cb) {
+  sheet(`<h3>${title}${XBTN}</h3><div class="card">${ftxt('nName', value, 'Name')}</div><button class="sbtn primary" id="nSave">${cta}</button>`, s => {
+    const i = s.querySelector('#nName'); setTimeout(() => { i.focus(); i.select(); }, 350);
+    const go = () => { const v = i.value.trim(); if (!v) return nudge(i); closeSheet(); cb(v); };
+    s.querySelector('#nSave').addEventListener('click', go); i.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  });
+}
+function confirmSheet(title, text, cta, fn) {
+  sheet(`<h3>${title}</h3><p class="note">${text}</p><button class="sbtn danger" id="cYes">${cta}</button><button class="sbtn plain" data-close>Cancel</button>`, s => {
+    s.querySelector('#cYes').addEventListener('click', () => { closeSheet(); fn(); });
+  });
+}
+
+/* ---- meal plans ---- */
+function switchPlan(id) {
+  ghostOff(); save();
+  S.active = id; applyGrams(plan()); save();
+  if (RM) return renderAll(false);
+  (S.ui.tab === 'budget' ? $('#blist') : list).animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(-12px)' }], { duration: 140, easing: EASE }).onfinish = () => {
+    renderAll(false); const L = S.ui.tab === 'budget' ? $('#blist') : list; L.animate([{ opacity: 0, transform: 'translateX(12px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: SPRING });
+  };
+}
+function planMenu(anchor) {
+  save();
+  const items = [{ head: 'Meal plans' }, ...S.plans.map(p => ({ label: p.name, check: p.id === S.active, right: r0(planKcal(p)) + ' kcal', do: () => p.id !== S.active && switchPlan(p.id) }))];
+  items.push('-',
+    { label: 'New meal plan', do: () => nameSheet('New meal plan', 'New meal', 'Create', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); }) },
+    { label: 'Duplicate', do: () => { save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); toast('Meal plan duplicated'); } },
+    ...(S.ui.v2 ? [{ label: 'Sort list…', do: () => sortMenu($('#planTitle')) }] : []),
+    { label: 'Rename', do: () => nameSheet('Rename meal plan', plan().name, 'Save', v => { plan().name = v; save(); renderMeal(false); }) },
+    { label: 'Delete', danger: true, disabled: S.plans.length < 2, do: () => confirmSheet(`Delete “${esc(plan().name)}”?`, 'Portions saved in this meal plan will be removed. Products stay in your list.', 'Delete meal plan', () => {
+      const i = S.plans.indexOf(plan()); S.plans.splice(i, 1); switchPlan(S.plans[Math.max(0, i - 1)].id); toast('Meal plan deleted'); }) });
+  menu(anchor || $('#planBtn'), items);
+}
+function sortMenu(anchor) {
+  const apply = fn => { const root = $('#secMeal'), before = snapRects(root); S.items.sort(fn); save(); renderList(); renderHeader(); playFlip(before, {}, root); };
+  menu(anchor && anchor.getBoundingClientRect ? anchor : $('#sortBtn'), [{ head: 'Sort by' },
+    { label: 'Calories, high to low', do: () => apply((a, b) => mac(b).k - mac(a).k) },
+    { label: 'Protein, high to low', do: () => apply((a, b) => mac(b).p - mac(a).p) },
+    { label: 'Portion, large to small', do: () => apply((a, b) => b.g - a.g) },
+    { label: 'Name, A to Z', do: () => apply((a, b) => a.name.localeCompare(b.name)) },
+    '-', { label: 'Eaten first, 0 g last', do: () => apply((a, b) => (a.g === 0) - (b.g === 0)) }]);
+}
+
+/* ---- goal plans ---- */
+const TYPES = [['bulk', 'Bulk'], ['cut', 'Cut'], ['maintain', 'Maintain'], ['recomp', 'Recomp']];
+const TYPE_RATE = { bulk: .25, cut: -.5, maintain: 0, recomp: 0 };
+const typeName = t => (TYPES.find(x => x[0] === t) || [, 'Custom'])[1];
+function switchGoal(id) {
+  S.goalActive = id; save();
+  if (!RM) $('#goalName').animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: SPRING });
+  renderAll(true);
+}
+function goalMenu() {
+  const g = goal();
+  menu($('#goalBtn'), [{ head: 'Goal plans' },
+    ...S.goals.map(x => ({ label: x.name, check: x.id === g.id, right: typeName(x.type), do: () => x.id !== g.id && switchGoal(x.id) })),
+    '-',
+    { label: `Edit “${g.name}”`, do: () => goalSheet(g, false) },
+    { label: 'New goal plan', do: () => goalSheet(null, true) },
+    { label: 'Duplicate', do: () => { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); } },
+    { label: 'Delete', danger: true, disabled: S.goals.length < 2, do: () => confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete goal plan', () => {
+      const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); }) },
+    '-',
+    { label: S.ui.v2 ? 'Use old main screen' : 'Use new main screen', do: () => { S.ui.v2 = !S.ui.v2; save(); syncTabs(); instant = true; renderAll(false); instant = false; } },
+    { label: 'Reset demo data', danger: true, do: () => confirmSheet('Reset demo data?', 'All products, plans and measurements on this device are replaced with the demo set.', 'Reset', () => {
+      ghostOff(); S = seed(); applyGrams(plan()); save(); renderAll(true); syncTabs(); toast('Demo data restored'); }) }
+  ]);
+}
+function goalSheet(g0, isNew) {
+  const src = g0 || goal(), d = { ...src };
+  if (isNew) { d.name = ''; d.sw = latest('w') ?? src.sw; }
+  const curW = latest('w');
+  sheet(`<h3>${isNew ? 'New goal plan' : 'Goal plan'}${XBTN}</h3>
+    <div class="card">${ftxt('gN', d.name, 'Plan name, e.g. Winter bulk')}</div>
+    <div style="margin-top:12px">${segHTML('gT', TYPES, d.type)}</div>
+    <div class="cap">Daily target</div>
+    <div class="card">${[['gK', 'Calories', 'k', 'kcal'], ['gP', 'Protein', 'p', 'g'], ['gF', 'Fat', 'f', 'g'], ['gC', 'Carbs', 'c', 'g']].map(([id, l, k, u]) =>
+      fnum(id, l, d[k], u, '0', d.rng && d.rng[k] ? `${d.rng[k][0]}–${d.rng[k][1]} ${u}` : '')).join('')}</div>
+    <div class="cap">Body target</div>
+    <div class="card">${fnum('gTw', 'Target weight', d.tw, 'kg')}
+      <div class="field"><label for="gR">Weekly change</label><span class="inp"><span class="u" id="gSign"></span><input id="gR" inputmode="decimal" value="${Math.abs(d.rate)}" placeholder="0"><span class="u">kg</span></span></div>
+      ${fnum('gBf', 'Target body fat', d.tbf, '%')}${fnum('gSw', 'Start weight', d.sw, 'kg', '0', curW != null ? `latest ${curW.toFixed(1)} kg` : '')}</div>
+    <p class="note" id="gEta" style="margin-top:12px"></p>
+    <button class="sbtn primary" id="gSave">${isNew ? 'Create plan' : 'Save'}</button>`, s => {
+    const seg = s.querySelector('#gT'), rIn = s.querySelector('#gR');
+    let type = d.type, touched = false;
+    const sign = () => type === 'cut' ? -1 : type === 'bulk' ? 1 : 0;
+    const eta = () => {
+      const tw = val(s, 'gTw'), r = (val(s, 'gR') || 0) * sign(), w = latest('w') ?? val(s, 'gSw');
+      const el = s.querySelector('#gEta');
+      if (tw == null || w == null) return el.textContent = '';
+      if (!r) return el.textContent = `Hold around ${tw.toFixed(1)} kg.`;
+      const weeks = (tw - w) / r;
+      el.textContent = weeks > 0 ? `At ${sgn(r)} kg a week you reach ${tw.toFixed(1)} kg around ${shortDate(Date.now() + weeks * 7 * DAY)} (${Math.ceil(weeks)} weeks).`
+                                 : `Target weight is on the other side of this plan’s direction.`;
+    };
+    const syncSign = () => { const sg = sign(); s.querySelector('#gSign').textContent = sg > 0 ? '+' : sg < 0 ? '−' : '±';
+      rIn.disabled = sg === 0; if (sg === 0) rIn.value = 0; else if (!touched && !(val(s, 'gR') > 0)) rIn.value = Math.abs(TYPE_RATE[type]); eta(); };
+    segBind(seg, v => { type = v; if (!touched) rIn.value = Math.abs(TYPE_RATE[v]); syncSign(); });
+    rIn.addEventListener('input', () => { touched = true; eta(); });
+    ['gTw', 'gSw'].forEach(id => s.querySelector('#' + id).addEventListener('input', eta));
+    syncSign();
+    s.querySelector('#gSave').addEventListener('click', () => {
+      const name = s.querySelector('#gN').value.trim(); if (!name) { nudge(s.querySelector('#gN')); return s.querySelector('#gN').focus(); }
+      const out = { name, type, k: r0(val(s, 'gK') || d.k), p: r0(val(s, 'gP') ?? d.p), f: r0(val(s, 'gF') ?? d.f), c: r0(val(s, 'gC') ?? d.c),
+        tw: val(s, 'gTw') ?? d.tw, rate: (val(s, 'gR') || 0) * sign(), tbf: val(s, 'gBf') ?? d.tbf, sw: val(s, 'gSw') ?? d.sw };
+      if (isNew) { const ng = { id: uid(), ...out }; S.goals.push(ng); closeSheet(); switchGoal(ng.id); toast(`Created “${name}”`); }
+      else { Object.assign(g0, out); recenter(g0); save(); closeSheet(); renderAll(true); }
+    });
+  });
+}
+
+/* ================= budget ================= */
+function budget() {
+  const days = S.ui.bdays, rows = [];
+  const add = (e, g) => { if (g <= 0) return; const need = g * days;
+    const packs = e.pk ? Math.ceil(need / e.pk - 1e-9) : null, cost = packs != null && e.pr ? packs * e.pr : null;
+    rows.push({ e, need, packs, cost }); };
+  S.items.forEach(e => { if (e.t === 'g') { const mx = maxOf(e), r = mx ? Math.min(1, e.g / mx) : 0; e.ch.forEach(c => add(c, c.g * r)); } else add(e, e.g); });
+  rows.sort((a, b) => (b.cost ?? -1) - (a.cost ?? -1));
+  let unused = 0; walk(S.items, e => { if (e.t !== 'g' && !rows.some(r => r.e === e)) unused++; });
+  return { rows, total: rows.reduce((s, r) => s + (r.cost || 0), 0), packs: rows.reduce((s, r) => s + (r.packs || 0), 0), unused };
+}
+const qty = (e, g) => isPc(e) ? `${r0(g / e.uw)} pc` : g >= 1000 ? `${r1(g / 1000)} ${U(e) === 'ml' ? 'l' : 'kg'}` : `${r0(g)} ${U(e)}`;
+function renderBudget() {
+  const b = budget(), bl = $('#blist');
+  $('#budPlan').textContent = plan().name; perSet($('#bper'), String(S.ui.bdays));
+  if (!b.rows.length) { bl.innerHTML = `<li class="empty"><b>Nothing to buy</b>${esc(plan().name)} has no portions yet.</li>`; }
+  else bl.innerHTML = b.rows.map(r => {
+    const e = r.e, sub = [`<span>${qty(e, r.need)}</span>`];
+    if (e.pk) sub.push(`<span><i>pack</i> ${qty(e, e.pk)}</span>`);
+    if (e.pr) sub.push(`<span><i>×</i>${money(e.pr)}</span>`);
+    const muted = r.cost == null;
+    return `<li class="row${muted ? ' muted' : ''}" data-id="${e.id}"><div class="rc">
+      <span class="pill">${r.packs != null ? r.packs + '×' : '—'}</span>
+      <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${sub.join('')}${muted ? `<span>${e.pk ? 'add price' : 'add pack & price'}</span>` : ''}</div></div>
+      <div class="amt">${muted ? '' : money(r.cost)}</div></div></li>`;
+  }).join('');
+  $('#budFoot').innerHTML = `${b.unused ? `${b.unused} products are at 0 in ${esc(plan().name)}. ` : ''}Prices in <button id="curBtn">${esc(S.ui.cur)}</button>`;
+  $('#curBtn').addEventListener('click', () => nameSheet('Currency', S.ui.cur, 'Save', v => { S.ui.cur = v; save(); renderHeader(); renderBudget(); }));
+}
+function perSet(el, v) { el.querySelectorAll('button').forEach(b => { const on = b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); }
+$('#bper').addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return;
+  S.ui.bdays = +b.dataset.v; save(); perSet($('#bper'), b.dataset.v);
+  const before = snapRects($('#blist')); renderHeader(); renderBudget(); playFlip(before, {}, $('#blist')); });
+$('#budPlanBtn').addEventListener('click', () => planMenu($('#budPlanBtn')));
+
+/* ================= measure ================= */
+const mlog = $('#mlog'), chart = $('#chart');
+function profileSheet(then) {
+  const b = S.body || { sex: 'm', age: '' };
+  sheet(`<h3>Body profile${XBTN}</h3><p class="note">Used to turn skinfolds into body fat (Jackson–Pollock, 3 sites). Asked once.</p>
+    ${segHTML('pS', [['m', 'Male'], ['f', 'Female']], b.sex)}
+    <div class="card" style="margin-top:12px">${fnum('pA', 'Age', b.age, 'yrs', '30')}</div>
+    <button class="sbtn primary" id="pSave">Save</button>`, s => {
+    const seg = s.querySelector('#pS'); segBind(seg);
+    s.querySelector('#pSave').addEventListener('click', () => {
+      const age = val(s, 'pA'); if (!(age > 10 && age < 100)) { nudge(s.querySelector('#pA')); return s.querySelector('#pA').focus(); }
+      S.body = { sex: seg.dataset.v, age: r0(age) }; save(); closeSheet(); renderAll();
+      if (then) setTimeout(then, 420);
+    });
+  });
+}
+function entrySheet(e0) {
+  if (!S.body) return profileSheet(() => entrySheet(e0));
+  const ex = e0 || S.log.find(x => x.d === todayISO());
+  const e = ex ? JSON.parse(JSON.stringify(ex)) : { id: uid(), d: todayISO() };
+  const sites = SITES[S.body.sex];
+  sheet(`<h3>${ex ? 'Measurement' : 'New measurement'}${XBTN}</h3>
+    <div class="card">
+      <div class="field"><label for="eD">Date</label><span class="inp"><input type="date" id="eD" value="${e.d}" max="${todayISO()}"></span></div>
+      ${fnum('eW', 'Weight', e.w, 'kg', latest('w') != null ? latest('w').toFixed(1) : '0.0')}
+    </div>
+    <div class="cap">Skinfolds<span class="r">${S.body.sex === 'f' ? 'female' : 'male'}, ${S.body.age} · <button type="button" id="eProf" style="color:var(--ink);font-weight:590">change</button></span></div>
+    <div class="card">${sites.map(([k, l]) => fnum('s' + k, l, e.sf && e.sf[k], 'mm')).join('')}
+      <div class="field"><span class="fl">Body fat</span><span class="calc" id="eBf">—</span></div></div>
+    <div class="cap">Circumferences<span class="r">optional</span></div>
+    <div class="card">${CIRC.map(([k, l]) => fnum('c' + k, l, e.circ && e.circ[k], 'cm')).join('')}</div>
+    <button class="sbtn primary" id="eSave">Save</button>
+    ${ex ? '<button class="sbtn danger" id="eDel">Delete entry</button>' : ''}`, s => {
+    const sfRead = () => ({ a: val(s, 'sa'), b: val(s, 'sb'), c: val(s, 'sc') });
+    const bfPrev = () => { const v = bfFrom(sfRead(), S.body); s.querySelector('#eBf').textContent = v != null ? v.toFixed(1) + '%' : '—'; };
+    ['sa', 'sb', 'sc'].forEach(id => s.querySelector('#' + id).addEventListener('input', bfPrev)); bfPrev();
+    s.querySelector('#eProf').addEventListener('click', () => profileSheet(() => entrySheet(ex)));
+    s.querySelector('#eSave').addEventListener('click', () => {
+      const d = s.querySelector('#eD').value || todayISO(), w = val(s, 'eW'), sf = sfRead(), circ = {};
+      CIRC.forEach(([k]) => { const v = val(s, 'c' + k); if (v > 0) circ[k] = v; });
+      const hasSf = sf.a > 0 || sf.b > 0 || sf.c > 0;
+      if (!(w > 0) && !hasSf && !Object.keys(circ).length) { nudge(s.querySelector('#eW')); return s.querySelector('#eW').focus(); }
+      const out = { id: e.id, d, w: w > 0 ? r1(w) : null };
+      if (hasSf) out.sf = sf; if (Object.keys(circ).length) out.circ = circ;
+      S.log = S.log.filter(x => x.id !== e.id && x.d !== d); S.log.push(out);
+      save(); closeSheet(); renderHeader(); renderMeasure(true);
+      toast(ex ? 'Measurement updated' : 'Measurement saved');
+    });
+    if (ex) s.querySelector('#eDel').addEventListener('click', () => { closeSheet(); const el = mlog.querySelector(`[data-id="${ex.id}"]`); if (el) removeWithUndo('log', ex.id, el); });
+  });
+}
+function logPill(e) {
+  if (editing && editing.kind === 'w' && editing.id === e.id) return fieldHTML(editing.buf, e.w != null ? e.w.toFixed(1) : '0.0', 'kg');
+  return e.w != null ? e.w.toFixed(1) + 'kg' : '—';
+}
+function renderLog() {
+  swOpen = null;
+  const rows = logSorted().reverse();
+  if (!rows.length) { mlog.innerHTML = `<li class="empty"><b>No measurements yet</b>Tap + to log your weight.</li>`; $('#moreBox').innerHTML = ''; return; }
+  const ws = rows.filter(e => e.w != null);
+  mlog.innerHTML = rows.slice(0, S.ui.logN).map((e, i) => {
+    const prev = ws.find(x => x.d < e.d), bf = bfOf(e), bits = [];
+    if (e.w != null && prev) bits.push(`<span>${sgn(e.w - prev.w, 1)}</span>`);
+    if (bf != null) bits.push(`<span><i>fat</i> ${bf.toFixed(1)}%</span>`);
+    const nc = CIRC.filter(([k]) => e.circ && e.circ[k]).length; if (nc) bits.push(`<span><i>+${nc} sizes</i></span>`);
+    return `<li class="row${e.w == null ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}">${ACTS}
+      <div class="rc"><button class="pill" data-act="pill" aria-label="Weight ${fmtDate(e.d)}">${logPill(e)}</button>
+      <div class="info" data-act="info"><div class="name">${fmtDate(e.d)}</div><div class="mac">${bits.join('') || '<span>first entry</span>'}</div></div></div></li>`;
+  }).join('');
+  $('#moreBox').innerHTML = rows.length > S.ui.logN ? `<button class="more" id="moreBtn">Show ${Math.min(14, rows.length - S.ui.logN)} more</button>` : '';
+  const mb = $('#moreBtn'); if (mb) mb.addEventListener('click', () => { S.ui.logN += 14; save(); const b = snapRects(mlog); renderLog(); playFlip(b, {}, mlog); });
+}
+function statRow(pill, name, sub) {
+  return `<div class="row"><div class="rc"><span class="pill">${pill}</span><div class="info" style="cursor:default"><div class="name">${name}</div><div class="mac">${sub}</div></div></div></div>`;
+}
+function renderStats() {
+  const g = goal(), st = weightStats(), lw = latest('w'), bf = latest('bf');
+  let etaTxt = 'needs 1 week of data';
+  if (st.rate != null && st.trend != null) {
+    if (Math.abs(g.tw - st.trend) <= .3) etaTxt = 'at target weight';
+    else if (Math.abs(st.rate) < .02) etaTxt = 'weight is flat';
+    else { const weeks = (g.tw - st.trend) / st.rate; etaTxt = weeks > 0 && weeks < 260 ? `goal ~${shortDate(Date.now() + weeks * 7 * DAY)}` : 'moving away from goal'; }
+  }
+  $('#stats').innerHTML =
+    statRow(st.trend != null ? st.trend.toFixed(1) + 'kg' : '—', 'Trend weight', `<span>7-day average</span>${lw != null ? `<span>latest ${lw.toFixed(1)}</span>` : ''}`) +
+    statRow(st.rate != null ? sgn(st.rate) : '—', 'kg per week', `<span>target ${sgn(g.rate)}</span><span>${etaTxt}</span>`) +
+    statRow(bf != null ? bf.toFixed(1) + '%' : '—', 'Body fat', bf != null && lw != null ? `<span>lean ${(lw * (1 - bf / 100)).toFixed(1)} kg</span><span>target ${g.tbf}%</span>` : '<span>add skinfolds to estimate</span>');
+}
+function renderSug() {
+  const g = goal(), sg = suggestion(), box = $('#sugBox');
+  if (sg.kind !== 'adj' || S.ui.sugHide === todayISO()) { box.innerHTML = ''; return; }
+  const nk = g.k + sg.kcal;
+  box.innerHTML = `<div class="sug"><div class="sug-t">${sg.rate >= 0 ? 'Gaining' : 'Losing'} <b>${Math.abs(sg.rate).toFixed(2)} kg</b> a week, ${esc(g.name)} expects <b>${sgn(g.rate)}</b>. Try <b>${sg.kcal > 0 ? '+' : '−'}${Math.abs(sg.kcal)} kcal</b> a day.</div>
+    <div class="sug-b"><button class="sbtn primary" id="sugApply">Set ${nk} kcal</button><button class="sbtn plain" id="sugLater">Later</button></div></div>`;
+  $('#sugApply').addEventListener('click', () => applyKcal(sg.kcal));
+  $('#sugLater').addEventListener('click', () => { S.ui.sugHide = todayISO(); save(); const el = box.firstElementChild;
+    if (RM) return renderSug(); el.animate([{ opacity: 1 }, { opacity: 0, transform: 'scale(.97)' }], { duration: 200, fill: 'forwards' }).onfinish = renderSug; });
+}
+function recenter(g) { // keep each From–To window's width, move it to the new target
+  if (!g.rng) return;
+  for (const k in g.rng) { const h = (g.rng[k][1] - g.rng[k][0]) / 2; g.rng[k] = [r0(g[k] - h), r0(g[k] + h)]; }
+}
+function applyKcal(d) {
+  const g = goal(), before = JSON.parse(JSON.stringify(g));
+  g.k = Math.max(1000, g.k + d);
+  let c = g.c + d / 4; if (c < 60) { const rest = (60 - c) * 4; c = 60; g.f = Math.max(30, r0(g.f - rest / 9)); }
+  g.c = r0(c); recenter(g); save(); renderHeader(); renderMeasure();
+  toast(`${g.name}: ${g.k} kcal, carbs ${g.c} g`, { label: 'Undo', fn: () => { Object.assign(g, before); save(); renderHeader(); renderMeasure(); } });
+}
+function renderMeasure(animate) {
+  $('#metricName').textContent = METRICS[S.ui.metric].label;
+  perSet($('#mper'), S.ui.period);
+  drawChart(animate); renderSug(); renderLog();
+}
+
+/* ---- chart ---- */
+let CG = null;
+function drawChart(animate) {
+  const W = chart.clientWidth || 340, H = 180, padT = 14, padB = 20, padR = 34, key = S.ui.metric, M = METRICS[key], g = goal();
+  const pts = series(key), tr = trendOf(pts), now = dnum(todayISO());
+  const days = { w: 7, m: 30, q: 90 }[S.ui.period];
+  const t0 = days ? now - days * DAY : Math.min(pts.length ? pts[0].t : now, now - 6 * DAY), t1 = now;
+  const vp = pts.filter(p => p.t >= t0), vt = tr.filter(p => p.t >= t0), tip = $('#tip');
+  [...chart.children].forEach(c => { if (c !== tip) c.remove(); }); tip.classList.remove('show');
+  if (!vp.length) { CG = null; chart.insertAdjacentHTML('afterbegin', `<div class="empty"><div><b>No ${M.label.toLowerCase()} yet</b>${pts.length ? 'Nothing in this period.' : 'Tap + below to log it.'}</div></div>`); return; }
+  const target = key === 'w' ? g.tw : key === 'bf' ? g.tbf : null;
+  const vals = vp.map(p => p.v).concat(vt.map(p => p.v));
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  const showT = target != null && target > lo - (hi - lo + M.min * 3) && target < hi + (hi - lo + M.min * 3);
+  if (showT) { lo = Math.min(lo, target); hi = Math.max(hi, target); }
+  const pad = Math.max((hi - lo) * .12, M.min); lo -= pad; hi += pad;
+  const X = t => (t - t0) / Math.max(1, t1 - t0) * (W - padR), Y = v => padT + (hi - v) / (hi - lo) * (H - padT - padB), f = v => v.toFixed(M.dec);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${M.label} chart">`;
+  [hi - pad, lo + pad].forEach(v => { svg += `<line class="grid" x1="0" x2="${W - padR}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"/><text class="ylab" x="${W - padR + 6}" y="${(Y(v) + 3.5).toFixed(1)}">${f(v)}</text>`; });
+  if (showT) svg += `<line class="path" x1="0" x2="${W - padR}" y1="${Y(target).toFixed(1)}" y2="${Y(target).toFixed(1)}"/><text class="goal-lab" x="${W - padR + 6}" y="${(Y(target) + 3.5).toFixed(1)}">${f(target)}</text>`;
+  svg += vp.map(p => `<circle class="pt" cx="${X(p.t).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="2.5"/>`).join('');
+  if (vt.length > 1) {
+    const P = vt.map(p => [X(p.t), Y(p.v)]); let d = `M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
+    for (let i = 1; i < P.length; i++) { const [x0, y0] = P[i - 1], [x1, y1] = P[i], mx = (x0 + x1) / 2; d += ` C${mx.toFixed(1)},${y0.toFixed(1)} ${mx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; }
+    svg += `<path class="trend" id="trendPath" d="${d}" pathLength="1"/>`;
+  }
+  const L = vp[vp.length - 1];
+  svg += `<circle class="last" cx="${X(L.t).toFixed(1)}" cy="${Y(L.v).toFixed(1)}" r="4.5"/>`;
+  svg += `<text class="xlab" x="0" y="${H - 3}">${shortDate(t0)}</text><text class="xlab" x="${W - padR}" y="${H - 3}" text-anchor="end">today</text>`;
+  svg += `<line class="hair" id="hair" x1="0" x2="0" y1="${padT}" y2="${H - padB}" opacity="0"/><circle class="hdot" id="hdot" r="5" cx="-20" cy="-20" opacity="0"/></svg>`;
+  chart.insertAdjacentHTML('afterbegin', svg);
+  CG = { vp, tr, X, Y, W, padR, M };
+  if (animate !== false && !RM) {
+    const tp = chart.querySelector('#trendPath');
+    if (tp) tp.animate([{ strokeDasharray: '1 1', strokeDashoffset: 1 }, { strokeDasharray: '1 1', strokeDashoffset: 0 }], { duration: 900, easing: EASE });
+    chart.querySelectorAll('.pt').forEach((c, i, a) => c.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 300 * i / a.length, fill: 'backwards' }));
+  }
+}
+function scrub(clientX) {
+  if (!CG) return;
+  const r = chart.getBoundingClientRect(), x = clientX - r.left;
+  let best = CG.vp[0], bd = 1e9; CG.vp.forEach(p => { const d = Math.abs(CG.X(p.t) - x); if (d < bd) { bd = d; best = p; } });
+  const px = CG.X(best.t), py = CG.Y(best.v), tv = CG.tr.find(q => q.t === best.t);
+  const hair = $('#hair'), hd = $('#hdot');
+  hair.setAttribute('x1', px); hair.setAttribute('x2', px); hair.setAttribute('opacity', 1);
+  hd.setAttribute('cx', px); hd.setAttribute('cy', py); hd.setAttribute('opacity', 1);
+  const tip = $('#tip');
+  tip.innerHTML = `<b>${best.v.toFixed(CG.M.dec)} ${CG.M.unit}</b>${fmtDate(best.e.d)}${tv ? ` · trend ${tv.v.toFixed(CG.M.dec)}` : ''}`;
+  tip.classList.add('show');
+  const tw2 = tip.offsetWidth; tip.style.left = Math.max(0, Math.min(r.width - tw2, px - tw2 / 2)) + 'px';
+  tip.style.top = Math.max(-8, py - 58) + 'px';
+}
+function unscrub() { $('#tip').classList.remove('show'); const h = $('#hair'), d = $('#hdot'); if (h) h.setAttribute('opacity', 0); if (d) d.setAttribute('opacity', 0); }
+chart.addEventListener('pointerdown', e => { scrub(e.clientX); });
+chart.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || e.buttons) scrub(e.clientX); });
+chart.addEventListener('pointerleave', unscrub);
+chart.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') setTimeout(unscrub, 1400); });
+chart.addEventListener('pointercancel', unscrub);
+$('#mper').addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return; S.ui.period = b.dataset.v; save(); perSet($('#mper'), b.dataset.v); drawChart(true); });
+function metricMenu() {
+  menu($('#metricBtn'), [{ head: 'Chart' },
+    ...Object.entries(METRICS).map(([k, M]) => { const v = latest(k); return { label: M.label, check: S.ui.metric === k, right: v != null ? v.toFixed(M.dec) + ' ' + M.unit : '—', do: () => {
+      S.ui.metric = k; save(); $('#metricName').textContent = M.label; drawChart(true);
+      if (!RM) $('#metricName').animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: SPRING }); } }; }),
+    '-', { label: 'Body profile', right: S.body ? `${S.body.sex === 'f' ? 'F' : 'M'} ${S.body.age}` : 'not set', do: () => profileSheet() }]);
+}
+
+/* ================= tabs ================= */
+function syncTabs() {
+  document.body.classList.toggle('v2', !!S.ui.v2);
+  ['meal', 'measure', 'budget'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
+  document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
+  $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget';
+}
+function switchTab(tab) {
+  if (S.ui.tab !== tab) haptic();
+  if (S.ui.tab === tab) return scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' });
+  if (editing) commitKeypad(); swClose(false);
+  const from = secOf(S.ui.tab), dir = TABS.indexOf(tab) > TABS.indexOf(S.ui.tab) ? 1 : -1;
+  const go = () => {
+    S.ui.tab = tab; save(); syncTabs();
+    instant = true; renderAll(false); instant = false;
+    if (RM) return;
+    const to = secOf(tab);
+    to.animate([{ opacity: 0, transform: `translateX(${16 * dir}px)` }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
+    ['#bigRow', '#bars'].forEach((s, i) => $(s).animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: i * 40, easing: SPRING, fill: 'backwards' }));
+  };
+  if (RM) return go();
+  from.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-16 * dir}px)` }], { duration: 130, easing: EASE, fill: 'forwards' }).onfinish = () => { from.getAnimations().forEach(a => a.cancel()); go(); };
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  const tab = t.dataset.tab.toLowerCase();
+  if (TABS.includes(tab)) return switchTab(tab);
+  if (!RM) t.animate([{ transform: 'none' }, { transform: 'translateY(-4px)' }, { transform: 'none' }], { duration: 420, easing: SPRING });
+  toast(`${t.dataset.tab} is coming later`);
+}));
+
+/* ================= wiring ================= */
+$('#planBtn').addEventListener('click', () => planMenu($('#planBtn')));
+$('#planTitle').addEventListener('click', () => planMenu($('#planTitle')));
+$('#goalBtn').addEventListener('click', goalMenu);
+$('#sortBtn').addEventListener('click', () => sortMenu($('#sortBtn')));
+$('#addBtn').addEventListener('click', () => foodSheet(null, true));
+$('#metricBtn').addEventListener('click', metricMenu);
+$('#addEntryBtn2').addEventListener('click', () => entrySheet(null));
+$('#searchBtn').addEventListener('click', () => { const s = $('#search'); if (s.hidden) { const b = snapRects(); s.hidden = false; playFlip(b); } $('#q').focus(); });
+$('#q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); renderMeal(true); });
+$('#qCancel').addEventListener('click', () => { query = ''; $('#q').value = ''; $('#q').blur(); const b = snapRects(); $('#search').hidden = true; renderList(); playFlip(b); });
+let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (S.ui.tab === 'measure') drawChart(false); }, 150); });
+
+/* ================= boot ================= */
+syncTabs(); renderAll(false); $('#planName').textContent = plan().name;
+if (!RM) document.querySelectorAll('.plan > *, .tabsec:not([hidden]) > .list-head, .tabsec:not([hidden]) .list > *').forEach((el, i) => el.animate(
+  [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 520, delay: Math.min(i, 14) * 28, easing: SPRING, fill: 'backwards' }));
+})();
+
+</script>
+
+</body>
+</html>
