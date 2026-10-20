@@ -19,9 +19,9 @@
 /* Layout: one phone column (max 430px): shared plan header → divider → tab section (Meal | Measure) → floating tab bar.
    Tokens mirror Figma file "Jebal", Page 3; new components reuse the same surfaces: grey ground, #f6f6f6 cards r14, rgba pills r10, mono numbers. */
 :root{
-  --bg:#e5e5e5; --ink:#000; --ink-50:rgba(0,0,0,.6); --ink-40:rgba(0,0,0,.55); --ink-28:rgba(0,0,0,.3);
+  --bg:#f7f7f7; --ink:#000; --ink-50:rgba(0,0,0,.6); --ink-40:rgba(0,0,0,.55); --ink-28:rgba(0,0,0,.3);
   --fill-8:rgba(0,0,0,.1); --fill-6:rgba(0,0,0,.07); --fill-3:rgba(0,0,0,.035);
-  --line:rgba(0,0,0,.1); --card:#f6f6f6; --merge:#dddddd; --dot:#cecece;
+  --line:rgba(0,0,0,.1); --card:#ffffff; --merge:#ececec; --dot:#cecece;
   --blue:#235fd0; --win:#9fb3d8;
   --ghost:#d57b0e; --ghost-ink:#905105; --ghost-fill:rgba(213,123,14,.16); --ghost-fill-0:rgba(213,123,14,.08); --ghost-ink-0:rgba(144,81,4,.5);
   --red:#d63a2f; --red-fill:rgba(214,58,47,.13);
@@ -241,9 +241,8 @@ body.v2 #zlist{margin-top:14px}
 
 /* ---------- tab bar ---------- */
 .tabbar{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:max(20px,calc(env(safe-area-inset-bottom,0px) - 12px));
-  display:flex;align-items:center;gap:16px;height:64px;padding:0 24px;border-radius:80px;background:rgba(255,255,255,.75);
-  -webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);
-  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.7),0 6px 24px rgba(0,0,0,.04);transition:transform .45s var(--spring),opacity .3s}
+  display:flex;align-items:center;gap:16px;height:64px;padding:0 24px;border-radius:80px;background:#fff;
+  box-shadow:0 0 0 .5px rgba(0,0,0,.04),0 6px 24px rgba(0,0,0,.06);transition:transform .45s var(--spring),opacity .3s}
 body.kb-open .tabbar{transform:translateX(-50%) translateY(140%);opacity:0}
 .tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;line-height:14px;color:var(--ink-40);font-feature-settings:"ss17" 1,"cv08" 1;transition:transform .3s var(--spring),color .3s}
 .tab:active{transform:scale(.9)}
@@ -252,7 +251,7 @@ body.kb-open .tabbar{transform:translateX(-50%) translateY(140%);opacity:0}
 .tab.on svg{opacity:1}
 
 /* ---------- precise edit ---------- */
-.precise{position:fixed;z-index:20;left:0;right:0;bottom:0;top:var(--ptop,0px);background:rgba(229,229,229,.1);
+.precise{position:fixed;z-index:20;left:0;right:0;bottom:0;top:var(--ptop,0px);background:rgba(247,247,247,.1);
   -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);opacity:0;transition:opacity .3s var(--ease);touch-action:none}
 .precise.show{opacity:1}
 .pcard{position:absolute;display:flex;gap:16px;align-items:flex-start;color:var(--ink)}
@@ -419,6 +418,96 @@ body.tab-measure .mhero{display:block}
 .brow.muted .amt,.brow.muted .name{color:var(--ink-40)}
 .bfoot{margin:22px 4px 0;font-size:13px;line-height:18px;color:var(--ink-50)}
 
+
+/* ---------- Figma 384:17674 — list + list head ---------- */
+.plan{padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+body.tab-meal .mhead{padding-bottom:0;box-shadow:0 1px 0 var(--line)!important}
+body.tab-meal .mhead .list-head{height:24px;margin:0;padding:14px 0}
+body.tab-meal .mhead .search{margin:0 0 12px}
+body.v2 #sortBtn{display:flex}
+body.v2 .tools{gap:10px;padding-left:12px}
+body.v2 .tools .ibtn{width:24px;height:24px}
+body.v2 .tools .ibtn svg{width:24px;height:24px;margin:0;opacity:1}
+body.tab-meal #list{margin-top:16px}
+#list,#zlist{gap:8px}
+#secMeal .rc{align-items:center;gap:10px}
+#secMeal .pill,body.v2 #secMeal .pill{min-width:72px;height:40px;padding:0 10px;font-weight:500;background:rgba(0,0,0,.08)}
+#secMeal .name{font-weight:510;letter-spacing:-.16px}
+#secMeal .mac{gap:8px;color:#000}
+#secMeal .mac i{color:rgba(0,0,0,.5);margin-right:1px}
+#secMeal .row.zero>.rc>.pill,#secMeal .group.zero>.ghead>.rc>.pill{background:rgba(0,0,0,.04);color:rgba(0,0,0,.5)}
+#secMeal .row.zero>.rc .name,#secMeal .group.zero>.ghead .name{font-weight:400;letter-spacing:-.32px;color:rgba(0,0,0,.5)}
+#secMeal .row.zero>.rc .mac,#secMeal .row.zero>.rc .mac i,#secMeal .group.zero>.ghead .mac,#secMeal .group.zero>.ghead .mac i{color:rgba(0,0,0,.5)}
+#secMeal .sa{height:40px}
+body.ghost #secMeal .pill{background:var(--ghost-fill);color:var(--ghost-ink)}
+body.ghost #secMeal .row.zero>.rc>.pill{background:var(--ghost-fill-0);color:var(--ghost-ink-0)}
+
+/* ---------- header styles 51 / 53 / 55 / 56 (switch in the goal plan menu) ---------- */
+.hv{display:none;margin-top:20px;font-variant-numeric:tabular-nums}
+body.tab-meal.hv-on .hv{display:flex;flex-direction:column;gap:6px}
+body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
+.hv .op{opacity:.55;font-weight:600}
+.hv em{font-style:normal;font-family:var(--mono);font-weight:700;white-space:nowrap}
+.hs{transition:background-color .3s,color .3s,box-shadow .3s}
+.hs.ok{background:var(--blue);color:#fff}
+.hs.under{background:transparent;color:#000;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.22)}
+.hs.over{background:#000;color:#fff}
+.ht{position:relative;height:4px;border-radius:2px;background:rgba(0,0,0,.1)}
+.ht .w{position:absolute;left:30%;width:40%;top:-3px;bottom:-3px;border-radius:3px;background:rgba(159,179,216,.7)}
+.ht .dt{position:absolute;left:var(--x,50%);top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:5px;background:currentColor;transition:left .55s var(--spring)}
+.ok .ht,.over .ht{background:rgba(255,255,255,.25)}
+.ok .ht .w{background:rgba(255,255,255,.35)}
+.over .ht .w{background:rgba(159,179,216,.55)}
+.hk{box-sizing:border-box;padding:12px 16px 14px;border-radius:18px;display:flex;flex-direction:column;gap:10px}
+.hk-top{display:flex;align-items:baseline;gap:6px}
+.hk-top b{font-size:36px;line-height:36px;font-weight:510;letter-spacing:-.8px}
+.hk-top .u{font-size:17px;font-weight:510;opacity:.65}
+.hk-top em{margin-left:auto;font-size:15px}
+.hk .ht .dt{width:12px;height:12px;margin:-6px 0 0 -6px}
+.hr{height:42px;border-radius:12px;display:grid;grid-template-columns:60px 76px minmax(0,1fr) 54px;align-items:center;gap:8px;padding:0 14px}
+.hr .hl{font-size:14px;font-weight:510}
+.hr .hn{font-family:var(--mono);font-size:14px;font-weight:700}
+.hr em{text-align:right;font-size:13px}
+.hcs{display:grid;gap:6px}
+.hc{box-sizing:border-box;border-radius:16px;padding:10px;display:flex;flex-direction:column;justify-content:space-between}
+.hc-top{display:flex;font-size:12px;font-weight:510}
+.hc-top span{opacity:.8}
+.hc-top em{margin-left:auto;font-size:12px}
+.hc .ht{height:3px}
+.hc .ht .dt{width:9px;height:9px;margin:-4.5px 0 0 -4.5px}
+.hv53 .hcs{grid-template-columns:repeat(4,minmax(0,1fr))}
+.hv53 .hc{height:118px}
+.hv53 .hc b{font-size:22px;line-height:24px;font-weight:600;letter-spacing:-.6px;display:block}
+.hv53 .hc .of{font-family:var(--mono);font-size:11px;font-weight:600;opacity:.6}
+.hv55 .hcs{grid-template-columns:repeat(3,minmax(0,1fr))}
+.hv55 .hc{height:92px;padding:10px 12px}
+.hv55 .hc .hn{font-family:var(--mono);font-size:18px;font-weight:700}
+.hv55 .hc .hn .op{font-size:12px}
+.h56{box-sizing:border-box;padding:16px;border-radius:20px;display:flex;flex-direction:column;gap:12px}
+.h56 .hk-top{align-items:center}
+.h56 .sep{height:1px;background:currentColor;opacity:.18}
+.h56 .r{display:grid;grid-template-columns:58px 76px minmax(0,1fr) 56px;gap:8px;align-items:center}
+.h56 .r .hl{font-size:14px;opacity:.85}
+.h56 .r .hn{font-family:var(--mono);font-size:14px;font-weight:700}
+.h56 .r .ht{background:currentColor;opacity:1}
+.h56 .r .ht::before{content:"";position:absolute;inset:0;border-radius:2px;background:var(--trk)}
+.h56 .chip{justify-self:end;display:flex;align-items:center;height:24px;padding:0 8px;border-radius:12px;font-size:12px;transition:background-color .3s,color .3s,box-shadow .3s}
+.h56 .r .ht{background:none}
+.h56 .r .ht::before{background:currentColor;opacity:.22}
+.h56 .r .ht .w{background:currentColor;opacity:.2}
+.h56 .r .dt{box-sizing:border-box;width:12px;height:12px;margin:-6px 0 0 -6px}
+.h56 .r.ok .dt{background:currentColor}
+.h56 .r.under .dt{background:transparent;border:2.5px solid currentColor}
+.h56 .r.over .dt{background:#000;border:2px solid currentColor}
+.h56.ok .r.ok .chip{background:#fff;color:var(--blue)}
+.h56:not(.ok) .r.ok .chip{background:var(--blue);color:#fff}
+.h56 .r.ok .dt{background:var(--blue);border:2px solid currentColor}
+.h56.ok .r.ok .dt{background:#fff;border:0}
+.h56 .r.under .chip{box-shadow:inset 0 0 0 1.5px currentColor}
+.h56 .r.over .chip{background:#000;color:#fff}
+.h56.over .r.over .chip{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
+.h56 .hk-top em{font-size:13px;display:flex;align-items:center;height:26px;padding:0 10px;border-radius:13px;background:rgba(127,127,127,.2)}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
@@ -448,6 +537,7 @@ body.tab-measure .mhero{display:block}
       <div class="macro"><div class="mlabel"><span class="cur">0</span><span class="sl">/</span><span class="goal">0</span> <span class="lbl">fat</span></div><div class="track"><div class="win"></div><div class="mark"></div></div></div>
       <div class="macro"><div class="mlabel"><span class="cur">0</span><span class="sl">/</span><span class="goal">0</span> <span class="lbl">carbs</span></div><div class="track"><div class="win"></div><div class="mark"></div></div></div>
     </div>
+    <div class="hv" id="hv"></div>
     <div class="mhero" id="mHero">
       <div class="mh-top"><span class="mh-w" id="mhW">—</span><span class="mh-u">kg</span><span class="mh-chip" id="mhRate">—</span></div>
       <div class="mh-sub" id="mhSub"></div>
@@ -622,7 +712,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '51' };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
@@ -786,6 +876,7 @@ function renderHeader() {
     renderRing(ratio, inR);
     [['p', 'protein'], ['f', 'fat'], ['c', 'carbs']].forEach(([k, l], i) => setBar(i, { label: l, cur: t[k], goal: g[k], tol: tolOf(k), overRed: true }));
     $('#bCur').classList.toggle('over', t.k - g.k > tolOf('k'));
+    renderHV(g, t);
   }
 }
 
@@ -812,6 +903,40 @@ function renderMHero() {
   $('#mhEnds').innerHTML = `<span><b>${g.sw.toFixed(1)}</b> start</span><span>${mid}</span><span>goal <b>${g.tw.toFixed(1)}</b></span>`;
 }
 
+/* ---- header styles: total + goal, signed deviation, status colour (blue in range, outline short, black over) ---- */
+const HV_TRACK = '<div class="ht"><i class="w"></i><i class="dt"></i></div>';
+const HV_LAB = { k: 'kcal', p: 'Protein', f: 'Fat', c: 'Carbs' };
+function hvMarkup(st) {
+  const kcard = (cls) => `<div class="hs hk ${cls || ''}" data-m="k"><div class="hk-top"><b class="v"></b><span class="u">/ <span class="g"></span> kcal</span><em class="d"></em></div>${HV_TRACK}</div>`;
+  const chip = (m, big) => `<div class="hs hc" data-m="${m}"><div class="hc-top"><span>${HV_LAB[m]}</span><em class="d"></em></div>` +
+    (big ? `<div><b class="v"></b><span class="of">of <span class="g"></span></span></div>` : `<span class="hn"><span class="v"></span><span class="op"> / <span class="g"></span></span></span>`) + HV_TRACK + '</div>';
+  if (st === '51') return kcard() + ['p', 'f', 'c'].map(m => `<div class="hs hr" data-m="${m}"><span class="hl">${HV_LAB[m]}</span><span class="hn"><span class="v"></span><span class="op">/<span class="g"></span></span></span>${HV_TRACK}<em class="d"></em></div>`).join('');
+  if (st === '53') return `<div class="hcs">${['k', 'p', 'f', 'c'].map(m => chip(m, true)).join('')}</div>`;
+  if (st === '55') return kcard() + `<div class="hcs">${['p', 'f', 'c'].map(m => chip(m, false)).join('')}</div>`;
+  return `<div class="hs h56" data-m="k"><div class="hk-top"><b class="v"></b><span class="u">/ <span class="g"></span> kcal</span><em class="d"></em></div><div class="sep"></div>` +
+    ['p', 'f', 'c'].map(m => `<div class="r" data-m="${m}"><span class="hl">${HV_LAB[m]}</span><span class="hn"><span class="v"></span><span class="op">/<span class="g"></span></span></span>${HV_TRACK}<em class="d chip"></em></div>`).join('') + '</div>';
+}
+function renderHV(g, t) {
+  const box = $('#hv'), st = S.ui.hv || 'classic';
+  if (!S.ui.v2 || st === 'classic') return;
+  if (box.dataset.s !== st) { box.dataset.s = st; box.className = 'hv hv' + st; box.innerHTML = hvMarkup(st); }
+  const rngOf = k => g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)];
+  let allOk = true;
+  box.querySelectorAll('[data-m]').forEach(el => {
+    const k = el.dataset.m, v = t[k], [lo, hi] = rngOf(k), goalV = g[k], half = Math.max(.5, (hi - lo) / 2), dev = r0(v - goalV);
+    const state = v < lo ? 'under' : v > hi ? 'over' : 'ok'; if (state !== 'ok') allOk = false;
+    el.classList.remove('ok', 'under', 'over'); el.classList.add(state);
+    el.querySelector(':scope .v').textContent = r0(v); el.querySelector(':scope .g').textContent = r0(goalV);
+    const sg = dev > 0 ? '+' : dev < 0 ? '−' : '±';
+    el.querySelector(':scope .d').textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev);
+    const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
+    if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
+  });
+  if (allOk !== wasAllOk && wasAllOk !== null && allOk) haptic();
+  wasAllOk = allOk;
+}
+let wasAllOk = null;
+
 /* ================= meal list ================= */
 const list = $('#list');
 let editing = null;   // {kind:'g'|'w', id, buf, dec}
@@ -822,7 +947,7 @@ const isPc = e => e.t !== 'g' && U(e) === 'pc' && e.uw > 0;
 const toU = (e, g) => isPc(e) ? Math.round(g / e.uw * 10) / 10 : g;
 const fmtAmt = (e, g) => e.t === 'g' ? `${g}g` : `${toU(e, g)}${uLab(e)}`;
 const money = v => Math.round(v).toLocaleString('ru-RU');
-const macHTML = m => `<span><i>K</i>${r0(m.k)}</span><span><i>P</i>${r0(m.p)}</span><span><i>F</i>${r0(m.f)}</span><span><i>C</i>${r0(m.c)}</span>`;
+const macHTML = m => `<span><i>KCAL</i>${r0(m.k)}</span><span><i>P</i>${r0(m.p)}</span><span><i>F</i>${r0(m.f)}</span><span><i>C</i>${r0(m.c)}</span>`;
 function fieldHTML(buf, ph, unit) { return buf ? `${buf}<i class="caret"></i>${unit}` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
 function pillHTML(e) {
   if (editing && editing.id === e.id) return fieldHTML(editing.buf, e.t === 'g' ? maxOf(e) : toU(e, e.g), e.t === 'g' ? 'g' : uLab(e));
@@ -1436,6 +1561,13 @@ function switchGoal(id) {
   if (!RM) $('#goalName').animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: SPRING });
   renderAll(true);
 }
+const HV_STYLES = [['51', 'Rows with totals · 51'], ['53', 'Four chips · 53'], ['55', 'Card + chips · 55'], ['56', 'Status card · 56'], ['classic', 'Ring + bars (classic)']];
+function setHV(k) {
+  S.ui.hv = k; save(); syncTabs(); $('#hv').dataset.s = ''; instant = true; renderHeader(); instant = false;
+  const el = k === 'classic' ? $('#bigRow') : $('#hv');
+  if (!RM) el.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
+  setHH && setHH(); toast(HV_STYLES.find(x => x[0] === k)[1]);
+}
 function goalMenu() {
   const g = goal();
   menu($('#goalBtn'), [{ head: 'Goal plans' },
@@ -1446,6 +1578,9 @@ function goalMenu() {
     { label: 'Duplicate', do: () => { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); } },
     { label: 'Delete', danger: true, disabled: S.goals.length < 2, do: () => confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete goal plan', () => {
       const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); }) },
+    '-',
+    { head: 'Header style' },
+    ...HV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.hv || 'classic') === k, do: () => setHV(k) })),
     '-',
     { label: S.ui.v2 ? 'Use old main screen' : 'Use new main screen', do: () => { S.ui.v2 = !S.ui.v2; save(); syncTabs(); instant = true; renderAll(false); instant = false; } },
     { label: 'Reset demo data', danger: true, do: () => confirmSheet('Reset demo data?', 'All products, plans and measurements on this device are replaced with the demo set.', 'Reset', () => {
@@ -1746,6 +1881,7 @@ function metricMenu() {
 /* ================= tabs ================= */
 function syncTabs() {
   document.body.classList.toggle('v2', !!S.ui.v2);
+  document.body.classList.toggle('hv-on', !!S.ui.v2 && (S.ui.hv || 'classic') !== 'classic');
   ['meal', 'measure', 'budget'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
   $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget';
