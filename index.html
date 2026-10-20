@@ -649,7 +649,7 @@ body.lv-03 #mhead .tools .ibtn svg{width:22px;height:22px;margin:0}
 
 /* ---------- main screen A: chips on top, collapse on scroll (Design options → Main screen) ---------- */
 body.ma.tab-meal .plan{top:-48px}
-body.ma.tab-meal .app{min-height:calc(100vh + 110px);box-sizing:border-box}
+body.ma.tab-meal .app{box-sizing:border-box}
 html,body{overflow-anchor:none}
 body.ma .title-row h1{font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.2px;color:var(--ink-50)}
 body.ma .title-row .dots{transform:scale(.85);transform-origin:left center}
@@ -783,8 +783,7 @@ body.ma.tab-meal #list{margin-top:8px}
 #secMeal .merge-target>.rc .info::after,#secMeal .merge-target>.ghead>.rc .info::after{content:attr(data-hint);font-size:12px;line-height:14px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .drag-clone>.rc{transition:transform .25s var(--spring),opacity .2s}
-.drag-clone.merging>.rc{transform:scale(.97);opacity:.9}
-.drag-clone.sliding{transition:transform .26s var(--spring)}
+.drag-clone.merging>.rc{transform:scale(.98);opacity:.85}
 .drag-clone.merging::before{opacity:.92!important}
 </style>
 
@@ -1283,7 +1282,7 @@ const zlist = $('#zlist'), zHead = $('#zHead');
 function renderList() {
   swOpen = null;
   const items = S.items.filter(matches), v2 = !!S.ui.v2; dayK = Math.max(1, totals().k);
-  zHead.hidden = zlist.hidden = true; zlist.innerHTML = '';
+  zHead.hidden = zlist.hidden = true; zlist.innerHTML = ''; requestAnimationFrame(() => typeof fitRoom === 'function' && fitRoom());
   if (!S.items.length) { list.innerHTML = `<li class="empty"><b>No products yet</b>Tap + to add the first one.</li>`; return; }
   if (!items.length) { list.innerHTML = `<li class="empty"><b>Nothing found</b>No product matches “${esc(query)}”.</li>`; return; }
   const html = (arr, o = 0) => arr.map((e, i) => e.t === 'g' ? groupHTML(e, i + o) : rowHTML(e, i + o)).join('');
@@ -1312,9 +1311,9 @@ function playFlip(before, opts = {}, root = list) {
     let dx = b.left - a.left, dy = b.top - a.top;
     const p = el.parentElement.closest('[data-id]'); if (p && deltas.has(p.dataset.id)) { const d = deltas.get(p.dataset.id); dx -= d[0]; dy -= d[1]; }
     deltas.set(id, [b.left - a.left, b.top - a.top]);
-    if (Math.abs(dx) > .5 || Math.abs(dy) > .5) el.animate([{ transform: `translate(${dx}px,${dy}px)` }, { transform: 'none' }], { duration: 520, easing: SPRING });
+    if (Math.abs(dx) > .5 || Math.abs(dy) > .5) el.animate([{ transform: `translate(${dx}px,${dy}px)` }, { transform: 'none' }], { duration: opts.dur || 520, easing: opts.ease || SPRING });
     if (el.classList.contains('group') && a.height - b.height > 1)
-      el.animate([{ clipPath: `inset(0 0 ${a.height - b.height}px 0 round 14px)` }, { clipPath: 'inset(0 0 0 0 round 14px)' }], { duration: 480, easing: SPRING });
+      el.animate([{ clipPath: `inset(0 0 ${a.height - b.height}px 0 round 14px)` }, { clipPath: 'inset(0 0 0 0 round 14px)' }], { duration: opts.dur || 480, easing: opts.ease || SPRING });
   });
 }
 function renderMeal(flip = true, opts) {
@@ -1530,14 +1529,15 @@ function toggleGroup(gr) {
 let drag = null, dragEndAt = 0;
 function startDrag(id, el, x, y) {
   let r = find(id);
-  if (r.parent) { // lifting a product out of its group: the group closes the gap smoothly
+  // the lifted row keeps its own shape and stays exactly under the finger; it lives inside the meal section so it keeps the list's look
+  const rect = el.getBoundingClientRect(), clone = el.cloneNode(true);
+  if (r.parent) { // lifting a product out of its group: the group closes the gap smoothly, the empty slot waits right after it
     const gr = r.parent, gi = S.items.indexOf(gr), full = gr.g >= maxOf(gr), b0 = snapRects();
     gr.ch.splice(r.i, 1); const nm = maxOf(gr); gr.g = full ? nm : Math.min(gr.g, nm);
     S.items.splice(gi + 1, 0, r.e); fixGroup(gr, S.items);
-    renderList(); renderHeader(); el = list.querySelector(`[data-id="${id}"]`); playFlip(b0, { skip: id });
+    renderList(); renderHeader(); el = list.querySelector(`[data-id="${id}"]`); el.classList.add('slot');
+    playFlip(b0, { skip: id, dur: 320, ease: EASE });
   }
-  // the lifted row keeps its own shape; it lives inside the meal section so it keeps the list's look
-  const rect = el.getBoundingClientRect(), clone = el.cloneNode(true);
   clone.classList.add('drag-clone', 'lifted'); clone.classList.remove('pressing', 'merge-target', 'slot');
   Object.assign(clone.style, { left: rect.left + 'px', top: rect.top + 'px', width: rect.width + 'px', transform: 'scale(1.03)' });
   ($('#secMeal') || document.body).appendChild(clone);
@@ -1547,6 +1547,12 @@ function startDrag(id, el, x, y) {
   drag.raf = requestAnimationFrame(autoScroll);
 }
 const siblings = () => [...list.children].filter(n => n.dataset.id && n !== drag.el);
+// a row's resting box, without any FLIP transform in flight, so targets don't flicker while rows glide
+function restRect(n) {
+  const r = n.getBoundingClientRect(), t = getComputedStyle(n).transform;
+  if (!t || t === 'none') return r;
+  const m = new DOMMatrixReadOnly(t); return { top: r.top - m.m42, bottom: r.bottom - m.m42, height: r.height };
+}
 function moveDrag(x, y) {
   drag.x = x; drag.y = y;
   updateTarget(); placeClone();
@@ -1554,27 +1560,24 @@ function moveDrag(x, y) {
 // over a merge target the clone shrinks and slides right, so the row it will join stays visible underneath
 function placeClone() {
   const m = !!drag.target;
-  // over a drop target the row slides right so the target's folder badge stays visible
-  const dx = Math.max(-24, Math.min(24, (drag.x - drag.x0) * .35)) + (m ? 68 : 0);
+  const dx = Math.max(-24, Math.min(24, (drag.x - drag.x0) * .35));
   drag.clone.style.transform = `translate(${dx}px, ${drag.y - drag.y0}px) scale(1.03)`;
-  if (drag.clone.classList.contains('merging') !== m) { // animate only the slide in/out, not the finger-following
-    drag.clone.classList.add('sliding'); clearTimeout(drag.st); drag.st = setTimeout(() => drag && drag.clone.classList.remove('sliding'), 260); }
   drag.clone.classList.toggle('merging', m);
 }
 function updateTarget() {
   const y = drag.y; let target = null;
   // generous drop zone: most of a row groups; only a thin edge (and the gap) reorders. Once over a row, stay on it until the finger leaves it.
-  if (drag.target && drag.target.isConnected) { const r = drag.target.getBoundingClientRect(); if (y > r.top - 3 && y < r.bottom + 3) target = drag.target; }
-  if (!target) for (const n of siblings()) { const r = n.getBoundingClientRect(), band = Math.min(7, r.height * .15); if (y > r.top + band && y < r.bottom - band) { target = n; break; } }
+  if (drag.target && drag.target.isConnected) { const r = restRect(drag.target); if (y > r.top - 3 && y < r.bottom + 3) target = drag.target; }
+  if (!target) for (const n of siblings()) { const r = restRect(n), band = Math.min(7, r.height * .15); if (y > r.top + band && y < r.bottom - band) { target = n; break; } }
   if (target !== drag.target) { if (drag.target) drag.target.classList.remove('merge-target'); if (target) { target.classList.add('merge-target'); haptic();
     const te = find(target.dataset.id).e, info = target.querySelector('.info');
     if (info) info.dataset.hint = te.t === 'g' ? `Drop to add to ${te.name}` : 'Drop to make a group · 2 items'; }
     drag.target = target; placeClone(); }
   if (target) return;
   let before = null;
-  for (const n of siblings()) { const r = n.getBoundingClientRect(); if (y < r.top + r.height / 2) { before = n; break; } }
+  for (const n of siblings()) { const r = restRect(n); if (y < r.top + r.height / 2) { before = n; break; } }
   if (drag.el.nextElementSibling === before || (!before && drag.el === list.lastElementChild)) return;
-  const snap = snapRects(); list.insertBefore(drag.el, before); playFlip(snap, { skip: drag.id }); haptic();
+  const snap = snapRects(); list.insertBefore(drag.el, before); playFlip(snap, { skip: drag.id, dur: 300, ease: EASE }); haptic();
 }
 function autoScroll() {
   if (!drag) return;
@@ -1598,7 +1601,7 @@ function endDrag(cancelled) {
   const merged = landId !== d.id;
   // land where the product really ends up: its own row (inside the open group when merged), else the group head
   const own = list.querySelector(`[data-id="${d.id}"]`), land = own || list.querySelector(`[data-id="${landId}"]`);
-  playFlip(before, { skip: own ? d.id : landId }, $('#secMeal'));
+  playFlip(before, { skip: own ? d.id : landId, dur: 380, ease: EASE }, $('#secMeal'));
   if (!land) { d.clone.remove(); return; }
   const host = land.classList.contains('group') ? land.querySelector(':scope>.ghead') : land;
   host.style.visibility = 'hidden';
@@ -1608,7 +1611,7 @@ function endDrag(cancelled) {
   d.clone.classList.remove('merging');
   d.clone.animate([{ transform: d.clone.style.transform, width: d.rect.width + 'px' },
     { transform: `translate(${lr.left - fin[0] - d.rect.left}px, ${lr.top - fin[1] - d.rect.top}px) scale(1)`, width: lr.width + 'px' }],
-    { duration: RM ? 1 : 360, easing: SPRING, fill: 'forwards' }).onfinish = () => {
+    { duration: RM ? 1 : 380, easing: EASE, fill: 'forwards' }).onfinish = () => {
       host.style.visibility = ''; d.clone.remove();
       if (merged && !RM) { const g = list.querySelector(`[data-id="${landId}"]`), pill = g && g.querySelector(':scope>.ghead>.rc>.pill, :scope>.rc>.pill');
         if (pill) pill.animate([{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 420, easing: SPRING }); }
@@ -2050,8 +2053,8 @@ const MI = {
   check: '<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 };
 // status of a set of totals against the active goal: o = over, u = under, k = in range
-function statusOf(t) {
-  const g = goal(), rng = k => g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)];
+function statusOf(t, g = goal()) {
+  const rng = k => g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)];
   return ['k', 'p', 'f', 'c'].map(k => { const [lo, hi] = rng(k); return t[k] < lo ? 'u' : t[k] > hi ? 'o' : 'k'; });
 }
 function planTotals(p) {
@@ -2157,17 +2160,28 @@ function designMenu() {
     '-', { head: 'Fine-tune style (hold grams)' },
     ...PV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.pv || 'classic') === k, do: () => { S.ui.pv = k; save(); toast(l + ' — hold any amount'); } }))]);
 }
+// Goal plans in the Menu 4 style: today's day checked against each goal (K/P/F/C dots), actions in a tray
 function goalMenu() {
-  const g = goal();
-  menu($('#goalBtn'), [{ head: 'Goal plans' },
-    ...S.goals.map(x => ({ label: x.name, check: x.id === g.id, right: typeName(x.type), do: () => x.id !== g.id && switchGoal(x.id) })),
-    '-',
-    { label: `Edit “${g.name}”`, do: () => goalSheet(g, false) },
-    { label: 'New goal plan', do: () => goalSheet(null, true) },
-    { label: 'Duplicate', do: () => { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); } },
-    { label: 'Delete', danger: true, disabled: S.goals.length < 2, do: () => confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete goal plan', () => {
-      const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); }) },
-  ]);
+  const g = goal(), t = totals(), SL = { o: 'over', u: 'under', k: 'in range' }, ML = ['kcal', 'protein', 'fat', 'carbs'];
+  const rows = S.goals.map(x => { const st = statusOf(t, x), on = x.id === g.id;
+    return `<button class="mpr${on ? ' on' : ''}" data-gid="${x.id}" role="menuitemradio" aria-checked="${on}">
+      <span class="mpt"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>
+      <span class="mpd" aria-label="today: ${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span></button>`; }).join('');
+  const acts = [['edit', 'Edit', MI.pen], ['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['del', 'Delete', MI.trash]]
+    .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.goals.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
+  popup($('#goalBtn'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
+    const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
+    haptic(); closeMenu();
+    setTimeout(() => {
+      if (r) { if (r.dataset.gid !== g.id) switchGoal(r.dataset.gid); return; }
+      const k = a.dataset.a;
+      if (k === 'edit') goalSheet(g, false);
+      if (k === 'new') goalSheet(null, true);
+      if (k === 'dup') { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); }
+      if (k === 'del') confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete goal plan', () => {
+        const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); });
+    }, 60);
+  });
 }
 function goalSheet(g0, isNew) {
   const src = g0 || goal(), d = { ...src };
@@ -2482,7 +2496,7 @@ function switchTab(tab) {
   const from = secOf(S.ui.tab), dir = TABS.indexOf(tab) > TABS.indexOf(S.ui.tab) ? 1 : -1;
   const go = () => {
     S.ui.tab = tab; save(); syncTabs();
-    instant = true; renderAll(false); instant = false; collapse(true);
+    instant = true; renderAll(false); instant = false; collapse(true); fitRoom();
     if (RM) return;
     const to = secOf(tab);
     to.animate([{ opacity: 0, transform: `translateX(${16 * dir}px)` }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
@@ -2514,7 +2528,7 @@ $('#addEntryBtn2').addEventListener('click', () => entrySheet(null));
 $('#searchBtn').addEventListener('click', () => { const s = $('#search'); if (s.hidden) { const b = snapRects(); s.hidden = false; playFlip(b); } $('#q').focus(); });
 $('#q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); renderMeal(true); });
 $('#qCancel').addEventListener('click', () => { query = ''; $('#q').value = ''; $('#q').blur(); const b = snapRects(); $('#search').hidden = true; renderList(); playFlip(b); });
-let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (S.ui.tab === 'measure') drawChart(false); }, 150); });
+let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { fitRoom(); if (S.ui.tab === 'measure') drawChart(false); }, 150); });
 
 /* ---- meal: the plan header and list title stay put ---- */
 const mhead = $('#mhead'), hdr = document.querySelector('header.plan');
@@ -2528,6 +2542,16 @@ function collapse(force) {
   if (!force && c === maC && t === 1) return;
   hdr.style.setProperty('--t', t.toFixed(3)); hdr.style.setProperty('--c', c.toFixed(3)); maC = c;
   hdr.classList.toggle('ma-col', c >= 1); setHH();
+}
+// room to collapse the header only when the list is longer than the screen anyway; a short list doesn't scroll at all
+function fitRoom() {
+  const app = document.querySelector('.app'); if (!app) return;
+  if (!maOn()) { app.style.minHeight = ''; return; }
+  // natural content height with the header fully open (measured without touching layout-affecting styles)
+  const last = [zlist, zHead, list].find(e => !e.hidden && e.offsetParent); if (!last) return;
+  const bottom = last.getBoundingClientRect().bottom + scrollY + parseFloat(getComputedStyle(app).paddingBottom) + MA_SHRINK * Math.max(0, maC);
+  if (bottom - innerHeight > 1) app.style.minHeight = `calc(100vh + ${MA_TITLE + MA_SHRINK + 4}px)`;
+  else { app.style.minHeight = ''; if (scrollY > 0) scrollTo(0, 0); }
 }
 let snapT;
 const snapHead = () => { clearTimeout(snapT); snapT = setTimeout(() => {
