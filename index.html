@@ -540,6 +540,8 @@ body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
 .px-chips em{font-style:normal;font-family:var(--mono);font-weight:700}
 .px-day{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
 .px-day.hv53 .hc{height:104px}
+.precise.px-ov.px-below{z-index:31}
+.px-below .px{padding-top:8px}
 .px-day.hv53{display:block}
 .px-day em{font-style:normal;font-family:var(--mono);font-weight:700;white-space:nowrap}
 .px-day .op{opacity:.55;font-weight:600}
@@ -957,10 +959,10 @@ function renderMHero() {
 
 /* ---- header styles: total + goal, signed deviation, status colour (blue in range, outline short, black over) ---- */
 const HV_TRACK = '<div class="ht"><i class="w"></i><i class="dt"></i></div>';
-const HV_LAB = { k: 'kcal', p: 'Protein', f: 'Fat', c: 'Carbs' };
+const HV_LAB = { k: 'kcal', p: 'Protein', f: 'Fat', c: 'Carbs' }, CHIP_LAB = { k: 'kcal', p: 'P', f: 'F', c: 'C' };
 function hvMarkup(st) {
   const kcard = (cls) => `<div class="hs hk ${cls || ''}" data-m="k"><div class="hk-top"><b class="v"></b><span class="u">/ <span class="g"></span> kcal</span><em class="d"></em></div>${HV_TRACK}</div>`;
-  const chip = (m, big) => `<div class="hs hc" data-m="${m}"><div class="hc-top"><span>${HV_LAB[m]}</span><em class="d"></em></div>` +
+  const chip = (m, big) => `<div class="hs hc" data-m="${m}"><div class="hc-top"><span>${CHIP_LAB[m]}</span><em class="d"></em></div>` +
     (big ? `<div><b class="v"></b><span class="of">of <span class="g"></span></span></div>` : `<span class="hn"><span class="v"></span><span class="op"> / <span class="g"></span></span></span>`) + HV_TRACK + '</div>';
   if (st === '51') return kcard() + ['p', 'f', 'c'].map(m => `<div class="hs hr" data-m="${m}"><span class="hl">${HV_LAB[m]}</span><span class="hn"><span class="v"></span><span class="op">/<span class="g"></span></span></span>${HV_TRACK}<em class="d"></em></div>`).join('');
   if (st === '53') return `<div class="hcs">${['k', 'p', 'f', 'c'].map(m => chip(m, true)).join('')}</div>`;
@@ -1377,7 +1379,7 @@ function dayState() {
 function openPrecise2(r, y, holding, pv) {
   const e = r.e, ruler = pv !== '16', STEP = pv === '16' ? 50 : 14;
   const ov = document.createElement('div'); ov.className = 'precise px-ov';
-  const head = pv === '18' ? `<div class="px-day hv53">${hvMarkup('53')}</div>` : '';
+  const head = ''; // 18: the real header chips stay in place above the overlay and update live
   const info = pv === '16'
     ? `<div class="px-name">${esc(e.name)}</div><div class="px-drumwrap"><i class="px-hl"></i><div class="px-drum"></div></div>
        <div class="px-drh"><span>${e.t === 'g' ? 'grams' : U(e) === 'pc' ? 'pieces' : U(e) === 'ml' ? 'ml' : 'grams'}</span><span>kcal</span><span>P</span><span>F</span><span>C</span></div>`
@@ -1385,6 +1387,8 @@ function openPrecise2(r, y, holding, pv) {
       (pv === '12' ? `<div class="px-sep"></div><div class="px-mac4">${['kcal', 'Protein', 'Fat', 'Carbs'].map((l, i) => `<div><span>${l}</span><b class="m${i}"></b></div>`).join('')}</div>`
                    : `<div class="px-mline"></div>`) + (pv === '15' ? '<div class="px-chips"></div>' : '');
   ov.innerHTML = `<div class="px px${pv}">${head}<div class="px-body">${ruler ? '<div class="px-ruler"></div><i class="px-mark"></i>' : ''}<div class="px-info">${info}${e.t === 'g' ? '<div class="pmax"></div>' : ''}</div></div></div>`;
+  if (pv === '18') { const hv = $('#hv'), b = (hv && hv.offsetParent ? hv : document.querySelector('header.plan')).getBoundingClientRect().bottom;
+    ov.style.top = Math.round(b + 10) + 'px'; ov.classList.add('px-below'); }
   document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('show'));
   const card = ov.querySelector('.px-info'), rul = ov.querySelector('.px-ruler');
   if (!RM) card.animate([{ opacity: 0, transform: (pv === '16' ? '' : 'translateY(-50%) ') + 'scale(.96)' }, { opacity: 1, transform: pv === '16' ? 'none' : 'translateY(-50%)' }], { duration: 420, easing: SPRING });
@@ -1408,7 +1412,7 @@ function openPrecise2(r, y, holding, pv) {
     if (rul) { const n0 = Math.round(e.g / unit), c = H / 2;
       ticks.forEach((t, i) => { const k = i - M, yy = c + k * STEP + off, big = ((n0 + k) % 5 + 5) % 5 === 0, d = Math.min(1, Math.abs(yy - c) / c);
         t.style.transform = `translateY(${yy.toFixed(1)}px)`; t.style.width = (big ? 40 : 22) + 'px'; t.style.opacity = ((big ? .55 : .28) * (1 - d * .85)).toFixed(3); }); }
-    if (pv === '15' || pv === '18') {
+    if (pv === '15') {
       const ds = dayState();
       if (pv === '15') ov.querySelector('.px-chips').innerHTML = ds.map(x => `<span class="hs ${x.st}"><small>${x.k === 'k' ? 'kcal' : x.l[0]}</small><em>${x.d}</em></span>`).join('');
       else ds.forEach(x => { const el = ov.querySelector(`.px-day [data-m="${x.k}"]`); el.classList.remove('ok', 'under', 'over'); el.classList.add(x.st);
