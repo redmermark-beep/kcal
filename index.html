@@ -646,6 +646,29 @@ body.lv-03.tab-meal .mhead .list-head{height:40px;padding:4px 0}
 body.lv-03 #mhead .tools{gap:2px;margin-right:-8px}
 body.lv-03 #mhead .tools .ibtn{width:40px;height:40px;border-radius:20px;display:grid;place-items:center}
 body.lv-03 #mhead .tools .ibtn svg{width:22px;height:22px;margin:0}
+
+/* ---------- main screen A: chips on top, collapse on scroll (Design options → Main screen) ---------- */
+body.ma.tab-meal .plan{top:-48px}
+body.ma.tab-meal .app{min-height:calc(100vh + 110px);box-sizing:border-box}
+html,body{overflow-anchor:none}
+body.ma .title-row h1{font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.2px;color:var(--ink-50)}
+body.ma .title-row .dots{transform:scale(.85);transform-origin:left center}
+body.ma.tab-meal .title-row{opacity:calc(1 - var(--t,0));transition:none}
+body.ma.tab-meal .divider{display:none}
+body.ma.tab-meal .plan{padding-bottom:0}
+body.ma.tab-meal .hv{margin-top:20px}
+body.ma.tab-meal .hv53 .hc{height:calc(118px - 54px * var(--c,0))}
+body.ma.tab-meal .hv53 .hc b{font-size:calc(22px - 5px * var(--c,0));line-height:calc(24px - 4px * var(--c,0))}
+body.ma.tab-meal .hv53 .hc .of{display:block;overflow:hidden;max-height:calc(14px * (1 - var(--c,0)));opacity:calc(.6 - var(--c,0) * 1.8)}
+body.ma.tab-meal .mhead{box-shadow:none!important;transition:box-shadow .2s}
+body.ma.tab-meal .mhead.stuck{box-shadow:0 1px 0 var(--line)!important}
+body.ma.tab-meal .mhead .list-head{padding:16px 0 12px}
+/* A: tab bar — active section is a soft capsule with its label, the rest are icons */
+body.ma .tabbar{gap:2px;height:56px;padding:0 6px;border-radius:28px}
+body.ma .tab{flex-direction:row;justify-content:center;gap:6px;min-width:48px;height:44px;padding:0;border-radius:22px;font-size:0;line-height:0;color:var(--ink);transition:background-color .3s,padding .35s var(--spring),transform .3s var(--spring)}
+body.ma .tab svg{width:24px;height:24px;opacity:.45}
+body.ma .tab.on{padding:0 16px 0 12px;background:rgba(0,0,0,.08);font-size:15px;line-height:20px;font-weight:590}
+body.ma .tab.on svg{opacity:1}
 </style>
 
 <div class="app" id="app">
@@ -787,18 +810,28 @@ const ICON = {
 };
 /* Haptics: Android has navigator.vibrate. iOS Safari (17.4+/18) gives a system tick when a switch-style
    checkbox is toggled by a click on its label, so we build that label, click it, and throw it away. */
+let touching = false, pending = false;
+addEventListener('touchstart', () => { touching = true; }, { passive: true, capture: true });
+const endTouch = e => { if (e.touches && e.touches.length) return; touching = false; if (pending) { pending = false; haptic(); } };
+addEventListener('touchend', endTouch, { passive: true }); addEventListener('touchcancel', () => { touching = false; pending = false; }, { passive: true });
 const haptic = (() => {
   let last = 0;
   const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   return () => {
     const now = performance.now(); if (now - last < 30) return; last = now;
-    try {
-      if (!ios && navigator.vibrate) { navigator.vibrate(10); return; }
-      const label = document.createElement('label'); label.setAttribute('aria-hidden', 'true'); label.style.display = 'none';
-      const input = document.createElement('input'); input.type = 'checkbox'; input.setAttribute('switch', ''); label.appendChild(input);
-      document.head.appendChild(label); label.click(); label.remove();
-    } catch (e) {}
+    if (!ios) { try { navigator.vibrate && navigator.vibrate(10); } catch (e) {} return; }
+    // iOS (18+) only plays the switch haptic inside a user gesture: while a finger is down, queue it for touchend
+    if (touching) { pending = true; return; }
+    fire();
   };
+  function fire() {
+    try {
+      const label = document.createElement('label'); label.setAttribute('aria-hidden', 'true');
+      label.style.cssText = 'position:fixed;left:-99px;top:0;width:1px;height:1px;opacity:0;pointer-events:none';
+      const input = document.createElement('input'); input.type = 'checkbox'; input.setAttribute('switch', ''); label.appendChild(input);
+      document.body.appendChild(label); label.click(); label.remove();
+    } catch (e) {}
+  }
 })();
 const ACTS = `<div class="acts"><button class="sa ed" data-sw="edit" aria-label="Edit">${ICON.pencil}</button><button class="sa del" data-sw="del" aria-label="Delete">${ICON.trash}</button></div>`;
 const XBTN = `<button class="x" data-close aria-label="Close">${ICON.x}</button>`;
@@ -1831,6 +1864,7 @@ function setHV(k) {
 }
 const PV_STYLES = [['12', 'Edge ruler · 12'], ['15', 'Ruler + day status · 15'], ['16', 'Table drum · 16'], ['18', 'Four chips + ruler · 18'], ['classic', 'Small wheel (classic)']];
 const LV_STYLES = [['01', 'Toolbar capsule · 01'], ['03', 'Plan tabs · 03'], ['11', 'Toolbar + kcal right · 11'], ['12', 'Kcal + share bar · 12'], ['17', 'Kcal inside the tile · 17'], ['classic', 'Classic list']];
+if (S && S.ui && S.ui.mav !== 1) { S.ui.ma = true; S.ui.mav = 1; S.ui.v2 = true; S.ui.lv = '01'; S.ui.lvv = 2; S.ui.hv = '53'; S.ui.pv = '18'; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 if (S && S.ui && S.ui.lvv !== 2) { S.ui.lv = '01'; S.ui.lvv = 2; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 function setLV(k) {
   const before = snapRects($('#secMeal'));
@@ -1841,8 +1875,12 @@ function placeTools() {
   const on = !!S.ui.v2 && ['11', '12', '17'].includes(S.ui.lv), dst = on ? $('#ltool') : $('#mhead .tools');
   ['ghostBtn', 'sortBtn', 'searchBtn', 'addBtn'].forEach(id => { const b = $('#' + id); if (b.parentElement !== dst) dst.appendChild(b); });
 }
+function setMA(on) { S.ui.ma = on; save(); syncTabs(); collapse(true); setHH(); toast(on ? 'Main screen: A · collapsing header' : 'Main screen: previous'); }
 function designMenu() {
-  menu($('#goalBtn'), [{ head: 'Product list' },
+  menu($('#goalBtn'), [{ head: 'Main screen' },
+    { label: 'A · chips collapse on scroll', check: !!S.ui.ma, do: () => setMA(true) },
+    { label: 'Previous', check: !S.ui.ma, do: () => setMA(false) },
+    '-', { head: 'Product list' },
     ...LV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.lv || 'classic') === k, do: () => setLV(k) })),
     '-', { head: 'Header style' },
     ...HV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.hv || 'classic') === k, do: () => setHV(k) })),
@@ -2166,6 +2204,7 @@ function syncTabs() {
   ['01', '03', '11', '12', '17'].forEach(k => document.body.classList.toggle('lv-' + k, lv === k));
   document.body.classList.toggle('lv-on', ['11', '12', '17'].includes(lv));
   document.body.classList.toggle('lv-c', lv === '01' || lv === '03'); placeTools();
+  document.body.classList.toggle('ma', !!S.ui.v2 && !!S.ui.ma);
   ['meal', 'measure', 'budget'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
   $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget';
@@ -2177,7 +2216,7 @@ function switchTab(tab) {
   const from = secOf(S.ui.tab), dir = TABS.indexOf(tab) > TABS.indexOf(S.ui.tab) ? 1 : -1;
   const go = () => {
     S.ui.tab = tab; save(); syncTabs();
-    instant = true; renderAll(false); instant = false;
+    instant = true; renderAll(false); instant = false; collapse(true);
     if (RM) return;
     const to = secOf(tab);
     to.animate([{ opacity: 0, transform: `translateX(${16 * dir}px)` }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
@@ -2213,8 +2252,26 @@ let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(
 
 /* ---- meal: the plan header and list title stay put ---- */
 const mhead = $('#mhead'), hdr = document.querySelector('header.plan');
-const setHH = () => document.documentElement.style.setProperty('--hh', hdr.offsetHeight + 'px');
-if (window.ResizeObserver) new ResizeObserver(setHH).observe(hdr); setHH();
+const MA_TITLE = 48, MA_SHRINK = 54;   // A: goal row scrolls away, then chips shrink 118 → 64
+const maOn = () => document.body.classList.contains('ma') && S.ui.tab === 'meal';
+const setHH = () => document.documentElement.style.setProperty('--hh', (hdr.offsetHeight - (maOn() ? MA_TITLE : 0)) + 'px');
+let maC = -1;
+function collapse(force) {
+  const on = maOn(), y = Math.max(0, scrollY);
+  const t = on ? Math.min(1, y / MA_TITLE) : 0, c = on ? Math.min(1, Math.max(0, (y - MA_TITLE) / MA_SHRINK)) : 0;
+  if (!force && c === maC && t === 1) return;
+  hdr.style.setProperty('--t', t.toFixed(3)); hdr.style.setProperty('--c', c.toFixed(3)); maC = c;
+  hdr.classList.toggle('ma-col', c >= 1); setHH();
+}
+let snapT;
+const snapHead = () => { clearTimeout(snapT); snapT = setTimeout(() => {
+  if (!maOn() || touching || precise || drag) return;
+  const y = scrollY, end = MA_TITLE + MA_SHRINK;
+  if (y > 2 && y < end - 2) scrollTo({ top: y < end / 2 ? 0 : end, behavior: RM ? 'auto' : 'smooth' });
+}, 140); };
+addEventListener('scroll', () => { collapse(); if (!touching) snapHead(); }, { passive: true });
+addEventListener('touchend', () => snapHead(), { passive: true });
+if (window.ResizeObserver) new ResizeObserver(setHH).observe(hdr); setHH(); collapse(true);
 const stickTop = () => S.ui.tab === 'meal' ? mhead.getBoundingClientRect().bottom : 0;
 let stuckRaf = 0;
 addEventListener('scroll', () => { if (stuckRaf) return; stuckRaf = requestAnimationFrame(() => { stuckRaf = 0;
