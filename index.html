@@ -726,6 +726,49 @@ body.ma.tab-meal #list{margin-top:8px}
 /* ---------- Black theme: the light design inverted (ground becomes true black), status hues kept ---------- */
 :root[data-theme="black"]{--bg:#fff;--card:#ececec;--merge:#dcdcdc;--tab:#f2f2f2;filter:invert(1) hue-rotate(180deg)}
 .st-sw.dk i.o{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35)}
+
+/* ---------- Menu 4: meal plans with status + action tray ---------- */
+.menu.mp{width:310px;min-width:0;border-radius:24px}
+.mpr{display:flex;align-items:center;gap:12px;width:100%;height:60px;padding:0 12px;border-radius:18px;text-align:left;transition:background-color .15s}
+.mpr:active{background:rgba(0,0,0,.05)}
+.mpr.on{background:rgba(0,0,0,.06)}
+.mpt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.mpt b{font-size:16px;font-weight:510;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mpr.on .mpt b{font-weight:600}
+.mpt span{font-family:var(--mono);font-size:12px;color:var(--ink-50)}
+.mpd{display:flex;gap:4px;flex:none}
+.mpd i{width:10px;height:10px;border-radius:5px;box-sizing:border-box}
+.mpd i.o{background:var(--over,#000)}
+.mpd i.u{box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3)}
+.mpd i.k{background:var(--blue)}
+.mpa{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:6px;padding:4px;border-radius:18px;background:rgba(0,0,0,.04)}
+.mpa button{height:56px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:510;color:var(--ink);transition:background-color .15s}
+.mpa button:active{background:rgba(0,0,0,.06)}
+.mpa button svg{width:20px;height:20px}
+.mpa button.danger{color:var(--red)}
+.mpa button[disabled]{opacity:.35;pointer-events:none}
+/* ---------- Sort 1: rows + tray ---------- */
+.menu.ms{width:300px;min-width:0;border-radius:24px}
+.msh{padding:8px 12px 6px;font-size:13px;font-weight:510;color:var(--ink-50)}
+.msr{display:flex;align-items:center;gap:12px;width:100%;height:52px;padding:0 12px;border-radius:16px;text-align:left;transition:background-color .15s}
+.msr:active{background:rgba(0,0,0,.05)}
+.msr.on{background:rgba(0,0,0,.06)}
+.msr .ic{width:32px;height:32px;flex:none;border-radius:10px;background:rgba(0,0,0,.06);display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:700;transition:background-color .2s,color .2s}
+.msr.on .ic{background:var(--ink);color:var(--bg)}
+.mst{flex:1;min-width:0;display:flex;flex-direction:column}
+.mst b{font-size:16px;font-weight:510}
+.msr.on .mst b{font-weight:600}
+.mst span{font-size:12px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msr>svg{width:14px;height:14px;flex:none}
+.mstray{display:flex;flex-direction:column;gap:8px;margin-top:6px;padding:8px;border-radius:18px;background:rgba(0,0,0,.04)}
+.mseg{display:flex;gap:2px;padding:2px;border-radius:12px;background:rgba(0,0,0,.06)}
+.mseg button{flex:1;height:36px;border-radius:10px;font-size:13px;font-weight:510;color:var(--ink-50);transition:background-color .2s,color .2s}
+.mseg button.on{background:var(--card);color:var(--ink);font-weight:590;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.msw{display:flex;align-items:center;gap:8px;min-height:36px;padding:0 4px;font-size:14px}
+.msw span{flex:1}
+.swt.sm{width:44px;height:26px;border-radius:13px}
+.swt.sm i{width:22px;height:22px;border-radius:11px}
+.swt.sm.on i{transform:translateX(18px)}
 </style>
 
 <div class="app" id="app">
@@ -1947,26 +1990,93 @@ function switchPlan(id) {
     renderAll(false); const L = S.ui.tab === 'budget' ? $('#bcards') : list; L.animate([{ opacity: 0, transform: 'translateX(12px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: SPRING });
   };
 }
+// generic anchored popup in the menu style (same placement, scrim and close as menu())
+function popup(anchor, cls, html, onClick) {
+  closeMenu();
+  const m = document.createElement('div'); m.className = 'menu ' + cls; m.setAttribute('role', 'menu'); m.innerHTML = html;
+  document.body.appendChild(m);
+  const place = () => { const a = anchor.getBoundingClientRect(), w = m.offsetWidth, h = m.offsetHeight;
+    const right = a.left + a.width / 2 > innerWidth / 2, left = right ? Math.max(12, Math.min(a.right + 4, innerWidth - 12) - w) : Math.min(Math.max(12, a.left - 4), innerWidth - w - 12);
+    let top = a.bottom + 8; if (top + h > innerHeight - 12) top = Math.max(12, a.top - h - 8);
+    m.style.left = left + 'px'; m.style.top = top + 'px';
+    m.style.setProperty('--ox', (a.left + a.width / 2 - left) + 'px'); m.style.setProperty('--oy', (top > a.top ? 0 : h) + 'px'); };
+  place();
+  m.addEventListener('click', e => onClick(e, m));
+  const scrim = document.createElement('div'); scrim.style.cssText = 'position:fixed;inset:0;z-index:49';
+  scrim.addEventListener('pointerdown', e => { e.preventDefault(); closeMenu(); });
+  document.body.appendChild(scrim);
+  openMenu = { m, scrim };
+  return m;
+}
+const MI = {
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h10v10H9zM5 15V5h10"/></svg>',
+  pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  check: '<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+// status of a set of totals against the active goal: o = over, u = under, k = in range
+function statusOf(t) {
+  const g = goal(), rng = k => g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)];
+  return ['k', 'p', 'f', 'c'].map(k => { const [lo, hi] = rng(k); return t[k] < lo ? 'u' : t[k] > hi ? 'o' : 'k'; });
+}
+function planTotals(p) {
+  if (p === plan()) return totals();
+  const keep = JSON.stringify(S.items); applyGrams(p); const t = totals(); S.items = JSON.parse(keep); return t;
+}
+// Menu 4: plans with their K/P/F/C status, actions in a tray
 function planMenu(anchor) {
   save();
-  const items = [{ head: 'Meal plans' }, ...S.plans.map(p => ({ label: p.name, check: p.id === S.active, right: r0(planKcal(p)) + ' kcal', do: () => p.id !== S.active && switchPlan(p.id) }))];
-  items.push('-',
-    { label: 'New meal plan', do: () => nameSheet('New meal plan', 'New meal', 'Create', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); }) },
-    { label: 'Duplicate', do: () => { save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); toast('Meal plan duplicated'); } },
-    ...(S.ui.v2 ? [{ label: 'Sort list…', do: () => sortMenu($('#planTitle')) }] : []),
-    { label: 'Rename', do: () => nameSheet('Rename meal plan', plan().name, 'Save', v => { plan().name = v; save(); renderMeal(false); }) },
-    { label: 'Delete', danger: true, disabled: S.plans.length < 2, do: () => confirmSheet(`Delete “${esc(plan().name)}”?`, 'Portions saved in this meal plan will be removed. Products stay in your list.', 'Delete meal plan', () => {
-      const i = S.plans.indexOf(plan()); S.plans.splice(i, 1); switchPlan(S.plans[Math.max(0, i - 1)].id); toast('Meal plan deleted'); }) });
-  menu(anchor || $('#planBtn'), items);
+  const SL = { o: 'over', u: 'under', k: 'in range' }, ML = ['kcal', 'protein', 'fat', 'carbs'];
+  const rows = S.plans.map(p => { const t = planTotals(p), st = statusOf(t), on = p.id === S.active;
+    return `<button class="mpr${on ? ' on' : ''}" data-pid="${p.id}" role="menuitemradio" aria-checked="${on}">
+      <span class="mpt"><b>${esc(p.name)}</b><span>${r0(t.k)} kcal</span></span>
+      <span class="mpd" aria-label="${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span></button>`; }).join('');
+  const acts = [['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['ren', 'Rename', MI.pen], ['del', 'Delete', MI.trash]]
+    .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.plans.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
+  popup(anchor || $('#planTitle'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
+    const r = e.target.closest('[data-pid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
+    haptic(); closeMenu();
+    setTimeout(() => {
+      if (r) { if (r.dataset.pid !== S.active) switchPlan(r.dataset.pid); return; }
+      const k = a.dataset.a;
+      if (k === 'new') nameSheet('New meal plan', 'New meal', 'Create', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); });
+      if (k === 'dup') { save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); toast('Meal plan duplicated'); }
+      if (k === 'ren') nameSheet('Rename meal plan', plan().name, 'Save', v => { plan().name = v; save(); renderMeal(false); });
+      if (k === 'del') confirmSheet(`Delete “${esc(plan().name)}”?`, 'Portions saved in this meal plan will be removed. Products stay in your list.', 'Delete meal plan', () => {
+        const i = S.plans.indexOf(plan()); S.plans.splice(i, 1); switchPlan(S.plans[Math.max(0, i - 1)].id); toast('Meal plan deleted'); });
+    }, 60);
+  });
+}
+// Sort 1: rows + a tray (direction, sort inside groups). Stays open so you see the list re-order behind it.
+const SORTS = [['k', 'K', 'Calories', e => mac(e).k], ['p', 'P', 'Protein', e => mac(e).p], ['g', 'g', 'Amount', e => e.g], ['n', 'A', 'Name', null]];
+function applySort() {
+  const u = S.ui, s = SORTS.find(x => x[0] === u.sortBy); if (!s) return;
+  const dir = u.sortDir === 'asc' ? 1 : -1;
+  const cmp = s[3] ? (a, b) => (s[3](a) - s[3](b)) * dir : (a, b) => a.name.localeCompare(b.name, 'ru') * (u.sortDir === 'desc' ? -1 : 1);
+  const root = $('#secMeal'), before = snapRects(root);
+  S.items.sort(cmp); if (u.sortInside) S.items.forEach(e => { if (e.t === 'g') e.ch.sort(cmp); });
+  save(); renderList(); renderHeader(); playFlip(before, {}, root);
+}
+function sortHTML() {
+  const u = S.ui, firstOf = s => { const arr = S.items.filter(e => e.g > 0); if (!arr.length) return ''; const d = u.sortDir === 'asc' ? 1 : -1;
+    const top = s[3] ? arr.reduce((a, b) => (s[3](b) - s[3](a)) * d < 0 ? b : a) : [...arr].sort((a, b) => a.name.localeCompare(b.name, 'ru') * (u.sortDir === 'desc' ? -1 : 1))[0];
+    return `${esc(top.name)} first`; };
+  return `<div class="msh">Sort ${esc(plan().name)} by</div>` + SORTS.map(s => `<button class="msr${u.sortBy === s[0] ? ' on' : ''}" data-s="${s[0]}" role="menuitemradio" aria-checked="${u.sortBy === s[0]}">
+      <span class="ic">${s[1]}</span><span class="mst"><b>${s[2]}</b><span>${firstOf(s)}</span></span>${u.sortBy === s[0] ? MI.check : ''}</button>`).join('') +
+    `<div class="mstray"><div class="mseg"><button data-d="desc" class="${u.sortDir !== 'asc' ? 'on' : ''}">${'High → low'}</button><button data-d="asc" class="${u.sortDir === 'asc' ? 'on' : ''}">Low → high</button></div>
+      <label class="msw"><span>Sort inside groups</span><button class="swt sm${u.sortInside ? ' on' : ''}" role="switch" aria-checked="${!!u.sortInside}" data-in="1"><i></i></button></label></div>`;
 }
 function sortMenu(anchor) {
-  const apply = fn => { const root = $('#secMeal'), before = snapRects(root); S.items.sort(fn); save(); renderList(); renderHeader(); playFlip(before, {}, root); };
-  menu(anchor && anchor.getBoundingClientRect ? anchor : $('#sortBtn'), [{ head: 'Sort by' },
-    { label: 'Calories, high to low', do: () => apply((a, b) => mac(b).k - mac(a).k) },
-    { label: 'Protein, high to low', do: () => apply((a, b) => mac(b).p - mac(a).p) },
-    { label: 'Portion, large to small', do: () => apply((a, b) => b.g - a.g) },
-    { label: 'Name, A to Z', do: () => apply((a, b) => a.name.localeCompare(b.name)) },
-    '-', { label: 'Eaten first, 0 g last', do: () => apply((a, b) => (a.g === 0) - (b.g === 0)) }]);
+  popup(anchor && anchor.getBoundingClientRect ? anchor : $('#sortBtn'), 'ms', sortHTML(), (e, m) => {
+    const s = e.target.closest('[data-s]'), d = e.target.closest('[data-d]'), w = e.target.closest('[data-in]'); if (!s && !d && !w) return;
+    haptic();
+    if (s) S.ui.sortBy = s.dataset.s;
+    if (d) S.ui.sortDir = d.dataset.d;
+    if (w) S.ui.sortInside = !S.ui.sortInside;
+    if (!S.ui.sortBy) S.ui.sortBy = 'k';
+    applySort(); m.innerHTML = sortHTML();
+  });
 }
 
 /* ---- goal plans ---- */
