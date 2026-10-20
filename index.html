@@ -612,6 +612,40 @@ body.lv-17 #secMeal .pill{position:relative;min-width:92px;height:56px;padding:0
 body.lv-17 #secMeal .pill::after{content:attr(data-k) " kcal";position:absolute;left:12px;bottom:10px;font-size:11px;line-height:13px;font-weight:400;color:rgba(0,0,0,.5)}
 body.lv-17 #secMeal .kids .pill{min-width:84px;height:52px;font-size:17px}
 body.lv-17 #secMeal .kids .pill::after{bottom:9px}
+
+/* ---------- compact list styles 01 / 03: kcal on the right ---------- */
+.ptabs,.lsum{display:none}
+body.lv-c #secMeal .kr{display:flex;flex:none;flex-direction:column;align-items:flex-end;min-width:44px;font-variant-numeric:tabular-nums}
+body.lv-c #secMeal .kr b{font-size:16px;line-height:20px}
+body.lv-c #secMeal .kids .kr b{font-size:15px;line-height:19px}
+body.lv-c #secMeal .kr small{font-size:11px;line-height:13px}
+body.lv-c #secMeal .mac>span:first-child{display:none}
+body.lv-c #secMeal .mac{gap:10px}
+/* 01: icons in one capsule, black add, ingredients on a rail */
+body.lv-01 #planName{font-size:22px;line-height:24px;letter-spacing:-.5px}
+body.lv-01.tab-meal .mhead .list-head{height:40px;padding:8px 0}
+body.lv-01 #mhead .tools{gap:2px;height:40px;padding:0 4px;border-radius:20px;background:rgba(0,0,0,.06);align-items:center}
+body.lv-01 #mhead .tools .ibtn{width:36px;height:36px;border-radius:18px;display:grid;place-items:center}
+body.lv-01 #mhead .tools .ibtn svg{width:22px;height:22px;margin:0}
+body.lv-01 #mhead #addBtn{background:#000}
+body.lv-01 #mhead #addBtn svg{width:20px;height:20px}
+body.lv-01 #mhead #addBtn path{stroke:#fff}
+body.lv-01 #secMeal .kids{margin-left:16px;padding-left:14px;box-shadow:inset 1.5px 0 0 rgba(0,0,0,.12);gap:8px}
+body.lv-01 #secMeal .kids .row::after{display:none}
+/* 03: plan chips on top, summary + 40px icons below */
+body.lv-03 .ptabs{display:flex;gap:6px;overflow-x:auto;margin:0 -16px;padding:12px 16px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+body.lv-03 .ptabs::-webkit-scrollbar{display:none}
+.ptab{flex:none;height:36px;padding:0 14px;border-radius:18px;background:rgba(0,0,0,.06);font-size:15px;font-weight:510;color:#000;white-space:nowrap;transition:background-color .25s,color .25s,transform .25s var(--spring)}
+.ptab:active{transform:scale(.95)}
+.ptab.on{background:#000;color:#fff}
+.ptab.padd{width:36px;padding:0;display:grid;place-items:center}
+.ptab.padd svg{width:16px;height:16px}
+body.lv-03 #planTitle{display:none}
+body.lv-03 .lsum{display:block;font-size:13px;color:rgba(0,0,0,.55);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+body.lv-03.tab-meal .mhead .list-head{height:40px;padding:4px 0}
+body.lv-03 #mhead .tools{gap:2px;margin-right:-8px}
+body.lv-03 #mhead .tools .ibtn{width:40px;height:40px;border-radius:20px;display:grid;place-items:center}
+body.lv-03 #mhead .tools .ibtn svg{width:22px;height:22px;margin:0}
 </style>
 
 <div class="app" id="app">
@@ -650,9 +684,11 @@ body.lv-17 #secMeal .kids .pill::after{bottom:9px}
 
   <section class="tabsec" id="secMeal">
     <div class="mhead" id="mhead">
+    <div class="ptabs" id="ptabs"></div>
     <div class="list-head">
       <button class="mtitle" id="planTitle" aria-label="Meal plans"><h2 id="planName">Favorite meal</h2><svg class="pchev" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="dots" id="planBtn" aria-label="Meal plans"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
+      <span class="lsum" id="lsum"></span>
       <div class="tools">
       <button class="ibtn" id="ghostBtn" aria-label="Try-out mode" aria-pressed="false"><svg viewBox="0 0 28 28" fill="none"><path d="M10.9375 14C11.6624 14 12.25 13.4124 12.25 12.6875C12.25 11.9626 11.6624 11.375 10.9375 11.375C10.2126 11.375 9.625 11.9626 9.625 12.6875C9.625 13.4124 10.2126 14 10.9375 14Z" fill="currentColor"/><path d="M17.0625 14C17.7874 14 18.375 13.4124 18.375 12.6875C18.375 11.9626 17.7874 11.375 17.0625 11.375C16.3376 11.375 15.75 11.9626 15.75 12.6875C15.75 13.4124 16.3376 14 17.0625 14Z" fill="currentColor"/><path d="M23 23L20.0003 20.5217L16.9997 23L14 20.5217L11.0003 23L7.99966 20.5217L5 23V13.087C5 10.6769 5.94821 8.36564 7.63604 6.66151C9.32387 4.95737 11.6131 4 14 4C16.3869 4 18.6761 4.95737 20.364 6.66151C22.0518 8.36564 23 10.6769 23 13.087V23Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="ibtn" id="sortBtn" aria-label="Sort"><svg viewBox="0 0 28 28" fill="none"><path d="M3 13H13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20H10" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 19L21 24L26 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24V12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -1059,8 +1095,17 @@ const matches = e => !query || e.name.toLowerCase().includes(query) || (e.t === 
 // list styles 11/12/17: kcal on the right, share-of-day bar, kcal inside the tile
 let dayK = 1;
 const krHTML = e => { const k = r0(mac(e).k); return `<b>${k}</b><span class="sh"><i style="width:${Math.min(100, k / dayK * 100).toFixed(1)}%"></i></span><small>kcal</small>`; };
+function renderPTabs() {
+  const box = $('#ptabs'); if (!box) return;
+  const lsum = $('#lsum'), n = S.items.filter(e => e.g > 0).length;
+  if (lsum) lsum.textContent = `${n} product${n === 1 ? '' : 's'} · ${r0(totals().k)} kcal`;
+  if (S.ui.lv !== '03') { box.innerHTML = ''; return; }
+  box.innerHTML = S.plans.map(p => `<button class="ptab${p.id === S.active ? ' on' : ''}" data-pid="${p.id}">${esc(p.name)}</button>`).join('') +
+    `<button class="ptab padd" data-pid="+" aria-label="New meal plan"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></button>`;
+  const on = box.querySelector('.ptab.on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
 function patchKr() {
-  dayK = Math.max(1, totals().k);
+  dayK = Math.max(1, totals().k); renderPTabs();
   $('#secMeal').querySelectorAll('[data-id]').forEach(el => { const r = find(el.dataset.id); if (!r) return;
     const host = el.classList.contains('group') ? el.querySelector(':scope>.ghead') : el; if (!host) return;
     const kr = host.querySelector(':scope>.rc>.kr'), p = host.querySelector(':scope>.rc>.pill');
@@ -1118,7 +1163,7 @@ function playFlip(before, opts = {}, root = list) {
 }
 function renderMeal(flip = true, opts) {
   const root = $('#secMeal'), before = flip ? snapRects(root) : null;
-  renderList(); renderHeader();
+  renderList(); renderHeader(); renderPTabs();
   $('#planName').textContent = plan().name;
   if (before) playFlip(before, opts, root);
 }
@@ -1785,15 +1830,15 @@ function setHV(k) {
   setHH && setHH(); toast(HV_STYLES.find(x => x[0] === k)[1]);
 }
 const PV_STYLES = [['12', 'Edge ruler · 12'], ['15', 'Ruler + day status · 15'], ['16', 'Table drum · 16'], ['18', 'Four chips + ruler · 18'], ['classic', 'Small wheel (classic)']];
-const LV_STYLES = [['11', 'Toolbar + kcal right · 11'], ['12', 'Kcal + share bar · 12'], ['17', 'Kcal inside the tile · 17'], ['classic', 'Classic list']];
-if (S && S.ui && S.ui.lvv !== 1) { S.ui.lv = '11'; S.ui.lvv = 1; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+const LV_STYLES = [['01', 'Toolbar capsule · 01'], ['03', 'Plan tabs · 03'], ['11', 'Toolbar + kcal right · 11'], ['12', 'Kcal + share bar · 12'], ['17', 'Kcal inside the tile · 17'], ['classic', 'Classic list']];
+if (S && S.ui && S.ui.lvv !== 2) { S.ui.lv = '01'; S.ui.lvv = 2; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 function setLV(k) {
   const before = snapRects($('#secMeal'));
-  S.ui.lv = k; save(); syncTabs(); renderList(); playFlip(before, {}, $('#secMeal'));
+  S.ui.lv = k; save(); syncTabs(); renderList(); renderPTabs(); playFlip(before, {}, $('#secMeal'));
   toast(LV_STYLES.find(x => x[0] === k)[1]);
 }
 function placeTools() {
-  const on = !!S.ui.v2 && (S.ui.lv || 'classic') !== 'classic', dst = on ? $('#ltool') : $('#mhead .tools');
+  const on = !!S.ui.v2 && ['11', '12', '17'].includes(S.ui.lv), dst = on ? $('#ltool') : $('#mhead .tools');
   ['ghostBtn', 'sortBtn', 'searchBtn', 'addBtn'].forEach(id => { const b = $('#' + id); if (b.parentElement !== dst) dst.appendChild(b); });
 }
 function designMenu() {
@@ -2118,8 +2163,9 @@ function syncTabs() {
   document.body.classList.toggle('v2', !!S.ui.v2);
   document.body.classList.toggle('hv-on', !!S.ui.v2 && (S.ui.hv || 'classic') !== 'classic');
   const lv = S.ui.v2 ? (S.ui.lv || 'classic') : 'classic';
-  ['11', '12', '17'].forEach(k => document.body.classList.toggle('lv-' + k, lv === k));
-  document.body.classList.toggle('lv-on', lv !== 'classic'); placeTools();
+  ['01', '03', '11', '12', '17'].forEach(k => document.body.classList.toggle('lv-' + k, lv === k));
+  document.body.classList.toggle('lv-on', ['11', '12', '17'].includes(lv));
+  document.body.classList.toggle('lv-c', lv === '01' || lv === '03'); placeTools();
   ['meal', 'measure', 'budget'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
   $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget';
@@ -2149,6 +2195,10 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
 
 /* ================= wiring ================= */
 $('#searchBtn').insertAdjacentHTML('beforeend', '<span class="slab">Search</span>');
+$('#ptabs').addEventListener('click', e => { const b = e.target.closest('.ptab'); if (!b) return; haptic();
+  if (b.dataset.pid === '+') return nameSheet('New meal plan', 'New meal', 'Create', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); });
+  if (b.dataset.pid === S.active) return planMenu(b);
+  switchPlan(b.dataset.pid); });
 $('#planBtn').addEventListener('click', () => planMenu($('#planBtn')));
 $('#planTitle').addEventListener('click', () => planMenu($('#planTitle')));
 $('#goalBtn').addEventListener('click', goalMenu);
