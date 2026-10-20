@@ -662,13 +662,60 @@ body.ma.tab-meal .hv53 .hc b{font-size:calc(22px - 5px * var(--c,0));line-height
 body.ma.tab-meal .hv53 .hc .of{display:block;overflow:hidden;max-height:calc(14px * (1 - var(--c,0)));opacity:calc(.6 - var(--c,0) * 1.8)}
 body.ma.tab-meal .mhead{box-shadow:none!important;transition:box-shadow .2s}
 body.ma.tab-meal .mhead.stuck{box-shadow:0 1px 0 var(--line)!important}
-body.ma.tab-meal .mhead .list-head{padding:16px 0 12px}
 /* A: tab bar — active section is a soft capsule with its label, the rest are icons */
 body.ma .tabbar{gap:2px;height:56px;padding:0 6px;border-radius:28px}
 body.ma .tab{flex-direction:row;justify-content:center;gap:6px;min-width:48px;height:44px;padding:0;border-radius:22px;font-size:0;line-height:0;color:var(--ink);transition:background-color .3s,padding .35s var(--spring),transform .3s var(--spring)}
 body.ma .tab svg{width:24px;height:24px;opacity:.45}
 body.ma .tab.on{padding:0 16px 0 12px;background:rgba(0,0,0,.08);font-size:15px;line-height:20px;font-weight:590}
 body.ma .tab.on svg{opacity:1}
+
+/* ---------- themes (Settings → Appearance) ---------- */
+.tabbar{background:var(--tab,#fff)}
+body.tab-meal .plan,body.tab-meal .mhead{background:var(--hbg,var(--bg))}
+.hs.over{background:var(--over,#000)}
+.hs.ok{background:var(--blue)}
+[data-theme="paper"]{--bg:#f3eee6;--card:#fbf8f3;--merge:#e9e2d6;--blue:#c2562b;--win:#d9a283;--over:#211d18;--tab:#fbf8f3;--line:rgba(60,40,20,.12)}
+[data-theme="paperblue"]{--bg:#f2eee7;--card:#fbf9f5;--merge:#e8e2d8;--tab:#fbf9f5;--line:rgba(60,40,20,.11)}
+[data-theme="stone"]{--bg:#ecebe7;--card:#f8f7f4;--merge:#e1dfd9;--tab:#f8f7f4;--line:rgba(40,35,25,.11)}
+[data-theme="mist"]{--bg:#eceef2;--card:#f8f9fb;--merge:#e0e3ea;--tab:#f8f9fb;--line:rgba(20,30,50,.1)}
+[data-theme="concrete"]{--bg:#e6e6e3;--card:#f4f4f2;--merge:#dadad6;--tab:#f4f4f2;--line:rgba(0,0,0,.11)}
+[data-theme="twotone"]{--bg:#f6f5f2;--hbg:#e9e8e4;--card:#fcfbf9;--merge:#e7e5e0;--tab:#fcfbf9;--line:rgba(40,35,25,.1)}
+[data-theme="concrete"] #secMeal .pill,[data-theme="concrete"] body.v2 #secMeal .pill{background:rgba(255,255,255,.62)}
+[data-theme="twotone"] body.tab-meal .mhead.stuck{box-shadow:0 1px 0 var(--line)!important}
+body.ma.nocol.tab-meal .plan{top:0}
+body.ma.nocol.tab-meal .app{min-height:0}
+/* ---------- settings ---------- */
+body.tab-settings .plan{display:none}
+#secSettings{padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+.st-title{margin:0;font-size:28px;line-height:34px;font-weight:600;letter-spacing:-.6px}
+.st-h{margin:28px 0 10px;font-size:13px;font-weight:590;color:var(--ink-50);letter-spacing:.1px}
+.st-themes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 8px}
+.st-th{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:510;color:var(--ink-50);transition:transform .25s var(--spring)}
+.st-th:active{transform:scale(.95)}
+.st-sw{position:relative;width:100%;aspect-ratio:1.15;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);display:flex;align-items:flex-end;gap:4px;padding:8px;box-sizing:border-box;transition:box-shadow .25s}
+.st-sw i{width:14px;height:14px;border-radius:5px}
+.st-sw i.o{box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.25)}
+.st-th.on{color:var(--ink)}
+.st-th.on .st-sw{box-shadow:inset 0 0 0 2px #000}
+.st-g{display:flex;flex-direction:column}
+.st-r{display:flex;align-items:center;gap:12px;min-height:60px;padding:8px 0;box-shadow:inset 0 -1px 0 var(--line);text-align:left;width:100%;cursor:pointer}
+.st-r:last-child{box-shadow:none}
+.st-r>div:first-child{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.st-r b{font-size:16px;line-height:20px;font-weight:510}
+.st-r span{font-size:13px;line-height:17px;color:var(--ink-50)}
+.st-r.danger b{color:var(--red)}
+.st-a:active{opacity:.6}
+.swt{position:relative;flex:none;width:51px;height:31px;border-radius:16px;background:rgba(0,0,0,.14);transition:background-color .25s}
+.swt i{position:absolute;left:2px;top:2px;width:27px;height:27px;border-radius:14px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18);transition:transform .3s var(--spring)}
+.swt.on{background:var(--blue)}
+.swt.on i{transform:translateX(20px)}
+.st-seg{display:flex;gap:2px;padding:2px;border-radius:12px;background:rgba(0,0,0,.06)}
+.st-seg button{height:36px;min-width:48px;padding:0 10px;border-radius:10px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink-50)}
+.st-seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.st-foot{margin:28px 0 0;font-size:12px;color:var(--ink-40);text-align:center}
+/* ---------- A: title "Пробы" belongs to its list — closer to the products than to the chips ---------- */
+body.ma.tab-meal .mhead .list-head{padding:24px 0 6px}
+body.ma.tab-meal #list{margin-top:8px}
 </style>
 
 <div class="app" id="app">
@@ -755,6 +802,11 @@ body.ma .tab.on svg{opacity:1}
     <div class="seg" id="bseg" data-v="15"><i class="thumb"></i><button data-v="7">7 days</button><button data-v="15">15 days</button><button data-v="30">30 days</button></div>
     <div id="bcards"></div>
   </section>
+
+  <section class="tabsec" id="secSettings" hidden>
+    <div class="bud-top"><h1 class="st-title">Settings</h1></div>
+    <div id="setBody"></div>
+  </section>
 </div>
 
 <nav class="tabbar" id="tabbar">
@@ -818,6 +870,7 @@ const haptic = (() => {
   let last = 0;
   const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   return () => {
+    if (typeof S !== 'undefined' && S && S.ui && S.ui.haptics === false) return;
     const now = performance.now(); if (now - last < 30) return; last = now;
     if (!ios) { try { navigator.vibrate && navigator.vibrate(10); } catch (e) {} return; }
     // iOS (18+) only plays the switch haptic inside a user gesture: while a finger is down, queue it for touchend
@@ -883,7 +936,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2 };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
@@ -1210,13 +1263,65 @@ function patchRow(id) {
   upd(r.e); if (r.parent) upd(r.parent); patchKr();
   renderHeader();
 }
-const TABS = ['budget', 'meal', 'measure'];
-const secOf = t => $({ meal: '#secMeal', measure: '#secMeasure', budget: '#secBudget' }[t]);
+const TABS = ['budget', 'meal', 'measure', 'settings'];
+const secOf = t => $({ meal: '#secMeal', measure: '#secMeasure', budget: '#secBudget', settings: '#secSettings' }[t]);
 function renderAll(flip = false) {
   if (S.ui.tab === 'measure') { renderHeader(); renderMeasure(); }
   else if (S.ui.tab === 'budget') { renderHeader(); renderBudget(); }
+  else if (S.ui.tab === 'settings') renderSettings();
   else renderMeal(flip);
 }
+
+/* ================= settings ================= */
+const THEMES = [
+  ['light', 'Light', '#f7f7f7', '#235fd0'], ['paper', 'Paper', '#f3eee6', '#c2562b'], ['paperblue', 'Paper blue', '#f2eee7', '#235fd0'],
+  ['stone', 'Stone', '#ecebe7', '#235fd0'], ['mist', 'Mist', '#eceef2', '#235fd0'], ['concrete', 'Concrete', '#e6e6e3', '#235fd0'], ['twotone', 'Two-tone', '#e9e8e4', '#235fd0']];
+const swHTML = (k, on) => `<button class="swt${on ? ' on' : ''}" role="switch" aria-checked="${on}" data-set="${k}"><i></i></button>`;
+function renderSettings() {
+  const u = S.ui, box = $('#setBody');
+  box.innerHTML = `
+    <div class="st-h">Appearance</div>
+    <div class="st-themes">${THEMES.map(([k, l, bg, ac]) => `<button class="st-th${(u.theme || 'light') === k ? ' on' : ''}" data-theme="${k}" aria-pressed="${(u.theme || 'light') === k}">
+      <span class="st-sw" style="background:${bg}"><i style="background:#000"></i><i style="background:${ac}"></i><i class="o"></i></span><span>${l}</span></button>`).join('')}</div>
+    <div class="st-h">Main screen</div>
+    <div class="st-g">
+      <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
+      <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
+      <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
+        <div class="st-seg">${[1, 5, 10].map(v => `<button data-step="${v}" class="${(u.step || 5) === v ? 'on' : ''}">${v} g</button>`).join('')}</div></div>
+    </div>
+    <div class="st-h">Data</div>
+    <div class="st-g">
+      <button class="st-r st-a" data-act="export"><div><b>Export backup</b><span>Save all products, plans and measurements as a file</span></div></button>
+      <label class="st-r st-a"><div><b>Import backup</b><span>Replace data on this device with a backup file</span></div><input type="file" accept="application/json,.json" id="stImport" hidden></label>
+      <button class="st-r st-a danger" data-act="reset"><div><b>Reset demo data</b><span>Replace everything with the demo set</span></div></button>
+    </div>
+    <p class="st-foot">Kcal · data is stored only on this device</p>`;
+}
+$('#secSettings').addEventListener('click', e => {
+  const th = e.target.closest('.st-th[data-theme]'), sw = e.target.closest('[data-set]'), st = e.target.closest('[data-step]'), act = e.target.closest('[data-act]');
+  if (th) { haptic(); S.ui.theme = th.dataset.theme; save(); syncTabs(); renderSettings(); return; }
+  if (sw) { const k = sw.dataset.set; S.ui[k] = S.ui[k] === false; save(); syncTabs(); renderSettings(); if (S.ui[k] !== false) haptic(); return; }
+  if (st) { haptic(); S.ui.step = +st.dataset.step; save(); renderSettings(); return; }
+  if (!act) return;
+  if (act.dataset.act === 'export') {
+    save(); const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = `kcal-backup-${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast('Backup saved');
+  }
+  if (act.dataset.act === 'reset') confirmSheet('Reset demo data?', 'All products, plans and measurements on this device are replaced with the demo set.', 'Reset', () => {
+    ghostOff(); const th = S.ui.theme; S = seed(); S.ui.theme = th; S.ui.tab = 'settings'; applyGrams(plan()); save(); syncTabs(); renderAll(false); toast('Demo data restored'); });
+});
+$('#secSettings').addEventListener('change', e => {
+  if (e.target.id !== 'stImport' || !e.target.files[0]) return;
+  e.target.files[0].text().then(txt => {
+    let o; try { o = JSON.parse(txt); } catch (err) { return toast('Not a Kcal backup'); }
+    if (!o || o.v !== 2 || !o.items || !o.goals) return toast('Not a Kcal backup');
+    confirmSheet('Import this backup?', 'Everything on this device is replaced with the data from the file.', 'Import', () => {
+      ghostOff(); o.ui = Object.assign({ ...UI0 }, o.ui || {}, { tab: 'settings' }); S = o; applyGrams(plan()); save(); syncTabs(); renderAll(false); toast('Backup imported'); });
+  });
+  e.target.value = '';
+});
 
 /* ================= toast ================= */
 let toastT;
@@ -1528,7 +1633,7 @@ function openPrecise2(r, y, holding, pv) {
   document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('show'));
   const card = ov.querySelector('.px-info'), rul = ov.querySelector('.px-ruler');
   if (!RM) card.animate([{ opacity: 0, transform: (pv === '16' ? '' : 'translateY(-50%) ') + 'scale(.96)' }, { opacity: 1, transform: pv === '16' ? 'none' : 'translateY(-50%)' }], { duration: 420, easing: SPRING });
-  const unit = isPc(e) ? e.uw : 5, lim = e.t === 'g' ? maxOf(e) : 99999;
+  const unit = isPc(e) ? e.uw : (S.ui.step || 5), lim = e.t === 'g' ? maxOf(e) : 99999;
   let ticks = [], H = 0, M = 0;
   if (rul) { H = rul.clientHeight; M = Math.ceil(H / 2 / STEP) + 2; for (let i = -M; i <= M; i++) { const t = document.createElement('i'); rul.appendChild(t); ticks.push(t); } }
   let phase = 0, acc = 0, lastY = y, lastT = performance.now(), vel = 0, raf = 0, moved = false;
@@ -1876,6 +1981,8 @@ function placeTools() {
   ['ghostBtn', 'sortBtn', 'searchBtn', 'addBtn'].forEach(id => { const b = $('#' + id); if (b.parentElement !== dst) dst.appendChild(b); });
 }
 function setMA(on) { S.ui.ma = on; save(); syncTabs(); collapse(true); setHH(); toast(on ? 'Main screen: A · collapsing header' : 'Main screen: previous'); }
+// the chosen design is fixed now: A main screen, four chips, chips + ruler, toolbar capsule list
+if (S && S.ui) Object.assign(S.ui, { v2: true, ma: true, hv: '53', pv: '18', lv: '01' });
 function designMenu() {
   menu($('#goalBtn'), [{ head: 'Main screen' },
     { label: 'A · chips collapse on scroll', check: !!S.ui.ma, do: () => setMA(true) },
@@ -1897,12 +2004,6 @@ function goalMenu() {
     { label: 'Duplicate', do: () => { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); } },
     { label: 'Delete', danger: true, disabled: S.goals.length < 2, do: () => confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete goal plan', () => {
       const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); }) },
-    '-',
-    { label: 'Design options…', do: () => designMenu() },
-    '-',
-    { label: S.ui.v2 ? 'Use old main screen' : 'Use new main screen', do: () => { S.ui.v2 = !S.ui.v2; save(); syncTabs(); instant = true; renderAll(false); instant = false; } },
-    { label: 'Reset demo data', danger: true, do: () => confirmSheet('Reset demo data?', 'All products, plans and measurements on this device are replaced with the demo set.', 'Reset', () => {
-      ghostOff(); S = seed(); applyGrams(plan()); save(); renderAll(true); syncTabs(); toast('Demo data restored'); }) }
   ]);
 }
 function goalSheet(g0, isNew) {
@@ -2205,9 +2306,11 @@ function syncTabs() {
   document.body.classList.toggle('lv-on', ['11', '12', '17'].includes(lv));
   document.body.classList.toggle('lv-c', lv === '01' || lv === '03'); placeTools();
   document.body.classList.toggle('ma', !!S.ui.v2 && !!S.ui.ma);
-  ['meal', 'measure', 'budget'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
+  ['meal', 'measure', 'budget', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
+  document.documentElement.dataset.theme = S.ui.theme || 'light';
+  document.body.classList.toggle('nocol', S.ui.collapse === false);
   document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
-  $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget';
+  $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget'; $('#secSettings').hidden = S.ui.tab !== 'settings';
 }
 function switchTab(tab) {
   if (S.ui.tab !== tab) haptic();
@@ -2253,7 +2356,7 @@ let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(
 /* ---- meal: the plan header and list title stay put ---- */
 const mhead = $('#mhead'), hdr = document.querySelector('header.plan');
 const MA_TITLE = 48, MA_SHRINK = 54;   // A: goal row scrolls away, then chips shrink 118 → 64
-const maOn = () => document.body.classList.contains('ma') && S.ui.tab === 'meal';
+const maOn = () => document.body.classList.contains('ma') && S.ui.tab === 'meal' && S.ui.collapse !== false;
 const setHH = () => document.documentElement.style.setProperty('--hh', (hdr.offsetHeight - (maOn() ? MA_TITLE : 0)) + 'px');
 let maC = -1;
 function collapse(force) {
