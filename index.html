@@ -781,6 +781,11 @@ body.ma.tab-meal #list{margin-top:8px}
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7h6l2 2h10v10H3zM12 12v5M9.5 14.5h5'/%3E%3C/svg%3E") center/contain no-repeat}
 #secMeal .merge-target>.rc .mac,#secMeal .merge-target>.ghead>.rc .mac{display:none}
 #secMeal .merge-target>.rc .info::after,#secMeal .merge-target>.ghead>.rc .info::after{content:attr(data-hint);font-size:12px;line-height:14px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.drag-clone>.rc{transition:transform .25s var(--spring),opacity .2s}
+.drag-clone.merging>.rc{transform:scale(.97);opacity:.9}
+.drag-clone.sliding{transition:transform .26s var(--spring)}
+.drag-clone.merging::before{opacity:.92!important}
 </style>
 
 <div class="app" id="app">
@@ -1522,24 +1527,21 @@ function toggleGroup(gr) {
 }
 
 /* ================= drag & merge ================= */
-let drag = null;
+let drag = null, dragEndAt = 0;
 function startDrag(id, el, x, y) {
   let r = find(id);
-  if (r.parent) {
-    const gr = r.parent, gi = S.items.indexOf(gr), full = gr.g >= maxOf(gr);
+  if (r.parent) { // lifting a product out of its group: the group closes the gap smoothly
+    const gr = r.parent, gi = S.items.indexOf(gr), full = gr.g >= maxOf(gr), b0 = snapRects();
     gr.ch.splice(r.i, 1); const nm = maxOf(gr); gr.g = full ? nm : Math.min(gr.g, nm);
     S.items.splice(gi + 1, 0, r.e); fixGroup(gr, S.items);
-    renderMeal(false); el = list.querySelector(`[data-id="${id}"]`);
+    renderList(); renderHeader(); el = list.querySelector(`[data-id="${id}"]`); playFlip(b0, { skip: id });
   }
-  // Group 1: the dragged product becomes a compact capsule (amount + name) just above the finger
-  const e0 = find(id).e, clone = document.createElement('div');
-  clone.className = 'drag-clone drag-chip';
-  clone.innerHTML = `<span class="dcg">${e0.t === 'g' ? MI.folder : ''}${fmtAmt(e0, e0.g)}</span><span class="dcn">${esc(e0.name)}</span>`;
-  clone.style.left = Math.max(8, x - 44) + 'px'; clone.style.top = (y - 58) + 'px';
-  // inside the meal section so the clone keeps the list's look (tile size, kcal column)
+  // the lifted row keeps its own shape; it lives inside the meal section so it keeps the list's look
+  const rect = el.getBoundingClientRect(), clone = el.cloneNode(true);
+  clone.classList.add('drag-clone', 'lifted'); clone.classList.remove('pressing', 'merge-target', 'slot');
+  Object.assign(clone.style, { left: rect.left + 'px', top: rect.top + 'px', width: rect.width + 'px', transform: 'scale(1.03)' });
   ($('#secMeal') || document.body).appendChild(clone);
-  const rect = clone.getBoundingClientRect();
-  if (!RM) clone.animate([{ transform: 'translateY(16px) scale(.6)', opacity: 0 }, { transform: 'rotate(-3deg)', opacity: 1 }], { duration: 300, easing: SPRING });
+  if (!RM) clone.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.03)' }], { duration: 260, easing: SPRING });
   el.classList.add('slot');
   drag = { id, el, clone, rect, x0: x, y0: y, x, y, target: null, raf: 0 };
   drag.raf = requestAnimationFrame(autoScroll);
@@ -1552,12 +1554,18 @@ function moveDrag(x, y) {
 // over a merge target the clone shrinks and slides right, so the row it will join stays visible underneath
 function placeClone() {
   const m = !!drag.target;
-  drag.clone.style.transform = `translate(${drag.x - drag.x0}px, ${drag.y - drag.y0}px) rotate(-3deg) scale(${m ? .94 : 1})`;
+  // over a drop target the row slides right so the target's folder badge stays visible
+  const dx = Math.max(-24, Math.min(24, (drag.x - drag.x0) * .35)) + (m ? 68 : 0);
+  drag.clone.style.transform = `translate(${dx}px, ${drag.y - drag.y0}px) scale(1.03)`;
+  if (drag.clone.classList.contains('merging') !== m) { // animate only the slide in/out, not the finger-following
+    drag.clone.classList.add('sliding'); clearTimeout(drag.st); drag.st = setTimeout(() => drag && drag.clone.classList.remove('sliding'), 260); }
   drag.clone.classList.toggle('merging', m);
 }
 function updateTarget() {
   const y = drag.y; let target = null;
-  for (const n of siblings()) { const r = n.getBoundingClientRect(), band = Math.min(14, r.height * .3); if (y > r.top + band && y < r.bottom - band) { target = n; break; } }
+  // generous drop zone: most of a row groups; only a thin edge (and the gap) reorders. Once over a row, stay on it until the finger leaves it.
+  if (drag.target && drag.target.isConnected) { const r = drag.target.getBoundingClientRect(); if (y > r.top - 3 && y < r.bottom + 3) target = drag.target; }
+  if (!target) for (const n of siblings()) { const r = n.getBoundingClientRect(), band = Math.min(7, r.height * .15); if (y > r.top + band && y < r.bottom - band) { target = n; break; } }
   if (target !== drag.target) { if (drag.target) drag.target.classList.remove('merge-target'); if (target) { target.classList.add('merge-target'); haptic();
     const te = find(target.dataset.id).e, info = target.querySelector('.info');
     if (info) info.dataset.hint = te.t === 'g' ? `Drop to add to ${te.name}` : 'Drop to make a group · 2 items'; }
@@ -1585,18 +1593,25 @@ function endDrag(cancelled) {
     const vis = S.items.filter(e => order.includes(e.id)).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
     S.items = vis.concat(S.items.filter(e => !order.includes(e.id)));
   }
-  save();
-  const before = snapRects(); renderList(); renderHeader();
-  const land = list.querySelector(`[data-id="${landId}"]`);
-  playFlip(before, { skip: landId });
+  save(); dragEndAt = performance.now();
+  const before = snapRects($('#secMeal')); renderList(); renderHeader();
+  const merged = landId !== d.id;
+  // land where the product really ends up: its own row (inside the open group when merged), else the group head
+  const own = list.querySelector(`[data-id="${d.id}"]`), land = own || list.querySelector(`[data-id="${landId}"]`);
+  playFlip(before, { skip: own ? d.id : landId }, $('#secMeal'));
   if (!land) { d.clone.remove(); return; }
-  const lr = land.getBoundingClientRect(), merged = landId !== d.id;
-  land.style.visibility = 'hidden';
-  d.clone.animate([{ transform: d.clone.style.transform, opacity: 1 },
-    { transform: `translate(${lr.left - d.rect.left}px, ${lr.top - d.rect.top}px) scale(${merged ? .96 : 1})`, opacity: merged ? 0 : 1 }],
-    { duration: RM ? 1 : 380, easing: SPRING, fill: 'forwards' }).onfinish = () => {
-      d.clone.remove(); land.style.visibility = '';
-      if (merged && !RM) land.animate([{ transform: 'scale(1.03)' }, { transform: 'none' }], { duration: 480, easing: SPRING });
+  const host = land.classList.contains('group') ? land.querySelector(':scope>.ghead') : land;
+  host.style.visibility = 'hidden';
+  // measure after the group's own FLIP starts: aim at its final place
+  const lr = host.getBoundingClientRect(), gEl = own && own.closest('.group'), gAnim = gEl && gEl.getAnimations()[0];
+  const fin = gAnim ? (() => { const kf = gAnim.effect.getKeyframes()[0]; const m = /translate\(([-\d.]+)px,\s*([-\d.]+)px\)/.exec(kf.transform || ''); return m ? [+m[1], +m[2]] : [0, 0]; })() : [0, 0];
+  d.clone.classList.remove('merging');
+  d.clone.animate([{ transform: d.clone.style.transform, width: d.rect.width + 'px' },
+    { transform: `translate(${lr.left - fin[0] - d.rect.left}px, ${lr.top - fin[1] - d.rect.top}px) scale(1)`, width: lr.width + 'px' }],
+    { duration: RM ? 1 : 360, easing: SPRING, fill: 'forwards' }).onfinish = () => {
+      host.style.visibility = ''; d.clone.remove();
+      if (merged && !RM) { const g = list.querySelector(`[data-id="${landId}"]`), pill = g && g.querySelector(':scope>.ghead>.rc>.pill, :scope>.rc>.pill');
+        if (pill) pill.animate([{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 420, easing: SPRING }); }
     };
 }
 function merge(src, tgt) {
@@ -2516,7 +2531,7 @@ function collapse(force) {
 }
 let snapT;
 const snapHead = () => { clearTimeout(snapT); snapT = setTimeout(() => {
-  if (!maOn() || touching || precise || drag) return;
+  if (!maOn() || touching || precise || drag || performance.now() - dragEndAt < 900) return;
   const y = scrollY, end = MA_TITLE + MA_SHRINK;
   if (y > 2 && y < end - 2) scrollTo({ top: y < end / 2 ? 0 : end, behavior: RM ? 'auto' : 'smooth' });
 }, 140); };
