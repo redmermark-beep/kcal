@@ -959,7 +959,7 @@ function renderMHero() {
 
 /* ---- header styles: total + goal, signed deviation, status colour (blue in range, outline short, black over) ---- */
 const HV_TRACK = '<div class="ht"><i class="w"></i><i class="dt"></i></div>';
-const HV_LAB = { k: 'kcal', p: 'Protein', f: 'Fat', c: 'Carbs' }, CHIP_LAB = { k: 'kcal', p: 'P', f: 'F', c: 'C' };
+const HV_LAB = { k: 'kcal', p: 'Protein', f: 'Fat', c: 'Carbs' }, CHIP_LAB = { k: 'KCAL', p: 'P', f: 'F', c: 'C' };
 function hvMarkup(st) {
   const kcard = (cls) => `<div class="hs hk ${cls || ''}" data-m="k"><div class="hk-top"><b class="v"></b><span class="u">/ <span class="g"></span> kcal</span><em class="d"></em></div>${HV_TRACK}</div>`;
   const chip = (m, big) => `<div class="hs hc" data-m="${m}"><div class="hc-top"><span>${CHIP_LAB[m]}</span><em class="d"></em></div>` +
