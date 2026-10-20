@@ -508,6 +508,52 @@ body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
 .h56.over .r.over .chip{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
 .h56 .hk-top em{font-size:13px;display:flex;align-items:center;height:26px;padding:0 10px;border-radius:13px;background:rgba(127,127,127,.2)}
 
+
+/* ---------- fine-tune styles (no cards, no shadows: type and hairlines on a frosted ground) ---------- */
+.precise.px-ov{top:0;z-index:35;background:rgba(247,247,247,.74);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2)}
+.px{position:absolute;inset:0;box-sizing:border-box;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;max-width:430px;margin:0 auto}
+.px-body{position:relative;flex:1;min-height:0}
+.px-ruler{position:absolute;left:0;top:0;bottom:0;width:72px;overflow:hidden}
+.px-ruler i{position:absolute;left:0;top:0;height:1.5px;margin-top:-.75px;border-radius:1px;background:#000;will-change:transform}
+.px-mark{position:absolute;left:0;top:50%;width:66px;height:3px;margin-top:-1.5px;border-radius:2px;background:#000}
+.px-info{position:absolute;left:96px;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
+.px-info.bump{animation:none}
+.px-name{font-size:17px;line-height:22px;font-weight:510;letter-spacing:-.3px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.px-num{display:flex;align-items:baseline;gap:4px}
+.px-num b{font-family:var(--mono);font-size:96px;line-height:88px;font-weight:600;letter-spacing:-6px;font-variant-numeric:tabular-nums}
+.px-num span{font-family:var(--mono);font-size:28px;font-weight:500;color:rgba(0,0,0,.4)}
+.px15 .px-num b{font-size:84px;line-height:80px;letter-spacing:-5px}
+.px18 .px-num b{font-size:72px;line-height:70px;letter-spacing:-4.5px}
+.px-sep{height:1px;background:var(--line);margin:4px 0}
+.px-mac4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.px-mac4 div{display:flex;flex-direction:column;gap:2px}
+.px-mac4 span{font-size:11px;line-height:14px;color:var(--ink-50)}
+.px-mac4 b{font-family:var(--mono);font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.px-mline{font-family:var(--mono);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.px-mline i{font-style:normal;color:rgba(0,0,0,.45);margin-left:10px}
+.px-mline i:first-child{margin-left:0}
+.px-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.px-chips span{height:28px;display:flex;align-items:center;gap:5px;padding:0 10px;border-radius:14px;font-size:12px;font-weight:510}
+.px-chips small{font-size:12px;opacity:.75}
+.px-chips em{font-style:normal;font-family:var(--mono);font-weight:700}
+.px-day{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.px-day .hr{height:36px;grid-template-columns:56px 80px minmax(0,1fr) 52px;padding:0 12px;border-radius:11px}
+.px-day .hr .hl{font-size:13px}
+.px-day .hr .hn{font-size:13px}
+.px-day .hr em{font-size:12px}
+.px-ov .pmax{font-size:12px;color:var(--ink-50)}
+.px16 .px-info{position:static;transform:none;height:100%;justify-content:center}
+.px-drumwrap{position:relative;height:min(450px,62vh);overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 28%,#000 72%,transparent);mask-image:linear-gradient(transparent,#000 28%,#000 72%,transparent)}
+.px-hl{position:absolute;left:0;right:0;top:50%;height:68px;margin-top:-34px;border-radius:18px;background:rgba(0,0,0,.07)}
+.px-drum{position:absolute;left:0;right:0;top:50%}
+.px-dr{position:absolute;left:0;right:0;top:0;height:50px;margin-top:-25px;display:grid;grid-template-columns:1fr repeat(4,50px);align-items:center;gap:4px;padding:0 16px;font-family:var(--mono);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.px-dr b{font-size:20px;font-weight:600;letter-spacing:-1px}
+.px-dr.on b{font-size:40px;letter-spacing:-2.5px}
+.px-dr b small{font-size:18px;letter-spacing:0;color:rgba(0,0,0,.4);margin-left:2px}
+.px-dr span{text-align:right}
+.px-drh{display:grid;grid-template-columns:1fr repeat(4,50px);gap:4px;padding:6px 16px 0;font-size:11px;color:var(--ink-50)}
+.px-drh span+span{text-align:right}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
@@ -712,7 +758,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '51' };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '51', pv: '15' };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
@@ -1238,6 +1284,7 @@ function merge(src, tgt) {
 let precise = null;
 function openPrecise(id, rowEl, y, holding) {
   const r = find(id); if (!r) return;
+  if ((S.ui.pv || 'classic') !== 'classic') return openPrecise2(r, y, holding, S.ui.pv);
   const e = r.e, pr = rowEl.querySelector('.pill').getBoundingClientRect(), top0 = Math.max(0, S.ui.tab === 'meal' ? mhead.getBoundingClientRect().bottom : $('#divider').getBoundingClientRect().bottom);
   const ov = document.createElement('div'); ov.className = 'precise'; ov.style.setProperty('--ptop', top0 + 'px');
   ov.innerHTML = `<div class="pcard" style="left:${pr.left + 4}px;top:${pr.top - top0}px"><div class="wheel">${'<i></i>'.repeat(13)}</div>
@@ -1292,6 +1339,106 @@ function openPrecise(id, rowEl, y, holding) {
     },
     close() { cancelAnimationFrame(raf); save(); ov.classList.remove('show'); ov.style.pointerEvents = 'none';
       if (!RM) card.animate([{ opacity: 1 }, { opacity: 0, transform: 'scale(.96)' }], { duration: 200, easing: EASE, fill: 'forwards' });
+      setTimeout(() => ov.remove(), 260); precise = null; renderMeal(true); }
+  };
+  ov.addEventListener('pointerdown', ev => {
+    if (!precise || precise.holding) return;
+    cancelAnimationFrame(raf); moved = false; lastY = ev.clientY; lastT = ev.timeStamp; vel = 0;
+    precise.holding = true; precise.startY = ev.clientY; lockScroll = true; ov.setPointerCapture(ev.pointerId);
+  });
+  ov.addEventListener('pointermove', ev => { if (precise && precise.holding && ov.hasPointerCapture(ev.pointerId)) precise.move(ev.clientY, ev.timeStamp); });
+  ov.addEventListener('pointerup', ev => {
+    if (!precise || precise.startY === undefined) return;
+    if (ov.hasPointerCapture(ev.pointerId)) ov.releasePointerCapture(ev.pointerId);
+    lockScroll = false;
+    if (!moved && Math.abs(ev.clientY - precise.startY) < 6) { precise.holding = false; return precise.close(); }
+    precise.release();
+  });
+  paint();
+}
+
+/* ---- fine-tune styles 12 / 15 / 16 / 18 (switch in the goal plan menu → Design options) ---- */
+function macAt(e, g) { const s0 = e.g; e.g = g; const m = mac(e); e.g = s0; return m; }
+function dayState() {
+  const g = goal(), t = totals();
+  return [['k', 'kcal'], ['p', 'Protein'], ['f', 'Fat'], ['c', 'Carbs']].map(([k, l]) => {
+    const [lo, hi] = g.rng && g.rng[k] ? g.rng[k] : [g[k] * (k === 'k' ? .98 : .95), g[k] * (k === 'k' ? 1.02 : 1.05)];
+    const v = t[k], dev = r0(v - g[k]), st = v < lo ? 'under' : v > hi ? 'over' : 'ok', half = Math.max(.5, (hi - lo) / 2);
+    return { k, l, v: r0(v), g: r0(g[k]), st, d: (st === 'ok' ? '✓ ' : '') + (dev > 0 ? '+' : dev < 0 ? '−' : '±') + Math.abs(dev),
+      x: Math.max(4, Math.min(96, 50 + (v - g[k]) / (half * 5) * 100)).toFixed(1) + '%' };
+  });
+}
+function openPrecise2(r, y, holding, pv) {
+  const e = r.e, ruler = pv !== '16', STEP = pv === '16' ? 50 : 14;
+  const ov = document.createElement('div'); ov.className = 'precise px-ov';
+  const head = pv === '18' ? `<div class="px-day">${['k', 'p', 'f', 'c'].map(k => `<div class="hs hr" data-m="${k}"><span class="hl"></span><span class="hn"><span class="v"></span><span class="op">/<span class="g"></span></span></span><div class="ht"><i class="w"></i><i class="dt"></i></div><em class="d"></em></div>`).join('')}</div>` : '';
+  const info = pv === '16'
+    ? `<div class="px-name">${esc(e.name)}</div><div class="px-drumwrap"><i class="px-hl"></i><div class="px-drum"></div></div>
+       <div class="px-drh"><span>${e.t === 'g' ? 'grams' : U(e) === 'pc' ? 'pieces' : U(e) === 'ml' ? 'ml' : 'grams'}</span><span>kcal</span><span>P</span><span>F</span><span>C</span></div>`
+    : `<div class="px-name">${esc(e.name)}</div><div class="px-num"><b class="pxv"></b><span class="pxu"></span></div>` +
+      (pv === '12' ? `<div class="px-sep"></div><div class="px-mac4">${['kcal', 'Protein', 'Fat', 'Carbs'].map((l, i) => `<div><span>${l}</span><b class="m${i}"></b></div>`).join('')}</div>`
+                   : `<div class="px-mline"></div>`) + (pv === '15' ? '<div class="px-chips"></div>' : '');
+  ov.innerHTML = `<div class="px px${pv}">${head}<div class="px-body">${ruler ? '<div class="px-ruler"></div><i class="px-mark"></i>' : ''}<div class="px-info">${info}${e.t === 'g' ? '<div class="pmax"></div>' : ''}</div></div></div>`;
+  document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('show'));
+  const card = ov.querySelector('.px-info'), rul = ov.querySelector('.px-ruler');
+  if (!RM) card.animate([{ opacity: 0, transform: (pv === '16' ? '' : 'translateY(-50%) ') + 'scale(.96)' }, { opacity: 1, transform: pv === '16' ? 'none' : 'translateY(-50%)' }], { duration: 420, easing: SPRING });
+  const unit = isPc(e) ? e.uw : 5, lim = e.t === 'g' ? maxOf(e) : 99999;
+  let ticks = [], H = 0, M = 0;
+  if (rul) { H = rul.clientHeight; M = Math.ceil(H / 2 / STEP) + 2; for (let i = -M; i <= M; i++) { const t = document.createElement('i'); rul.appendChild(t); ticks.push(t); } }
+  let phase = 0, acc = 0, lastY = y, lastT = performance.now(), vel = 0, raf = 0, moved = false;
+  const fmtN = g => String(toU(e, g));
+  const paint = () => {
+    const m = mac(e), off = phase / 15 * STEP;
+    if (pv !== '16') {
+      ov.querySelector('.pxv').textContent = fmtN(e.g); ov.querySelector('.pxu').textContent = e.t === 'g' ? 'g' : uLab(e);
+      if (pv === '12') [m.k, m.p, m.f, m.c].forEach((v, i) => ov.querySelector('.m' + i).textContent = r0(v));
+      else ov.querySelector('.px-mline').innerHTML = `<i>K</i>${r0(m.k)}<i>P</i>${r0(m.p)}<i>F</i>${r0(m.f)}<i>C</i>${r0(m.c)}` + (isPc(e) ? `<i>·</i>${e.g}g` : '');
+    } else {
+      const rows = []; for (let k = -4; k <= 4; k++) { const g = e.g + k * unit; if (g < 0 || g > lim) continue; const mm = macAt(e, g), d = Math.abs(k * STEP + off);
+        rows.push(`<div class="px-dr${k === 0 ? ' on' : ''}" style="transform:translateY(${(k * STEP + off).toFixed(1)}px);opacity:${Math.max(.12, 1 - d / 190).toFixed(2)}"><b>${fmtN(g)}${k === 0 ? `<small>${e.t === 'g' ? 'g' : uLab(e)}</small>` : ''}</b><span>${r0(mm.k)}</span><span>${r0(mm.p)}</span><span>${r0(mm.f)}</span><span>${r0(mm.c)}</span></div>`); }
+      ov.querySelector('.px-drum').innerHTML = rows.join('');
+    }
+    const pm = ov.querySelector('.pmax'); if (pm) pm.textContent = `max ${maxOf(e)}g`;
+    if (rul) { const n0 = Math.round(e.g / unit), c = H / 2;
+      ticks.forEach((t, i) => { const k = i - M, yy = c + k * STEP + off, big = ((n0 + k) % 5 + 5) % 5 === 0, d = Math.min(1, Math.abs(yy - c) / c);
+        t.style.transform = `translateY(${yy.toFixed(1)}px)`; t.style.width = (big ? 40 : 22) + 'px'; t.style.opacity = ((big ? .55 : .28) * (1 - d * .85)).toFixed(3); }); }
+    if (pv === '15' || pv === '18') {
+      const ds = dayState();
+      if (pv === '15') ov.querySelector('.px-chips').innerHTML = ds.map(x => `<span class="hs ${x.st}"><small>${x.k === 'k' ? 'kcal' : x.l[0]}</small><em>${x.d}</em></span>`).join('');
+      else ds.forEach(x => { const el = ov.querySelector(`.px-day [data-m="${x.k}"]`); el.classList.remove('ok', 'under', 'over'); el.classList.add(x.st);
+        el.querySelector('.hl').textContent = x.l; el.querySelector('.v').textContent = x.v; el.querySelector('.g').textContent = x.g; el.querySelector('.d').textContent = x.d;
+        el.querySelector('.ht').style.setProperty('--x', x.x); });
+    }
+  };
+  const bump = d => {
+    let v = e.g + Math.sign(d) * unit * (Math.abs(d) === 50 ? (isPc(e) ? 5 : 10) : Math.abs(d) === 25 ? (isPc(e) ? 2 : 5) : 1);
+    v = Math.max(0, Math.min(lim, Math.round(v / unit) * unit));
+    if (v === e.g) { if (!card.classList.contains('bump')) { card.classList.add('bump'); setTimeout(() => card.classList.remove('bump'), 360); } return false; }
+    setGrams(e, v, r.parent); return true;
+  };
+  const step = (deg, speed) => {
+    phase += deg; acc += deg;
+    const size = speed > 1.6 ? 50 : speed > .7 ? 25 : 5; let changed = false;
+    while (acc <= -15) { acc += 15; changed = bump(+size) || changed; }
+    while (acc >= 15) { acc -= 15; changed = bump(-size) || changed; }
+    phase = ((phase % 15) + 15 + 7.5) % 15 - 7.5;
+    if (changed) { patchRow(e.id); haptic(); }
+    paint();
+  };
+  const PX = 15 / STEP; // degrees per pixel so one notch = one tick spacing
+  const snapBack = () => { const from = phase, t0 = performance.now();
+    const f = now => { const x = Math.min(1, (now - t0) / 220); phase = from * Math.pow(1 - x, 3); paint(); if (x < 1) raf = requestAnimationFrame(f); };
+    raf = requestAnimationFrame(f); };
+  precise = {
+    holding,
+    move(cy, ts) { const dy = cy - lastY, dt = Math.max(1, ts - lastT); lastY = cy; lastT = ts; if (dy) moved = true; vel = dy / dt; step(dy * PX, Math.abs(vel)); },
+    release() {
+      this.holding = false; save(); let v = vel; cancelAnimationFrame(raf);
+      if (RM || Math.abs(v) < .25) return snapBack();
+      const tick = () => { v *= .94; step(v * 16 * PX, Math.abs(v)); if (Math.abs(v) > .05) raf = requestAnimationFrame(tick); else { save(); snapBack(); } };
+      raf = requestAnimationFrame(tick);
+    },
+    close() { cancelAnimationFrame(raf); save(); ov.classList.remove('show'); ov.style.pointerEvents = 'none';
       setTimeout(() => ov.remove(), 260); precise = null; renderMeal(true); }
   };
   ov.addEventListener('pointerdown', ev => {
@@ -1568,6 +1715,13 @@ function setHV(k) {
   if (!RM) el.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
   setHH && setHH(); toast(HV_STYLES.find(x => x[0] === k)[1]);
 }
+const PV_STYLES = [['12', 'Edge ruler · 12'], ['15', 'Ruler + day status · 15'], ['16', 'Table drum · 16'], ['18', 'Header rows + ruler · 18'], ['classic', 'Small wheel (classic)']];
+function designMenu() {
+  menu($('#goalBtn'), [{ head: 'Header style' },
+    ...HV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.hv || 'classic') === k, do: () => setHV(k) })),
+    '-', { head: 'Fine-tune style (hold grams)' },
+    ...PV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.pv || 'classic') === k, do: () => { S.ui.pv = k; save(); toast(l + ' — hold any amount'); } }))]);
+}
 function goalMenu() {
   const g = goal();
   menu($('#goalBtn'), [{ head: 'Goal plans' },
@@ -1579,8 +1733,7 @@ function goalMenu() {
     { label: 'Delete', danger: true, disabled: S.goals.length < 2, do: () => confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete goal plan', () => {
       const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); }) },
     '-',
-    { head: 'Header style' },
-    ...HV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.hv || 'classic') === k, do: () => setHV(k) })),
+    { label: 'Design options…', do: () => designMenu() },
     '-',
     { label: S.ui.v2 ? 'Use old main screen' : 'Use new main screen', do: () => { S.ui.v2 = !S.ui.v2; save(); syncTabs(); instant = true; renderAll(false); instant = false; } },
     { label: 'Reset demo data', danger: true, do: () => confirmSheet('Reset demo data?', 'All products, plans and measurements on this device are replaced with the demo set.', 'Reset', () => {
