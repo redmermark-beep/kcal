@@ -565,6 +565,53 @@ body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+/* ---------- product list styles 11 / 12 / 17 (Design options) ---------- */
+.ltool,.kr,.slab{display:none}
+body.lv-on.tab-meal .ltool{position:fixed;z-index:29;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));max-width:398px;margin:0 auto;
+  bottom:calc(max(20px,calc(env(safe-area-inset-bottom,0px) - 12px)) + 76px);display:flex;align-items:center;gap:4px;height:56px;padding:0 6px;box-sizing:border-box;
+  border-radius:28px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 0 0 .5px rgba(0,0,0,.06),0 6px 24px rgba(0,0,0,.05);
+  transition:transform .45s var(--spring),opacity .3s}
+body.lv-on.kb-open .ltool{transform:translateY(260%);opacity:0;pointer-events:none}
+body.lv-on .ltool .ibtn{width:44px;height:44px;border-radius:22px;display:grid;place-items:center}
+body.lv-on .ltool .ibtn svg{width:22px;height:22px;margin:0;opacity:1}
+body.lv-on .ltool #searchBtn{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 14px;background:rgba(0,0,0,.06);font-size:15px;color:rgba(0,0,0,.5)}
+body.lv-on .ltool #searchBtn svg{width:18px;height:18px;opacity:.5}
+body.lv-on .ltool .slab{display:inline}
+body.lv-on .ltool #addBtn{background:#000}
+body.lv-on .ltool #addBtn svg{width:20px;height:20px}
+body.lv-on .ltool #addBtn path{stroke:#fff}
+body.lv-on.tab-meal .app{padding-bottom:calc(200px + env(safe-area-inset-bottom,0px))}
+body.lv-on #mhead .tools:empty{display:none}
+body.lv-on #planName{font-size:22px;line-height:24px;letter-spacing:-.5px}
+/* rows: big tiles */
+body.lv-on #list,body.lv-on #zlist{gap:8px}
+body.lv-on #secMeal .rc{gap:12px}
+body.lv-on #secMeal .pill{min-width:88px;height:52px;padding:0 12px;border-radius:14px;font-size:17px;line-height:17px}
+body.lv-on #secMeal .kids .pill{min-width:80px;height:48px;border-radius:12px;font-size:16px}
+body.lv-on #secMeal .name{font-size:18px;line-height:22px;letter-spacing:-.4px}
+body.lv-on #secMeal .kids .name{font-size:17px;line-height:21px;font-weight:400}
+body.lv-on #secMeal .mac{font-size:13px;line-height:16px;gap:10px;margin-top:3px}
+body.lv-on #secMeal .mac>span:first-child{display:none}
+body.lv-on #secMeal .kids .row::after{top:22px}
+body.lv-17 #secMeal .kids .row::after{top:24px}
+/* 11 + 12: kcal on the right */
+body.lv-11 #secMeal .kr,body.lv-12 #secMeal .kr{display:flex;flex:none;flex-direction:column;align-items:flex-end;min-width:48px;font-variant-numeric:tabular-nums}
+.kr b{font-family:var(--mono);font-size:18px;line-height:22px;font-weight:600}
+.kids .kr b{font-size:16px;line-height:20px}
+.kr small{font-size:11px;line-height:13px;color:rgba(0,0,0,.5)}
+.kr .sh{display:none;width:56px;height:4px;margin-top:5px;border-radius:2px;background:rgba(0,0,0,.08);overflow:hidden}
+.kr .sh i{display:block;height:100%;border-radius:2px;background:#000;transition:width .3s var(--ease)}
+.kids .kr .sh i{background:rgba(0,0,0,.4)}
+body.lv-12 #secMeal .kr{min-width:56px}
+body.lv-12 .kr small{display:none}
+body.lv-12 .kr .sh{display:block}
+#secMeal .zero>.rc>.kr b,#secMeal .zero>.ghead>.rc>.kr b{color:rgba(0,0,0,.5);font-weight:500}
+/* 17: kcal inside the tile */
+body.lv-17 #secMeal .pill{position:relative;min-width:92px;height:56px;padding:0 12px 14px;font-size:18px;line-height:18px}
+body.lv-17 #secMeal .pill::after{content:attr(data-k) " kcal";position:absolute;left:12px;bottom:10px;font-size:11px;line-height:13px;font-weight:400;color:rgba(0,0,0,.5)}
+body.lv-17 #secMeal .kids .pill{min-width:84px;height:52px;font-size:17px}
+body.lv-17 #secMeal .kids .pill::after{bottom:9px}
 </style>
 
 <div class="app" id="app">
@@ -623,6 +670,7 @@ body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
     <button class="zhead" id="zHead" hidden></button>
     <ul class="list slist" id="zlist" data-list="meal" hidden></ul>
   </section>
+  <div class="ltool" id="ltool" role="toolbar" aria-label="List tools"></div>
 
   <section class="tabsec" id="secMeasure" hidden>
     <div class="list-head">
@@ -1008,22 +1056,32 @@ function pillHTML(e) {
   return fmtAmt(e, e.g);
 }
 const matches = e => !query || e.name.toLowerCase().includes(query) || (e.t === 'g' && e.ch.some(matches));
+// list styles 11/12/17: kcal on the right, share-of-day bar, kcal inside the tile
+let dayK = 1;
+const krHTML = e => { const k = r0(mac(e).k); return `<b>${k}</b><span class="sh"><i style="width:${Math.min(100, k / dayK * 100).toFixed(1)}%"></i></span><small>kcal</small>`; };
+function patchKr() {
+  dayK = Math.max(1, totals().k);
+  $('#secMeal').querySelectorAll('[data-id]').forEach(el => { const r = find(el.dataset.id); if (!r) return;
+    const host = el.classList.contains('group') ? el.querySelector(':scope>.ghead') : el; if (!host) return;
+    const kr = host.querySelector(':scope>.rc>.kr'), p = host.querySelector(':scope>.rc>.pill');
+    if (kr) kr.innerHTML = krHTML(r.e); if (p) p.dataset.k = r0(mac(r.e).k); });
+}
 function rowHTML(e, i) {
   return `<li class="row${e.g === 0 ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">${ACTS}
-    <div class="rc"><button class="pill" data-act="pill" aria-label="${esc(e.name)}, ${e.g} grams">${pillHTML(e)}</button>
-    <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${macHTML(mac(e))}</div></div></div></li>`;
+    <div class="rc"><button class="pill" data-act="pill" data-k="${r0(mac(e).k)}" aria-label="${esc(e.name)}, ${e.g} grams">${pillHTML(e)}</button>
+    <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${macHTML(mac(e))}</div></div><div class="kr">${krHTML(e)}</div></div></li>`;
 }
 function groupHTML(e, i) {
   return `<li class="group${e.open ? ' open' : ''}${e.g === 0 ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">
-    <div class="ghead">${ACTS}<div class="rc"><button class="pill" data-act="pill" aria-label="${esc(e.name)}, ${e.g} of ${maxOf(e)} grams">${pillHTML(e)}</button>
+    <div class="ghead">${ACTS}<div class="rc"><button class="pill" data-act="pill" data-k="${r0(mac(e).k)}" aria-label="${esc(e.name)}, ${e.g} of ${maxOf(e)} grams">${pillHTML(e)}</button>
     <div class="info"><div class="name"><span class="gname" data-act="gname">${esc(e.name)}</span><button class="chev" data-act="chev" aria-label="${e.open ? 'Collapse' : 'Expand'}" aria-expanded="${!!e.open}"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-    <div class="mac">${macHTML(mac(e))}</div></div></div></div>
+    <div class="mac">${macHTML(mac(e))}</div></div><div class="kr">${krHTML(e)}</div></div></div>
     <ul class="kids">${e.open ? e.ch.map((c, j) => rowHTML(c, i + j + 1)).join('') : ''}</ul></li>`;
 }
 const zlist = $('#zlist'), zHead = $('#zHead');
 function renderList() {
   swOpen = null;
-  const items = S.items.filter(matches), v2 = !!S.ui.v2;
+  const items = S.items.filter(matches), v2 = !!S.ui.v2; dayK = Math.max(1, totals().k);
   zHead.hidden = zlist.hidden = true; zlist.innerHTML = '';
   if (!S.items.length) { list.innerHTML = `<li class="empty"><b>No products yet</b>Tap + to add the first one.</li>`; return; }
   if (!items.length) { list.innerHTML = `<li class="empty"><b>Nothing found</b>No product matches “${esc(query)}”.</li>`; return; }
@@ -1071,7 +1129,7 @@ function patchRow(id) {
     host.querySelector(':scope>.rc>.pill').innerHTML = pillHTML(e);
     host.querySelector(':scope>.rc .mac').innerHTML = macHTML(mac(e));
     el.classList.toggle('zero', e.g === 0); };
-  upd(r.e); if (r.parent) upd(r.parent);
+  upd(r.e); if (r.parent) upd(r.parent); patchKr();
   renderHeader();
 }
 const TABS = ['budget', 'meal', 'measure'];
@@ -1727,8 +1785,21 @@ function setHV(k) {
   setHH && setHH(); toast(HV_STYLES.find(x => x[0] === k)[1]);
 }
 const PV_STYLES = [['12', 'Edge ruler · 12'], ['15', 'Ruler + day status · 15'], ['16', 'Table drum · 16'], ['18', 'Four chips + ruler · 18'], ['classic', 'Small wheel (classic)']];
+const LV_STYLES = [['11', 'Toolbar + kcal right · 11'], ['12', 'Kcal + share bar · 12'], ['17', 'Kcal inside the tile · 17'], ['classic', 'Classic list']];
+if (S && S.ui && S.ui.lvv !== 1) { S.ui.lv = '11'; S.ui.lvv = 1; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function setLV(k) {
+  const before = snapRects($('#secMeal'));
+  S.ui.lv = k; save(); syncTabs(); renderList(); playFlip(before, {}, $('#secMeal'));
+  toast(LV_STYLES.find(x => x[0] === k)[1]);
+}
+function placeTools() {
+  const on = !!S.ui.v2 && (S.ui.lv || 'classic') !== 'classic', dst = on ? $('#ltool') : $('#mhead .tools');
+  ['ghostBtn', 'sortBtn', 'searchBtn', 'addBtn'].forEach(id => { const b = $('#' + id); if (b.parentElement !== dst) dst.appendChild(b); });
+}
 function designMenu() {
-  menu($('#goalBtn'), [{ head: 'Header style' },
+  menu($('#goalBtn'), [{ head: 'Product list' },
+    ...LV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.lv || 'classic') === k, do: () => setLV(k) })),
+    '-', { head: 'Header style' },
     ...HV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.hv || 'classic') === k, do: () => setHV(k) })),
     '-', { head: 'Fine-tune style (hold grams)' },
     ...PV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.pv || 'classic') === k, do: () => { S.ui.pv = k; save(); toast(l + ' — hold any amount'); } }))]);
@@ -2046,6 +2117,9 @@ function metricMenu() {
 function syncTabs() {
   document.body.classList.toggle('v2', !!S.ui.v2);
   document.body.classList.toggle('hv-on', !!S.ui.v2 && (S.ui.hv || 'classic') !== 'classic');
+  const lv = S.ui.v2 ? (S.ui.lv || 'classic') : 'classic';
+  ['11', '12', '17'].forEach(k => document.body.classList.toggle('lv-' + k, lv === k));
+  document.body.classList.toggle('lv-on', lv !== 'classic'); placeTools();
   ['meal', 'measure', 'budget'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
   $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget';
@@ -2074,6 +2148,7 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
 }));
 
 /* ================= wiring ================= */
+$('#searchBtn').insertAdjacentHTML('beforeend', '<span class="slab">Search</span>');
 $('#planBtn').addEventListener('click', () => planMenu($('#planBtn')));
 $('#planTitle').addEventListener('click', () => planMenu($('#planTitle')));
 $('#goalBtn').addEventListener('click', goalMenu);
