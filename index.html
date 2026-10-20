@@ -718,10 +718,6 @@ body.ma.tab-meal .mhead .list-head{padding:24px 0 6px}
 body.ma.tab-meal #list{margin-top:8px}
 
 /* ---------- drag to group ---------- */
-.drag-clone.merging{opacity:.55}
-.row.merge-target::before,.group.merge-target{box-shadow:inset 0 0 0 2px var(--ink)!important}
-.row.merge-target::after{content:"Group";position:absolute;right:0;top:50%;z-index:2;transform:translateY(-50%);height:24px;padding:0 10px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:12px;font-weight:600;line-height:24px}
-#secMeal .row.merge-target .kr{visibility:hidden}
 
 /* ---------- Black theme: the light design inverted (ground becomes true black), status hues kept ---------- */
 :root[data-theme="black"]{--bg:#fff;--card:#ececec;--merge:#dcdcdc;--tab:#f2f2f2;filter:invert(1) hue-rotate(180deg)}
@@ -769,6 +765,22 @@ body.ma.tab-meal #list{margin-top:8px}
 .swt.sm{width:44px;height:26px;border-radius:13px}
 .swt.sm i{width:22px;height:22px;border-radius:11px}
 .swt.sm.on i{transform:translateX(18px)}
+
+/* ---------- drag to group: Group 1 (soft fill + folder badge) ---------- */
+.drag-chip{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 6px;border-radius:22px;background:var(--card);
+  box-shadow:0 0 0 .5px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.16);transform:rotate(-3deg);transform-origin:30% 50%;white-space:nowrap;transition:opacity .2s}
+.drag-chip .dcg{height:32px;padding:0 10px;border-radius:16px;background:rgba(0,0,0,.08);display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:13px;font-weight:600}
+.drag-chip .dcg svg{width:14px;height:14px}
+.drag-chip .dcn{font-size:15px;font-weight:590;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.drag-chip.merging{opacity:.96}
+.row.merge-target::before{opacity:1;transform:none;background:rgba(0,0,0,.06)!important;box-shadow:none!important;inset:-4px -8px;border-radius:16px}
+.group.merge-target{background:rgba(0,0,0,.06)!important;box-shadow:none!important}
+#secMeal .merge-target>.rc>.pill,#secMeal .merge-target>.ghead>.rc>.pill{position:relative;background:var(--ink)!important;color:transparent!important}
+#secMeal .merge-target>.rc>.pill::after,#secMeal .merge-target>.ghead>.rc>.pill::after{content:"";position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;background:var(--bg);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7h6l2 2h10v10H3zM12 12v5M9.5 14.5h5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7h6l2 2h10v10H3zM12 12v5M9.5 14.5h5'/%3E%3C/svg%3E") center/contain no-repeat}
+#secMeal .merge-target>.rc .mac,#secMeal .merge-target>.ghead>.rc .mac{display:none}
+#secMeal .merge-target>.rc .info::after,#secMeal .merge-target>.ghead>.rc .info::after{content:attr(data-hint);font-size:12px;line-height:14px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 
 <div class="app" id="app">
@@ -1519,12 +1531,15 @@ function startDrag(id, el, x, y) {
     S.items.splice(gi + 1, 0, r.e); fixGroup(gr, S.items);
     renderMeal(false); el = list.querySelector(`[data-id="${id}"]`);
   }
-  const rect = el.getBoundingClientRect(), clone = el.cloneNode(true);
-  clone.classList.add('drag-clone', 'lifted'); clone.classList.remove('pressing');
-  Object.assign(clone.style, { left: rect.left + 'px', top: rect.top + 'px', width: rect.width + 'px', transform: 'scale(1.03)' });
+  // Group 1: the dragged product becomes a compact capsule (amount + name) just above the finger
+  const e0 = find(id).e, clone = document.createElement('div');
+  clone.className = 'drag-clone drag-chip';
+  clone.innerHTML = `<span class="dcg">${e0.t === 'g' ? MI.folder : ''}${fmtAmt(e0, e0.g)}</span><span class="dcn">${esc(e0.name)}</span>`;
+  clone.style.left = Math.max(8, x - 44) + 'px'; clone.style.top = (y - 58) + 'px';
   // inside the meal section so the clone keeps the list's look (tile size, kcal column)
   ($('#secMeal') || document.body).appendChild(clone);
-  if (!RM) clone.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.03)' }], { duration: 260, easing: SPRING });
+  const rect = clone.getBoundingClientRect();
+  if (!RM) clone.animate([{ transform: 'translateY(16px) scale(.6)', opacity: 0 }, { transform: 'rotate(-3deg)', opacity: 1 }], { duration: 300, easing: SPRING });
   el.classList.add('slot');
   drag = { id, el, clone, rect, x0: x, y0: y, x, y, target: null, raf: 0 };
   drag.raf = requestAnimationFrame(autoScroll);
@@ -1536,14 +1551,17 @@ function moveDrag(x, y) {
 }
 // over a merge target the clone shrinks and slides right, so the row it will join stays visible underneath
 function placeClone() {
-  const m = !!drag.target, dx = Math.max(-24, Math.min(24, (drag.x - drag.x0) * .35)) + (m ? 20 : 0);
-  drag.clone.style.transform = `translate(${dx}px, ${drag.y - drag.y0}px) scale(${m ? .94 : 1.03})`;
+  const m = !!drag.target;
+  drag.clone.style.transform = `translate(${drag.x - drag.x0}px, ${drag.y - drag.y0}px) rotate(-3deg) scale(${m ? .94 : 1})`;
   drag.clone.classList.toggle('merging', m);
 }
 function updateTarget() {
   const y = drag.y; let target = null;
   for (const n of siblings()) { const r = n.getBoundingClientRect(), band = Math.min(14, r.height * .3); if (y > r.top + band && y < r.bottom - band) { target = n; break; } }
-  if (target !== drag.target) { if (drag.target) drag.target.classList.remove('merge-target'); if (target) { target.classList.add('merge-target'); haptic(); } drag.target = target; placeClone(); }
+  if (target !== drag.target) { if (drag.target) drag.target.classList.remove('merge-target'); if (target) { target.classList.add('merge-target'); haptic();
+    const te = find(target.dataset.id).e, info = target.querySelector('.info');
+    if (info) info.dataset.hint = te.t === 'g' ? `Drop to add to ${te.name}` : 'Drop to make a group · 2 items'; }
+    drag.target = target; placeClone(); }
   if (target) return;
   let before = null;
   for (const n of siblings()) { const r = n.getBoundingClientRect(); if (y < r.top + r.height / 2) { before = n; break; } }
@@ -2013,6 +2031,7 @@ const MI = {
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h10v10H9zM5 15V5h10"/></svg>',
   pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg>',
   trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10H3z"/></svg>',
   check: '<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 };
 // status of a set of totals against the active goal: o = over, u = under, k = in range
