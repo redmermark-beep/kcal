@@ -471,7 +471,9 @@ body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
 .hcs{display:grid;gap:6px}
 .hc{box-sizing:border-box;border-radius:16px;padding:10px;display:flex;flex-direction:column;justify-content:space-between}
 .hc-top{display:flex;font-size:12px;font-weight:510}
-.hc-top span{opacity:.8}
+.hc-top{white-space:nowrap;gap:4px}
+.hc-top span{opacity:.8;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.hc-top em{flex:none}
 .hc-top em{margin-left:auto;font-size:12px}
 .hc .ht{height:3px}
 .hc .ht .dt{width:9px;height:9px;margin:-4.5px 0 0 -4.5px}
@@ -537,6 +539,10 @@ body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
 .px-chips small{font-size:12px;opacity:.75}
 .px-chips em{font-style:normal;font-family:var(--mono);font-weight:700}
 .px-day{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.px-day.hv53 .hc{height:104px}
+.px-day.hv53{display:block}
+.px-day em{font-style:normal;font-family:var(--mono);font-weight:700;white-space:nowrap}
+.px-day .op{opacity:.55;font-weight:600}
 .px-day .hr{height:36px;grid-template-columns:56px 80px minmax(0,1fr) 52px;padding:0 12px;border-radius:11px}
 .px-day .hr .hl{font-size:13px}
 .px-day .hr .hn{font-size:13px}
@@ -758,7 +764,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '51', pv: '15' };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2 };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
@@ -974,7 +980,7 @@ function renderHV(g, t) {
     el.classList.remove('ok', 'under', 'over'); el.classList.add(state);
     el.querySelector(':scope .v').textContent = r0(v); el.querySelector(':scope .g').textContent = r0(goalV);
     const sg = dev > 0 ? '+' : dev < 0 ? '−' : '±';
-    el.querySelector(':scope .d').textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev);
+    el.querySelector(':scope .d').textContent = state === 'ok' && el.classList.contains('hc') ? '✓' : (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev);
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
@@ -1371,7 +1377,7 @@ function dayState() {
 function openPrecise2(r, y, holding, pv) {
   const e = r.e, ruler = pv !== '16', STEP = pv === '16' ? 50 : 14;
   const ov = document.createElement('div'); ov.className = 'precise px-ov';
-  const head = pv === '18' ? `<div class="px-day">${['k', 'p', 'f', 'c'].map(k => `<div class="hs hr" data-m="${k}"><span class="hl"></span><span class="hn"><span class="v"></span><span class="op">/<span class="g"></span></span></span><div class="ht"><i class="w"></i><i class="dt"></i></div><em class="d"></em></div>`).join('')}</div>` : '';
+  const head = pv === '18' ? `<div class="px-day hv53">${hvMarkup('53')}</div>` : '';
   const info = pv === '16'
     ? `<div class="px-name">${esc(e.name)}</div><div class="px-drumwrap"><i class="px-hl"></i><div class="px-drum"></div></div>
        <div class="px-drh"><span>${e.t === 'g' ? 'grams' : U(e) === 'pc' ? 'pieces' : U(e) === 'ml' ? 'ml' : 'grams'}</span><span>kcal</span><span>P</span><span>F</span><span>C</span></div>`
@@ -1406,7 +1412,7 @@ function openPrecise2(r, y, holding, pv) {
       const ds = dayState();
       if (pv === '15') ov.querySelector('.px-chips').innerHTML = ds.map(x => `<span class="hs ${x.st}"><small>${x.k === 'k' ? 'kcal' : x.l[0]}</small><em>${x.d}</em></span>`).join('');
       else ds.forEach(x => { const el = ov.querySelector(`.px-day [data-m="${x.k}"]`); el.classList.remove('ok', 'under', 'over'); el.classList.add(x.st);
-        el.querySelector('.hl').textContent = x.l; el.querySelector('.v').textContent = x.v; el.querySelector('.g').textContent = x.g; el.querySelector('.d').textContent = x.d;
+        el.querySelector('.v').textContent = x.v; el.querySelector('.g').textContent = x.g; el.querySelector('.d').textContent = x.st === 'ok' ? '✓' : x.d;
         el.querySelector('.ht').style.setProperty('--x', x.x); });
     }
   };
@@ -1709,13 +1715,14 @@ function switchGoal(id) {
   renderAll(true);
 }
 const HV_STYLES = [['51', 'Rows with totals · 51'], ['53', 'Four chips · 53'], ['55', 'Card + chips · 55'], ['56', 'Status card · 56'], ['classic', 'Ring + bars (classic)']];
+if (S && S.ui && S.ui.dv !== 2) { S.ui.hv = '53'; S.ui.pv = '18'; S.ui.dv = 2; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 function setHV(k) {
   S.ui.hv = k; save(); syncTabs(); $('#hv').dataset.s = ''; instant = true; renderHeader(); instant = false;
   const el = k === 'classic' ? $('#bigRow') : $('#hv');
   if (!RM) el.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: SPRING });
   setHH && setHH(); toast(HV_STYLES.find(x => x[0] === k)[1]);
 }
-const PV_STYLES = [['12', 'Edge ruler · 12'], ['15', 'Ruler + day status · 15'], ['16', 'Table drum · 16'], ['18', 'Header rows + ruler · 18'], ['classic', 'Small wheel (classic)']];
+const PV_STYLES = [['12', 'Edge ruler · 12'], ['15', 'Ruler + day status · 15'], ['16', 'Table drum · 16'], ['18', 'Four chips + ruler · 18'], ['classic', 'Small wheel (classic)']];
 function designMenu() {
   menu($('#goalBtn'), [{ head: 'Header style' },
     ...HV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.hv || 'classic') === k, do: () => setHV(k) })),
