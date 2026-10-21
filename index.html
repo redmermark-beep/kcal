@@ -1061,7 +1061,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: '21', grid: 'cur', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: 'plain', grid: '7', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
