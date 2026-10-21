@@ -842,7 +842,7 @@ body.gr.hs-card.tab-meal .plan::before{left:calc(max(16px,env(safe-area-inset-le
 body.gr.hs-card.ma.tab-meal .hv{margin-top:var(--ct)}
 body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4px}
 /* ---------- sheets = reference «Product sheet» (canvas: Sheet reference): floating card, tiles, own keypad ---------- */
-.sheet{left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));max-width:414px;border-radius:36px;padding:16px 16px 18px;background:var(--bg);
+.sheet{transition:transform .55s var(--spring),bottom .25s var(--ease),max-height .25s var(--ease);left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));max-width:414px;border-radius:36px;padding:16px 16px 18px;background:var(--bg);
   box-shadow:0 0 2px rgba(0,0,0,.08),0 20px 60px rgba(0,0,0,.18);max-height:calc(100vh - 40px - env(safe-area-inset-top,0px));transform:translateY(calc(100% + 40px))}
 .sheet .grab{display:none}
 .scrim.show{background:rgba(0,0,0,.14)}
@@ -856,6 +856,12 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .sh-kick{flex-basis:100%;font-size:13px;font-weight:510;color:var(--ink-50);margin-bottom:-4px}
 .sh-name{flex:1;min-width:0;border:0;background:none;padding:0;font:inherit;font-size:24px;line-height:30px;font-weight:600;letter-spacing:-.5px;color:var(--ink);outline:none;text-overflow:ellipsis;-webkit-user-select:text;user-select:text}
 .sh-name::placeholder{color:rgba(0,0,0,.22)}
+.sheet input:focus,.sheet input:focus-visible{outline:none}
+.sh-name{border-radius:10px;transition:background-color .2s,box-shadow .2s}
+.sh-name:focus{background:var(--fill-6);box-shadow:0 0 0 6px var(--fill-6)}
+.sh-name:focus~.sh-pen{opacity:0}
+.sh-pen{transition:opacity .2s}
+.sheet .tfield:focus-within{background:var(--fill-6);box-shadow:none}
 .sh-name:not(:placeholder-shown){flex:0 1 auto}
 @supports (field-sizing:content){.sh-name{field-sizing:content;flex:0 1 auto;max-width:100%}}
 @supports not (field-sizing:content){.sh-name:not(:placeholder-shown){flex:1}}
@@ -864,7 +870,7 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .sh-ic:active,.sheet .x:active{transform:scale(.9)}
 .sh-ic.red{color:var(--red)}
 .sh-ic.big{width:50px;height:50px;border-radius:25px;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.06)}
-.sh-head .x{margin-left:0}
+.sh-head .x{margin-left:0;flex:none;display:grid;place-items:center;padding:0}
 .sh-head .sh-ic:first-of-type{margin-left:auto}
 .sh-head .sh-name+.x{margin-left:auto}
 /* choice = tiles (black when chosen) */
@@ -912,10 +918,10 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .sh-warn[hidden]{display:none}
 .sh-warn b{font-family:var(--mono)}
 .sh-chip{flex:none;margin-left:auto;height:30px;padding:0 12px;border-radius:15px;background:#000;color:#fff;font-size:13px;font-weight:600}
-.sh-act{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px}
+.sh-act{display:flex;align-items:center;gap:8px;margin-top:18px}
 .sh-act[hidden]{display:none}
-.sheet .sbtn.primary{width:auto;min-width:150px;padding:0 36px;margin:18px auto 0;box-shadow:0 8px 20px rgba(0,0,0,.2)}
-.sheet .sh-act .sbtn.primary{margin:0;padding:0 28px}
+.sheet .sbtn.primary{width:100%;margin:18px 0 0;padding:0 20px;box-shadow:none}
+.sheet .sh-act .sbtn.primary{flex:1;width:auto;margin:0}
 .sheet .sbtn.primary:disabled{background:var(--fill-8);color:rgba(0,0,0,.35);box-shadow:none}
 .sbtn .sv{font-family:var(--mono);font-size:14px;font-weight:600;opacity:.75}
 .sbtn .sv:not(:empty){margin-left:4px;padding-left:12px;box-shadow:inset 1px 0 0 rgba(255,255,255,.25)}
@@ -2083,7 +2089,19 @@ function sheet(html, onReady) {
   s.addEventListener('touchstart', e => { sy = s.scrollTop <= 0 && !e.target.closest('input,.seg') ? e.touches[0].clientY : null; }, { passive: true });
   s.addEventListener('touchmove', e => { if (sy === null) return; const d = e.touches[0].clientY - sy; if (d > 0) { s.style.transition = 'none'; s.style.transform = `translateY(${d}px)`; } }, { passive: true });
   s.addEventListener('touchend', e => { if (sy === null) return; const d = e.changedTouches[0].clientY - sy; sy = null; s.style.transition = ''; s.style.transform = ''; if (d > 110) closeSheet(); });
-  openSheet = { s, scrim };
+  const vv = window.visualViewport;
+  const kbFit = () => {
+    if (!vv) return;
+    const kb = Math.max(0, innerHeight - vv.height - vv.offsetTop), on = kb > 80;
+    s.style.bottom = on ? `${kb + 8}px` : '';
+    s.style.maxHeight = on ? `${vv.height - 16}px` : '';
+    const a = document.activeElement;
+    if (on && a && s.contains(a)) setTimeout(() => (a.closest('.vt,.tfield,.sh-head') || a).scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' }), 30);
+  };
+  const kbOff = () => { if (vv) { vv.removeEventListener('resize', kbFit); vv.removeEventListener('scroll', kbFit); } };
+  if (vv) { vv.addEventListener('resize', kbFit); vv.addEventListener('scroll', kbFit); }
+  s.addEventListener('focusin', () => { setTimeout(kbFit, 60); setTimeout(kbFit, 350); });
+  openSheet = { s, scrim, kbOff };
   if (onReady) onReady(s);
   kpBind(s);
   return s;
@@ -2095,14 +2113,16 @@ function kpBind(s) {
   s.querySelectorAll('.vt[data-f] input').forEach(i => {
     fit(i);
     new MutationObserver(() => fit(i)).observe(i, { attributes: true, attributeFilter: ['placeholder', 'value'] });
-    i.addEventListener('focus', () => { i.closest('.vt').classList.add('on'); setTimeout(() => { try { i.select(); } catch (_) {} }, 0); });
+    let fresh = false;
+    i.addEventListener('focus', () => { fresh = true; i.closest('.vt').classList.add('on'); });
+    i.addEventListener('beforeinput', ev => { if (fresh && /^(insert|delete)/.test(ev.inputType)) { i.value = ''; if (ev.inputType.startsWith('delete')) { ev.preventDefault(); i.dispatchEvent(new Event('input', { bubbles: true })); } } fresh = false; });
     i.addEventListener('blur', () => i.closest('.vt').classList.remove('on'));
     i.addEventListener('keydown', ev => { if (ev.key !== 'Enter') return; ev.preventDefault(); const l = tiles(), nx = l[l.indexOf(i) + 1]; nx ? nx.focus() : i.blur(); });
   });
   s.addEventListener('input', () => s.querySelectorAll('.vt[data-f] input').forEach(fit));
 }
 function closeSheet(fast) {
-  if (!openSheet) return; const { s, scrim } = openSheet; openSheet = null;
+  if (!openSheet) return; const { s, scrim, kbOff } = openSheet; openSheet = null; if (kbOff) kbOff();
   if (document.activeElement && s.contains(document.activeElement)) document.activeElement.blur();
   s.classList.remove('show'); scrim.classList.remove('show'); setTimeout(() => { s.remove(); scrim.remove(); }, fast ? 0 : 450);
 }
@@ -2124,20 +2144,15 @@ function nudge(el) { const f = el.closest('.field,.vt') || el; f.classList.remov
 function foodSheet(e, isNew) {
   const n = e ? e.n : { k: '', p: '', f: '', c: '' }, unit0 = e ? U(e) : 'g';
   const ul = u => u === 'pc' ? 'pc' : u;
-  const mm = e && !isNew ? mac(e) : null;
-  const sum = !mm ? '' : e.g > 0
-    ? `<div class="sh-sum"><span class="m">In ${esc(plan().name)}</span><b>${fmtAmt(e, e.g)}</b><b class="r">${r0(mm.k)} kcal</b><span class="m mono">P${r0(mm.p)} F${r0(mm.f)} C${r0(mm.c)}</span></div>`
-    : `<div class="sh-sum"><span class="m">Not in ${esc(plan().name)} yet</span></div>`;
   sheet(`<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
     ${segHTML('fU', [['g', 'Grams', SHI.g], ['ml', 'Millilitres', SHI.ml], ['pc', 'Pieces', SHI.pc]], unit0)}
     <div class="card" id="fUwBox" style="margin-top:6px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>
     ${isNew ? `<div class="cap">Daily amount in ${esc(plan().name)}</div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
-    <div class="cap">Per 100 g<span class="r">kcal fills in from macros</span></div>
+    <div class="cap">Per 100 g</div>
     <div class="card c4">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'kcal', isNew ? '' : n.k, '', '0')}</div>
     <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
-    <div class="cap">Shopping<span class="r">optional · for Budget</span></div>
+    <div class="cap">Shopping<span class="r">optional</span></div>
     <div class="card">${fnum('fPk', 'Pack', e && e.pk ? toU(e, e.pk) : '', ul(unit0), '—')}${fnum('fPr', 'Price', e && e.pr, esc(S.ui.cur), '—')}</div>
-    ${sum}
     ${isNew ? '<button class="sbtn primary" id="fSave" disabled>Add to the list</button>'
       : `<div class="sh-act" id="fAct" hidden><button type="button" class="sh-ic big" id="fUndo" aria-label="Undo changes">${SHI.undo}</button><button class="sbtn primary" id="fSave">Save<span class="sv" id="fSv"></span></button></div>`}`, s => {
     const seg = s.querySelector('#fU');
