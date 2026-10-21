@@ -881,7 +881,7 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .vt:active{transform:scale(.97)}
 .vt .l{font-size:12px;line-height:15px;font-weight:510;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vt b{display:flex;align-items:baseline;min-width:0;font-size:24px;line-height:28px;font-weight:600;letter-spacing:-.5px;white-space:nowrap}
-.vt b input[type=hidden]{display:none}
+.vt[data-f] b input{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;border-radius:inherit;background:none;opacity:0;font-size:16px;color:transparent;caret-color:transparent;cursor:pointer;-webkit-user-select:text;user-select:text}
 .vt b .v.ph{color:rgba(0,0,0,.22)}
 .vt.on b .v.ph{color:rgba(255,255,255,.35)}
 .vt b .u.sg{margin:0 1px 0 0;font-size:20px;color:inherit}
@@ -902,19 +902,6 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .vt-date b input{width:100%;font-size:18px;-webkit-appearance:none;appearance:none;text-align:left;caret-color:auto;-webkit-user-select:text;user-select:text}
 .vt-calc{cursor:default;background:var(--fill-3);box-shadow:none}
 .card:has(>.vt)>.vt:only-child{grid-column:1/-1}
-/* keypad */
-.kp{margin-top:12px;animation:kpIn .32s var(--spring)}
-.kp.out{animation:kpOut .18s var(--ease) forwards}
-@keyframes kpIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes kpOut{to{opacity:0;transform:translateY(10px)}}
-.kp-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.kp-next{height:32px;padding:0 13px;border-radius:16px;background:var(--fill-6);font-size:13px;font-weight:600;color:var(--ink)}
-.kp-del{margin-left:auto;width:48px;height:32px;border-radius:16px;display:grid;place-items:center;color:var(--ink)}
-.kp-keys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px}
-.kp-keys button{height:52px;border-radius:26px;background:var(--fill-6);font-size:26px;line-height:26px;color:var(--ink);font-variant-numeric:tabular-nums;transition:transform .15s var(--spring),background-color .15s}
-.kp-keys button:active{transform:scale(.93);background:rgba(0,0,0,.14)}
-.kp-keys .ok{background:#000;color:#fff;display:grid;place-items:center}
-.kp-next:active,.kp-del:active{transform:scale(.94)}
 /* summary, warning, actions */
 .sh-sum{display:flex;align-items:center;gap:8px;margin-top:14px;padding:12px 14px;border-radius:16px;background:var(--fill-6);font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden}
 .sh-sum b{font-weight:600;font-family:var(--mono)}
@@ -2101,50 +2088,18 @@ function sheet(html, onReady) {
   kpBind(s);
   return s;
 }
-/* own keypad for number tiles: tap a tile → it turns black, keys type into it; Next moves on, ✓ closes */
-const KP_BACK = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11v12H9l-5-6z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/></svg>';
-const KP_OK = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+/* number tiles: the real input lies over the tile (system decimal keypad); the tile shows the value and turns black while typing */
 function kpBind(s) {
-  let cur = null, fresh = false, kp = null, at = 0;
-  const tiles = () => [...s.querySelectorAll('.vt[data-f]')].filter(t => t.offsetParent);
+  const tiles = () => [...s.querySelectorAll('.vt[data-f] input')].filter(i => i.offsetParent);
   const fit = i => { const v = i.parentElement.querySelector('.v'); if (!v) return; v.textContent = i.value || i.placeholder || ''; v.classList.toggle('ph', !i.value); };
-  s.querySelectorAll('.vt[data-f] input').forEach(i => { fit(i); i.addEventListener('input', () => fit(i)); new MutationObserver(() => fit(i)).observe(i, { attributes: true, attributeFilter: ['placeholder', 'value'] }); i.focus = () => open(i.closest('.vt')); });
-  s.addEventListener('input', () => s.querySelectorAll('.vt[data-f] input').forEach(fit));
-  const label = () => { const l = tiles(), nx = l[l.indexOf(cur) + 1]; kp.querySelector('.kp-next').textContent = nx ? `Next · ${nx.querySelector('.l').textContent} ›` : 'Done'; };
-  function close() { if (cur) cur.classList.remove('on'); cur = null; if (kp) { const k = kp; kp = null; k.classList.add('out'); setTimeout(() => k.remove(), 180); } }
-  function open(t) {
-    if (!t || cur === t) return;
-    if (cur) cur.classList.remove('on'); cur = t; t.classList.add('on'); fresh = true; at = performance.now(); haptic();
-    if (!kp) {
-      const box = document.createElement('div');
-      box.innerHTML = `<div class="kp"><div class="kp-top"><button type="button" class="kp-next"></button><button type="button" class="kp-del" aria-label="Delete a digit">${KP_BACK}</button></div><div class="kp-keys">${['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'ok'].map(k => `<button type="button" data-k="${k}"${k === 'ok' ? ' class="ok" aria-label="Done"' : ''}>${k === 'ok' ? KP_OK : k}</button>`).join('')}</div></div>`;
-      kp = box.firstChild;
-      const anchor = [...s.children].find(c => c.matches('.sbtn,.btnrow,.sh-act'));
-      anchor ? s.insertBefore(kp, anchor) : s.appendChild(kp);
-      kp.addEventListener('click', ev => {
-        const b = ev.target.closest('button'); if (!b || !cur) return; haptic();
-        const i = cur.querySelector('input');
-        if (b.classList.contains('kp-next')) { const l = tiles(), nx = l[l.indexOf(cur) + 1]; return nx ? open(nx) : close(); }
-        if (b.classList.contains('kp-del')) { i.value = fresh ? '' : i.value.slice(0, -1); fresh = false; }
-        else {
-          const k = b.dataset.k; if (k === 'ok') return close();
-          let v = fresh ? '' : i.value; fresh = false;
-          if (k === '.') { if (v.includes('.')) return; v = (v || '0') + '.'; }
-          else { if (v === '0') v = ''; if (v.replace('.', '').length >= 6) return; v += k; }
-          i.value = v;
-        }
-        i.dispatchEvent(new Event('input', { bubbles: true }));
-      });
-    }
-    label();
-    requestAnimationFrame(() => { t.scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' }); });
-  }
-  s.addEventListener('click', ev => {
-    if (ev.target.closest('.kp')) return;
-    const t = ev.target.closest('.vt[data-f]');
-    if (t) return open(t);
-    if (cur && performance.now() - at > 350 && !ev.target.closest('.sbtn,.sh-act')) close();
+  s.querySelectorAll('.vt[data-f] input').forEach(i => {
+    fit(i);
+    new MutationObserver(() => fit(i)).observe(i, { attributes: true, attributeFilter: ['placeholder', 'value'] });
+    i.addEventListener('focus', () => { i.closest('.vt').classList.add('on'); setTimeout(() => { try { i.select(); } catch (_) {} }, 0); });
+    i.addEventListener('blur', () => i.closest('.vt').classList.remove('on'));
+    i.addEventListener('keydown', ev => { if (ev.key !== 'Enter') return; ev.preventDefault(); const l = tiles(), nx = l[l.indexOf(i) + 1]; nx ? nx.focus() : i.blur(); });
   });
+  s.addEventListener('input', () => s.querySelectorAll('.vt[data-f] input').forEach(fit));
 }
 function closeSheet(fast) {
   if (!openSheet) return; const { s, scrim } = openSheet; openSheet = null;
@@ -2160,7 +2115,7 @@ function segSet(seg, v) {
 function segHTML(id, opts, v) { return `<div class="seg" id="${id}" data-v="${v}"><i class="thumb"></i>${opts.map(([k, l, ic]) => `<button type="button" data-v="${k}">${ic || ''}${l}</button>`).join('')}</div>`; }
 function segBind(seg, fn) { seg.addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (!b) return; segSet(seg, b.dataset.v); fn && fn(b.dataset.v); }); }
 const fnum = (id, label, val, unit, ph = '0', hint = '') =>
-  `<div class="vt" data-f="${id}"><span class="l">${label}</span><b><span class="v"></span><i class="cr"></i><span class="u">${unit || ''}</span><input id="${id}" type="hidden" value="${val ?? ''}" placeholder="${ph}"></b>${hint ? `<span class="h">${hint}</span>` : ''}</div>`;
+  `<div class="vt" data-f="${id}"><span class="l">${label}</span><b><span class="v"></span><i class="cr"></i><span class="u">${unit || ''}</span><input id="${id}" inputmode="decimal" enterkeyhint="next" value="${val ?? ''}" placeholder="${ph}" autocomplete="off" aria-label="${label}"></b>${hint ? `<span class="h">${hint}</span>` : ''}</div>`;
 const ftxt = (id, val, ph) => `<div class="tfield"><input id="${id}" value="${esc(val || '')}" placeholder="${esc(ph || '')}" autocomplete="off" aria-label="${esc(ph || 'Name')}"></div>`;
 const val = (s, id) => numIn(s.querySelector('#' + id).value);
 function nudge(el) { const f = el.closest('.field,.vt') || el; f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); }
@@ -2436,7 +2391,7 @@ function goalSheet(g0, isNew) {
       fnum(id, l, d[k], u, '0', d.rng && d.rng[k] ? `${d.rng[k][0]}–${d.rng[k][1]} ${u}` : '')).join('')}</div>
     <div class="cap">Body target</div>
     <div class="card">${fnum('gTw', 'Target weight', d.tw, 'kg')}
-      <div class="vt" data-f="gR"><span class="l">Weekly change</span><b><span class="u sg" id="gSign"></span><span class="v"></span><i class="cr"></i><span class="u">kg</span><input id="gR" type="hidden" value="${Math.abs(d.rate)}" placeholder="0"></b></div>
+      <div class="vt" data-f="gR"><span class="l">Weekly change</span><b><span class="u sg" id="gSign"></span><span class="v"></span><i class="cr"></i><span class="u">kg</span><input id="gR" inputmode="decimal" enterkeyhint="next" value="${Math.abs(d.rate)}" placeholder="0" autocomplete="off" aria-label="Weekly change"></b></div>
       ${fnum('gBf', 'Target body fat', d.tbf, '%')}${fnum('gSw', 'Start weight', d.sw, 'kg', '0', curW != null ? `latest ${curW.toFixed(1)} kg` : '')}</div>
     <p class="note" id="gEta" style="margin-top:12px"></p>
     <button class="sbtn primary" id="gSave">${isNew ? 'Create plan' : 'Save'}</button>`, s => {
