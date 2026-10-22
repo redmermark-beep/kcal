@@ -783,7 +783,6 @@ body.ma.tab-meal #list{margin-top:8px}
 #secMeal .merge-target>.rc .info::after,#secMeal .merge-target>.ghead>.rc .info::after{content:attr(data-hint);font-size:12px;line-height:14px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .drag-clone>.rc{transition:transform .25s var(--spring),opacity .2s}
-.drag-clone.merging>.rc{transform:scale(.98);opacity:.85}
 .drag-clone.merging::before{opacity:.92!important}
 
 /* ---------- main screen style (Settings → Main screen → Style): Plain or Card (21: plan + chips on a white card, filled chips) ---------- */
@@ -907,7 +906,8 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .vt.ed::after{content:"";position:absolute;right:10px;top:12px;width:6px;height:6px;border-radius:3px;background:var(--blue)}
 .vt-date b input{width:100%;font-size:18px;-webkit-appearance:none;appearance:none;text-align:left;caret-color:auto;-webkit-user-select:text;user-select:text}
 .vt-calc{cursor:default;background:var(--fill-3);box-shadow:none}
-.card:has(>.vt)>.vt:only-child{grid-column:1/-1}
+.sheet .card>.vt:only-child{grid-column:1/-1}
+.sh-ic:disabled{opacity:.35}
 /* summary, warning, actions */
 .sh-sum{display:flex;align-items:center;gap:8px;margin-top:14px;padding:12px 14px;border-radius:16px;background:var(--fill-6);font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden}
 .sh-sum b{font-weight:600;font-family:var(--mono)}
@@ -1664,7 +1664,6 @@ function tapAction(g) {
   if (g.list === 'log') { const e = S.log.find(x => x.id === g.id); if (!e) return; return g.act === 'pill' ? openKeypad('w', g.id) : entrySheet(e); }
   const r = find(g.id); if (!r) return;
   if (g.act === 'pill') return openKeypad('g', g.id);
-  if (r.e.t === 'g' && g.act === 'gname') return groupSheet(r.e);
   if (r.e.t === 'g') return toggleGroup(r.e);
   return foodSheet(r.e);
 }
@@ -1718,56 +1717,57 @@ function toggleGroup(gr) {
 /* ================= drag & merge ================= */
 let drag = null, dragEndAt = 0;
 function startDrag(id, el, x, y) {
-  let r = find(id);
-  // the lifted row keeps its own shape and stays exactly under the finger; it lives inside the meal section so it keeps the list's look
+  // the lifted row keeps its own shape and follows the finger freely; nothing is restructured until the drop
   const rect = el.getBoundingClientRect(), clone = el.cloneNode(true);
-  if (r.parent) { // lifting a product out of its group: the group closes the gap smoothly, the empty slot waits right after it
-    const gr = r.parent, gi = S.items.indexOf(gr), full = gr.g >= maxOf(gr), b0 = snapRects();
-    gr.ch.splice(r.i, 1); const nm = maxOf(gr); gr.g = full ? nm : Math.min(gr.g, nm);
-    S.items.splice(gi + 1, 0, r.e); fixGroup(gr, S.items);
-    renderList(); renderHeader(); el = list.querySelector(`[data-id="${id}"]`); el.classList.add('slot');
-    playFlip(b0, { skip: id, dur: 320, ease: EASE });
-  }
   clone.classList.add('drag-clone', 'lifted'); clone.classList.remove('pressing', 'merge-target', 'slot');
   Object.assign(clone.style, { left: rect.left + 'px', top: rect.top + 'px', width: rect.width + 'px', transform: 'scale(1.03)' });
   ($('#secMeal') || document.body).appendChild(clone);
   if (!RM) clone.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.03)' }], { duration: 260, easing: SPRING });
   el.classList.add('slot');
-  drag = { id, el, clone, rect, x0: x, y0: y, x, y, target: null, raf: 0 };
+  drag = { id, el, clone, rect, x0: x, y0: y, x, y, target: null, raf: 0, isGroup: find(id).e.t === 'g' };
   drag.raf = requestAnimationFrame(autoScroll);
 }
-const siblings = () => [...list.children].filter(n => n.dataset.id && n !== drag.el);
-// a row's resting box, without any FLIP transform in flight, so targets don't flicker while rows glide
+// a box at rest, without any FLIP transform in flight, so targets don't flicker while rows glide
 function restRect(n) {
   const r = n.getBoundingClientRect(), t = getComputedStyle(n).transform;
   if (!t || t === 'none') return r;
-  const m = new DOMMatrixReadOnly(t); return { top: r.top - m.m42, bottom: r.bottom - m.m42, height: r.height };
+  const m = new DOMMatrixReadOnly(t); return { top: r.top - m.m42, bottom: r.bottom - m.m42, height: r.height, left: r.left, right: r.right };
 }
-function moveDrag(x, y) {
-  drag.x = x; drag.y = y;
-  updateTarget(); placeClone();
-}
-// over a merge target the clone shrinks and slides right, so the row it will join stays visible underneath
+const tops = () => [...list.children].filter(n => n.dataset.id && n !== drag.el);
+const openKids = () => drag.isGroup ? [] : [...list.querySelectorAll(':scope > .group.open > .kids')];
+function moveDrag(x, y) { drag.x = x; drag.y = y; updateTarget(); placeClone(); }
 function placeClone() {
-  const m = !!drag.target;
-  const dx = Math.max(-24, Math.min(24, (drag.x - drag.x0) * .35));
-  drag.clone.style.transform = `translate(${dx}px, ${drag.y - drag.y0}px) scale(1.03)`;
-  drag.clone.classList.toggle('merging', m);
+  drag.clone.style.transform = `translate(${drag.x - drag.x0}px, ${drag.y - drag.y0}px) scale(1.03)`;
+  drag.clone.classList.toggle('merging', !!drag.target);
+}
+function setTarget(t) {
+  if (t === drag.target) return;
+  if (drag.target) drag.target.classList.remove('merge-target');
+  if (t) { t.classList.add('merge-target'); haptic();
+    const te = find(t.dataset.id).e, info = (t.querySelector(':scope > .ghead') || t).querySelector('.info');
+    if (info) info.dataset.hint = te.t === 'g' ? `Drop to add to ${te.name}` : 'Drop to make a group · 2 items'; }
+  drag.target = t; placeClone();
 }
 function updateTarget() {
-  const y = drag.y; let target = null;
-  // generous drop zone: most of a row groups; only a thin edge (and the gap) reorders. Once over a row, stay on it until the finger leaves it.
-  if (drag.target && drag.target.isConnected) { const r = restRect(drag.target); if (y > r.top - 3 && y < r.bottom + 3) target = drag.target; }
-  if (!target) for (const n of siblings()) { const r = restRect(n), band = Math.min(7, r.height * .15); if (y > r.top + band && y < r.bottom - band) { target = n; break; } }
-  if (target !== drag.target) { if (drag.target) drag.target.classList.remove('merge-target'); if (target) { target.classList.add('merge-target'); haptic();
-    const te = find(target.dataset.id).e, info = target.querySelector('.info');
-    if (info) info.dataset.hint = te.t === 'g' ? `Drop to add to ${te.name}` : 'Drop to make a group · 2 items'; }
-    drag.target = target; placeClone(); }
-  if (target) return;
-  let before = null;
-  for (const n of siblings()) { const r = restRect(n); if (y < r.top + r.height / 2) { before = n; break; } }
-  if (drag.el.nextElementSibling === before || (!before && drag.el === list.lastElementChild)) return;
-  const snap = snapRects(); list.insertBefore(drag.el, before); playFlip(snap, { skip: drag.id, dur: 300, ease: EASE }); haptic();
+  const y = drag.y, own = drag.el.closest('.group');
+  // 1 · merge: a top-level row, or a group's head (not the group the row already lives in)
+  const hitBox = n => n.classList.contains('group') ? restRect(n.querySelector(':scope > .ghead')) : restRect(n);
+  let t = null;
+  if (drag.target && drag.target.isConnected) { const r = hitBox(drag.target); if (y > r.top - 3 && y < r.bottom + 3) t = drag.target; }
+  if (!t) for (const n of tops()) { if (n === own) continue; const r = hitBox(n), band = Math.min(7, r.height * .15); if (y > r.top + band && y < r.bottom - band) { t = n; break; } }
+  setTarget(t); if (t) return;
+  // 2 · inside an open group: reorder among its products
+  let parent = list, before = null;
+  for (const ul of openKids()) {
+    const kids = [...ul.children].filter(n => n !== drag.el);
+    if (!kids.length) continue;
+    const ur = restRect(ul);
+    if (y > ur.top - 4 && y < ur.bottom + 4) { parent = ul; before = kids.find(k => { const r = restRect(k); return y < r.top + r.height / 2; }) || null; break; }
+  }
+  // 3 · top level: before the first row (or group head) whose middle is below the finger
+  if (parent === list) before = tops().find(n => { const r = hitBox(n); return y < r.top + r.height / 2; }) || null;
+  if (drag.el.parentElement === parent && (drag.el.nextElementSibling === before || (!before && drag.el === parent.lastElementChild))) return;
+  const snap = snapRects(); parent.insertBefore(drag.el, before); playFlip(snap, { skip: drag.id, dur: 300, ease: EASE }); haptic();
 }
 function autoScroll() {
   if (!drag) return;
@@ -1777,25 +1777,35 @@ function autoScroll() {
   if (v) { const b = scrollY; scrollBy(0, v); if (scrollY !== b) updateTarget(); }
   drag.raf = requestAnimationFrame(autoScroll);
 }
+// rebuild the order (and group membership) from what is on screen
+function orderFromDom() {
+  const byId = {}, walk = arr => arr.forEach(e => { byId[e.id] = e; if (e.t === 'g') walk(e.ch); }); walk(S.items);
+  const max0 = {}; Object.values(byId).forEach(e => { if (e.t === 'g') max0[e.id] = maxOf(e); });
+  const shown = [...list.children].filter(n => n.dataset.id), ids = new Set();
+  const top = shown.map(n => { const e = byId[n.dataset.id]; ids.add(e.id);
+    if (e.t === 'g' && n.classList.contains('open')) { e.ch = [...n.querySelectorAll(':scope > .kids > [data-id]')].map(k => { ids.add(k.dataset.id); return byId[k.dataset.id]; }); }
+    return e; });
+  const rest = S.items.filter(e => !ids.has(e.id));
+  S.items = top.concat(rest);
+  [...S.items].forEach(e => { if (e.t !== 'g') return; const mx = maxOf(e); e.g = e.g >= max0[e.id] ? mx : Math.min(e.g, mx); fixGroup(e, S.items); });
+}
 function endDrag(cancelled) {
   const d = drag; drag = null; cancelAnimationFrame(d.raf);
-  const src = find(d.id).e; let landId = d.id;
-  if (d.target && !cancelled) { d.target.classList.remove('merge-target'); landId = merge(src, find(d.target.dataset.id).e); }
-  else if (!cancelled) {
-    const order = [...list.children].map(n => n.dataset.id).filter(Boolean);
-    const vis = S.items.filter(e => order.includes(e.id)).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
-    S.items = vis.concat(S.items.filter(e => !order.includes(e.id)));
-  }
+  let landId = d.id;
+  if (d.target && !cancelled) {
+    d.target.classList.remove('merge-target');
+    const r = find(d.id), src = r.e, tgt = find(d.target.dataset.id).e;
+    if (r.parent) { const gp = r.parent, full = gp.g >= maxOf(gp); r.arr.splice(r.i, 1); gp.g = full ? maxOf(gp) : Math.min(gp.g, maxOf(gp)); S.items.splice(S.items.indexOf(gp), 0, src); fixGroup(gp, S.items); }
+    landId = merge(src, tgt);
+  } else if (!cancelled) orderFromDom();
   save(); dragEndAt = performance.now();
   const before = snapRects($('#secMeal')); renderList(); renderHeader();
   const merged = landId !== d.id;
-  // land where the product really ends up: its own row (inside the open group when merged), else the group head
   const own = list.querySelector(`[data-id="${d.id}"]`), land = own || list.querySelector(`[data-id="${landId}"]`);
   playFlip(before, { skip: own ? d.id : landId, dur: 380, ease: EASE }, $('#secMeal'));
   if (!land) { d.clone.remove(); return; }
   const host = land.classList.contains('group') ? land.querySelector(':scope>.ghead') : land;
   host.style.visibility = 'hidden';
-  // measure after the group's own FLIP starts: aim at its final place
   const lr = host.getBoundingClientRect(), gEl = own && own.closest('.group'), gAnim = gEl && gEl.getAnimations()[0];
   const fin = gAnim ? (() => { const kf = gAnim.effect.getKeyframes()[0]; const m = /translate\(([-\d.]+)px,\s*([-\d.]+)px\)/.exec(kf.transform || ''); return m ? [+m[1], +m[2]] : [0, 0]; })() : [0, 0];
   d.clone.classList.remove('merging');
@@ -2172,16 +2182,16 @@ function foodSheet(e, isNew) {
   const unitsHTML = `${segHTML('fU', [['g', 'Grams', SHI.g], ['ml', 'Millilitres', SHI.ml], ['pc', 'Pieces', SHI.pc]], unit0)}
     <div class="card" id="fUwBox" style="margin-top:6px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>`;
   sheet(`<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
-    ${chipsUI ? '' : unitsHTML}
-    ${isNew ? `<div class="cap">Daily amount in ${esc(plan().name)}</div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
     ${chipsUI
-      ? `<div class="card c5">${fnum('fK', 'KCAL', isNew ? '' : n.k, '', '0', '\u00a0')}${fnum('fP', 'P', n.p, '', '0', '\u00a0')}${fnum('fF', 'F', n.f, '', '0', '\u00a0')}${fnum('fC', 'C', n.c, '', '0', '\u00a0')}</div><div class="cap" style="margin-top:8px">per 100 g</div><div class="cap">Counted in</div>${unitsHTML}`
+      ? `<div class="card c5">${fnum('fK', 'KCAL', isNew ? '' : n.k, '', '0', '\u00a0')}${fnum('fP', 'P', n.p, '', '0', '\u00a0')}${fnum('fF', 'F', n.f, '', '0', '\u00a0')}${fnum('fC', 'C', n.c, '', '0', '\u00a0')}</div><div class="cap" style="margin-top:8px">per 100 g</div>`
       : `<div class="cap">Per 100 g</div><div class="card c4">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'kcal', isNew ? '' : n.k, '', '0')}</div>`}
     <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
+    <div class="cap">Counted in</div>${unitsHTML}
+    ${isNew ? `<div class="cap">In ${esc(plan().name)}<span class="r">daily amount</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
     <div class="cap">Shopping<span class="r">optional</span></div>
     <div class="card">${fnum('fPk', 'Pack', e && e.pk ? toU(e, e.pk) : '', ul(unit0), '—')}${fnum('fPr', 'Price', e && e.pr, esc(S.ui.cur), '—')}</div>
     ${isNew ? '<button class="sbtn primary" id="fSave" disabled>Add to the list</button>'
-      : `<div class="sh-act" id="fAct" hidden><button type="button" class="sh-ic big" id="fUndo" aria-label="Undo changes">${SHI.undo}</button><button class="sbtn primary" id="fSave">Save<span class="sv" id="fSv"></span></button></div>`}`, s => {
+      : `<div class="sh-act" id="fAct"><button type="button" class="sh-ic big" id="fUndo" aria-label="Undo changes" disabled>${SHI.undo}</button><button class="sbtn primary" id="fSave" disabled>Save</button></div>`}`, s => {
     const seg = s.querySelector('#fU');
     const ins = () => [...s.querySelectorAll('input')];
     const snap = () => JSON.stringify([seg.dataset.v, ...ins().map(i => i.value)]), snap0 = snap(), vals0 = ins().map(i => i.value), unit00 = seg.dataset.v;
@@ -2197,9 +2207,7 @@ function foodSheet(e, isNew) {
         hl('fK', !isNew && kNow !== r0(n.k) ? `was ${r0(n.k)}` : k != null ? `macros ${auto}` : 'from macros');
       }
       if (isNew) { s.querySelector('#fSave').disabled = !s.querySelector('#fName').value.trim(); return; }
-      const ch = snap() !== snap0; s.querySelector('#fAct').hidden = !ch;
-      const k1 = k != null ? r0(k) : auto, k0 = r0(n.k);
-      s.querySelector('#fSv').textContent = ch && k1 !== k0 ? `${k0} → ${k1} kcal` : '';
+      const ch = snap() !== snap0; s.querySelector('#fSave').disabled = !ch; s.querySelector('#fUndo').disabled = !ch;
       s.querySelectorAll('.vt[data-f]').forEach(t => { const i = t.querySelector('input'), j = ins().indexOf(i); t.classList.toggle('ed', j >= 0 && i.value !== vals0[j]); });
     };
     s.addEventListener('input', sync); seg.addEventListener('click', () => setTimeout(sync));
@@ -2242,9 +2250,8 @@ function groupSheet(g) {
     <div class="cap">${g.ch.length} products<span class="r">${g.g} of ${maxOf(g)} g eaten</span></div>
     <div class="card">${g.ch.map(c => `<div class="field"><span class="fl">${esc(c.name)}</span><span class="calc">${c.g}g</span></div>`).join('')}</div>
     <button class="sbtn primary" id="gSave">Save</button>
-    <div class="btnrow"><button class="sbtn plain" id="gUn">Ungroup</button><button class="sbtn danger" id="gDel">Delete</button></div>`, s => {
+    <div class="btnrow"><button class="sbtn danger" id="gDel">Delete group</button></div>`, s => {
     s.querySelector('#gSave').addEventListener('click', () => { g.name = s.querySelector('#gName').value.trim() || g.name; save(); closeSheet(); renderMeal(true); });
-    s.querySelector('#gUn').addEventListener('click', () => { const r = find(g.id); r.arr.splice(r.i, 1, ...g.ch); save(); closeSheet(); renderMeal(true); });
     s.querySelector('#gDel').addEventListener('click', () => { closeSheet(); const el = list.querySelector(`[data-id="${g.id}"] > .ghead`); if (el) removeWithUndo('meal', g.id, el); });
   });
 }
