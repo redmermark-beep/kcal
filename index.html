@@ -1017,7 +1017,7 @@ button.sh-row:active{transform:scale(.98)}
 .sh-rows button.sh-row:active{background:var(--fill-6)}
 .gm-on{background:var(--fill-8);color:var(--ink);box-shadow:none}
 .gm-t{background:rgba(255,255,255,.7)}
-.gm-h .mck{align-self:center;opacity:1}
+.gm-h .mck{align-self:center;opacity:1;margin-left:4px}
 .sheet .seg button{background:transparent;box-shadow:inset 0 0 0 1px var(--fill-8)}
 .sheet .seg button.on{background:var(--fill-8);color:var(--ink);box-shadow:none;font-weight:600}
 </style>
@@ -2257,7 +2257,7 @@ function foodSheet(e, isNew) {
       : `<div class="cap">Per 100 g</div><div class="card c4">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'kcal', isNew ? '' : n.k, '', '0')}</div>`}
     <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
     <div class="cap">Counted in</div>${unitsHTML}
-    ${isNew ? `<div class="cap">In ${esc(plan().name)}<span class="r">daily amount</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
+    ${isNew ? `<div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
     <div class="cap">Shopping<span class="r">optional</span></div>
     <div class="card">${fnum('fPk', 'Pack', e && e.pk ? toU(e, e.pk) : '', ul(unit0), '—')}${fnum('fPr', 'Price', e && e.pr, esc(S.ui.cur), '—')}</div>
     ${isNew ? '<button class="sbtn primary" id="fSave" disabled>Add to the list</button>'
@@ -2389,7 +2389,7 @@ function planMenu(anchor) {
   const rows = S.plans.map(p => { const t = planTotals(p), st = statusOf(t), on = p.id === S.active;
     return `<button class="mpr${on ? ' on' : ''}" data-pid="${p.id}" role="menuitemradio" aria-checked="${on}">
       <span class="mpt"><b>${esc(p.name)}</b><span>${r0(t.k)} kcal</span></span>
-      <span class="mpd" aria-label="${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span>${on ? `<span class="mck">${MI.check}</span>` : ''}</button>`; }).join('');
+      <span class="mpd" aria-label="${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span><span class="mck">${on ? MI.check : ''}</span></button>`; }).join('');
   const acts = [['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['ren', 'Rename', MI.pen], ['del', 'Delete', MI.trash]]
     .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.plans.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
   popup(anchor || $('#planTitle'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
@@ -2401,7 +2401,7 @@ function planMenu(anchor) {
       if (k === 'new') nameSheet('New meal plan', 'New meal', 'Create', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); });
       if (k === 'dup') { save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); toast('Meal plan duplicated'); }
       if (k === 'ren') nameSheet('Rename meal plan', plan().name, 'Save', v => { plan().name = v; save(); renderMeal(false); });
-      if (k === 'del') confirmSheet(`Delete “${esc(plan().name)}”?`, 'Portions saved in this meal plan will be removed. Products stay in your list.', 'Delete meal plan', () => {
+      if (k === 'del') confirmSheet('Delete meal plan?', `“${esc(plan().name)}” and its portions will be removed. Products stay in your list.`, 'Delete', () => {
         const i = S.plans.indexOf(plan()); S.plans.splice(i, 1); switchPlan(S.plans[Math.max(0, i - 1)].id); toast('Meal plan deleted'); });
     }, 60);
   });
@@ -2419,7 +2419,7 @@ function applySort() {
 function sortMenu() {
   const u = S.ui;
   const rows = () => SORTS.map(x => `<button type="button" class="sh-row${u.sortBy === x[0] ? ' on' : ''}" data-s="${x[0]}" role="radio" aria-checked="${u.sortBy === x[0]}"><span class="sh-let">${x[1]}</span><span class="t"><b>${x[2]}</b></span>${u.sortBy === x[0] ? `<span class="ck">${MI.check}</span>` : ''}</button>`).join('');
-  sheet(`<h3>Sort ${esc(plan().name)}${XBTN}</h3>
+  sheet(`<h3>Sort products${XBTN}</h3>
     <div class="sh-rows" id="soR">${rows()}</div>
     <div class="cap">Order</div>${segHTML('soD', [['desc', 'High → low'], ['asc', 'Low → high']], u.sortDir === 'asc' ? 'asc' : 'desc')}
     <div class="sh-row sw" style="margin-top:6px"><span class="t"><b>Sort inside groups</b></span>${swHTML('sortInside', !!u.sortInside)}</div>
@@ -2483,13 +2483,13 @@ function goalMenu() {
   const rate = g.rate || 0, wk = rate && g.tw != null && w != null ? (g.tw - w) / rate : null;
   const eta = wk != null && wk > 0 ? new Date(Date.now() + wk * 7 * 864e5).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '';
   const tile = (l, v) => `<div class="gm-t"><span>${l}</span><b>${r0(v)}</b></div>`;
-  const others = S.goals.filter(x => x.id !== g.id).map(x => `<button type="button" class="sh-row" data-gid="${x.id}"><span class="t"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>${DOTS(statusOf(t, x))}</button>`).join('');
+  const others = S.goals.filter(x => x.id !== g.id).map(x => `<button type="button" class="sh-row" data-gid="${x.id}"><span class="t"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>${DOTS(statusOf(t, x))}<span class="mck"></span></button>`).join('');
   sheet(`<h3>Goal plans${XBTN}</h3>
     <div class="gm-on"><div class="gm-h"><b>${esc(g.name)}</b><span>${esc(typeName(g.type))}${rate ? ` · ${sgn(rate)} kg/wk` : ''}</span>${DOTS(statusOf(t, g))}<span class="mck">${MI.check}</span></div>
       <div class="gm-g">${tile('KCAL', g.k)}${tile('P', g.p)}${tile('F', g.f)}${tile('C', g.c)}</div>
       ${w != null && g.tw != null ? `<div class="gm-f">${w.toFixed(1)} → ${(+g.tw).toFixed(1)} kg${eta ? ` · around ${eta}` : ''}</div>` : ''}</div>
     ${others ? `<div class="cap">Switch to</div><div class="sh-rows">${others}</div>` : ''}
-    <div class="sh-act"><button type="button" class="sh-ic big" data-a="new" aria-label="New goal plan">${SHI.plus}</button><button type="button" class="sh-ic big" data-a="dup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic big red" data-a="del" aria-label="Delete"${S.goals.length < 2 ? ' disabled' : ''}>${SHI.trash}</button><button class="sbtn primary" data-a="edit">Edit ${esc(g.name)}</button></div>`, s => {
+    <div class="sh-act"><button type="button" class="sh-ic big" data-a="new" aria-label="New goal plan">${SHI.plus}</button><button type="button" class="sh-ic big" data-a="dup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic big red" data-a="del" aria-label="Delete"${S.goals.length < 2 ? ' disabled' : ''}>${SHI.trash}</button><button class="sbtn primary" data-a="edit">Edit plan</button></div>`, s => {
     s.addEventListener('click', e => {
       const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
       haptic(); closeSheet();
@@ -2499,7 +2499,7 @@ function goalMenu() {
         if (k === 'edit') goalSheet(g, false);
         if (k === 'new') goalSheet(null, true);
         if (k === 'dup') { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); }
-        if (k === 'del') confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete', () => {
+        if (k === 'del') confirmSheet('Delete goal plan?', `“${esc(g.name)}” targets will be removed. Your meals and measurements stay.`, 'Delete', () => {
           const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); });
       }, 420);
     });
