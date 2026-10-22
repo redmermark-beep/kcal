@@ -951,6 +951,49 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .c5>.vt .h{font-family:var(--sans);font-size:11px;line-height:13px;font-weight:510;letter-spacing:-.2px;text-overflow:clip;color:var(--ink-50);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .c5>.vt.on .h{color:rgba(255,255,255,.6)}
 .c5>.vt .l{font-size:12px;opacity:.85}
+/* ---------- menus in the sheet style (canvas «Menus»): Пробы = menu 1, Bulk plan = sheet 2, Sort = sheet 2 ---------- */
+.menu.mp{width:320px;padding:8px;border-radius:28px;background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 0 2px rgba(0,0,0,.08),0 16px 50px rgba(0,0,0,.18)}
+.mpr{height:58px;padding:0 14px;border-radius:18px;background:var(--fill-6);transition:background-color .15s,transform .2s var(--spring)}
+.mpr+.mpr{margin-top:6px}
+.mpr:active{transform:scale(.98);background:var(--fill-8)}
+.mpr.on{background:#000;color:#fff}
+.mpr.on .mpt span{color:rgba(255,255,255,.6)}
+.mpd i{width:8px;height:8px;border-radius:4px}
+.mpr.on .mpd i.o{background:#fff}
+.mpr.on .mpd i.u{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)}
+.mpr.on .mpd i.k{background:#6f9bf0}
+.mpa{gap:6px;margin-top:8px;padding:0;background:none}
+.mpa button{height:62px;border-radius:18px;background:var(--fill-6);font-size:12px}
+.mpa button:active{background:var(--fill-8)}
+.mpa button svg{width:18px;height:18px}
+/* rows inside sheets */
+.sh-rows{display:flex;flex-direction:column;gap:6px}
+.sh-row{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;box-sizing:border-box;padding:0 14px;border-radius:18px;background:var(--fill-6);text-align:left;color:var(--ink);transition:background-color .2s,color .2s,transform .2s var(--spring)}
+button.sh-row:active{transform:scale(.98)}
+.sh-row.on{background:#000;color:#fff}
+.sh-row .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sh-row .t b{font-size:16px;font-weight:600;letter-spacing:-.2px}
+.sh-row .t span{font-family:var(--mono);font-size:12px;color:var(--ink-50)}
+.sh-row .ck{width:18px;height:18px;display:grid}
+.sh-row.sw .t b{font-weight:510;font-size:15px}
+.sh-let{flex:none;width:32px;height:32px;border-radius:10px;background:rgba(0,0,0,.08);display:grid;place-items:center;font-size:13px;font-weight:700}
+.sh-row.on .sh-let{background:rgba(255,255,255,.18)}
+.sh-dots{margin-left:auto;display:flex;gap:4px;flex:none}
+.sh-dots i{width:8px;height:8px;border-radius:4px;box-sizing:border-box}
+.sh-dots i.o{background:#000}.sh-dots i.u{box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.4)}.sh-dots i.k{background:var(--blue)}
+.gm-on .sh-dots i.o{background:#fff}.gm-on .sh-dots i.u{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)}.gm-on .sh-dots i.k{background:#6f9bf0}
+.gm-on{padding:14px;border-radius:20px;background:#000;color:#fff}
+.gm-h{display:flex;align-items:baseline;gap:8px}
+.gm-h b{font-size:18px;font-weight:600;letter-spacing:-.3px}
+.gm-h>span{font-size:12px;opacity:.6}
+.gm-h .sh-dots{align-self:center}
+.gm-g{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:6px;margin-top:12px}
+.gm-t{padding:8px 10px;border-radius:14px;background:rgba(255,255,255,.12)}
+.gm-t span{display:block;font-size:11px;opacity:.6}
+.gm-t b{font-family:var(--mono);font-size:18px;font-weight:600}
+.gm-f{margin-top:10px;font-size:12px;opacity:.6}
+.sh-act .sh-ic.big.red{color:var(--red)}
+.sh-act .sh-ic:disabled{opacity:.35}
 </style>
 
 <div class="app" id="app">
@@ -1130,6 +1173,7 @@ const SHI = {
   copy: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>',
   trash: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>',
   pen: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>',
+  plus: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   undo: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>'
 };
 
@@ -2346,24 +2390,19 @@ function applySort() {
   S.items.sort(cmp); if (u.sortInside) S.items.forEach(e => { if (e.t === 'g') e.ch.sort(cmp); });
   save(); renderList(); renderHeader(); playFlip(before, {}, root);
 }
-function sortHTML() {
-  const u = S.ui, firstOf = s => { const arr = S.items.filter(e => e.g > 0); if (!arr.length) return ''; const d = u.sortDir === 'asc' ? 1 : -1;
-    const top = s[3] ? arr.reduce((a, b) => (s[3](b) - s[3](a)) * d < 0 ? b : a) : [...arr].sort((a, b) => a.name.localeCompare(b.name, 'ru') * (u.sortDir === 'desc' ? -1 : 1))[0];
-    return `${esc(top.name)} first`; };
-  return `<div class="msh">Sort ${esc(plan().name)} by</div>` + SORTS.map(s => `<button class="msr${u.sortBy === s[0] ? ' on' : ''}" data-s="${s[0]}" role="menuitemradio" aria-checked="${u.sortBy === s[0]}">
-      <span class="ic">${s[1]}</span><span class="mst"><b>${s[2]}</b><span>${firstOf(s)}</span></span>${u.sortBy === s[0] ? MI.check : ''}</button>`).join('') +
-    `<div class="mstray"><div class="mseg"><button data-d="desc" class="${u.sortDir !== 'asc' ? 'on' : ''}">${'High → low'}</button><button data-d="asc" class="${u.sortDir === 'asc' ? 'on' : ''}">Low → high</button></div>
-      <label class="msw"><span>Sort inside groups</span><button class="swt sm${u.sortInside ? ' on' : ''}" role="switch" aria-checked="${!!u.sortInside}" data-in="1"><i></i></button></label></div>`;
-}
-function sortMenu(anchor) {
-  popup(anchor && anchor.getBoundingClientRect ? anchor : $('#sortBtn'), 'ms', sortHTML(), (e, m) => {
-    const s = e.target.closest('[data-s]'), d = e.target.closest('[data-d]'), w = e.target.closest('[data-in]'); if (!s && !d && !w) return;
-    haptic();
-    if (s) S.ui.sortBy = s.dataset.s;
-    if (d) S.ui.sortDir = d.dataset.d;
-    if (w) S.ui.sortInside = !S.ui.sortInside;
-    if (!S.ui.sortBy) S.ui.sortBy = 'k';
-    applySort(); m.innerHTML = sortHTML();
+function sortMenu() {
+  const u = S.ui;
+  const rows = () => SORTS.map(x => `<button type="button" class="sh-row${u.sortBy === x[0] ? ' on' : ''}" data-s="${x[0]}" role="radio" aria-checked="${u.sortBy === x[0]}"><span class="sh-let">${x[1]}</span><span class="t"><b>${x[2]}</b></span>${u.sortBy === x[0] ? `<span class="ck">${MI.check}</span>` : ''}</button>`).join('');
+  sheet(`<h3>Sort ${esc(plan().name)}${XBTN}</h3>
+    <div class="sh-rows" id="soR">${rows()}</div>
+    <div class="cap">Order</div>${segHTML('soD', [['desc', 'High → low'], ['asc', 'Low → high']], u.sortDir === 'asc' ? 'asc' : 'desc')}
+    <div class="sh-row sw" style="margin-top:6px"><span class="t"><b>Sort inside groups</b></span>${swHTML('sortInside', !!u.sortInside)}</div>
+    <button class="sbtn primary" data-close>Done</button>`, s => {
+    const go = () => { if (!u.sortBy) u.sortBy = 'k'; applySort(); s.querySelector('#soR').innerHTML = rows(); };
+    s.querySelector('#soR').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (!b) return; haptic(); u.sortBy = b.dataset.s; go(); });
+    segBind(s.querySelector('#soD'), v => { haptic(); u.sortDir = v; go(); });
+    const sw = s.querySelector('[data-set="sortInside"]');
+    sw.addEventListener('click', e => { e.stopPropagation(); haptic(); u.sortInside = !u.sortInside; sw.classList.toggle('on', u.sortInside); sw.setAttribute('aria-checked', u.sortInside); go(); });
   });
 }
 
@@ -2411,27 +2450,33 @@ function designMenu() {
     '-', { head: 'Fine-tune style (hold grams)' },
     ...PV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.pv || 'classic') === k, do: () => { S.ui.pv = k; save(); toast(l + ' — hold any amount'); } }))]);
 }
-// Goal plans in the Menu 4 style: today's day checked against each goal (K/P/F/C dots), actions in a tray
+// Goal plans: a sheet (canvas Menus · Bulk plan 2) — the active plan with its targets, the others to switch to
+const DOTS = st => `<span class="sh-dots">${st.map(x => `<i class="${x}"></i>`).join('')}</span>`;
 function goalMenu() {
-  const g = goal(), t = totals(), SL = { o: 'over', u: 'under', k: 'in range' }, ML = ['kcal', 'protein', 'fat', 'carbs'];
-  const rows = S.goals.map(x => { const st = statusOf(t, x), on = x.id === g.id;
-    return `<button class="mpr${on ? ' on' : ''}" data-gid="${x.id}" role="menuitemradio" aria-checked="${on}">
-      <span class="mpt"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>
-      <span class="mpd" aria-label="today: ${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span></button>`; }).join('');
-  const acts = [['edit', 'Edit', MI.pen], ['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['del', 'Delete', MI.trash]]
-    .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.goals.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
-  popup($('#goalBtn'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
-    const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
-    haptic(); closeMenu();
-    setTimeout(() => {
-      if (r) { if (r.dataset.gid !== g.id) switchGoal(r.dataset.gid); return; }
-      const k = a.dataset.a;
-      if (k === 'edit') goalSheet(g, false);
-      if (k === 'new') goalSheet(null, true);
-      if (k === 'dup') { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); }
-      if (k === 'del') confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete goal plan', () => {
-        const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); });
-    }, 60);
+  const g = goal(), t = totals(), w = latest('w');
+  const rate = g.rate || 0, wk = rate && g.tw != null && w != null ? (g.tw - w) / rate : null;
+  const eta = wk != null && wk > 0 ? new Date(Date.now() + wk * 7 * 864e5).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '';
+  const tile = (l, v) => `<div class="gm-t"><span>${l}</span><b>${r0(v)}</b></div>`;
+  const others = S.goals.filter(x => x.id !== g.id).map(x => `<button type="button" class="sh-row" data-gid="${x.id}"><span class="t"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>${DOTS(statusOf(t, x))}</button>`).join('');
+  sheet(`<h3>Goal plans${XBTN}</h3>
+    <div class="gm-on"><div class="gm-h"><b>${esc(g.name)}</b><span>${esc(typeName(g.type))}${rate ? ` · ${sgn(rate)} kg/wk` : ''}</span>${DOTS(statusOf(t, g))}</div>
+      <div class="gm-g">${tile('KCAL', g.k)}${tile('P', g.p)}${tile('F', g.f)}${tile('C', g.c)}</div>
+      ${w != null && g.tw != null ? `<div class="gm-f">${w.toFixed(1)} → ${(+g.tw).toFixed(1)} kg${eta ? ` · around ${eta}` : ''}</div>` : ''}</div>
+    ${others ? `<div class="cap">Switch to</div><div class="sh-rows">${others}</div>` : ''}
+    <div class="sh-act"><button type="button" class="sh-ic big" data-a="new" aria-label="New goal plan">${SHI.plus}</button><button type="button" class="sh-ic big" data-a="dup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic big red" data-a="del" aria-label="Delete"${S.goals.length < 2 ? ' disabled' : ''}>${SHI.trash}</button><button class="sbtn primary" data-a="edit">Edit ${esc(g.name)}</button></div>`, s => {
+    s.addEventListener('click', e => {
+      const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
+      haptic(); closeSheet();
+      setTimeout(() => {
+        if (r) return switchGoal(r.dataset.gid);
+        const k = a.dataset.a;
+        if (k === 'edit') goalSheet(g, false);
+        if (k === 'new') goalSheet(null, true);
+        if (k === 'dup') { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); }
+        if (k === 'del') confirmSheet(`Delete “${esc(g.name)}”?`, 'Your meals and measurements stay. Only these targets are removed.', 'Delete', () => {
+          const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); });
+      }, 420);
+    });
   });
 }
 function goalSheet(g0, isNew) {
@@ -2777,7 +2822,7 @@ $('#ptabs').addEventListener('click', e => { const b = e.target.closest('.ptab')
 $('#planBtn').addEventListener('click', () => planMenu($('#planBtn')));
 $('#planTitle').addEventListener('click', () => planMenu($('#planTitle')));
 $('#goalBtn').addEventListener('click', goalMenu);
-$('#sortBtn').addEventListener('click', () => sortMenu($('#sortBtn')));
+$('#sortBtn').addEventListener('click', () => sortMenu());
 $('#addBtn').addEventListener('click', () => foodSheet(null, true));
 $('#metricBtn').addEventListener('click', metricMenu);
 $('#addEntryBtn2').addEventListener('click', () => entrySheet(null));
