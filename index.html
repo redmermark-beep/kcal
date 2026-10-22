@@ -1020,6 +1020,27 @@ button.sh-row:active{transform:scale(.98)}
 .gm-h .mck{align-self:center;opacity:1;margin-left:4px}
 .sheet .seg button{background:transparent;box-shadow:inset 0 0 0 1px var(--fill-8)}
 .sheet .seg button.on{background:var(--fill-8);color:var(--ink);box-shadow:none;font-weight:600}
+/* ---------- sort = short sheet (variant 2); new product = compact (variant 3) ---------- */
+.so-chips{display:flex;flex-wrap:wrap;gap:6px}
+.so-chip{height:38px;padding:0 14px;border-radius:19px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:510;color:var(--ink);box-shadow:inset 0 0 0 1px var(--fill-8);transition:background-color .2s,transform .2s var(--spring)}
+.so-chip:active{transform:scale(.95)}
+.so-chip.on{background:var(--fill-8);box-shadow:none;font-weight:600}
+.so-row{display:flex;align-items:center;gap:10px;margin-top:12px}
+.so-lab{margin-left:auto;font-size:14px}
+.sheet.sh-short{padding-bottom:20px}
+.sheet.sh-short h3{font-size:20px;line-height:24px;margin-bottom:14px}
+.np-card{margin-top:4px;padding:12px;border-radius:22px;background:var(--card)}
+.np-card .cap{margin:0 2px 8px}
+.np-card .vt{background:var(--fill-3)}
+.np-card .vt.on{background:#000}
+.np-units{margin-top:10px}
+.np-units .seg button{height:34px;border-radius:17px;font-size:13px}
+.np-more{display:flex;align-items:center;gap:8px;width:100%;height:52px;margin-top:10px;padding:0 16px;box-sizing:border-box;border-radius:18px;background:var(--card);font-size:15px;color:var(--ink);text-align:left}
+.np-more .r{margin-left:auto;font-size:13px;color:var(--ink-50)}
+.np-more svg{transition:transform .3s var(--spring)}
+.np-more.open svg{transform:rotate(180deg)}
+#fMoreBox .vt{background:var(--card)}
+#fMoreBox .vt.on{background:#000}
 </style>
 
 <div class="app" id="app">
@@ -2251,7 +2272,15 @@ function foodSheet(e, isNew) {
   const chipsUI = S.ui.sheet === 'g';
   const unitsHTML = `${segHTML('fU', [['g', 'Grams', SHI.g], ['ml', 'Millilitres', SHI.ml], ['pc', 'Pieces', SHI.pc]], unit0)}
     <div class="card" id="fUwBox" style="margin-top:6px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>`;
-  sheet(`<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
+  sheet(isNew ? `<div class="sh-head"><span class="sh-kick">New product</span><input class="sh-name" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name">${XBTN}</div>
+    <div class="np-card"><div class="cap">Per 100 g<span class="r">kcal fills in itself</span></div>
+      <div class="card c4">${fnum('fP', 'Protein', '', 'g')}${fnum('fF', 'Fat', '', 'g')}${fnum('fC', 'Carbs', '', 'g')}${fnum('fK', 'kcal', '', '', '0')}</div>
+      <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
+      <div class="np-units">${unitsHTML}</div></div>
+    <button type="button" class="np-more" id="fMore" aria-expanded="false"><span>Amount, pack and price</span><span class="r">optional</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div id="fMoreBox" hidden><div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>
+      <div class="cap">Shopping</div><div class="card">${fnum('fPk', 'Pack', '', ul(unit0), '—')}${fnum('fPr', 'Price', '', esc(S.ui.cur), '—')}</div></div>
+    <button class="sbtn primary" id="fSave">Add to the list</button>` : `<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
     ${chipsUI
       ? `<div class="card c5">${fnum('fK', 'KCAL', isNew ? '' : n.k, '', '0', '\u00a0')}${fnum('fP', 'P', n.p, '', '0', '\u00a0')}${fnum('fF', 'F', n.f, '', '0', '\u00a0')}${fnum('fC', 'C', n.c, '', '0', '\u00a0')}</div><div class="cap" style="margin-top:8px">per 100 g</div>`
       : `<div class="cap">Per 100 g</div><div class="card c4">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'kcal', isNew ? '' : n.k, '', '0')}</div>`}
@@ -2276,11 +2305,14 @@ function foodSheet(e, isNew) {
         const kNow = k != null ? r0(k) : auto;
         hl('fK', !isNew && kNow !== r0(n.k) ? `was ${r0(n.k)}` : k != null ? `macros ${auto}` : 'from macros');
       }
-      if (isNew) { s.querySelector('#fSave').disabled = !s.querySelector('#fName').value.trim(); return; }
+      if (isNew) return;
       const ch = snap() !== snap0; s.querySelector('#fSave').disabled = !ch; s.querySelector('#fUndo').disabled = !ch;
       s.querySelectorAll('.vt[data-f]').forEach(t => { const i = t.querySelector('input'), j = ins().indexOf(i); t.classList.toggle('ed', j >= 0 && i.value !== vals0[j]); });
     };
     s.addEventListener('input', sync); seg.addEventListener('click', () => setTimeout(sync));
+    const mb = s.querySelector('#fMore');
+    if (mb) mb.addEventListener('click', () => { haptic(); const box = s.querySelector('#fMoreBox'), open = box.hidden; box.hidden = !open; mb.setAttribute('aria-expanded', open); mb.classList.toggle('open', open);
+      if (open && !RM) box.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: SPRING }); });
     s.querySelector('#fUse').addEventListener('click', () => { const i = s.querySelector('#fK'); i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); });
     if (!isNew) s.querySelector('#fUndo').addEventListener('click', () => { ins().forEach((i, j) => { i.value = vals0[j]; i.dispatchEvent(new Event('input', { bubbles: true })); }); segSet(seg, unit00); setU(unit00); sync(); });
     setTimeout(sync);
@@ -2418,15 +2450,18 @@ function applySort() {
 }
 function sortMenu() {
   const u = S.ui;
-  const rows = () => SORTS.map(x => `<button type="button" class="sh-row${u.sortBy === x[0] ? ' on' : ''}" data-s="${x[0]}" role="radio" aria-checked="${u.sortBy === x[0]}"><span class="sh-let">${x[1]}</span><span class="t"><b>${x[2]}</b></span>${u.sortBy === x[0] ? `<span class="ck">${MI.check}</span>` : ''}</button>`).join('');
+  const LAB = { k: 'Calories', p: 'Protein', g: 'Amount', n: 'Name' };
+  const dirTxt = () => u.sortBy === 'n' ? (u.sortDir === 'desc' ? 'Z → A' : 'A → Z') : (u.sortDir === 'asc' ? 'Low → high' : 'High → low');
+  const arrow = () => (u.sortBy === 'n' ? u.sortDir === 'desc' : u.sortDir !== 'asc') ? 'M12 5v14M6 13l6 6 6-6' : 'M12 19V5M6 11l6-6 6 6';
+  const chips = () => SORTS.map(x => `<button type="button" class="so-chip${u.sortBy === x[0] ? ' on' : ''}" data-s="${x[0]}" role="radio" aria-checked="${u.sortBy === x[0]}">${LAB[x[0]]}</button>`).join('');
+  const dir = () => `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="${arrow()}"/></svg>${dirTxt()}`;
   sheet(`<h3>Sort products${XBTN}</h3>
-    <div class="sh-rows" id="soR">${rows()}</div>
-    <div class="cap">Order</div>${segHTML('soD', [['desc', 'High → low'], ['asc', 'Low → high']], u.sortDir === 'asc' ? 'asc' : 'desc')}
-    <div class="sh-row sw" style="margin-top:6px"><span class="t"><b>Sort inside groups</b></span>${swHTML('sortInside', !!u.sortInside)}</div>
-    <button class="sbtn primary" data-close>Done</button>`, s => {
-    const go = () => { if (!u.sortBy) u.sortBy = 'k'; applySort(); s.querySelector('#soR').innerHTML = rows(); };
-    s.querySelector('#soR').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (!b) return; haptic(); u.sortBy = b.dataset.s; go(); });
-    segBind(s.querySelector('#soD'), v => { haptic(); u.sortDir = v; go(); });
+    <div class="so-chips" id="soR" role="radiogroup" aria-label="Sort by">${chips()}</div>
+    <div class="so-row"><button type="button" class="so-chip" id="soD" aria-label="Order">${dir()}</button><span class="so-lab">In groups</span>${swHTML('sortInside', !!u.sortInside)}</div>`, s => {
+    s.classList.add('sh-short');
+    const go = () => { if (!u.sortBy) u.sortBy = 'k'; applySort(); s.querySelector('#soR').innerHTML = chips(); s.querySelector('#soD').innerHTML = dir(); };
+    s.querySelector('#soR').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (!b) return; haptic(); u.sortBy = b.dataset.s; if (!u.sortDir) u.sortDir = u.sortBy === 'n' ? 'asc' : 'desc'; go(); });
+    s.querySelector('#soD').addEventListener('click', () => { haptic(); u.sortDir = u.sortDir === 'asc' ? 'desc' : 'asc'; go(); });
     const sw = s.querySelector('[data-set="sortInside"]');
     sw.addEventListener('click', e => { e.stopPropagation(); haptic(); u.sortInside = !u.sortInside; sw.classList.toggle('on', u.sortInside); sw.setAttribute('aria-checked', u.sortInside); go(); });
   });
