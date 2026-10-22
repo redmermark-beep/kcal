@@ -1029,18 +1029,13 @@ button.sh-row:active{transform:scale(.98)}
 .so-lab{margin-left:auto;font-size:14px}
 .sheet.sh-short{padding-bottom:20px}
 .sheet.sh-short h3{font-size:20px;line-height:24px;margin-bottom:14px}
-.np-card{margin-top:4px;padding:12px;border-radius:22px;background:var(--card)}
-.np-card .cap{margin:0 2px 8px}
-.np-card .vt{background:var(--fill-3)}
-.np-card .vt.on{background:#000}
-.np-units{margin-top:10px}
-.np-units .seg button{height:34px;border-radius:17px;font-size:13px}
-.np-more{display:flex;align-items:center;gap:8px;width:100%;height:52px;margin-top:10px;padding:0 16px;box-sizing:border-box;border-radius:18px;background:var(--card);font-size:15px;color:var(--ink);text-align:left}
-.np-more .r{margin-left:auto;font-size:13px;color:var(--ink-50)}
-.np-more svg{transition:transform .3s var(--spring)}
-.np-more.open svg{transform:rotate(180deg)}
-#fMoreBox .vt{background:var(--card)}
-#fMoreBox .vt.on{background:#000}
+/* ---------- Meal-tab consistency pass (22 Oct): one title size, actions as header icons, name edited in the header ---------- */
+.sheet.sh-short h3{font-size:24px;line-height:28px}
+.sheet h3.h-ic .sh-ic{width:36px;height:36px}
+.sheet h3.h-ic .sh-ic:first-of-type{margin-left:auto}
+.sheet h3.h-ic .x{margin-left:0}
+.sheet h3 .sh-ic:disabled{opacity:.35}
+.sh-ic.red{color:var(--red)}
 </style>
 
 <div class="app" id="app">
@@ -2272,15 +2267,7 @@ function foodSheet(e, isNew) {
   const chipsUI = S.ui.sheet === 'g';
   const unitsHTML = `${segHTML('fU', [['g', 'Grams', SHI.g], ['ml', 'Millilitres', SHI.ml], ['pc', 'Pieces', SHI.pc]], unit0)}
     <div class="card" id="fUwBox" style="margin-top:6px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>`;
-  sheet(isNew ? `<div class="sh-head"><span class="sh-kick">New product</span><input class="sh-name" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name">${XBTN}</div>
-    <div class="np-card"><div class="cap">Per 100 g<span class="r">kcal fills in itself</span></div>
-      <div class="card c4">${fnum('fP', 'Protein', '', 'g')}${fnum('fF', 'Fat', '', 'g')}${fnum('fC', 'Carbs', '', 'g')}${fnum('fK', 'kcal', '', '', '0')}</div>
-      <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
-      <div class="np-units">${unitsHTML}</div></div>
-    <button type="button" class="np-more" id="fMore" aria-expanded="false"><span>Amount, pack and price</span><span class="r">optional</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <div id="fMoreBox" hidden><div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>
-      <div class="cap">Shopping</div><div class="card">${fnum('fPk', 'Pack', '', ul(unit0), '—')}${fnum('fPr', 'Price', '', esc(S.ui.cur), '—')}</div></div>
-    <button class="sbtn primary" id="fSave">Add to the list</button>` : `<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
+  sheet(`<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
     ${chipsUI
       ? `<div class="card c5">${fnum('fK', 'KCAL', isNew ? '' : n.k, '', '0', '\u00a0')}${fnum('fP', 'P', n.p, '', '0', '\u00a0')}${fnum('fF', 'F', n.f, '', '0', '\u00a0')}${fnum('fC', 'C', n.c, '', '0', '\u00a0')}</div><div class="cap" style="margin-top:8px">per 100 g</div>`
       : `<div class="cap">Per 100 g</div><div class="card c4">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'kcal', isNew ? '' : n.k, '', '0')}</div>`}
@@ -2289,7 +2276,7 @@ function foodSheet(e, isNew) {
     ${isNew ? `<div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
     <div class="cap">Shopping<span class="r">optional</span></div>
     <div class="card">${fnum('fPk', 'Pack', e && e.pk ? toU(e, e.pk) : '', ul(unit0), '—')}${fnum('fPr', 'Price', e && e.pr, esc(S.ui.cur), '—')}</div>
-    ${isNew ? '<button class="sbtn primary" id="fSave" disabled>Add to the list</button>'
+    ${isNew ? '<button class="sbtn primary" id="fSave">Add to the list</button>'
       : `<div class="sh-act" id="fAct"><button type="button" class="sh-ic big" id="fUndo" aria-label="Undo changes" disabled>${SHI.undo}</button><button class="sbtn primary" id="fSave" disabled>Save</button></div>`}`, s => {
     const seg = s.querySelector('#fU');
     const ins = () => [...s.querySelectorAll('input')];
@@ -2348,11 +2335,11 @@ function foodSheet(e, isNew) {
   });
 }
 function groupSheet(g) {
-  sheet(`<h3>Group${XBTN}</h3><div class="card">${ftxt('gName', g.name, 'Group name')}</div>
+  sheet(`<div class="sh-head"><span class="sh-kick">Group</span><input class="sh-name" id="gName" value="${esc(g.name)}" placeholder="Group name" autocomplete="off" aria-label="Group name"><span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic red" id="gDel" aria-label="Delete group">${SHI.trash}</button>${XBTN}</div>
     <div class="cap">${g.ch.length} products<span class="r">${g.g} of ${maxOf(g)} g eaten</span></div>
     <div class="card">${g.ch.map(c => `<div class="field"><span class="fl">${esc(c.name)}</span><span class="calc">${c.g}g</span></div>`).join('')}</div>
-    <button class="sbtn primary" id="gSave">Save</button>
-    <div class="btnrow"><button class="sbtn danger" id="gDel">Delete group</button></div>`, s => {
+    <button class="sbtn primary" id="gSave" disabled>Save</button>`, s => {
+    const gi = s.querySelector('#gName'); gi.addEventListener('input', () => { s.querySelector('#gSave').disabled = !gi.value.trim() || gi.value.trim() === g.name; });
     s.querySelector('#gSave').addEventListener('click', () => { g.name = s.querySelector('#gName').value.trim() || g.name; save(); closeSheet(); renderMeal(true); });
     s.querySelector('#gDel').addEventListener('click', () => { closeSheet(); const el = list.querySelector(`[data-id="${g.id}"] > .ghead`); if (el) removeWithUndo('meal', g.id, el); });
   });
@@ -2519,12 +2506,12 @@ function goalMenu() {
   const eta = wk != null && wk > 0 ? new Date(Date.now() + wk * 7 * 864e5).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '';
   const tile = (l, v) => `<div class="gm-t"><span>${l}</span><b>${r0(v)}</b></div>`;
   const others = S.goals.filter(x => x.id !== g.id).map(x => `<button type="button" class="sh-row" data-gid="${x.id}"><span class="t"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>${DOTS(statusOf(t, x))}<span class="mck"></span></button>`).join('');
-  sheet(`<h3>Goal plans${XBTN}</h3>
+  sheet(`<h3 class="h-ic">Goal plans<button type="button" class="sh-ic" data-a="new" aria-label="New goal plan">${SHI.plus}</button><button type="button" class="sh-ic" data-a="dup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" data-a="del" aria-label="Delete"${S.goals.length < 2 ? ' disabled' : ''}>${SHI.trash}</button>${XBTN}</h3>
     <div class="gm-on"><div class="gm-h"><b>${esc(g.name)}</b><span>${esc(typeName(g.type))}${rate ? ` · ${sgn(rate)} kg/wk` : ''}</span>${DOTS(statusOf(t, g))}<span class="mck">${MI.check}</span></div>
       <div class="gm-g">${tile('KCAL', g.k)}${tile('P', g.p)}${tile('F', g.f)}${tile('C', g.c)}</div>
       ${w != null && g.tw != null ? `<div class="gm-f">${w.toFixed(1)} → ${(+g.tw).toFixed(1)} kg${eta ? ` · around ${eta}` : ''}</div>` : ''}</div>
     ${others ? `<div class="cap">Switch to</div><div class="sh-rows">${others}</div>` : ''}
-    <div class="sh-act"><button type="button" class="sh-ic big" data-a="new" aria-label="New goal plan">${SHI.plus}</button><button type="button" class="sh-ic big" data-a="dup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic big red" data-a="del" aria-label="Delete"${S.goals.length < 2 ? ' disabled' : ''}>${SHI.trash}</button><button class="sbtn primary" data-a="edit">Edit plan</button></div>`, s => {
+    <button class="sbtn primary" data-a="edit">Edit plan</button>`, s => {
     s.addEventListener('click', e => {
       const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
       haptic(); closeSheet();
@@ -2544,8 +2531,8 @@ function goalSheet(g0, isNew) {
   const src = g0 || goal(), d = { ...src };
   if (isNew) { d.name = ''; d.sw = latest('w') ?? src.sw; }
   const curW = latest('w');
-  sheet(`<h3>${isNew ? 'New goal plan' : 'Goal plan'}${XBTN}</h3>
-    <div class="card">${ftxt('gN', d.name, 'Plan name, e.g. Winter bulk')}</div>
+  sheet(`<div class="sh-head"><span class="sh-kick">${isNew ? 'New goal plan' : 'Goal plan'}</span><input class="sh-name" id="gN" value="${esc(d.name)}" placeholder="Plan name" autocomplete="off" aria-label="Plan name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span>`}${XBTN}</div>
+
     <div style="margin-top:12px">${segHTML('gT', TYPES, d.type)}</div>
     <div class="cap">Daily target</div>
     <div class="card">${[['gK', 'Calories', 'k', 'kcal'], ['gP', 'Protein', 'p', 'g'], ['gF', 'Fat', 'f', 'g'], ['gC', 'Carbs', 'c', 'g']].map(([id, l, k, u]) =>
