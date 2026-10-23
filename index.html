@@ -1079,7 +1079,8 @@ body.v2 .zhead[hidden]{display:none}
 .br1 s{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-50);margin-top:2px}
 .br1 b{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:17px;font-weight:600;color:var(--ink)}
 .br1 b svg{color:var(--blue)}
-.bal-nav{display:flex;align-items:center;margin-top:6px}
+.bal-nav{display:flex;align-items:center;margin:4px 0 -6px}
+.bal-in{margin-left:6px;font-size:13px;font-weight:400;color:var(--ink-50)}
 .bal-nav button{flex:1;height:44px;font-size:14px;font-weight:510;color:var(--ink)}
 .bal-nav button:first-child{text-align:left;padding-left:6px}.bal-nav button:last-child{text-align:right;padding-right:6px}
 .bal-nav button:disabled{color:var(--ink-50);opacity:.45}
@@ -2228,7 +2229,7 @@ function ghostOff() {
 
 /* ================= balance the plan (S2, 23 Oct) =================
    Up to three portion changes that bring kcal, P, F and C into their ranges.
-   A dish (group) only changes as a whole portion, never its recipe. */
+   A dish (group) changes as a whole portion, or — when it is eaten whole — by its recipe (one ingredient at a time). */
 function goalRange(k, g = goal()) { return g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)]; }
 function balanceOptions(relax = 1) {
   const g = goal(), K = ['k', 'p', 'f', 'c'], t0 = totals();
@@ -2243,13 +2244,19 @@ function balanceOptions(relax = 1) {
     const cap = (pc ? e.uw * Math.max(1, Math.min(4, Math.floor(gcap / e.uw))) : ml ? 750 : gcap) * relax;
     return { e, v: K.map(k => (e.n[k] || 0) / 100), lo: 0, hi: Math.max(e.g, pc ? Math.floor(cap / e.uw) * e.uw : cap), step: pc ? e.uw : ml ? 10 : 5, g0: e.g, p, min: pc ? e.uw : p * .3 };
   }).filter(x => x && x.v.some(n => n > 0));
+  // recipe edits: ingredients of a dish that is eaten whole (the dish portion follows the recipe)
+  S.items.forEach(gr => { if (gr.t !== 'g' || !gr.g || gr.g < maxOf(gr)) return;
+    gr.ch.forEach(e => { if (!e.n || !e.g) return; const d = e.n.k || 0, pc = isPc(e), ml = U(e) === 'ml';
+      const cap = Math.max(e.g * 1.6, d >= 450 ? 60 : 200) * relax;
+      cand.push({ e, parent: gr, v: K.map(k => (e.n[k] || 0) / 100), lo: Math.round(e.g * .4), hi: pc ? Math.floor(cap / e.uw) * e.uw : cap, step: pc ? e.uw : ml ? 10 : 5, g0: e.g, p: e.g, min: e.g * .4 }); }); });
+  const clash = set => set.some(c => c.parent && set.some(o => o.e === c.parent || (o !== c && o.parent === c.parent)));
   const fits = t => K.every((k, i) => t[i] >= R[i][0] - 1e-6 && t[i] <= R[i][1] + 1e-6);
   const T0 = K.map(k => t0[k]);
   const err = t => t.reduce((s, x, i) => s + ((x - C[i]) / W[i]) ** 2, 0);
   const totOf = (set, gs) => T0.map((x, i) => x + set.reduce((s, c, j) => s + c.v[i] * (gs[j] - c.g0), 0));
   const sols = [], n = cand.length, seen = new Set();
   const push = (set, gs, extra = 0) => {
-    const ch = set.map((c, j) => ({ e: c.e, from: c.g0, to: gs[j] })).filter(x => Math.abs(x.to - x.from) > 1e-6);
+    const ch = set.map((c, j) => ({ e: c.e, parent: c.parent, from: c.g0, to: gs[j] })).filter(x => Math.abs(x.to - x.from) > 1e-6);
     if (!ch.length) return; const key = ch.map(x => x.e.id + ':' + x.to).sort().join('|'); if (seen.has(key)) return; seen.add(key);
     const t = totOf(set, gs);
     const cost = ch.length * 10 + err(t) * 2 + extra + set.reduce((s, c, j) => s + Math.abs(gs[j] - c.g0) * (c.v[0] || 1) / 100 + Math.abs(gs[j] - c.g0) / Math.max(c.g0, c.p) * 6 + (c.g0 === 0 && gs[j] > 0 ? 3 : 0), 0);
@@ -2271,6 +2278,7 @@ function balanceOptions(relax = 1) {
     return d;
   };
   const tryset = set => {
+    if (clash(set)) return;
     const d = solve(set); if (!d) return;
     let gs = set.map((c, i) => Math.round(Math.min(c.hi, Math.max(c.lo, c.g0 + d[i])) / c.step) * c.step);
     gs = repair(set, gs);
@@ -2288,7 +2296,7 @@ function balanceOptions(relax = 1) {
   // 2) build the plan: spread portions across products (coordinate descent with a pull towards a normal portion)
   if (empty || quick < 2) {
     const build = (lam, banned) => {
-      const x = cand.map(c => c.g0), locked = cand.map((c, i) => banned.has(c.e.id));
+      const x = cand.map(c => c.g0), locked = cand.map((c, i) => banned.has(c.e.id) || !!c.parent);
       const sweep = () => { for (let it = 0; it < 120; it++) cand.forEach((c, i) => { if (locked[i]) return;
         const t = totOf(cand, x); let a = lam / (c.p * c.p), bb = 0;
         for (let k = 0; k < 4; k++) { const w = c.v[k] / W[k]; a += w * w; bb += w * ((t[k] - C[k]) / W[k]); }
@@ -2333,17 +2341,19 @@ function balanceSheet() {
     return `${d > 0 ? '+' : '−'}${Math.abs(Math.round(d * 10) / 10)} ${u}`; };
   const body = () => { if (!opts.length) return `<p class="bal-none">Couldn't find a plan that fits with these products.<br>Add a few more products and try again.</p>`;
     const o = opts[i];
-    return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}${esc(ch.e.name)}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fmtD(ch)}</em></div>`).join('')}</div>
-      ${balRes(o.t)}`; };
+    return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}${esc(ch.e.name)}${ch.parent ? `<small class="bal-in">in ${esc(ch.parent.name)}</small>` : ''}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fmtD(ch)}</em></div>`).join('')}</div>`; };
+  const res = () => opts.length ? balRes(opts[i].t) : '';
   sheet(`<h3>${build ? 'Build the plan' : 'Balance the plan'}${XBTN}</h3><div id="balBody">${body()}</div>
-    ${opts.length ? `<button class="sbtn primary" id="balGo">Apply</button>${opts.length > 1 ? `<div class="bal-nav"><button type="button" id="balPrev" disabled>‹ Previous</button><span id="balN">1 of ${opts.length}</span><button type="button" id="balAlt">Another way ›</button></div>` : ''}` : ''}`, s => {
-    const nav = d => { haptic(); i = Math.max(0, Math.min(opts.length - 1, i + d)); s.querySelector('#balBody').innerHTML = body();
+    ${opts.length > 1 ? `<div class="bal-nav"><button type="button" id="balPrev" disabled>‹ Previous</button><span id="balN">1 of ${opts.length}</span><button type="button" id="balAlt">Another way ›</button></div>` : ''}
+    <div id="balRes">${res()}</div>
+    ${opts.length ? `<button class="sbtn primary" id="balGo">Apply</button>` : ''}`, s => {
+    const nav = d => { haptic(); i = Math.max(0, Math.min(opts.length - 1, i + d)); s.querySelector('#balBody').innerHTML = body(); s.querySelector('#balRes').innerHTML = res();
       s.querySelector('#balPrev').disabled = i === 0; s.querySelector('#balAlt').disabled = i === opts.length - 1; s.querySelector('#balN').textContent = `${i + 1} of ${opts.length}`; };
     const alt = s.querySelector('#balAlt'); if (alt) { alt.addEventListener('click', () => nav(1)); s.querySelector('#balPrev').addEventListener('click', () => nav(-1)); }
     const go = s.querySelector('#balGo'); if (go) go.addEventListener('click', () => {
-      const undo = opts[i].changes.map(ch => [ch.e, ch.from]);
-      opts[i].changes.forEach(ch => setGrams(ch.e, ch.to)); save(); closeSheet(); haptic(); renderAll(true);
-      toast('Plan balanced', { label: 'Undo', fn: () => { undo.forEach(([e, g]) => setGrams(e, g)); save(); renderAll(true); } }); });
+      const undo = opts[i].changes.map(ch => [ch.e, ch.from, ch.parent]);
+      opts[i].changes.forEach(ch => setGrams(ch.e, ch.to, ch.parent)); save(); closeSheet(); haptic(); renderAll(true);
+      toast('Plan balanced', { label: 'Undo', fn: () => { undo.forEach(([e, g, p]) => setGrams(e, g, p)); save(); renderAll(true); } }); });
   });
 }
 $('#balBtn').addEventListener('click', () => { haptic(); balanceSheet(); });
