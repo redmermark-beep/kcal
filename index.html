@@ -1073,7 +1073,11 @@ body.v2 .zhead[hidden]{display:none}
 .bal-r em.p{color:var(--blue)}
 .bal-res{margin:12px 4px 16px;font-family:var(--mono);font-size:13px;color:var(--ink-50)}
 .bal-res b{color:var(--blue)}
-.bal-alt{display:block;width:100%;height:44px;margin-top:6px;font-size:14px;font-weight:510;color:var(--ink-50)}
+.bal-nav{display:flex;align-items:center;margin-top:6px}
+.bal-nav button{flex:1;height:44px;font-size:14px;font-weight:510;color:var(--ink)}
+.bal-nav button:first-child{text-align:left;padding-left:6px}.bal-nav button:last-child{text-align:right;padding-right:6px}
+.bal-nav button:disabled{color:var(--ink-50);opacity:.45}
+.bal-nav span{font-family:var(--mono);font-size:12px;color:var(--ink-50)}
 .bal-none{margin:4px 4px 8px;font-size:15px;line-height:21px;color:var(--ink-50)}
 </style>
 
@@ -2251,8 +2255,10 @@ function balanceSheet() {
     return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}${esc(ch.e.name)}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fmtD(ch)}</em></div>`).join('')}</div>
       <div class="bal-res">→ <b>${r0(o.t.k)}</b> kcal · P <b>${r0(o.t.p)}</b> · F <b>${r0(o.t.f)}</b> · C <b>${r0(o.t.c)}</b></div>`; };
   sheet(`<h3>Balance the plan${XBTN}</h3><div id="balBody">${body()}</div>
-    ${opts.length ? `<button class="sbtn primary" id="balGo">Apply</button>${opts.length > 1 ? '<button type="button" class="bal-alt" id="balAlt">Another way</button>' : ''}` : ''}`, s => {
-    const alt = s.querySelector('#balAlt'); if (alt) alt.addEventListener('click', () => { haptic(); i = (i + 1) % opts.length; s.querySelector('#balBody').innerHTML = body(); });
+    ${opts.length ? `<button class="sbtn primary" id="balGo">Apply</button>${opts.length > 1 ? `<div class="bal-nav"><button type="button" id="balPrev" disabled>‹ Previous</button><span id="balN">1 of ${opts.length}</span><button type="button" id="balAlt">Another way ›</button></div>` : ''}` : ''}`, s => {
+    const nav = d => { haptic(); i = Math.max(0, Math.min(opts.length - 1, i + d)); s.querySelector('#balBody').innerHTML = body();
+      s.querySelector('#balPrev').disabled = i === 0; s.querySelector('#balAlt').disabled = i === opts.length - 1; s.querySelector('#balN').textContent = `${i + 1} of ${opts.length}`; };
+    const alt = s.querySelector('#balAlt'); if (alt) { alt.addEventListener('click', () => nav(1)); s.querySelector('#balPrev').addEventListener('click', () => nav(-1)); }
     const go = s.querySelector('#balGo'); if (go) go.addEventListener('click', () => {
       const undo = opts[i].changes.map(ch => [ch.e, ch.from]);
       opts[i].changes.forEach(ch => setGrams(ch.e, ch.to)); save(); closeSheet(); haptic(); renderAll(true);
