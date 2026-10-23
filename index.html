@@ -878,8 +878,6 @@ body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4p
 .np-more .r{margin-left:auto;font-size:13px;color:var(--ink-50)}
 .np-more svg{transition:transform .3s var(--spring)}
 .np-more.open svg{transform:rotate(180deg)}
-#fMoreBox .vt{background:var(--card)}
-#fMoreBox .vt.on{background:#000}
 .sh-ic.big{width:50px;height:50px;border-radius:25px;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.06)}
 .sh-head .x{margin-left:0;flex:none;display:grid;place-items:center;padding:0}
 .sh-head .sh-ic:first-of-type{margin-left:auto}
@@ -1048,6 +1046,11 @@ button.sh-row:active{transform:scale(.98)}
 .sheet h3.h-ic .x{margin-left:0}
 .sheet h3 .sh-ic:disabled{opacity:.35}
 .sh-ic.red{color:var(--red)}
+
+.npb-cap{display:flex;align-items:center;gap:6px;width:100%;margin:18px 0 0;padding:6px 4px;box-sizing:border-box;background:none;font-size:13px;font-weight:510;color:var(--ink);text-align:left}
+.npb-cap .r{margin-left:auto;font-size:13px;font-weight:400;color:var(--ink-50)}
+.npb-cap svg{transition:transform .3s var(--spring)}
+.npb-cap.open svg{transform:rotate(180deg)}
 </style>
 
 <div class="app" id="app">
@@ -2280,11 +2283,11 @@ function foodSheet(e, isNew) {
   const unitsHTML = `${segHTML('fU', [['g', 'Grams', SHI.g], ['ml', 'Millilitres', SHI.ml], ['pc', 'Pieces', SHI.pc]], unit0)}
     <div class="card" id="fUwBox" style="margin-top:6px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>`;
   sheet(isNew ? `<div class="sh-head"><span class="sh-kick">New product</span><input class="sh-name" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name">${XBTN}</div>
-    <div class="np-card"><div class="cap">Per 100 g<span class="r">kcal fills in itself</span></div>
-      <div class="card c4">${fnum('fP', 'Protein', '', 'g')}${fnum('fF', 'Fat', '', 'g')}${fnum('fC', 'Carbs', '', 'g')}${fnum('fK', 'kcal', '', '', '0')}</div>
-      <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
-      <div class="np-units">${unitsHTML}</div></div>
-    <button type="button" class="np-more" id="fMore" aria-expanded="false"><span>Amount, pack and price</span><span class="r">optional</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="cap">Per 100 g</div>
+    <div class="card c4">${fnum('fP', 'Protein', '', 'g')}${fnum('fF', 'Fat', '', 'g')}${fnum('fC', 'Carbs', '', 'g')}${fnum('fK', 'kcal', '', '', '0')}</div>
+    <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
+    <div class="cap">Counted in</div>${unitsHTML}
+    <button type="button" class="npb-cap" id="fMore" aria-expanded="false"><span class="l">More details</span><span class="r">Amount · Pack · Price</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div id="fMoreBox" hidden><div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>
       <div class="cap">Shopping</div><div class="card">${fnum('fPk', 'Pack', '', ul(unit0), '—')}${fnum('fPr', 'Price', '', esc(S.ui.cur), '—')}</div></div>
     <button class="sbtn primary" id="fSave">Add to the list</button>` : `<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
@@ -2318,7 +2321,7 @@ function foodSheet(e, isNew) {
     };
     s.addEventListener('input', sync); seg.addEventListener('click', () => setTimeout(sync));
     const mb = s.querySelector('#fMore');
-    if (mb) mb.addEventListener('click', () => { haptic(); const box = s.querySelector('#fMoreBox'), open = box.hidden; box.hidden = !open; mb.setAttribute('aria-expanded', open); mb.classList.toggle('open', open);
+    if (mb) mb.addEventListener('click', () => { haptic(); const box = s.querySelector('#fMoreBox'), open = box.hidden; box.hidden = !open; mb.setAttribute('aria-expanded', open); mb.classList.toggle('open', open); mb.querySelector('.l').textContent = open ? 'Fewer details' : 'More details'; mb.querySelector('.r').textContent = open ? '' : 'Amount · Pack · Price';
       if (open && !RM) box.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: SPRING }); });
     s.querySelector('#fUse').addEventListener('click', () => { const i = s.querySelector('#fK'); i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); });
     if (!isNew) s.querySelector('#fUndo').addEventListener('click', () => { ins().forEach((i, j) => { i.value = vals0[j]; i.dispatchEvent(new Event('input', { bubbles: true })); }); segSet(seg, unit00); setU(unit00); sync(); });
