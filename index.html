@@ -1092,6 +1092,16 @@ body.v2.ma.tab-meal .mhead .list-head{padding:calc(20px - 8px * var(--c,0)) 0 ca
 body.ch-soft .hv53 .hc{border-radius:18px!important}
 body.ch-soft .hv53 .hc.under{background-color:rgba(0,0,0,.075)!important;box-shadow:none!important}
 body.ch-soft .hv53 .hc.under .ht{background:rgba(0,0,0,.12)!important}
+
+/* toolbar T1 (23 Oct): no capsule, loose icons, black + */
+body.lv-01 #mhead .tools{background:transparent!important;gap:2px!important;padding:0 0 0 12px!important}
+body.lv-01 #mhead .tools .ibtn{width:38px!important;height:38px!important}
+body.lv-01 #mhead #addBtn{width:40px!important;height:40px!important;border-radius:20px!important}
+/* a long plan name ends with … instead of pushing the buttons */
+#mhead .list-head{min-width:0}
+#mhead .mtitle{min-width:0;flex:1 1 auto;max-width:100%;overflow:hidden}
+#mhead .mtitle h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mhead .mtitle .pchev{flex:none}
 </style>
 
 <div class="app" id="app">
