@@ -787,19 +787,9 @@ body.ma.tab-meal #list{margin-top:8px}
 
 /* ---------- main screen style (Settings → Main screen → Style): Plain or Card (21: plan + chips on a white card, filled chips) ---------- */
 :root{--pg-card:color-mix(in srgb,var(--bg) 97%,#000)}
-html:has(body.hs-card.tab-meal){background:var(--pg-card)}
-body.hs-card.tab-meal{--hbg:var(--pg-card);background:var(--pg-card)}
 /* card: plan name + chips sit on a white card */
-body.hs-card.tab-meal .plan{padding-top:calc(env(safe-area-inset-top,0px) + 30px);padding-bottom:12px}
-body.hs-card.tab-meal .plan::before{content:"";position:absolute;z-index:-1;left:calc(max(16px,env(safe-area-inset-left,0px)) - 4px);right:calc(max(16px,env(safe-area-inset-right,0px)) - 4px);bottom:0;top:calc(env(safe-area-inset-top,0px) + 16px + 40px * var(--t,0));border-radius:26px;background:var(--card);box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 28px rgba(0,0,0,.06);pointer-events:none}
-body.hs-card.tab-meal .plan .title-row,body.hs-card.tab-meal .plan .hv{margin-left:8px;margin-right:8px}
-body.hs-card.ma.tab-meal .hv{margin-top:14px}
-body.hs-card.ma.tab-meal .mhead .list-head{padding:27px 0 4px}
-body.hs-card .hv53 .hc>div:nth-child(2){flex:1}
 
 /* 21: filled chips — short of the goal is a solid grey tile */
-body.hs-f .hv53 .hc.under{background:rgba(0,0,0,.1);box-shadow:none}
-body.hs-f .hv53 .hc.under .ht{background:rgba(0,0,0,.13)}
 .st-col{flex-direction:column;align-items:stretch}
 .st-col .st-seg{width:100%;box-sizing:border-box}
 .st-col .st-seg button{flex:1;font-family:var(--sans);font-size:13px}
@@ -816,7 +806,6 @@ body.lv-c #secMeal .kids .kr b{font-size:16px;line-height:20px}
 .hv53 .hc-top em{font-family:var(--sans);font-weight:510}
 .hv53 .hc b{line-height:1.1}
 .hv53 .hc .of{display:block;margin-top:2px}
-body.ma.tab-meal:not(.hs-card) .mhead .list-head{padding:22px 0 8px}
 body.ma .tabbar{bottom:max(24px,calc(env(safe-area-inset-bottom,0px) - 10px))}
 body.ma .tab svg{opacity:.4}
 body.ma .tab.on svg{opacity:1}
@@ -826,8 +815,6 @@ body.ma #goalBtn circle:nth-of-type(1){cx:14.6px}
 body.ma #goalBtn circle:nth-of-type(3){cx:25.4px}
 body.ma.tab-meal::after{content:"";position:fixed;left:0;right:0;bottom:0;height:150px;z-index:29;pointer-events:none;background:linear-gradient(color-mix(in srgb,var(--hbg,var(--bg)) 0%,transparent),var(--hbg,var(--bg)) 60%)}
 /* ---------- main screen grids (Settings → Main screen → Grid), canvas page «Grids»: 3 = one keyline 24 · 4 = 8-pt strict · 7 = 5 columns, KCAL spans 2 ---------- */
-body.gr-3{--cx:12px;--cp:12px;--cpt:14px;--cpb:12px;--ct:16px;--cg:8px;--ch:112px;--cr:14px;--kr:26px;--lx:24px;--sg:16px}
-body.gr-4{--cx:8px;--cp:8px;--cpt:16px;--cpb:8px;--ct:16px;--cg:8px;--ch:112px;--cr:16px;--kr:24px;--lx:16px;--sg:16px}
 body.gr-7{--cx:8px;--cp:12px;--cpt:14px;--cpb:12px;--ct:16px;--cg:6px;--ch:112px;--cr:14px;--kr:26px;--lx:20px;--sg:16px}
 body.gr.ma.tab-meal .plan .title-row,body.gr.ma.tab-meal .plan .hv{margin-left:calc(var(--cx) + var(--cp) - 16px);margin-right:calc(var(--cx) + var(--cp) - 16px)}
 body.gr.ma.tab-meal #secMeal{padding:0 calc(var(--lx) - 16px)}
@@ -836,10 +823,6 @@ body.gr .hv53 .hc{border-radius:var(--cr)}
 body.gr.ma.tab-meal .hv53 .hc{height:calc(var(--ch) - (var(--ch) - 64px) * var(--c,0))}
 body.gr-7 .hv53 .hcs{grid-template-columns:repeat(5,minmax(0,1fr))}
 body.gr-7 .hv53 .hc[data-m="k"]{grid-column:span 2}
-body.gr.hs-card.tab-meal .plan{padding-top:calc(env(safe-area-inset-top,0px) + 16px + var(--cpt));padding-bottom:var(--cpb)}
-body.gr.hs-card.tab-meal .plan::before{left:calc(max(16px,env(safe-area-inset-left,0px)) - 16px + var(--cx));right:calc(max(16px,env(safe-area-inset-right,0px)) - 16px + var(--cx));border-radius:var(--kr)}
-body.gr.hs-card.ma.tab-meal .hv{margin-top:var(--ct)}
-body.gr.hs-card.ma.tab-meal .mhead .list-head{padding:calc(var(--sg) + 8px) 0 4px}
 /* ---------- sheets = reference «Product sheet» (canvas: Sheet reference): floating card, tiles, own keypad ---------- */
 .sheet{transition:transform .55s var(--spring),bottom .25s var(--ease),max-height .25s var(--ease);left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));max-width:414px;border-radius:36px;padding:16px 16px 18px;background:var(--bg);
   box-shadow:0 0 2px rgba(0,0,0,.08),0 20px 60px rgba(0,0,0,.18);max-height:calc(100vh - 40px - env(safe-area-inset-top,0px));transform:translateY(calc(100% + 40px))}
@@ -1066,118 +1049,18 @@ body.ch-hero .hv53 .hc-top em{font-size:13px;font-weight:600}
 body.ch-hero .hv53 .hc .ht{height:5px;border-radius:3px}
 body.ch-hero .hv53 .hc .ht .dt{width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:7px}
 
-/* ---------- Chips · Panel (FX1, 23 Oct): black top panel with KCAL, P F C as pills with a slider ---------- */
-body.ch-panel header.plan>*{position:relative;z-index:1}
-body.ch-panel header.plan::before{content:"";position:absolute;left:0;right:0;top:0;height:var(--ph,260px);background:#000;border-radius:0 0 30px 30px;z-index:0}
-body.ch-panel #goalName{color:rgba(255,255,255,.7)!important}
-body.ch-panel #goalBtn{filter:invert(1)}
-body.ch-panel .hv53 .hc{position:relative}
-body.ch-panel .hv53 .hcs{row-gap:calc(12px - 4px * var(--c,0))!important}
-body.ch-panel.gr.ma.tab-meal .hv53 .hc[data-m="k"]{background:transparent!important;box-shadow:none!important;height:auto!important;border-radius:0!important;padding:4px 0 calc(18px - 6px * var(--c,0))!important}
-body.ch-panel .hv53 .hc[data-m="k"]>div:nth-child(2){margin:calc(6px - 4px * var(--c,0)) 0 calc(12px - 4px * var(--c,0))}
-body.ch-panel.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:calc(60px - 34px * var(--c,0))!important;letter-spacing:calc(-3px + 2.2px * var(--c,0))!important;line-height:.95!important}
-body.ch-panel .hv53 .hc[data-m="k"] .hc-top em{padding:3px 9px;border-radius:11px;background:rgba(255,255,255,.16)}
-body.ch-panel.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]){height:calc(72px - 16px * var(--c,0))!important;border-radius:20px!important;padding:0 14px!important;display:block!important}
-body.ch-panel .hv53 .hc:not([data-m="k"]) .hc-top span{position:absolute;left:14px;top:7px;font-size:10px!important;opacity:calc(.6 - .6 * var(--c,0))}
-body.ch-panel .hv53 .hc:not([data-m="k"]) .hc-top em{position:absolute;right:12px;top:7px;margin:0!important;font-size:11px!important;font-style:normal}
-body.ch-panel .hv53 .hc:not([data-m="k"])>div:nth-child(2){position:absolute;left:14px;top:calc(21px - 7px * var(--c,0));margin:0!important;display:flex;align-items:baseline;gap:2px}
-body.ch-panel.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]) b{font-size:calc(26px - 6px * var(--c,0))!important;letter-spacing:-1px!important;line-height:1!important}
-body.ch-panel.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]) .of{display:inline!important;font-size:0!important;margin:0!important;max-height:none!important;opacity:.6!important;overflow:visible!important}
-body.ch-panel .hv53 .hc:not([data-m="k"]) .of .g{font-size:11px}
-body.ch-panel .hv53 .hc:not([data-m="k"]) .of .g::before{content:"/"}
-body.ch-panel .hv53 .hc:not([data-m="k"]) .ht{display:block!important;position:absolute;left:14px;right:14px;bottom:calc(12px - 2px * var(--c,0));height:3px}
-body.ch-panel .hv53 .hc:not([data-m="k"]) .ht .w{top:-2px;bottom:-2px}
-body.ch-panel .hv53 .hc:not([data-m="k"]) .ht .dt{width:10px;height:10px;margin:-5px 0 0 -5px}
 
-/* ---------- Chips · Split (IX1 + K/A, 23 Oct): KCAL left, P F C rows with sliders right, list rounded up into the panel; panel colour by calories (pc-k) or blue when the plan fits (pc-a) ---------- */
-body.ch-split header.plan>*{position:relative;z-index:1}
-body.ch-split .hv53 .hc{position:relative}
-body.ch-split header.plan::before{content:"";position:absolute;left:0;right:0;top:0;height:var(--ph,260px);background:#000;border-radius:0 0 30px 30px;z-index:0}
-body.ch-split #goalName{color:rgba(255,255,255,.7)!important}
-body.ch-split #goalBtn{filter:invert(1)}
-body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{background:transparent!important;box-shadow:none!important;height:auto!important;border-radius:0!important;padding:4px 0 18px!important}
-body.ch-split .hv53 .hc[data-m="k"]>div:nth-child(2){margin:6px 0 12px}
-body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:60px!important;letter-spacing:-3px!important;line-height:.95!important}
-body.ch-split .hv53 .hc[data-m="k"] .hc-top em{padding:3px 9px;border-radius:11px;background:rgba(255,255,255,.16)}
-body.ch-split .hv53 .hcs{row-gap:12px!important}
-body.ch-split .hv53 .hcs{grid-template-columns:1.35fr 1fr!important;grid-template-rows:repeat(3,auto);column-gap:14px!important;row-gap:6px!important}
-body.ch-split .hv53 .hc[data-m="k"]{grid-column:1!important;grid-row:1/4!important}
-body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{padding:2px 0 4px!important;justify-content:space-between!important}
-body.ch-split .hv53 .hc[data-m="k"]>div:nth-child(2){display:block!important;margin:4px 0 8px}
-body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:54px!important}
-body.ch-split .hv53 .hc[data-m="k"] .of{display:block;margin-top:4px!important}
-body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]){grid-column:2!important;height:38px!important;padding:0 12px!important;border-radius:12px!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:8px;color:#fff!important}
-body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top{order:1;flex:none}
-body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
-body.ch-split .hv53 .hc:not([data-m="k"])>div:nth-child(2){order:2}
-body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]) b{font-size:17px!important;letter-spacing:-.3px!important}
-body.ch-split .hv53 .hc:not([data-m="k"]) .of,body.ch-split .hv53 .hc:not([data-m="k"]) .ht{display:none!important}
-body.ch-split .hv53 .hc.over:not([data-m="k"]){background:rgba(255,255,255,.12)!important;box-shadow:none!important}
-body.ch-split .hv53 .hc.under:not([data-m="k"]){background:transparent!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)!important}
-body.ch-split .hv{padding-bottom:18px}
-body.ch-split .hv53 .hc{position:relative}
-body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top{position:static}
-body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{font-size:13px;opacity:.75}
-body.ch-split .hv53 .hc:not([data-m="k"]) .ht{display:block!important;position:absolute;height:3px}
-body.ch-split .hv53 .hc:not([data-m="k"]) .ht .w{top:-2px;bottom:-2px}
-body.ch-split .hv53 .hc:not([data-m="k"]) .ht .dt{width:10px;height:10px;margin:-5px 0 0 -5px}
-body.ch-split .hv53 .hc.under:not([data-m="k"]) .ht{background:rgba(255,255,255,.2)!important}
-body.ch-split .hv53 .hc.under:not([data-m="k"]) .ht .dt{background:#fff!important}
-body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]){height:52px!important;align-items:flex-start!important;padding-top:9px!important}
-body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{top:17px!important}
-body.ch-split .hv53 .hc:not([data-m="k"]) .ht{left:12px;right:12px;bottom:9px}
-body.ch-split .hv53 .hcs{row-gap:6px!important}
-body.ch-split header.plan::before{height:auto!important;bottom:0;border-radius:0!important}
-body.ch-split header.plan::after{content:"";position:absolute;left:0;right:0;top:var(--ph,260px);bottom:-1px;background:var(--bg,#f7f7f7);border-radius:var(--rr,28px) var(--rr,28px) 0 0;z-index:0}
-body.ch-split .hv{padding-bottom:0!important}
-body.ch-split header.plan{padding-bottom:var(--rr,28px)!important}
-body.ch-split header.plan{--rr:40px}
-body.ch-split.ma.tab-meal .mhead .list-head{padding-top:2px!important}
-body.ch-split .hv53 .hc{transition:none}
-body.ch-split header.plan::before{background:radial-gradient(120% 80% at 85% 30%,#1b2a4a 0%,#000 60%)!important}
-body.ch-split .hv53 .hc:not([data-m="k"]){background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 0 0 1px rgba(255,255,255,.08),0 8px 18px -10px rgba(0,0,0,.8)!important;-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
-body.ch-split .hv53 .hc.ok:not([data-m="k"]){background:linear-gradient(180deg,rgba(86,140,255,.95),rgba(35,95,208,.85))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 24px -10px rgba(35,95,208,.9)!important}
-body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:calc(54px - 26px * var(--c,0))!important}
-body.ch-split .hv53 .hc[data-m="k"] .of{opacity:calc(1 - var(--c,0) * 2)!important;max-height:calc(16px * (1 - var(--c,0)))!important;overflow:hidden}
-body.ch-split .hv53 .hc[data-m="k"]>div:nth-child(2){margin:calc(4px - 4px * var(--c,0)) 0 calc(8px - 6px * var(--c,0))!important}
-body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]){height:calc(52px - 16px * var(--c,0))!important;padding-top:calc(9px - 1px * var(--c,0))!important}
-body.ch-split .hv53 .hc:not([data-m="k"]) .ht{opacity:calc(1 - var(--c,0) * 1.6)}
-body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{top:calc(17px - 1px * var(--c,0))!important}
-body.ch-split .hv53 .hcs{row-gap:calc(6px - 2px * var(--c,0))!important}
-body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{color:#fff!important}
-body.ch-split .hv53 .hc.under[data-m="k"] .ht{background:rgba(255,255,255,.2)!important}
-body.ch-split .hv53 .hc.under[data-m="k"] .ht .dt{background:#fff!important}
-body.ch-split.pc-k.kst-ok header.plan::before,body.ch-split.pc-a.allok header.plan::before{background:radial-gradient(110% 90% at 85% 15%,#5a8fff 0%,#2a62dc 50%,#1a47b4 100%)!important}
-body.ch-split.pc-k.kst-ok .hv53 .hc:not([data-m="k"]),body.ch-split.pc-a.allok .hv53 .hc:not([data-m="k"]){background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.1))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.12)!important}
-body.ch-split.pc-k.kst-ok .hv53 .hc.under:not([data-m="k"]){background:transparent!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)!important}
-body.ch-split.pc-k.kst-ok .hv53 .hc.over:not([data-m="k"]){background:rgba(0,0,0,.55)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)!important}
-body.ch-split.pc-k.kst-ok .hv53 .ht .w,body.ch-split.pc-a.allok .hv53 .ht .w{background:rgba(255,255,255,.4)!important}
-body.ch-split.pc-k.kst-ok .hv53 .ht,body.ch-split.pc-a.allok .hv53 .ht{background:rgba(255,255,255,.25)!important}
-body.ch-split.pc-k.kst-ok .hv53 .ht .dt,body.ch-split.pc-a.allok .hv53 .ht .dt{background:#fff!important}
-body.ch-split.pc-k.kst-ok .hv53 .hc[data-m="k"] .hc-top em,body.ch-split.pc-a.allok .hv53 .hc[data-m="k"] .hc-top em{background:rgba(255,255,255,.22)!important}
-body.ch-split.pc-k.kst-under header.plan::before{background:linear-gradient(180deg,#e9ebef,#dde0e6)!important}
-body.ch-split.pc-k.kst-under #goalName{color:rgba(0,0,0,.55)!important}
-body.ch-split.pc-k.kst-under #goalBtn{filter:none!important}
-body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc[data-m="k"]{color:#000!important}
-body.ch-split.pc-k.kst-under .hv53 .hc[data-m="k"] .hc-top em{background:rgba(0,0,0,.08)!important}
-body.ch-split.pc-k.kst-under .hv53 .hc[data-m="k"] .ht{background:rgba(0,0,0,.12)!important}
-body.ch-split.pc-k.kst-under .hv53 .hc[data-m="k"] .ht .dt{background:#000!important}
-body.ch-split.pc-k.kst-under .hv53 .hc:not([data-m="k"]){-webkit-backdrop-filter:none;backdrop-filter:none}
-body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc.under:not([data-m="k"]){background:rgba(255,255,255,.75)!important;color:#000!important;box-shadow:inset 0 1px 0 #fff,0 4px 12px -8px rgba(0,0,0,.3)!important}
-body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc.under:not([data-m="k"]) .ht{background:rgba(0,0,0,.12)!important}
-body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc.under:not([data-m="k"]) .ht .dt{background:#000!important}
-body.ch-split.pc-k.kst-under .hv53 .hc.over:not([data-m="k"]){background:#111!important}
-body.ch-split.pc-k.kst-under .hv53 .hc.ok:not([data-m="k"]){background:var(--blue)!important}
-body.ch-split.pc-k.kst-under header.plan::after{background:var(--bg)}
-body.ch-split.pc-a:not(.allok) .hv53 .hc.ok[data-m="k"] b{color:#7ea8ff}
-body.ch-split.pc-a:not(.allok) .hv53 .hc.under[data-m="k"] b{color:rgba(255,255,255,.5)}
-body.ch-split.pc-a:not(.allok) .hv53 .hc.ok[data-m="k"] .hc-top em{background:var(--blue)!important}
-body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{color:#fff!important}
-body.ch-split .hv53 .hc.under[data-m="k"] .ht{background:rgba(255,255,255,.2)!important}
-body.ch-split .hv53 .hc.under[data-m="k"] .ht .dt{background:#fff!important}
 
 /* list title spacing: 20 above / 14 to the list at rest → 12 / 12 around the divider when the chips collapse */
-body.ma.tab-meal:not(.hs-card) .mhead .list-head,body.gr.ma.tab-meal:not(.hs-card) .mhead .list-head{padding:calc(20px - 8px * var(--c,0)) 0 calc(6px + 6px * var(--c,0))}
+
+/* not-in-plan divider (23 Oct): replaces the Show / Hide toggle */
+body.v2 .zhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:20px 0 6px;padding:14px 4px 0;height:auto;border-top:1px solid var(--line);font-size:13px;font-weight:510;color:var(--ink-50);letter-spacing:0;cursor:default}
+body.v2 .zhead .n{font-family:var(--mono);font-size:12px}
+body.v2 .zhead[hidden]{display:none}
+/* a just-added product flashes once */
+#secMeal .just-added>.rc,#secMeal .just-added>.ghead{animation:justAdded 1.6s ease-out}
+@keyframes justAdded{0%,35%{background:rgba(35,95,208,.14)}100%{background:transparent}}
+#secMeal .just-added>.rc{border-radius:16px}
 </style>
 
 <div class="app" id="app">
@@ -1235,7 +1118,7 @@ body.ma.tab-meal:not(.hs-card) .mhead .list-head,body.gr.ma.tab-meal:not(.hs-car
     </div>
     </div>
     <ul class="list slist" id="list" data-list="meal"></ul>
-    <button class="zhead" id="zHead" hidden></button>
+    <div class="zhead" id="zHead" role="separator" hidden></div>
     <ul class="list slist" id="zlist" data-list="meal" hidden></ul>
   </section>
   <div class="ltool" id="ltool" role="toolbar" aria-label="List tools"></div>
@@ -1408,7 +1291,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: 'plain', grid: '7', sheet: 'b', chips: 'row', pcol: 'a', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: 'plain', grid: '7', sheet: 'b', chips: 'row', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
@@ -1628,7 +1511,6 @@ function renderHV(g, t) {
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
-  const kc = box.querySelector('[data-m="k"]'); ['ok', 'under', 'over'].forEach(x => document.body.classList.toggle('kst-' + x, !!kc && kc.classList.contains(x))); document.body.classList.toggle('allok', allOk);
   if (allOk !== wasAllOk && wasAllOk !== null && allOk) haptic();
   wasAllOk = allOk;
 }
@@ -1692,18 +1574,15 @@ function renderList() {
   const html = (arr, o = 0) => arr.map((e, i) => e.t === 'g' ? groupHTML(e, i + o) : rowHTML(e, i + o)).join('');
   if (!v2) { list.innerHTML = html(items); return; }
   // eaten first; everything at 0 sits in a folded "not in plan" section
-  const on = items.filter(e => e.g > 0), off = items.filter(e => e.g === 0), open = !!query || S.ui.zeroOpen;
-  list.innerHTML = on.length ? html(on) : `<li class="empty"><b>Nothing in ${esc(plan().name)} yet</b>Set a portion below or tap +.</li>`;
+  const on = items.filter(e => e.g > 0), off = items.filter(e => e.g === 0), open = true;   // 23 Oct: not-in-plan products always shown under a divider
+  list.innerHTML = on.length ? html(on) : `<li class="empty"><b>Nothing in ${esc(plan().name)} yet</b>Set a portion for a product below or tap +.</li>`;
   if (off.length) {
     zHead.hidden = false; zHead.classList.toggle('open', open);
-    zHead.innerHTML = `${open ? 'Hide' : 'Show'} ${off.length} not in ${esc(plan().name)}<svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    zHead.innerHTML = `<span>Not in ${esc(plan().name)}</span><span class="n">${off.length}</span>`;
     if (open) { zlist.hidden = false; zlist.innerHTML = html(off, on.length); }
   }
 }
-zHead.addEventListener('click', () => {
-  haptic(); const before = snapRects($('#secMeal'));
-  S.ui.zeroOpen = !S.ui.zeroOpen; save(); renderList(); playFlip(before, { stagger: true }, $('#secMeal'));
-});
+
 function snapRects(root = list) { const m = new Map(); root.querySelectorAll('[data-id]').forEach(el => m.set(el.dataset.id, el.getBoundingClientRect())); return m; }
 function playFlip(before, opts = {}, root = list) {
   if (RM) return;
@@ -1755,8 +1634,7 @@ const preInv = hex => { const c = [1, 3, 5].map(i => parseInt((hex.length === 4 
   return '#' + HR.map(r => Math.round(Math.min(1, Math.max(0, 1 - (r[0] * c[0] + r[1] * c[1] + r[2] * c[2]))) * 255).toString(16).padStart(2, '0')).join(''); };
 const swHTML = (k, on) => `<button class="swt${on ? ' on' : ''}" role="switch" aria-checked="${on}" data-set="${k}"><i></i></button>`;
 const GRIDS = [['cur', 'Current', 'Chips inside the card, list on 16'], ['3', 'Keyline 24', 'Everything on one line at 24 · 4 columns, gap 8'], ['4', '8-pt', 'Everything on 16 · 4 columns, gap 8, steps of 8'], ['7', '5 col', '5 columns, KCAL takes two · margins 20, gap 6']];
-const CHIP_STYLES = [['split', 'Split', 'Black panel: KCAL left, P F C rows with sliders right; the list rounds up into it'], ['panel', 'Panel', 'Black top panel with KCAL, P F C pills with a slider below'], ['hero', 'Hero', 'KCAL full width on top, P F C below (5 col grid)'], ['row', 'Row', 'Four chips in one row']];
-const PANEL_COLS = [['a', 'Plan fits', 'Black; turns blue when all four fit, calories number shows its state'], ['k', 'Calories', 'Black over, blue in range, light grey under']];
+const CHIP_STYLES = [['row', 'Row', 'Four chips in one row, KCAL takes two columns'], ['hero', 'Hero', 'KCAL full width on top, P F C below']];
 const SHEET_STYLES = [['b', 'Tiles', 'Product sheet: four tiles, unit on top'], ['g', 'Chips', 'Product sheet: chips like the header, kcal per macro']];
 const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21', 'Card', 'Plan and chips on a white card']];
 function renderSettings() {
@@ -1767,16 +1645,8 @@ function renderSettings() {
       <span class="st-sw${k === 'black' ? ' dk' : ''}" style="background:${cv(bg)}"><i style="background:${cv(k === 'black' ? '#f2f2f2' : '#000')}"></i><i style="background:${cv(ac)}"></i><i class="o"></i></span><span>${l}</span></button>`).join('')}</div>
     <div class="st-h">Main screen</div>
     <div class="st-g">
-      <div class="st-r st-col"><div><b>Style</b><span>${(HS_STYLES.find(x => x[0] === (u.hs || 'plain')) || HS_STYLES[0])[2]}</span></div>
-        <div class="st-seg">${HS_STYLES.map(([k, l]) => `<button data-hs="${k}" class="${(u.hs || 'plain') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
-      <div class="st-r st-col"><div><b>Grid</b><span>${(GRIDS.find(x => x[0] === (u.grid || 'cur')) || GRIDS[0])[2]}</span></div>
-        <div class="st-seg">${GRIDS.map(([k, l]) => `<button data-grid="${k}" class="${(u.grid || 'cur') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'row')) || CHIP_STYLES[0])[2]}</span></div>
         <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'row') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
-      ${(u.chips || 'row') === 'split' ? `<div class="st-r st-col"><div><b>Panel colour</b><span>${(PANEL_COLS.find(x => x[0] === (u.pcol || 'a')) || PANEL_COLS[0])[2]}</span></div>
-        <div class="st-seg">${PANEL_COLS.map(([k, l]) => `<button data-pcol="${k}" class="${(u.pcol || 'a') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` : ''}
-      <div class="st-r st-col"><div><b>Sheets</b><span>${(SHEET_STYLES.find(x => x[0] === (u.sheet || 'b')) || SHEET_STYLES[0])[2]}</span></div>
-        <div class="st-seg">${SHEET_STYLES.map(([k, l]) => `<button data-sheet="${k}" class="${(u.sheet || 'b') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
@@ -1795,16 +1665,8 @@ $('#secSettings').addEventListener('click', e => {
   if (th) { haptic(); S.ui.theme = th.dataset.th; save(); syncTabs(); renderSettings(); return; }
   if (sw) { const k = sw.dataset.set; S.ui[k] = S.ui[k] === false; save(); syncTabs(); renderSettings(); if (S.ui[k] !== false) haptic(); return; }
   if (st) { haptic(); S.ui.step = +st.dataset.step; save(); renderSettings(); return; }
-  const hsb = e.target.closest('[data-hs]');
-  if (hsb) { haptic(); S.ui.hs = hsb.dataset.hs; save(); syncTabs(); renderSettings(); return; }
-  const shb = e.target.closest('[data-sheet]');
-  if (shb) { haptic(); S.ui.sheet = shb.dataset.sheet; save(); renderSettings(); return; }
-  const pcb = e.target.closest('[data-pcol]');
-  if (pcb) { haptic(); S.ui.pcol = pcb.dataset.pcol; save(); syncTabs(); renderSettings(); return; }
   const chb = e.target.closest('[data-chips]');
   if (chb) { haptic(); S.ui.chips = chb.dataset.chips; save(); syncTabs(); renderSettings(); return; }
-  const grb = e.target.closest('[data-grid]');
-  if (grb) { haptic(); S.ui.grid = grb.dataset.grid; save(); syncTabs(); renderSettings(); return; }
   if (!act) return;
   if (act.dataset.act === 'export') {
     save(); const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' }), a = document.createElement('a');
@@ -2349,6 +2211,7 @@ function closeMenu() { if (!openMenu) return; const { m, scrim } = openMenu; ope
 
 let openSheet = null;
 function sheet(html, onReady) {
+  hideToast();
   closeSheet(true);
   const scrim = document.createElement('div'); scrim.className = 'scrim';
   const s = document.createElement('div'); s.className = 'sheet'; s.setAttribute('role', 'dialog');
@@ -2481,8 +2344,10 @@ function foodSheet(e, isNew) {
       const pk = toG(val(s, 'fPk')), pr = val(s, 'fPr');
       const props = { name, n: read(), unit, uw: unit === 'pc' ? uw : undefined, pk: pk > 0 ? pk : undefined, pr: pr > 0 ? pr : undefined };
       if (isNew) {
-        S.items.unshift({ id: uid(), t: 'f', g: toG(val(s, 'fG') || 0), ...props });
-        query = ''; $('#q').value = ''; scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' });
+        const nid = uid(); S.items.unshift({ id: nid, t: 'f', g: toG(val(s, 'fG') || 0), ...props });
+        query = ''; $('#q').value = '';
+        setTimeout(() => { const el = document.querySelector(`#secMeal [data-id="${nid}"]`); if (!el) return;
+          el.scrollIntoView({ block: 'center', behavior: RM ? 'auto' : 'smooth' }); el.classList.add('just-added'); setTimeout(() => el.classList.remove('just-added'), 1600); }, 380);
         toast(`${name} added to all meal plans`);
       } else { const r = find(e.id); if (r) Object.assign(r.e, props); }
       save(); closeSheet(); renderAll(true);
@@ -2599,7 +2464,7 @@ function applySort() {
   save(); renderList(); renderHeader(); playFlip(before, {}, root);
 }
 function sortMenu() {
-  const u = S.ui;
+  const u = S.ui; u.sortBy = '';   // one-off: the list is sorted once, nothing stays "on" afterwards
   const LAB = { k: 'Calories', p: 'Protein', g: 'Amount', n: 'Name' };
   const dirTxt = () => u.sortBy === 'n' ? (u.sortDir === 'desc' ? 'Z → A' : 'A → Z') : (u.sortDir === 'asc' ? 'Low → high' : 'High → low');
   const arrow = () => (u.sortBy === 'n' ? u.sortDir === 'desc' : u.sortDir !== 'asc') ? 'M12 5v14M6 13l6 6 6-6' : 'M12 19V5M6 11l6-6 6 6';
@@ -2988,11 +2853,11 @@ function syncTabs() {
   document.body.classList.toggle('lv-c', lv === '01' || lv === '03'); placeTools();
   document.body.classList.toggle('ma', !!S.ui.v2 && !!S.ui.ma);
   if (S.ui.hs === '11' || S.ui.hs === '22') S.ui.hs = '21';
-  if ((S.ui.chipsV || 0) < 3) { S.ui.chipsV = 3; S.ui.chips = 'row'; }   // Bands / Sheet were tried and dropped (2026-10-21)
+  S.ui.hs = 'plain'; S.ui.grid = '7'; S.ui.sheet = 'b'; if (S.ui.chips !== 'hero') S.ui.chips = 'row';   // settled 23 Oct: Plain, 5 col, Tiles; chips Row or Hero   // Bands / Sheet were tried and dropped (2026-10-21)
   const hs = S.ui.v2 && S.ui.ma ? (S.ui.hs || 'plain') : 'plain';
   document.body.classList.toggle('hs-card', hs === '21'); document.body.classList.toggle('hs-f', hs === '21');
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
-  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); const chs = S.ui.chips || 'row'; document.body.classList.toggle('ch-hero', gr === '7' && chs !== 'row'); document.body.classList.toggle('ch-split', gr === '7' && chs === 'split' && S.ui.tab === 'meal'); document.body.classList.toggle('pc-k', (S.ui.pcol || 'a') === 'k'); document.body.classList.toggle('pc-a', (S.ui.pcol || 'a') !== 'k'); document.body.classList.toggle('ch-panel', gr === '7' && chs === 'panel' && S.ui.tab === 'meal'); collapse && collapse(true);
+  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); collapse && collapse(true);
   ['meal', 'measure', 'budget', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.documentElement.dataset.theme = S.ui.theme || 'light';
   document.body.classList.toggle('nocol', S.ui.collapse === false);
@@ -3047,20 +2912,12 @@ const MA_TITLE = 48, MA_SHRINK = 54;   // A: goal row scrolls away, then chips s
 const maOn = () => document.body.classList.contains('ma') && S.ui.tab === 'meal' && S.ui.collapse !== false;
 const setHH = () => document.documentElement.style.setProperty('--hh', (hdr.offsetHeight - (maOn() ? MA_TITLE : 0)) + 'px');
 let maC = -1;
-function phFit() {   // Chips · Panel: the black panel ends under the KCAL chip
-  const b = document.body;
-  if (b.classList.contains('ch-split')) { const h = hdr.querySelector('.hv53'); if (h) hdr.style.setProperty('--ph', (h.getBoundingClientRect().bottom - hdr.getBoundingClientRect().top + 16).toFixed(1) + 'px'); return; }
-  if (!b.classList.contains('ch-panel')) return;
-  const k = hdr.querySelector('.hv53 .hc[data-m="k"]'); if (k) hdr.style.setProperty('--ph', (k.getBoundingClientRect().bottom - hdr.getBoundingClientRect().top).toFixed(1) + 'px');
-}
-if (window.ResizeObserver) new ResizeObserver(phFit).observe($('#hv'));
 function collapse(force) {
   const on = maOn(), y = Math.max(0, scrollY);
   const t = on ? Math.min(1, y / MA_TITLE) : 0, c = on ? Math.min(1, Math.max(0, (y - MA_TITLE) / MA_SHRINK)) : 0;
   if (!force && c === maC && t === 1) return;
   hdr.style.setProperty('--t', t.toFixed(3)); hdr.style.setProperty('--c', c.toFixed(3)); maC = c; mhead.style.setProperty('--c', c.toFixed(3));
   hdr.classList.toggle('ma-col', c >= 1);
-  phFit();
   setHH();
 }
 // room to collapse the header only when the list is longer than the screen anyway; a short list doesn't scroll at all
