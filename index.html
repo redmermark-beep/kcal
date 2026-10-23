@@ -848,6 +848,7 @@ body.gr-7 .hv53 .hc[data-m="k"]{grid-column:span 2}
 .sh-name:not(:placeholder-shown){flex:0 1 auto}
 @supports (field-sizing:content){.sh-name{field-sizing:content;flex:0 1 auto;max-width:100%}}
 @supports not (field-sizing:content){.sh-name:not(:placeholder-shown){flex:1}}
+@supports (field-sizing:content){.sh-head:has(#fDup) .sh-name{max-width:calc(100% - 168px)}.sh-head:has(#fScan) .sh-name{max-width:calc(100% - 96px)}}
 .sh-pen{flex:none;color:rgba(0,0,0,.3);display:grid;margin:0 4px 0 -4px}
 .sh-ic{flex:none;width:36px;height:36px;border-radius:18px;background:var(--fill-6);display:grid;place-items:center;color:var(--ink);transition:transform .2s var(--spring)}
 .sh-ic:active,.sheet .x:active{transform:scale(.9)}
@@ -1190,6 +1191,37 @@ button.bal-r{width:100%;text-align:left;color:var(--ink)}
 .nu-res svg{color:var(--blue)}.nu-res b{font-family:var(--mono);font-weight:600}
 .nu-res .r{margin-left:auto;font-size:13px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 #fxB .br1{margin:12px 0 12px}
+/* where nutrients come from (25 Oct): the product sheet's section, Find, scanning */
+.nu-srcb{margin-top:10px}
+.nu-srcb .t{display:flex;flex-direction:column;gap:1px;min-width:0}
+.nu-s1{font-size:15px;line-height:20px;font-weight:510;color:var(--ink);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.nu-s2{font-size:13px;line-height:17px;color:var(--ink-50)}
+#fNutBox .cap{margin:16px 4px 8px}
+.nu-vn{margin:-4px 4px 14px}
+.nu-vn+.cap{margin-top:0}
+#fNutBox .nu-pl{margin-top:10px}
+#fNutBox .cap+.nu-pl{margin-top:0}
+.nu-pl .mac{color:#000}
+.nu-fl{max-height:50vh;overflow:auto;margin:0 -2px;padding:0 2px}
+.nu-fl .cap{margin:18px 4px 8px}
+.nu-fl .bal-rows{max-height:none}
+.nu-fl .nu-addday{margin-top:0}
+.nu-fl .nu-addday:disabled{opacity:.4}
+.nu-fn{margin:2px 4px 0}
+.nu-fr{min-height:58px;padding:8px 14px}
+.nu-fr b{flex-direction:column;align-items:flex-start;gap:1px;white-space:normal}
+.nu-fr b span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nu-fr b small{max-width:100%;font-size:13px;line-height:16px;font-weight:400;color:var(--ink-50);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nu-fr em{flex:none;white-space:nowrap}
+.nu-fr em i{font-style:normal;font-family:var(--sans);font-size:13px;font-weight:400;color:var(--ink-50)}
+.nu-fr.on{background:var(--fill-8)}
+.nu-fr.on em::after{content:"";display:inline-block;width:16px;height:16px;margin-left:8px;vertical-align:-3px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.nu-pick .tfield+.nu-fl{margin-top:2px}
+.nu-pick .btnrow.wide .sbtn svg,.sheet .btnrow.wide .sbtn svg{flex:none}
+.sheet .sbtn.nu-unk{display:flex}
+.nu-busy{display:flex;align-items:center;gap:10px;min-height:40px;padding:8px 14px;margin:0 0 12px;box-sizing:border-box;border-radius:20px;background:var(--fill-6);font-size:14px;line-height:18px;font-weight:510;flex-basis:100%}
+.nu-busy i{flex:none;width:14px;height:14px;box-sizing:border-box;border-radius:50%;border:2px solid var(--fill-8);border-top-color:var(--ink);animation:nuspin .8s linear infinite}
+@keyframes nuspin{to{transform:rotate(360deg)}}
 #fxB .bal-nav{margin:4px 0 -2px}
 </style>
 
@@ -2556,14 +2588,16 @@ function nudge(el) { const f = el.closest('.field,.vt') || el; f.classList.remov
 /* ---- product / group sheets ---- */
 function foodSheet(e, isNew) {
   const n = e ? e.n : { k: '', p: '', f: '', c: '' }, unit0 = e ? U(e) : 'g';
+  const st = { src: e ? e.src || null : undefined, m: e ? e.m : null, k: e ? e.n.k : null };   // what the Nutrients section shows
   const ul = u => u === 'pc' ? 'pc' : u;
   const chipsUI = S.ui.sheet === 'g';
   const unitsHTML = `${segHTML('fU', [['g', 'Grams', SHI.g], ['ml', 'Millilitres', SHI.ml], ['pc', 'Pieces', SHI.pc]], unit0)}
     <div class="card" id="fUwBox" style="margin-top:6px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>`;
-  sheet(isNew ? `<div class="sh-head"><span class="sh-kick">New product</span><input class="sh-name" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name">${XBTN}</div>
+  sheet(isNew ? `<div class="sh-head"><span class="sh-kick">New product</span><input class="sh-name" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name"><button type="button" class="sh-ic" id="fScan" aria-label="Scan a label or barcode">${SCAN_IC}</button>${XBTN}</div>
     <div class="cap">Per 100 g</div>
     <div class="card c4">${fnum('fP', 'Protein', '', 'g')}${fnum('fF', 'Fat', '', 'g')}${fnum('fC', 'Carbs', '', 'g')}${fnum('fK', 'kcal', '', '', '0')}</div>
     <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
+    ${nSecHTML(st)}
     <div class="cap">Counted in</div>${unitsHTML}
     <button type="button" class="npb-cap" id="fMore" aria-expanded="false"><span class="l">More details</span><span class="r">Amount · Pack · Price</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div id="fMoreBox" hidden><div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>
@@ -2573,6 +2607,7 @@ function foodSheet(e, isNew) {
       ? `<div class="card c5">${fnum('fK', 'KCAL', isNew ? '' : n.k, '', '0', '\u00a0')}${fnum('fP', 'P', n.p, '', '0', '\u00a0')}${fnum('fF', 'F', n.f, '', '0', '\u00a0')}${fnum('fC', 'C', n.c, '', '0', '\u00a0')}</div><div class="cap" style="margin-top:8px">per 100 g</div>`
       : `<div class="cap">Per 100 g</div><div class="card c4">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'kcal', isNew ? '' : n.k, '', '0')}</div>`}
     <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
+    ${nSecHTML(st)}
     <div class="cap">Counted in</div>${unitsHTML}
     ${isNew ? `<div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
     <div class="cap">Shopping<span class="r">optional</span></div>
@@ -2580,7 +2615,7 @@ function foodSheet(e, isNew) {
     ${isNew ? '<button class="sbtn primary" id="fSave">Add to the list</button>'
       : `<div class="sh-act" id="fAct"><button type="button" class="sh-ic big" id="fUndo" aria-label="Undo changes" disabled>${SHI.undo}</button><button class="sbtn primary" id="fSave" disabled>Save</button></div>`}`, s => {
     const seg = s.querySelector('#fU');
-    const ins = () => [...s.querySelectorAll('input')];
+    const ins = () => [...s.querySelectorAll('input')].filter(i => !i.closest('.nu-pick'));
     const snap = () => JSON.stringify([seg.dataset.v, ...ins().map(i => i.value)]), snap0 = snap(), vals0 = ins().map(i => i.value), unit00 = seg.dataset.v;
     const sync = () => {
       const auto = r0((val(s, 'fP') || 0) * 4 + (val(s, 'fF') || 0) * 9 + (val(s, 'fC') || 0) * 4), k = val(s, 'fK');
@@ -2604,6 +2639,34 @@ function foodSheet(e, isNew) {
     s.querySelector('#fUse').addEventListener('click', () => { const i = s.querySelector('#fK'); i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); });
     if (!isNew) s.querySelector('#fUndo').addEventListener('click', () => { ins().forEach((i, j) => { i.value = vals0[j]; i.dispatchEvent(new Event('input', { bubbles: true })); }); segSet(seg, unit00); setU(unit00); sync(); });
     setTimeout(sync);
+    /* Nutrients section: a saved product changes its source right away (Undo in the toast); a new one keeps it until «Add to the list» */
+    const TI = ['fP', 'fF', 'fC', 'fK'], tv = () => TI.map(id => s.querySelector('#' + id).value).join('|'), nameIn = s.querySelector('#fName');
+    let pend = null, autoN = null, drawNut = () => {};
+    const fill = (nn, partial) => { const v = { fP: nn.p, fF: nn.f, fC: nn.c, fK: nn.k }; TI.forEach(id => { if (partial && v[id] == null) return; const i = s.querySelector('#' + id);
+      i.value = v[id] == null ? '' : id === 'fK' ? r0(v[id]) : r1(v[id]); i.dispatchEvent(new Event('input', { bubbles: true })); }); autoN = tv(); };
+    const canFill = () => TI.every(id => !s.querySelector('#' + id).value) || (autoN && tv() === autoN);
+    const unfill = () => { if (autoN && tv() === autoN) fill({}); autoN = null; };
+    const setPend = (p, auto) => { pend = p ? { ...p, auto } : null; st.src = p ? p.src : undefined; st.m = p ? p.m : null; drawNut(); };
+    const scanNew = (anchor, closeFind) => nPickFile(f => nScan(f, { busy: nBusy(anchor) }).then(r => { if (!r) return toast('Couldn’t read the label — try closer, in good light');
+      closeFind && closeFind(); if (r.name && !nameIn.value.trim()) { nameIn.value = r.name; nameIn.dispatchEvent(new Event('input', { bubbles: true })); }
+      fill(r.n, true); autoN = null; setPend({ src: r.src, m: r.m }, false); haptic();
+      toast(r.via === 'barcode' ? `Found by barcode · ${r.name}` : `Read ${Object.keys(r.n).length + Object.keys(r.m).length} values — check them`); }).catch(() => toast('Scanning needs the internet the first time')));
+    const onFind = () => { if (!isNew) { const r = find(e.id); if (r) nFindFor(r.e, () => { st.src = r.e.src || null; st.m = r.e.m; drawNut(); }, { macros: nn => fill(nn, true) }); return; }
+      nFind({ name: nameIn.value.trim(), src: st.src, done: p => { setPend(p, false); if (canFill()) fill(p.n); },
+        hand: () => nValSheet({ kick: 'Per 100 g · type them in', name: nameIn.value.trim() || 'New product', m: st.m, done: ({ m }) => setPend({ src: { t: 'hand' }, m }, false) }),
+        scan: (closeFind, box) => scanNew(box.querySelector('.sh-head'), closeFind),
+        none: st.src && st.src.t !== 'none' ? () => { setPend({ src: { t: 'none' } }, false); unfill(); } : null }); };
+    drawNut = nSecBind(s, st, onFind);
+    if (isNew) {
+      let mt; const match = () => { const nm = nameIn.value.trim(); if (pend && !pend.auto) return;
+        if (!nm) { setPend(null); unfill(); return; } if (!NDB.ok) { st.src = null; drawNut(); }
+        ndbLoad().then(() => { if (nameIn.value.trim() !== nm || (pend && !pend.auto)) return; const r = ndbMatch(nm, null);
+          if (r.t === 'db') { const p = nDbPick(r.id); setPend(p, true); if (canFill()) fill(p.n); } else { setPend({ src: r }, true); unfill(); } })
+          .catch(() => { st.src = undefined; drawNut(); }); };
+      nameIn.addEventListener('input', () => { clearTimeout(mt); mt = setTimeout(match, 350); });
+      s.querySelector('#fScan').addEventListener('click', () => { haptic(); scanNew(s.querySelector('.sh-head'), null); });
+    } else if (!e.src) ndbLoad().then(() => { const r = find(e.id); if (!r || r.e.src) return; const x = ndbMatch(r.e.name, r.e.n);
+      if (x.t === 'db') nSet(r.e, nDbPick(x.id)); else r.e.src = x; save(); st.src = r.e.src; st.m = r.e.m; drawNut(); }).catch(() => { st.src = { t: 'none' }; drawNut(); });
     const setU = u => { s.querySelector('#fUwBox').hidden = u !== 'pc';
       ['fG', 'fPk'].forEach(id => { const i = s.querySelector('#' + id); if (i) i.parentElement.querySelector('.u').textContent = ul(u); }); };
     segBind(seg, v => { setU(v); if (v === 'pc') setTimeout(() => s.querySelector('#fUw').focus(), 50); });
@@ -2618,13 +2681,19 @@ function foodSheet(e, isNew) {
       const toG = v => v == null ? null : unit === 'pc' ? r0(v * uw) : r0(v);
       const pk = toG(val(s, 'fPk')), pr = val(s, 'fPr');
       const props = { name, n: read(), unit, uw: unit === 'pc' ? uw : undefined, pk: pk > 0 ? pk : undefined, pr: pr > 0 ? pr : undefined };
+      const renamed = !isNew && e && name !== e.name;
       if (isNew) {
-        const nid = uid(); S.items.unshift({ id: nid, t: 'f', g: toG(val(s, 'fG') || 0), ...props });
+        const nid = uid(), src = pend && pend.src && pend.src.t ? { src: pend.src, ...(pend.m && Object.keys(pend.m).length ? { m: pend.m } : {}) } : {};
+        S.items.unshift({ id: nid, t: 'f', g: toG(val(s, 'fG') || 0), ...props, ...src }); setTimeout(ndbAuto, 600);
         query = ''; $('#q').value = '';
         setTimeout(() => { const el = document.querySelector(`#secMeal [data-id="${nid}"]`); if (!el) return;
           el.scrollIntoView({ block: 'center', behavior: RM ? 'auto' : 'smooth' }); el.classList.add('just-added'); setTimeout(() => el.classList.remove('just-added'), 1600); }, 380);
         toast(`${name} added to all meal plans`);
-      } else { const r = find(e.id); if (r) Object.assign(r.e, props); }
+      } else { const r = find(e.id); if (r) { Object.assign(r.e, props);
+        if (renamed && (!r.e.src || ['db', 'ask', 'none'].includes(r.e.src.t))) ndbLoad().then(() => { const x = ndbMatch(r.e.name, r.e.n), k = { src: r.e.src, m: r.e.m };
+          if (x.t === 'db' && !(r.e.src && r.e.src.id === x.id)) { nSet(r.e, nDbPick(x.id)); save(); renderAll(true);
+            toast(`Nutrients from ${NDB.by.get(x.id).ru || x.d}`, { label: 'Undo', fn: () => { r.e.src = k.src; if (k.m) r.e.m = k.m; else delete r.e.m; NM = new WeakMap(); save(); renderAll(true); } }); }
+          else if (x.t !== 'db' && (!r.e.src || r.e.src.t !== 'db')) { r.e.src = x; delete r.e.m; save(); } }).catch(() => {}); } }
       save(); closeSheet(); renderAll(true);
     });
     if (!isNew) {
@@ -3221,55 +3290,302 @@ const NUT = [
  { id:'his', g:'amino', n:'Histidine', s:'His', u:'g', t:0.71, d:'Histamine, red blood cells.', lo:'—', hi:'—' },
 ];
 const NRARE = new Set(['b7','cl','io','cr','mo','fl']);
-const NFOOD = {
- 'Молоко протеин': { full:1, vA:40,vD:.1,vE:.02,vK:.1,b1:.04,b2:.2,b3:.1,b5:.36,b6:.04,b9:5,b12:.5,cho:17, ca:160,p:130,mg:14,na:50,k:170,fe:.03,zn:.5,cu:.01,mn:.003,se:4,io:30, sug:4,sat:.6,mono:.25,poly:.04,ala:.01,la:.03,ch:6,water:88, leu:.59,ile:.33,val:.4,lys:.48,met:.21,phe:.58,thr:.27,trp:.08,his:.16 },
- 'Йогурт греческий': { full:1, vA:90,vD:.1,vE:.2,vK:.4,b1:.02,b2:.25,b3:.2,b5:.3,b6:.06,b7:3,b9:7,b12:.6,cho:15, ca:110,p:135,mg:11,na:35,k:140,fe:.04,zn:.5,cu:.02,mn:.01,se:9,io:25, sug:4,sat:6,mono:2.4,poly:.3,ala:.05,la:.2,ch:30,water:77, leu:.4,ile:.22,val:.27,lys:.35,met:.14,phe:.4,thr:.18,trp:.06,his:.11 },
- 'Кукурузный крахмал': { full:1, ca:2,p:13,mg:3,na:9,k:3,fe:.47,zn:.06,cu:.05,mn:.05,se:2.8, fib:.9,water:8 },
- 'Несквик': { ca:40,p:100,mg:60,na:40,k:200,fe:2,zn:.8,cu:.4,mn:.4, fib:6,sug:75,sat:2.4,caf:7,water:1 },
- 'Арахис': { full:1, vE:8.3,b1:.64,b2:.14,b3:12,b5:1.8,b6:.35,b7:34,b9:240,cho:52, ca:92,p:376,mg:168,na:18,k:705,fe:4.6,zn:3.3,cu:1.1,mn:1.9,se:7.2, fib:8.5,sug:4,sat:7,mono:24,poly:16,la:15.6,water:6.5, leu:1.67,ile:.9,val:1.08,lys:.93,met:.65,phe:2.4,thr:.88,trp:.25,his:.65 },
- 'Рапсовое масло': { full:1, vE:17.5,vK:71, sat:7.4,mono:63,poly:28,ala:9.1,la:18.6,trans:.4 },
- 'Овсянка': { full:1, vE:.4,vK:2,b1:.46,b2:.16,b3:1.1,b5:1.1,b6:.1,b7:20,b9:32,cho:40, ca:52,p:410,mg:138,na:6,k:360,fe:4.3,zn:3.6,cu:.4,mn:4.9,se:29, fib:10,sug:1,sat:1.2,mono:2,poly:2.5,ala:.1,la:2.4,water:9, leu:1,ile:.5,val:.7,lys:.55,met:.7,phe:1.1,thr:.44,trp:.18,his:.3 },
- 'Протеин': { ca:450,p:350,mg:80,na:220,k:550,fe:.8,zn:1.6, sug:4,sat:1.2,ch:150,water:4, leu:9.5,ile:5.2,val:5,lys:8,met:4.2,phe:5.6,thr:5.5,trp:1.5,his:1.6 },
- 'Кола': { full:1, p:10,na:4,k:2, sug:11,caf:10,water:89 },
- 'Банан': { full:1, vA:3,vC:8.7,vE:.1,vK:.5,b1:.03,b2:.07,b3:.67,b5:.33,b6:.37,b9:20,cho:10, ca:5,p:22,mg:27,na:1,k:358,fe:.26,zn:.15,cu:.08,mn:.27,se:1, fib:2.6,sug:12,sat:.1,water:75, leu:.07,lys:.05,val:.05,ile:.03,met:.02,phe:.05,thr:.03,trp:.01,his:.08 },
- 'Курица': { full:1, vA:9,vE:.2,b1:.09,b2:.14,b3:10.4,b5:1.5,b6:.8,b9:4,b12:.2,cho:73, ca:5,p:213,mg:28,na:45,k:334,fe:.37,zn:.7,cu:.04,mn:.01,se:22.8, sat:.6,mono:.7,poly:.4,la:.3,epa:20,ch:73,water:74, leu:1.9,ile:1.2,val:1.25,lys:2.1,met:.93,phe:1.85,thr:1.07,trp:.29,his:.75 },
- 'Яйцо': { full:1, vA:160,vD:2,vE:1.05,vK:.3,b1:.04,b2:.46,b3:.08,b5:1.5,b6:.17,b7:20,b9:47,b12:.9,cho:294, ca:56,p:198,mg:12,na:142,k:138,fe:1.75,zn:1.3,cu:.07,mn:.03,se:30.7,io:50, sug:.4,sat:3.1,mono:3.7,poly:1.9,ala:.05,la:1.6,epa:70,ch:372,water:76, leu:1.09,ile:.67,val:.86,lys:.91,met:.66,phe:1.18,thr:.56,trp:.17,his:.31 },
- 'Тапиока': { full:1, ca:20,p:7,mg:1,na:1,k:11,fe:1.6,zn:.1,cu:.02,mn:.1,se:.8, fib:.9,sug:3.4,water:11 },
- 'Печенье найлепше': { vE:2,vK:10,b1:.2,b2:.15,b3:2,b9:50, ca:30,p:90,mg:25,na:300,k:150,fe:2,zn:.6,cu:.2,mn:.4,se:5, fib:2.5,sug:30,sat:13,mono:9,poly:3,la:2.8,ala:.1,trans:.2,ch:5,water:3 },
- 'Рис длинный': { full:1, vE:.1,b1:.07,b2:.05,b3:1.6,b5:1,b6:.16,b9:8,cho:6, ca:28,p:115,mg:25,na:5,k:115,fe:.8,zn:1.1,cu:.22,mn:1.1,se:15, fib:1.3,sat:.2,mono:.2,poly:.2,la:.2,water:12, leu:.6,ile:.3,val:.44,lys:.26,met:.35,phe:.76,thr:.25,trp:.08,his:.17 },
- 'Мандарины оч.': { full:1, vA:34,vC:27,vE:.2,b1:.06,b2:.04,b3:.38,b6:.08,b9:16,cho:10, ca:37,p:20,mg:12,na:2,k:166,fe:.15,zn:.07,cu:.04,mn:.04,se:.1, fib:1.8,sug:10.6,water:85 },
- 'Киви оч.': { full:1, vA:4,vC:93,vE:1.5,vK:40,b1:.03,b2:.03,b3:.34,b6:.06,b9:25,cho:8, ca:34,p:34,mg:17,na:3,k:312,fe:.3,zn:.14,cu:.13,mn:.1,se:.2, fib:3,sug:9,ala:.04,la:.25,water:83 },
- 'Сок': { full:1, vA:10,vC:50,vE:.04,b1:.09,b2:.03,b3:.4,b6:.04,b9:30,cho:6, ca:11,p:17,mg:11,na:1,k:200,fe:.2,zn:.05,cu:.04,mn:.01, sug:8.4,water:88 },
- 'Апельсин': { full:1, vA:11,vC:53,vE:.18,b1:.09,b2:.04,b3:.28,b5:.25,b6:.06,b9:30,cho:8, ca:40,p:14,mg:10,na:0,k:181,fe:.1,zn:.07,cu:.04,mn:.03,se:.5, fib:2.4,sug:9,water:87 },
-};
-// Built-in product list for Fix (per 100 g, USDA-based). n = kcal, protein, fat, carbs; por = a normal portion, cap = most it may suggest.
+// Built-in product list for Fix: values per 100 g from USDA SR28 (id = its NDB number). por = a normal portion, cap = most it may suggest.
 const NCAT = {
- 'Шпинат': { n: [23, 2.9, .4, 3.6], por: 100, cap: 200, m: { full: 1, vA: 469, vC: 28, vE: 2, vK: 483, b1: .08, b2: .19, b3: .72, b5: .07, b6: .2, b9: 194, cho: 19, ca: 99, p: 49, mg: 79, na: 79, k: 558, fe: 2.7, zn: .53, cu: .13, mn: .9, se: 1, fib: 2.2, sug: .4, ala: .14, la: .03, water: 91 } },
- 'Брокколи': { n: [34, 2.8, .4, 6.6], por: 150, cap: 300, m: { full: 1, vA: 31, vC: 89, vE: .8, vK: 102, b1: .07, b2: .12, b3: .64, b5: .57, b6: .18, b9: 63, cho: 19, ca: 47, p: 66, mg: 21, na: 33, k: 316, fe: .73, zn: .41, cu: .05, mn: .21, se: 2.5, fib: 2.6, sug: 1.7, ala: .02, water: 89 } },
- 'Морковь': { n: [41, .9, .2, 9.6], por: 100, cap: 200, m: { full: 1, vA: 835, vC: 5.9, vE: .66, vK: 13, b1: .07, b2: .06, b3: .98, b5: .27, b6: .14, b9: 19, cho: 9, ca: 33, p: 35, mg: 12, na: 69, k: 320, fe: .3, zn: .24, cu: .05, mn: .14, se: .1, fib: 2.8, sug: 4.7, water: 88 } },
- 'Перец сладкий': { n: [31, 1, .3, 6], por: 150, cap: 300, m: { full: 1, vA: 157, vC: 128, vE: 1.6, vK: 4.9, b1: .05, b2: .09, b3: .98, b6: .29, b9: 46, cho: 6, ca: 7, p: 26, mg: 12, na: 4, k: 211, fe: .43, zn: .25, mn: .11, fib: 2.1, sug: 4.2, water: 92 } },
- 'Картофель': { n: [77, 2, .1, 17], por: 200, cap: 400, m: { full: 1, vC: 19.7, vK: 2, b1: .08, b2: .03, b3: 1.1, b5: .3, b6: .3, b9: 15, cho: 12, ca: 12, p: 57, mg: 23, na: 6, k: 425, fe: .8, zn: .3, cu: .11, mn: .15, se: .4, fib: 2.2, sug: .8, water: 79 } },
- 'Батат': { n: [86, 1.6, .1, 20], por: 200, cap: 400, m: { full: 1, vA: 709, vC: 2.4, vE: .26, vK: 1.8, b1: .08, b2: .06, b3: .56, b5: .8, b6: .21, b9: 11, cho: 12, ca: 30, p: 47, mg: 25, na: 55, k: 337, fe: .61, zn: .3, cu: .15, mn: .26, se: .6, fib: 3, sug: 4.2, water: 77 } },
- 'Авокадо': { n: [160, 2, 15, 8.5], por: 70, cap: 150, m: { full: 1, vA: 7, vC: 10, vE: 2.1, vK: 21, b1: .07, b2: .13, b3: 1.7, b5: 1.4, b6: .26, b9: 81, cho: 14, ca: 12, p: 52, mg: 29, na: 7, k: 485, fe: .55, zn: .64, cu: .19, mn: .14, se: .4, fib: 6.7, sug: .7, sat: 2.1, mono: 9.8, poly: 1.8, ala: .11, la: 1.7, water: 73 } },
- 'Черника': { n: [57, .7, .3, 14], por: 100, cap: 200, m: { full: 1, vA: 3, vC: 9.7, vE: .57, vK: 19, b1: .04, b2: .04, b3: .42, b6: .05, b9: 6, cho: 6, ca: 6, p: 12, mg: 6, k: 77, fe: .28, zn: .16, cu: .06, mn: .34, fib: 2.4, sug: 10, water: 84 } },
- 'Лосось': { n: [208, 20, 13, 0], por: 120, cap: 200, m: { full: 1, vA: 58, vD: 11, vE: 3.6, b1: .21, b2: .16, b3: 8.7, b5: 1.5, b6: .64, b9: 26, b12: 3.2, cho: 78, ca: 9, p: 240, mg: 27, na: 59, k: 363, fe: .34, zn: .36, cu: .05, se: 24, sat: 3.1, mono: 3.8, poly: 3.9, ala: .1, epa: 2000, la: .6, ch: 55, water: 65, leu: 1.6, ile: .9, val: 1, lys: 1.8, met: .8, phe: 1.5, thr: .9, trp: .22, his: .6 } },
- 'Сардины в масле': { n: [208, 25, 11, 0], por: 90, cap: 150, m: { full: 1, vA: 32, vD: 4.8, vE: 2, vK: 2.6, b1: .08, b2: .23, b3: 5.2, b5: .64, b6: .17, b9: 10, b12: 8.9, cho: 75, ca: 382, p: 490, mg: 39, na: 307, k: 397, fe: 2.9, zn: 1.3, cu: .19, mn: .11, se: 53, sat: 1.5, mono: 3.9, poly: 5.1, ala: .5, epa: 980, la: 3.5, ch: 142, water: 60 } },
- 'Говядина постная': { n: [150, 21, 7, 0], por: 150, cap: 250, m: { full: 1, vE: .2, vK: 1.5, b1: .06, b2: .17, b3: 5.5, b5: .6, b6: .5, b9: 7, b12: 2.6, cho: 70, ca: 12, p: 200, mg: 21, na: 60, k: 330, fe: 2.1, zn: 4.8, cu: .08, se: 20, sat: 2.9, mono: 3, poly: .3, la: .2, ch: 65, water: 71, leu: 1.7, ile: 1, val: 1.1, lys: 1.8, met: .8, phe: 1.6, thr: .9, trp: .14, his: .7 } },
- 'Говяжья печень': { n: [135, 20, 3.6, 3.9], por: 60, cap: 100, m: { full: 1, vA: 4968, vC: 1.3, vD: 1.2, vE: .4, vK: 3, b1: .19, b2: 2.8, b3: 13, b5: 7.2, b6: 1.1, b9: 290, b12: 59, cho: 333, ca: 5, p: 387, mg: 18, na: 69, k: 313, fe: 4.9, zn: 4, cu: 9.8, mn: .31, se: 40, sat: 1.2, ch: 275, water: 71 } },
- 'Кефир 2,5%': { n: [53, 3, 2.5, 4], por: 250, cap: 500, m: { full: 1, vA: 25, vD: .1, b1: .03, b2: .17, b3: .1, b5: .3, b6: .04, b9: 7, b12: .4, cho: 15, ca: 120, p: 95, mg: 12, na: 40, k: 150, zn: .4, se: 2, io: 15, sug: 4, sat: 1.5, mono: .7, ch: 8, water: 89 } },
- 'Творог 5%': { n: [121, 17, 5, 1.8], por: 150, cap: 250, m: { full: 1, vA: 40, vD: .1, b2: .27, b3: .2, b5: .5, b6: .08, b9: 12, b12: .9, cho: 18, ca: 164, p: 220, mg: 23, na: 41, k: 112, zn: .4, se: 9, io: 10, sug: 1.8, sat: 3, mono: 1.3, ch: 9, water: 71 } },
- 'Сыр твёрдый': { n: [402, 25, 33, 1.3], por: 30, cap: 60, m: { full: 1, vA: 265, vD: .6, vE: .7, vK: 2.8, b2: .43, b12: 1.1, ca: 721, p: 512, mg: 28, na: 621, k: 76, zn: 3.1, se: 14, sat: 19, mono: 9, poly: 1, ch: 105, water: 37 } },
- 'Гречка': { n: [343, 13, 3.4, 72], por: 80, cap: 150, m: { full: 1, vE: .3, b1: .1, b2: .43, b3: 7, b5: 1.2, b6: .21, b9: 30, cho: 54, ca: 18, p: 347, mg: 231, na: 1, k: 460, fe: 2.2, zn: 2.4, cu: 1.1, mn: 1.3, se: 8.3, fib: 10, sat: .74, mono: 1, poly: 1, ala: .08, la: .96, water: 10 } },
- 'Чечевица': { n: [352, 25, 1.1, 63], por: 70, cap: 150, m: { full: 1, vE: .5, vK: 5, b1: .87, b2: .21, b3: 2.6, b5: 2.1, b6: .54, b9: 479, cho: 96, ca: 35, p: 281, mg: 47, na: 6, k: 677, fe: 6.5, zn: 3.3, cu: .75, mn: 1.4, se: .1, fib: 11, sug: 2, ala: .04, la: .14, water: 8, leu: 1.8, ile: 1.1, val: 1.3, lys: 1.8, met: .55, phe: 2, thr: .9, trp: .22, his: .7 } },
- 'Фасоль красная': { n: [333, 24, .8, 60], por: 70, cap: 150, m: { full: 1, vK: 19, b1: .53, b2: .22, b3: 2.1, b5: .78, b6: .4, b9: 394, cho: 66, ca: 83, p: 406, mg: 140, na: 12, k: 1406, fe: 8.2, zn: 2.8, cu: .96, mn: 1.1, se: 3.2, fib: 15, sug: 2, ala: .2, la: .1, water: 11 } },
- 'Хлеб цельнозерновой': { n: [250, 13, 3.5, 43], por: 60, cap: 120, m: { full: 1, vE: .4, b1: .4, b2: .16, b3: 4.4, b5: .6, b6: .2, b9: 42, cho: 27, ca: 125, p: 212, mg: 76, na: 450, k: 250, fe: 2.5, zn: 1.8, cu: .3, mn: 2, se: 26, fib: 7, sug: 4, sat: .7, la: 1.2, water: 38 } },
- 'Грецкий орех': { n: [654, 15, 65, 14], por: 20, cap: 40, m: { full: 1, vE: .7, vK: 2.7, b1: .34, b2: .15, b3: 1.1, b5: .57, b6: .54, b9: 98, cho: 39, ca: 98, p: 346, mg: 158, na: 2, k: 441, fe: 2.9, zn: 3.1, cu: 1.6, mn: 3.4, se: 4.9, fib: 6.7, sug: 2.6, sat: 6.1, mono: 8.9, poly: 47, ala: 9.1, la: 38, water: 4 } },
- 'Миндаль': { n: [579, 21, 50, 22], por: 20, cap: 40, m: { full: 1, vE: 25.6, b1: .2, b2: 1.1, b3: 3.6, b5: .47, b6: .14, b9: 44, cho: 52, ca: 269, p: 481, mg: 270, na: 1, k: 733, fe: 3.7, zn: 3.1, cu: 1, mn: 2.2, se: 4.1, fib: 12.5, sug: 4.4, sat: 3.8, mono: 31, poly: 12, la: 12, water: 4.4 } },
- 'Семечки подсолнуха': { n: [584, 21, 51, 20], por: 20, cap: 40, m: { full: 1, vE: 35, b1: 1.5, b2: .36, b3: 8.3, b5: 1.1, b6: 1.3, b9: 227, cho: 55, ca: 78, p: 660, mg: 325, na: 9, k: 645, fe: 5.2, zn: 5, cu: 1.8, mn: 1.9, se: 53, fib: 8.6, sug: 2.6, sat: 4.5, mono: 18.5, poly: 23, la: 23, water: 5 } },
- 'Тыквенные семечки': { n: [559, 30, 49, 11], por: 20, cap: 40, m: { full: 1, vE: 2.2, vK: 7.3, b1: .27, b2: .15, b3: 5, b6: .14, b9: 58, cho: 63, ca: 46, p: 1233, mg: 592, na: 7, k: 809, fe: 8.8, zn: 7.8, cu: 1.3, mn: 4.5, se: 9.4, fib: 6, sug: 1.4, sat: 8.7, mono: 16, poly: 21, la: 21, water: 5 } },
- 'Семена льна': { n: [534, 18, 42, 29], por: 10, cap: 25, m: { full: 1, vE: .3, vK: 4.3, b1: 1.6, b2: .16, b3: 3.1, b6: .47, b9: 87, cho: 79, ca: 255, p: 642, mg: 392, na: 30, k: 813, fe: 5.7, zn: 4.3, cu: 1.2, mn: 2.5, se: 25, fib: 27, sug: 1.6, sat: 3.7, mono: 7.5, poly: 29, ala: 22.8, la: 5.9, water: 7 } },
- 'Квашеная капуста': { n: [19, .9, .1, 4.3], por: 100, cap: 200, m: { full: 1, vC: 15, vK: 13, b6: .13, b9: 24, ca: 30, p: 20, mg: 13, na: 661, k: 170, fe: 1.5, fib: 2.9, sug: 1.8, water: 92 } },
+ 'Шпинат': { id: '11457', d: "Spinach, raw", n: [23,2.86,0.39,3.63], por: 100, cap: 200, m: { fib:2.2,sug:0.42,water:91.4,caf:0,vA:469,b1:0.078,b2:0.189,b3:0.724,b5:0.065,b6:0.195,b9:194,b12:0,vC:28.1,vD:0,vE:2.03,vK:483,cho:19.3,ca:99,fe:2.71,mg:79,p:49,k:558,na:79,zn:0.53,cu:0.13,mn:0.897,se:1,sat:0.063,mono:0.01,poly:0.165,trans:0,ch:0,la:0.026,ala:0.138,epa:0,trp:0.039,thr:0.122,ile:0.147,leu:0.223,lys:0.174,met:0.088,phe:0.237,val:0.161,his:0.064 } },
+ 'Брокколи': { id: '11090', d: "Broccoli, raw", n: [34,2.82,0.37,6.64], por: 150, cap: 300, m: { fib:2.6,sug:1.7,water:89.3,caf:0,vA:31,b1:0.071,b2:0.117,b3:0.639,b5:0.573,b6:0.175,b9:63,b12:0,vC:89.2,vD:0,vE:0.78,vK:102,cho:18.7,ca:47,fe:0.73,mg:21,p:66,k:316,na:33,zn:0.41,cu:0.049,mn:0.21,se:2.5,sat:0.039,mono:0.011,poly:0.038,trans:0,ch:0,la:0.017,ala:0.021,epa:0,trp:0.033,thr:0.088,ile:0.079,leu:0.129,lys:0.135,met:0.066,phe:0.167,val:0.125,his:0.059 } },
+ 'Морковь': { id: '11124', d: "Carrots, raw", n: [41,0.93,0.24,9.58], por: 100, cap: 200, m: { fib:2.8,sug:4.74,water:88.3,caf:0,vA:835,b1:0.066,b2:0.058,b3:0.983,b5:0.273,b6:0.138,b9:19,b12:0,vC:5.9,vD:0,vE:0.66,vK:13.2,cho:8.8,ca:33,fe:0.3,mg:12,p:35,k:320,na:69,zn:0.24,cu:0.045,mn:0.143,se:0.1,fl:0.0032,sat:0.037,mono:0.014,poly:0.117,trans:0,ch:0,la:0.115,ala:0.002,epa:0,trp:0.012,thr:0.191,ile:0.077,leu:0.102,lys:0.101,met:0.103,phe:0.104,val:0.069,his:0.04 } },
+ 'Перец сладкий': { id: '11821', d: "Peppers, sweet, red, raw", n: [31,0.99,0.3,6.03], por: 150, cap: 300, m: { fib:2.1,sug:4.2,water:92.2,caf:0,vA:157,b1:0.054,b2:0.085,b3:0.979,b5:0.317,b6:0.291,b9:46,b12:0,vC:128,vD:0,vE:1.58,vK:4.9,cho:5.6,ca:7,fe:0.43,mg:12,p:26,k:211,na:4,zn:0.25,cu:0.017,mn:0.112,se:0.1,sat:0.027,mono:0.003,poly:0.07,trans:0,ch:0,la:0.045,ala:0.025,epa:0,trp:0.012,thr:0.04,ile:0.021,leu:0.036,lys:0.036,met:0.025,phe:0.059,val:0.031,his:0.017 } },
+ 'Картофель': { id: '11352', d: "Potatoes, flesh and skin, raw", n: [77,2.05,0.09,17.5], por: 200, cap: 400, m: { fib:2.1,sug:0.82,water:79.2,caf:0,vA:0,b1:0.081,b2:0.032,b3:1.06,b5:0.295,b6:0.298,b9:15,b12:0,vC:19.7,vD:0,vE:0.01,vK:2,cho:12.1,ca:12,fe:0.81,mg:23,p:57,k:425,na:6,zn:0.3,cu:0.11,mn:0.153,se:0.4,sat:0.025,mono:0.002,poly:0.042,trans:0,ch:0,la:0.032,ala:0.01,epa:0,trp:0.021,thr:0.067,ile:0.066,leu:0.098,lys:0.107,met:0.056,phe:0.129,val:0.103,his:0.035 } },
+ 'Батат': { id: '11507', d: "Sweet potato, raw, unprepared", n: [86,1.57,0.05,20.1], por: 200, cap: 400, m: { fib:3,sug:4.18,water:77.3,caf:0,vA:709,b1:0.078,b2:0.061,b3:0.557,b5:0.8,b6:0.209,b9:11,b12:0,vC:2.4,vD:0,vE:0.26,vK:1.8,cho:12.3,ca:30,fe:0.61,mg:25,p:47,k:337,na:55,zn:0.3,cu:0.151,mn:0.258,se:0.6,sat:0.018,mono:0.001,poly:0.014,trans:0,ch:0,la:0.013,ala:0.001,epa:0,trp:0.031,thr:0.083,ile:0.055,leu:0.092,lys:0.066,met:0.051,phe:0.123,val:0.086,his:0.031 } },
+ 'Авокадо': { id: '09037', d: "Avocados, raw, all commercial varieties", n: [160,2,14.7,8.53], por: 70, cap: 150, m: { fib:6.7,sug:0.66,water:73.2,caf:0,vA:7,b1:0.067,b2:0.13,b3:1.74,b5:1.39,b6:0.257,b9:81,b12:0,vC:10,vD:0,vE:2.07,vK:21,cho:14.2,ca:12,fe:0.55,mg:29,p:52,k:485,na:7,zn:0.64,cu:0.19,mn:0.142,se:0.4,fl:0.007,sat:2.13,mono:9.8,poly:1.82,trans:0,ch:0,la:1.67,ala:0.111,epa:0,trp:0.025,thr:0.073,ile:0.084,leu:0.143,lys:0.132,met:0.065,phe:0.146,val:0.107,his:0.049 } },
+ 'Черника': { id: '09050', d: "Blueberries, raw", n: [57,0.74,0.33,14.5], por: 100, cap: 200, m: { fib:2.4,sug:9.96,water:84.2,caf:0,vA:3,b1:0.037,b2:0.041,b3:0.418,b5:0.124,b6:0.052,b9:6,b12:0,vC:9.7,vD:0,vE:0.57,vK:19.3,cho:6,ca:6,fe:0.28,mg:6,p:12,k:77,na:1,zn:0.16,cu:0.057,mn:0.336,se:0.1,sat:0.028,mono:0.047,poly:0.146,trans:0,ch:0,la:0.088,ala:0.058,epa:0,trp:0.003,thr:0.02,ile:0.023,leu:0.044,lys:0.013,met:0.02,phe:0.035,val:0.031,his:0.011 } },
+ 'Лосось': { id: '15236', d: "Fish, salmon, Atlantic, farmed, raw", n: [208,20.4,13.4,0], por: 120, cap: 200, m: { fib:0,sug:0,water:64.9,caf:0,vA:58,b1:0.207,b2:0.155,b3:8.67,b5:1.55,b6:0.636,b9:26,b12:3.23,vC:3.9,vD:11,vE:3.55,vK:0.5,cho:78.5,ca:9,fe:0.34,mg:27,p:240,k:363,na:59,zn:0.36,cu:0.045,mn:0.011,se:24,sat:3.05,mono:3.77,poly:3.89,ch:55,la:0.9,ala:0.148,epa:1966,trp:0.209,thr:0.86,ile:0.968,leu:1.61,lys:1.87,met:0.845,phe:1.6,val:1.11,his:0.549 } },
+ 'Сардины в масле': { id: '15088', d: "Fish, sardine, Atlantic, canned in oil, drained solids with bone", n: [208,24.6,11.4,0], por: 90, cap: 150, m: { fib:0,sug:0,water:59.6,caf:0,vA:32,b1:0.08,b2:0.227,b3:5.25,b5:0.642,b6:0.167,b9:10,b12:8.94,vC:0,vD:4.8,vE:2.04,vK:2.6,cho:75,ca:382,fe:2.92,mg:39,p:490,k:397,na:307,zn:1.31,cu:0.186,mn:0.108,se:52.7,sat:1.53,mono:3.87,poly:5.15,ch:142,la:3.54,ala:0.498,epa:982,trp:0.276,thr:1.08,ile:1.13,leu:2,lys:2.26,met:0.993,phe:1.79,val:1.27,his:0.725 } },
+ 'Говядина постная': { id: '23354', d: "Beef, round, top round steak, boneless, separable lean only, trimmed to 0\" fat, all grades, raw", n: [121,23.6,2.94,0], por: 150, cap: 250, m: { fib:0,sug:0,water:73,caf:0,vA:2,b1:0.064,b2:0.236,b3:6.46,b5:0.358,b6:0.635,b9:4,b12:1.64,vC:0,vD:0,vE:0.23,vK:1.5,cho:64.8,ca:13,fe:2.34,mg:12,p:220,k:313,na:54,zn:3.7,cu:0.048,mn:0.004,se:22.2,sat:1.12,mono:1.29,poly:0.223,trans:0.138,ch:62,la:0.136,ala:0.004,epa:3,trp:0.289,thr:1.21,ile:1.2,leu:2.22,lys:2.48,met:0.944,phe:1.99,val:1.27,his:0.957 } },
+ 'Говяжья печень': { id: '13325', d: "Beef, variety meats and by-products, liver, raw", n: [135,20.4,3.63,3.89], por: 60, cap: 100, m: { fib:0,sug:0,water:70.8,caf:0,vA:4968,b1:0.189,b2:2.75,b3:13.2,b5:7.17,b6:1.08,b9:290,b12:59.3,vC:1.3,vD:1.2,vE:0.38,vK:3.1,cho:333,ca:5,fe:4.9,mg:18,p:387,k:313,na:69,zn:4,cu:9.76,mn:0.31,se:39.7,sat:1.23,mono:0.479,poly:0.465,trans:0.17,ch:275,la:0.299,ala:0.007,epa:0,trp:0.263,thr:0.869,ile:0.967,leu:1.91,lys:1.61,met:0.919,phe:1.89,val:1.26,his:0.629 } },
+ 'Кефир': { id: '01289', d: "Kefir, lowfat, plain, LIFEWAY", n: [41,3.79,0.93,4.48], por: 250, cap: 500, m: { fib:0,sug:4.61,water:90.1,caf:0,vA:171,b1:0.03,b2:0.135,b3:0.15,b5:0.385,b6:0.058,b9:13,b12:0.29,vC:0.2,vD:1,vE:0.02,vK:0.1,cho:15.2,ca:130,fe:0.04,mg:12,p:105,k:164,na:40,zn:0.46,cu:0.009,mn:0.005,se:3.6,sat:0.658,mono:0.31,poly:0.053,trans:0.037,ch:5,la:0.029,ala:0.006,epa:0 } },
+ 'Творог 5%': { id: '01015', d: "Cheese, cottage, lowfat, 2% milkfat", n: [81,10.4,2.27,4.76], por: 150, cap: 250, m: { fib:0,sug:4,water:81.2,caf:0,vA:68,b1:0.02,b2:0.251,b3:0.103,b5:0.524,b6:0.057,b9:8,b12:0.47,vC:0,vD:0,vE:0.08,vK:0,cho:16.3,ca:111,fe:0.13,mg:9,p:150,k:125,na:308,zn:0.51,cu:0.033,mn:0.015,se:11.9,sat:1.24,mono:0.516,poly:0.083,trans:0.067,ch:12,la:0.047,ala:0.007,epa:1,trp:0.138,thr:0.47,ile:0.556,leu:1.05,lys:0.878,met:0.315,phe:1.11,val:0.703,his:0.306 } },
+ 'Сыр твёрдый': { id: '01009', d: "Cheese, cheddar", n: [404,22.9,33.3,3.09], por: 30, cap: 60, m: { fib:0,sug:0.48,water:37,caf:0,vA:330,b1:0.029,b2:0.428,b3:0.059,b5:0.41,b6:0.066,b9:27,b12:1.1,vC:0,vD:0.6,vE:0.71,vK:2.4,cho:16.5,ca:710,fe:0.14,mg:27,p:455,k:76,na:653,zn:3.64,cu:0.03,mn:0.027,se:28.5,fl:0.0349,sat:18.9,mono:9.25,poly:1.42,trans:0.917,ch:99,la:1.17,ala:0.114,epa:11,trp:0.547,thr:1.04,ile:1.21,leu:1.94,lys:1.02,met:0.67,phe:2.18,val:1.4,his:0.547 } },
+ 'Гречка': { id: '20009', d: "Buckwheat groats, roasted, dry", n: [346,11.7,2.71,75], por: 80, cap: 150, m: { fib:10.3,water:8.41,vA:0,b1:0.224,b2:0.271,b3:5.13,b5:1.23,b6:0.353,b9:42,b12:0,vC:0,vD:0,cho:54.2,ca:17,fe:2.47,mg:221,p:319,k:320,na:11,zn:2.42,cu:0.624,mn:1.62,se:8.4,sat:0.591,mono:0.828,poly:0.828,ch:0,la:0.766,ala:0.062,epa:0,trp:0.17,thr:0.448,ile:0.441,leu:0.736,lys:0.595,met:0.355,phe:0.674,val:0.6,his:0.273 } },
+ 'Чечевица': { id: '16069', d: "Lentils, raw", n: [352,24.6,1.06,63.4], por: 70, cap: 150, m: { fib:10.7,sug:2.03,water:8.26,caf:0,vA:2,b1:0.873,b2:0.211,b3:2.6,b5:2.14,b6:0.54,b9:479,b12:0,vC:4.5,vD:0,vE:0.49,vK:5,cho:96.4,ca:35,fe:6.51,mg:47,p:281,k:677,na:6,zn:3.27,cu:0.754,mn:1.39,se:0.1,sat:0.154,mono:0.193,poly:0.526,trans:0,ch:0,la:0.414,ala:0.112,epa:0,trp:0.221,thr:0.882,ile:1.06,leu:1.79,lys:1.72,met:0.532,phe:1.87,val:1.22,his:0.693 } },
+ 'Фасоль красная': { id: '16032', d: "Beans, kidney, red, mature seeds, raw", n: [337,22.5,1.06,61.3], por: 70, cap: 150, m: { fib:15.2,sug:2.1,water:11.8,caf:0,vA:0,b1:0.608,b2:0.215,b3:2.11,b5:0.78,b6:0.397,b9:394,b12:0,vC:4.5,vD:0,vE:0.21,vK:5.6,cho:65.9,ca:83,fe:6.69,mg:138,p:406,k:1359,na:12,zn:2.79,cu:0.699,mn:1.11,se:3.2,fl:0.0022,sat:0.154,mono:0.082,poly:0.586,trans:0,ch:0,la:0.228,ala:0.358,epa:0,trp:0.267,thr:0.948,ile:0.995,leu:1.8,lys:1.55,met:0.584,phe:1.85,val:1.18,his:0.627 } },
+ 'Хлеб цельнозерновой': { id: '18075', d: "Bread, whole-wheat, commercially prepared", n: [252,12.4,3.5,42.7], por: 60, cap: 120, m: { fib:6,sug:4.34,water:39,caf:0,vA:0,b1:0.394,b2:0.167,b3:4.44,b5:0.646,b6:0.215,b9:42,b12:0,vC:0,vD:0,vE:2.66,vK:7.8,cho:27.2,ca:161,fe:2.47,mg:75,p:212,k:254,na:455,zn:1.77,cu:0.227,mn:2.17,se:25.7,sat:0.722,mono:0.62,poly:1.59,trans:0.02,ch:0,la:1.44,ala:0.137,epa:0 } },
+ 'Грецкий орех': { id: '12155', d: "Nuts, walnuts, english", n: [654,15.2,65.2,13.7], por: 20, cap: 40, m: { fib:6.7,sug:2.61,water:4.07,caf:0,vA:1,b1:0.341,b2:0.15,b3:1.12,b5:0.57,b6:0.537,b9:98,b12:0,vC:1.3,vD:0,vE:0.7,vK:2.7,cho:39.2,ca:98,fe:2.91,mg:158,p:346,k:441,na:2,zn:3.09,cu:1.59,mn:3.41,se:4.9,sat:6.13,mono:8.93,poly:47.2,ch:0,la:38.1,ala:9.08,epa:0,trp:0.17,thr:0.596,ile:0.625,leu:1.17,lys:0.424,met:0.444,phe:1.12,val:0.753,his:0.391 } },
+ 'Миндаль': { id: '12061', d: "Nuts, almonds", n: [579,21.1,49.9,21.6], por: 20, cap: 40, m: { fib:12.5,sug:4.35,water:4.41,caf:0,vA:0,b1:0.205,b2:1.14,b3:3.62,b5:0.471,b6:0.137,b9:44,b12:0,vC:0,vD:0,vE:25.6,vK:0,cho:52.1,ca:269,fe:3.71,mg:270,p:481,k:733,na:1,zn:3.12,cu:1.03,mn:2.18,se:4.1,sat:3.8,mono:31.6,poly:12.3,trans:0.015,ch:0,la:12.3,ala:0.003,epa:0,trp:0.211,thr:0.601,ile:0.751,leu:1.47,lys:0.568,met:0.372,phe:1.58,val:0.855,his:0.539 } },
+ 'Семечки подсолнуха': { id: '12036', d: "Seeds, sunflower seed kernels, dried", n: [584,20.8,51.5,20], por: 20, cap: 40, m: { fib:8.6,sug:2.62,water:4.73,caf:0,vA:3,b1:1.48,b2:0.355,b3:8.34,b5:1.13,b6:1.34,b9:227,b12:0,vC:1.4,vD:0,vE:35.2,vK:0,cho:55.1,ca:78,fe:5.25,mg:325,p:660,k:645,na:9,zn:5,cu:1.8,mn:1.95,se:53,sat:4.46,mono:18.5,poly:23.1,ch:0,la:23.1,ala:0.06,epa:14,trp:0.348,thr:0.928,ile:1.14,leu:1.66,lys:0.937,met:0.945,phe:1.83,val:1.31,his:0.632 } },
+ 'Тыквенные семечки': { id: '12014', d: "Seeds, pumpkin and squash seed kernels, dried", n: [559,30.2,49,10.7], por: 20, cap: 40, m: { fib:6,sug:1.4,water:5.23,caf:0,vA:1,b1:0.273,b2:0.153,b3:4.99,b5:0.75,b6:0.143,b9:58,b12:0,vC:1.9,vD:0,vE:2.18,vK:7.3,cho:63,ca:46,fe:8.82,mg:592,p:1233,k:809,na:7,zn:7.81,cu:1.34,mn:4.54,se:9.4,sat:8.66,mono:16.2,poly:21,trans:0.064,ch:0,la:20.7,ala:0.12,epa:0,trp:0.576,thr:0.998,ile:1.28,leu:2.42,lys:1.24,met:0.935,phe:2.83,val:1.58,his:0.78 } },
+ 'Семена льна': { id: '12220', d: "Seeds, flaxseed", n: [534,18.3,42.2,28.9], por: 10, cap: 25, m: { fib:27.3,sug:1.55,water:6.96,caf:0,vA:0,b1:1.64,b2:0.161,b3:3.08,b5:0.985,b6:0.473,b9:87,b12:0,vC:0.6,vD:0,vE:0.31,vK:4.3,cho:78.7,ca:255,fe:5.73,mg:392,p:642,k:813,na:30,zn:4.34,cu:1.22,mn:2.48,se:25.4,sat:3.66,mono:7.53,poly:28.7,ch:0,la:5.9,ala:22.8,epa:0,trp:0.297,thr:0.766,ile:0.896,leu:1.24,lys:0.862,met:0.71,phe:1.45,val:1.07,his:0.472 } },
+ 'Квашеная капуста': { id: '11439', d: "Sauerkraut, canned, solids and liquids", n: [19,0.91,0.14,4.28], por: 100, cap: 200, m: { fib:2.9,sug:1.78,water:92.5,caf:0,vA:1,b1:0.021,b2:0.022,b3:0.143,b5:0.093,b6:0.13,b9:24,b12:0,vC:14.7,vD:0,vE:0.14,vK:13,cho:10.4,ca:30,fe:1.47,mg:13,p:20,k:170,na:661,zn:0.19,cu:0.096,mn:0.151,se:0.6,fl:0.007,sat:0.034,mono:0.013,poly:0.067,trans:0,ch:0,la:0.034,ala:0.033,epa:0,trp:0.008,thr:0.025,ile:0.021,leu:0.029,lys:0.031,met:0.017,phe:0.037,val:0.03,his:0.016 } },
+ 'Апельсин': { id: '09200', d: "Oranges, raw, all commercial varieties", n: [47,0.94,0.12,11.8], por: 150, cap: 300, m: { fib:2.4,sug:9.35,water:86.8,caf:0,vA:11,b1:0.087,b2:0.04,b3:0.282,b5:0.25,b6:0.06,b9:30,b12:0,vC:53.2,vD:0,vE:0.18,vK:0,cho:8.4,ca:40,fe:0.1,mg:10,p:14,k:181,na:0,zn:0.07,cu:0.045,mn:0.025,se:0.5,sat:0.015,mono:0.023,poly:0.025,trans:0,ch:0,la:0.018,ala:0.007,epa:0,trp:0.009,thr:0.015,ile:0.025,leu:0.023,lys:0.047,met:0.03,phe:0.047,val:0.04,his:0.018 } },
+ 'Киви': { id: '09148', d: "Kiwifruit, green, raw", n: [61,1.14,0.52,14.7], por: 100, cap: 200, m: { fib:3,sug:8.99,water:83.1,caf:0,vA:4,b1:0.027,b2:0.025,b3:0.341,b5:0.183,b6:0.063,b9:25,b12:0,vC:92.7,vD:0,vE:1.46,vK:40.3,cho:7.8,ca:34,fe:0.31,mg:17,p:34,k:312,na:3,zn:0.14,cu:0.13,mn:0.098,se:0.2,sat:0.029,mono:0.047,poly:0.287,trans:0,ch:0,la:0.246,ala:0.042,epa:0,trp:0.015,thr:0.047,ile:0.051,leu:0.066,lys:0.061,met:0.055,phe:0.078,val:0.057,his:0.027 } },
+ 'Яйцо': { id: '01123', d: "Egg, whole, raw, fresh", n: [143,12.6,9.51,0.72], por: 100, cap: 200, m: { fib:0,sug:0.37,water:76.2,caf:0,vA:160,b1:0.04,b2:0.457,b3:0.075,b5:1.53,b6:0.17,b9:47,b12:0.89,vC:0,vD:2,vE:1.05,vK:0.3,cho:294,ca:56,fe:1.75,mg:12,p:198,k:138,na:142,zn:1.29,cu:0.072,mn:0.028,se:30.7,fl:0.0011,sat:3.13,mono:3.66,poly:1.91,trans:0.038,ch:372,la:1.53,ala:0.036,epa:58,trp:0.167,thr:0.556,ile:0.671,leu:1.09,lys:0.912,met:0.652,phe:1.18,val:0.858,his:0.309 } },
+ 'Йогурт греческий': { id: '01293', d: "Yogurt, Greek, plain, whole milk", n: [97,9,5,3.98], por: 150, cap: 300, m: { fib:0,sug:4,water:81.3,caf:0,vA:2,b1:0.023,b2:0.278,b3:0.208,b5:0.331,b6:0.063,b9:5,b12:0.75,vC:0,vD:0,vE:0.01,vK:0,cho:15.1,ca:100,fe:0,mg:11,p:135,k:141,na:35,zn:0.52,cu:0.017,mn:0.009,se:9.7,sat:2.4,mono:2.14,poly:0.469,trans:0,ch:13,la:0.209,ala:0.023,epa:4 } },
+ 'Овсянка': { id: '08120', d: "Cereals, oats, regular and quick, not fortified, dry", n: [379,13.2,6.52,67.7], por: 60, cap: 120, m: { fib:10.1,sug:0.99,water:10.8,caf:0,vA:0,b1:0.46,b2:0.155,b3:1.12,b5:1.12,b6:0.1,b9:32,b12:0,vC:0,vD:0,vE:0.42,vK:2,cho:40.4,ca:52,fe:4.25,mg:138,p:410,k:362,na:6,zn:3.64,cu:0.391,mn:3.63,se:28.9,sat:1.11,mono:1.98,poly:2.3,ch:0,la:2.2,ala:0.1,epa:0,trp:0.182,thr:0.382,ile:0.503,leu:0.98,lys:0.637,met:0.662,phe:1.06,val:0.688,his:0.275 } },
+ 'Фасоль белая': { id: '16049', d: "Beans, white, mature seeds, raw", n: [333,23.4,0.85,60.3], por: 70, cap: 150, m: { fib:15.2,sug:2.11,water:11.3,caf:0,vA:0,b1:0.437,b2:0.146,b3:0.479,b5:0.732,b6:0.318,b9:388,b12:0,vC:0,vD:0,vE:0.21,vK:5.6,cho:66.2,ca:240,fe:10.4,mg:190,p:301,k:1795,na:16,zn:3.67,cu:0.984,mn:1.8,se:12.8,sat:0.219,mono:0.074,poly:0.364,trans:0,ch:0,la:0.198,ala:0.166,epa:0,trp:0.277,thr:0.983,ile:1.03,leu:1.86,lys:1.6,met:0.605,phe:1.92,val:1.22,his:0.65 } },
+ 'Нут': { id: '16056', d: "Chickpeas (garbanzo beans, bengal gram), mature seeds, raw", n: [378,20.5,6.04,63], por: 70, cap: 150, m: { fib:12.2,sug:10.7,water:7.68,caf:0,vA:3,b1:0.477,b2:0.212,b3:1.54,b5:1.59,b6:0.535,b9:557,b12:0,vC:4,vD:0,vE:0.82,vK:9,cho:99.3,ca:57,fe:4.31,mg:79,p:252,k:718,na:24,zn:2.76,cu:0.656,mn:21.3,se:0,sat:0.603,mono:1.38,poly:2.73,trans:0,ch:0,la:2.63,ala:0.102,epa:0,trp:0.2,thr:0.766,ile:0.882,leu:1.47,lys:1.38,met:0.549,phe:1.61,val:0.865,his:0.566 } },
+ 'Тофу': { id: '16126', d: "Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)", n: [78,9.04,4.17,2.85], por: 100, cap: 200, m: { fib:0.9,sug:0.6,water:82.9,caf:0,vA:0,b1:0.06,b2:0.063,b3:0.101,b5:0.11,b6:0.071,b9:19,b12:0,vC:0.2,vD:0,vE:0.01,vK:2.4,cho:28.1,ca:201,fe:1.61,mg:37,p:121,k:148,na:12,zn:0.83,cu:0.213,mn:0.625,se:9.9,sat:0.793,mono:1.13,poly:1.65,trans:0,ch:0,la:1.47,ala:0.167,trp:0.123,thr:0.411,ile:0.444,leu:0.728,lys:0.462,met:0.14,phe:0.804,val:0.455,his:0.225 } },
+ 'Скумбрия': { id: '15046', d: "Fish, mackerel, Atlantic, raw", n: [205,18.6,13.9,0], por: 100, cap: 180, m: { fib:0,sug:0,water:63.5,caf:0,vA:50,b1:0.176,b2:0.312,b3:9.08,b5:0.856,b6:0.399,b9:1,b12:8.71,vC:0.4,vD:16.1,vE:1.52,vK:5,cho:65,ca:12,fe:1.63,mg:76,p:217,k:314,na:90,zn:0.63,cu:0.073,mn:0.015,se:44.1,sat:3.26,mono:5.46,poly:3.35,ch:70,la:0.219,ala:0.159,epa:2299,trp:0.208,thr:0.815,ile:0.857,leu:1.51,lys:1.71,met:0.75,phe:1.35,val:0.958,his:0.548 } },
+ 'Сельдь': { id: '15039', d: "Fish, herring, Atlantic, raw", n: [158,18,9.04,0], por: 100, cap: 180, m: { fib:0,sug:0,water:72,caf:0,vA:28,b1:0.092,b2:0.233,b3:3.22,b5:0.645,b6:0.302,b9:10,b12:13.7,vC:0.7,vD:4.2,vE:1.07,vK:0.1,cho:65,ca:57,fe:1.1,mg:32,p:236,k:327,na:90,zn:0.99,cu:0.092,mn:0.035,se:36.5,sat:2.04,mono:3.74,poly:2.13,ch:60,la:0.13,ala:0.103,epa:1571,trp:0.201,thr:0.787,ile:0.828,leu:1.46,lys:1.65,met:0.725,phe:1.31,val:0.925,his:0.529 } },
+ 'Брюссельская капуста': { id: '11098', d: "Brussels sprouts, raw", n: [43,3.38,0.3,8.95], por: 100, cap: 200, m: { fib:3.8,sug:2.2,water:86,caf:0,vA:38,b1:0.139,b2:0.09,b3:0.745,b5:0.309,b6:0.219,b9:61,b12:0,vC:85,vD:0,vE:0.88,vK:177,cho:19.1,ca:42,fe:1.4,mg:23,p:69,k:389,na:25,zn:0.42,cu:0.07,mn:0.337,se:1.6,sat:0.062,mono:0.023,poly:0.153,trans:0,ch:0,la:0.045,ala:0.099,epa:0,trp:0.037,thr:0.12,ile:0.132,leu:0.152,lys:0.154,met:0.054,phe:0.098,val:0.155,his:0.076 } },
+ 'Капуста кале': { id: '11233', d: "Kale, raw", n: [49,4.28,0.93,8.75], por: 60, cap: 150, m: { fib:3.6,sug:2.26,water:84,caf:0,vA:500,b1:0.11,b2:0.13,b3:1,b5:0.091,b6:0.271,b9:141,b12:0,vC:120,vD:0,vE:1.54,vK:705,cho:0.8,ca:150,fe:1.47,mg:47,p:92,k:491,na:38,zn:0.56,cu:1.5,mn:0.659,se:0.9,sat:0.091,mono:0.052,poly:0.338,trans:0,ch:0,la:0.138,ala:0.18,epa:0 } },
+ 'Кунжут': { id: '12023', d: "Seeds, sesame seeds, whole, dried", n: [573,17.7,49.7,23.4], por: 10, cap: 25, m: { fib:11.8,sug:0.3,water:4.69,caf:0,vA:0,b1:0.791,b2:0.247,b3:4.51,b5:0.05,b6:0.79,b9:97,b12:0,vC:0,vD:0,vE:0.25,vK:0,cho:25.6,ca:975,fe:14.6,mg:351,p:629,k:468,na:11,zn:7.75,cu:4.08,mn:2.46,se:34.4,sat:6.96,mono:18.8,poly:21.8,ch:0,la:21.4,ala:0.376,epa:0,trp:0.388,thr:0.736,ile:0.763,leu:1.36,lys:0.569,met:0.944,phe:1.68,val:0.99,his:0.522 } },
+ 'Семена чиа': { id: '12006', d: "Seeds, chia seeds, dried", n: [486,16.5,30.7,42.1], por: 15, cap: 30, m: { fib:34.4,water:5.8,b1:0.62,b2:0.17,b3:8.83,b12:0,vC:1.6,vE:0.5,ca:631,fe:7.72,mg:335,p:860,k:407,na:16,zn:4.58,cu:0.924,mn:2.72,se:55.2,sat:3.33,mono:2.31,poly:23.7,trans:0.14,ch:0,la:5.83,ala:17.8,trp:0.436,thr:0.709,ile:0.801,leu:1.37,lys:0.97,met:0.995,phe:1.58,val:0.95,his:0.531 } },
+ 'Бразильский орех': { id: '12078', d: "Nuts, brazilnuts, dried, unblanched", n: [659,14.3,67.1,11.7], por: 5, cap: 10, m: { fib:7.5,sug:2.33,water:3.42,caf:0,vA:0,b1:0.617,b2:0.035,b3:0.295,b5:0.184,b6:0.101,b9:22,b12:0,vC:0.7,vD:0,vE:5.65,vK:0,cho:28.8,ca:160,fe:2.43,mg:376,p:725,k:659,na:3,zn:4.06,cu:1.74,mn:1.22,se:1917,sat:16.1,mono:23.9,poly:24.4,ch:0,la:23.9,ala:0.018,epa:0,trp:0.135,thr:0.365,ile:0.518,leu:1.19,lys:0.49,met:1.43,phe:1.05,val:0.76,his:0.409 } },
+ 'Молоко': { id: '01077', d: "Milk, whole, 3.25% milkfat, with added vitamin D", n: [61,3.15,3.25,4.8], por: 250, cap: 500, m: { fib:0,sug:5.05,water:88.1,caf:0,vA:46,b1:0.046,b2:0.169,b3:0.089,b5:0.373,b6:0.036,b9:5,b12:0.45,vC:0,vD:1.3,vE:0.07,vK:0.3,cho:14.3,ca:113,fe:0.03,mg:10,p:84,k:132,na:43,zn:0.37,cu:0.025,mn:0.004,se:3.7,sat:1.86,mono:0.812,poly:0.195,ch:10,la:0.12,ala:0.075,epa:0,trp:0.04,thr:0.134,ile:0.163,leu:0.299,lys:0.264,met:0.102,phe:0.322,val:0.206,his:0.095 } },
+ 'Банан': { id: '09040', d: "Bananas, raw", n: [89,1.09,0.33,22.8], por: 120, cap: 240, m: { fib:2.6,sug:12.2,water:74.9,caf:0,vA:3,b1:0.031,b2:0.073,b3:0.665,b5:0.334,b6:0.367,b9:20,b12:0,vC:8.7,vD:0,vE:0.1,vK:0.5,cho:9.8,ca:5,fe:0.26,mg:27,p:22,k:358,na:1,zn:0.15,cu:0.078,mn:0.27,se:1,fl:0.0022,sat:0.112,mono:0.032,poly:0.073,trans:0,ch:0,la:0.046,ala:0.027,epa:0,trp:0.009,thr:0.028,ile:0.028,leu:0.068,lys:0.05,met:0.017,phe:0.058,val:0.047,his:0.077 } },
+ 'Курага': { id: '09032', d: "Apricots, dried, sulfured, uncooked", n: [241,3.39,0.51,62.6], por: 30, cap: 60, m: { fib:7.3,sug:53.4,water:30.9,caf:0,vA:180,b1:0.015,b2:0.074,b3:2.59,b5:0.516,b6:0.143,b9:10,b12:0,vC:1,vD:0,vE:4.33,vK:3.1,cho:13.9,ca:55,fe:2.66,mg:32,p:71,k:1162,na:10,zn:0.39,cu:0.343,mn:0.235,se:2.2,sat:0.017,mono:0.074,poly:0.074,ch:0,la:0.074,ala:0,epa:0,trp:0.016,thr:0.073,ile:0.063,leu:0.105,lys:0.083,met:0.034,phe:0.101,val:0.078,his:0.047 } },
+ 'Грибы': { id: '11260', d: "Mushrooms, white, raw", n: [22,3.09,0.34,3.26], por: 100, cap: 200, m: { fib:1,sug:1.98,water:92.5,caf:0,vA:0,b1:0.081,b2:0.402,b3:3.61,b5:1.5,b6:0.104,b9:17,b12:0.04,vC:2.1,vD:0.2,vE:0.01,vK:0,cho:17.3,ca:3,fe:0.5,mg:9,p:86,k:318,na:5,zn:0.52,cu:0.318,mn:0.047,se:9.3,sat:0.05,mono:0,poly:0.16,trans:0,ch:0,la:0.16,ala:0,epa:0,trp:0.035,thr:0.107,ile:0.076,leu:0.12,lys:0.107,met:0.043,phe:0.129,val:0.232,his:0.057 } },
+ 'Индейка': { id: '05219', d: "Turkey, breast, from whole bird, meat only, raw", n: [114,23.7,1.48,0.14], por: 150, cap: 250, m: { fib:0,sug:0.05,water:74.9,caf:0,vA:6,b1:0.042,b2:0.145,b3:9.92,b5:0.775,b6:0.813,b9:7,b12:0.63,vC:0,vD:0.1,vE:0.06,vK:0,cho:61.3,ca:11,fe:0.73,mg:28,p:201,k:242,na:113,zn:1.28,cu:0.07,mn:0.011,se:22.7,sat:0.289,mono:0.264,poly:0.258,trans:0.013,ch:57,la:0.196,ala:0.009,epa:2,trp:0.252,thr:0.859,ile:0.678,leu:1.64,lys:1.95,met:0.842,phe:1.47,val:0.756,his:0.641 } },
+ 'Свиная вырезка': { id: '10060', d: "Pork, fresh, loin, tenderloin, separable lean only, raw", n: [109,20.9,2.17,0], por: 150, cap: 250, m: { fib:0,sug:0,water:76,caf:0,vA:0,b1:0.998,b2:0.342,b3:6.68,b5:0.846,b6:0.777,b9:0,b12:0.51,vC:0,vD:0.2,vE:0.22,vK:0,cho:80.8,ca:5,fe:0.98,mg:27,p:247,k:399,na:53,zn:1.89,cu:0.09,mn:0.015,se:30.8,sat:0.698,mono:0.792,poly:0.367,trans:0.021,ch:65,la:0.292,ala:0.008,epa:0,trp:0.22,thr:0.94,ile:1.03,leu:1.78,lys:1.94,met:0.819,phe:1.68,val:1.09,his:0.905 } },
 };
+
+/* ================= where a product's nutrients come from (25 Oct) =================
+   e.m   = vitamins, minerals… per 100 g that are actually known. A missing key is unknown — never a guess.
+   e.src = {t:'db', id, d}  USDA SR28 (nutdb.json, loaded on demand)
+         | {t:'off', code, d} Open Food Facts · {t:'label'} read from a label · {t:'hand'} typed in
+         | {t:'ask', c:[ids]} several possible matches · {t:'none'} unknown
+   A product without e.src is matched by its name once the database is loaded: a sure match fills e.m, otherwise it waits for a pick. */
+const NDB = { p: null, ok: false };
+const NSOFT = new Set('оч очищ очищен очищенный очищенная очищенные очищенное свежий свежая свежие свежее сырой сырая сырые сырое домашний домашняя домашнее натуральный натуральная натуральное fresh raw peeled шт г гр кг мл л g kg ml pc'.split(' '));
+const ntok = s => String(s || '').toLowerCase().replace(/ё/g, 'е').replace(/[čć]/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z').replace(/đ/g, 'dj')
+  .replace(/[^a-zа-я0-9]+/g, ' ').trim().split(' ').filter(Boolean);
+const ncore = t => t.filter(w => !NSOFT.has(w) && !/^\d+$/.test(w));
+const tmS = (a, b) => { if (a === b) return true; const [s, l] = a.length <= b.length ? [a, b] : [b, a];   // apple~apples, яйцо~яйца, not кола~колбаса
+  if (s.length >= 3 && l.startsWith(s) && l.length - s.length <= 3) return true;
+  if (!/[а-я]/.test(s)) return false; let i = 0; while (i < s.length && s[i] === l[i]) i++; return s.length >= 4 && i >= s.length - 1 && l.length - s.length <= 2; };   // Russian endings only
+const tmL = (a, b) => b.startsWith(a) || tmS(a, b);   // while typing: «ябл» finds «яблоко»
+function ndbLoad() {
+  if (NDB.p) return NDB.p;
+  NDB.p = fetch('nutdb.json').then(r => { if (!r.ok) throw Error('nutdb ' + r.status); return r.json(); }).then(j => {
+    const C = j.cols; NDB.cols = C; NDB.by = new Map();
+    NDB.all = j.foods.map(f => { const cn = f.length > 3 + C.length ? f[f.length - 1] : '', x = { id: f[0], d: f[1], g: j.groups[f[2]], f, k: f[3], t: ntok(f[1] + ' ' + cn) }; NDB.by.set(f[0], x); return x; });
+    NDB.ru = j.ru.map(([n, id, s]) => { const names = n.split('|'), x = { names, id, sug: !!s, toks: names.map(ntok) }, r = NDB.by.get(id); if (r && !r.ru) r.ru = names[0]; return x; });
+    NDB.map = new Map(); const put = (k, x) => { if (k && !NDB.map.has(k)) NDB.map.set(k, x); };
+    NDB.ru.forEach(x => x.toks.forEach(t => put(t.join(' '), x)));
+    const GEN = new Set(['nuts', 'seeds', 'fish', 'cheese', 'beverages', 'spices', 'mollusks', 'crustaceans', 'game', 'candies', 'cookies', 'snacks', 'cereals', 'sauce', 'soup', 'oil', 'alcoholic']);
+    NDB.ru.forEach(x => { const r = NDB.by.get(x.id); if (!r) return; const seg = r.d.toLowerCase().replace(/\(.*?\)/g, '').split(',').map(s => s.trim()).filter(Boolean);   // English names: «apples», «apple», «olive oil»
+      const gen = GEN.has(seg[0].split(' ')[0]), w = gen ? seg[1] : seg[0]; if (!w) return;
+      [w, w.replace(/s$/, ''), w.replace(/es$/, ''), gen ? w + ' ' + seg[0] : ''].forEach(k => put(ntok(k).join(' '), x)); });
+    NDB.ok = true; return NDB; }).catch(e => { NDB.p = null; throw e; });
+  return NDB.p;
+}
+const NDB_K = { p_: 'p', k_: 'k' };
+function ndbM(r) { const m = {}; NDB.cols.forEach((c, i) => { if (i < 4) return; const v = r.f[3 + i]; if (typeof v === 'number') m[NDB_K[c] || c] = v; }); return m; }
+const ndbN = r => ({ k: r.f[3], p: r.f[4], f: r.f[5], c: r.f[6] });
+function ndbSearch(q, loose, lim = 30) {
+  const qt = ncore(ntok(q)); if (!qt.length) return [];
+  const tm = loose ? tmL : tmS, best = new Map();
+  const score = (toks, ru) => { let hit = 0, first = false; qt.forEach(w => { let j = toks.indexOf(w), q = 1; if (j < 0) { j = toks.findIndex(z => z === w + 's' || z === w + 'es'); q = .98; } if (j < 0) { j = toks.findIndex(z => tm(w, z)); q = .85; } if (j >= 0) { hit += q; if (j === 0) first = true; } }); if (!hit) return 0;
+    return hit / qt.length * 100 + (first ? 20 : 0) - Math.max(0, toks.length - hit) * (ru ? 4 : 2) + (ru ? 20 : 0); };
+  NDB.ru.forEach(x => { let s = 0; x.toks.forEach(t => { s = Math.max(s, score(t, true)); }); if (s > (best.get(x.id) || 0)) best.set(x.id, s); });
+  NDB.all.forEach(r => { const s = score(r.t, false); if (s > (best.get(r.id) || 0)) best.set(r.id, s); });
+  return [...best].map(([id, s]) => ({ id, s })).filter(z => z.s > 0).sort((a, b) => b.s - a.s).slice(0, lim);
+}
+function ndbMatch(name, n) {   // → a source for this name; n = the product's own kcal/macros, used as a check
+  const t = ntok(name), x = NDB.map.get(t.join(' ')) || NDB.map.get(ncore(t).join(' '));
+  const more = () => ndbSearch(name, false, 6).filter(z => z.s >= 50).map(z => z.id);
+  if (x) { const r = NDB.by.get(x.id), k = n && +n.k, off = k > 0 && Math.abs(k - r.k) > Math.max(30, r.k * .25);
+    if (!x.sug && !off) return { t: 'db', id: x.id, d: r.d };
+    return { t: 'ask', c: [x.id, ...more().filter(id => id !== x.id)].slice(0, 5) }; }
+  const c = more(); return c.length ? { t: 'ask', c: c.slice(0, 5) } : { t: 'none' };
+}
+const nDbPick = id => { const r = NDB.by.get(id); return { src: { t: 'db', id, d: r.d }, m: ndbM(r), n: ndbN(r) }; };
+function nSet(e, pick) {   // write a picked source onto a product
+  e.src = pick.src; if (pick.m && Object.keys(pick.m).length) e.m = pick.m; else delete e.m;
+  if (pick.n && !(e.n && (e.n.k || e.n.p || e.n.f || e.n.c))) e.n = { k: r1(pick.n.k), p: r1(pick.n.p), f: r1(pick.n.f), c: r1(pick.n.c) };
+  NM = new WeakMap();
+}
+function ndbAuto() {   // match every product that has never been matched; quietly, once
+  if (ghostSnap) return Promise.resolve(0); const todo = []; walk(S.items, e => { if (e.t !== 'g' && !e.src) todo.push(e); });
+  if (!todo.length) return Promise.resolve(0);
+  return ndbLoad().then(() => { if (ghostSnap) return 0; let got = 0;
+    todo.forEach(e => { if (e.src) return; if (e.m && Object.keys(e.m).length) { delete e.m.full; e.src = { t: 'label' }; return; }
+      const s = ndbMatch(e.name, e.n); if (s.t === 'db') { nSet(e, nDbPick(s.id)); got++; } else e.src = s; });
+    NM = new WeakMap(); save(); if (S.ui.tab === 'nutrients') renderNut();
+    if (got) toast(`Nutrients found for ${got} ${got === 1 ? 'product' : 'products'}`); return got; }).catch(() => 0);
+}
+const nSrcTxt = s => s === undefined ? '' : !s ? 'Looking…' : ({ db: 'From database', off: 'From Open Food Facts', label: 'From the label', hand: 'Your values', ask: 'Not sure', none: 'Unknown' })[s.t] || 'Unknown';
+const nKnown = m => m ? NUT.filter(n => typeof m[n.id] === 'number') : [];
+function nSecBody(st, all) {   // the open part of the product sheet's Nutrients section; st = { src, m, k }
+  const s = st.src, known = nKnown(st.m); if (!NEED) NEED = nNeeds();
+  let a, b, chip;
+  if (!s) { a = 'Looking in the database…'; b = ''; chip = ''; }
+  else if (s.t === 'ask') { a = 'Not sure which product this is'; b = `${s.c.length} possible ${s.c.length === 1 ? 'match' : 'matches'}`; chip = 'Pick'; }
+  else if (!known.length) { a = 'No vitamin or mineral data'; b = 'Not counted on Nutrients'; chip = 'Find'; }
+  else { const r = s.t === 'db' && NDB.ok && NDB.by.get(s.id), dk = r ? r.k : null;
+    a = esc(s.t === 'db' || s.t === 'off' ? s.d || 'Open Food Facts' : s.t === 'label' ? 'From the label' : 'Typed in by you');
+    b = (s.t === 'db' ? 'USDA database' : s.t === 'off' ? 'Open Food Facts' : 'Per 100 g') + ` · ${known.length} nutrients` + (dk != null && st.k > 0 && Math.abs(st.k - dk) > Math.max(30, dk * .25) ? ` · ${r0(dk)} kcal there, yours ${r0(st.k)}` : '');
+    chip = 'Change'; }
+  const rows = known.map(n => { const q = need(n), v = st.m[n.id], base = q.t || q.lim; return { n, v, p: base ? Math.round(v / base * 100) : null, lim: !q.t && !!q.lim }; });
+  const top = rows.filter(x => x.p !== null && !x.lim && x.n.g !== 'amino').sort((x, y) => y.p - x.p).slice(0, 5), list = all ? rows : top;
+  return `<div class="sh-warn nu-srcb"><span class="t"><span class="nu-s1">${a}</span>${b ? `<span class="nu-s2">${b}</span>` : ''}</span>${chip ? `<button type="button" class="sh-chip" data-nfind>${chip}</button>` : ''}</div>
+    ${list.length ? `${all ? '' : '<div class="cap">Most per 100 g<span class="r">of daily need</span></div>'}<ul class="list nu-l nu-pl">${list.map(x => `<li class="row"><div class="rc"><span class="pill">${x.p === null ? nFmt(x.v) : x.p + '%'}</span><div class="info"><div class="name">${x.n.n}</div><div class="mac"><span>${nFmt(x.v)}<i> ${x.n.u}</i></span>${x.lim ? '<i>limit</i>' : ''}</div></div></div></li>`).join('')}</ul>` : ''}
+    ${rows.length > top.length || all ? `<button type="button" class="nu-more" data-nall>${all ? 'Show less' : `Show all ${rows.length}`}</button>` : ''}`;
+}
+/* the section itself: a caption that opens like «More details»; st is kept up to date by the sheet */
+const nSecHTML = st => `<button type="button" class="npb-cap" id="fNut" aria-expanded="false"><span class="l">Nutrients</span><span class="r" id="fNutR">${nSrcTxt(st.src)}</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="fNutBox" hidden></div>`;
+function nSecBind(s, st, onFind) {
+  const cap = s.querySelector('#fNut'), box = s.querySelector('#fNutBox'); let all = false;
+  const draw = () => { s.querySelector('#fNutR').textContent = nSrcTxt(st.src); if (box.hidden) return; box.innerHTML = nSecBody(st, all);
+    const f = box.querySelector('[data-nfind]'); if (f) f.addEventListener('click', () => { haptic(); onFind(); });
+    const m = box.querySelector('[data-nall]'); if (m) m.addEventListener('click', () => { haptic(); all = !all; draw(); }); };
+  cap.addEventListener('click', () => { haptic(); const open = box.hidden; box.hidden = !open; cap.setAttribute('aria-expanded', open); cap.classList.toggle('open', open); all = false; draw();
+    if (open && !RM) box.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: SPRING }); });
+  return draw;
+}
+/* an overlay inside the open sheet (like «Add a nutrient»), or its own sheet when nothing is open */
+function nOver(html, ready) {
+  if (openSheet) { const box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.append(box);
+    const close = () => box.remove(); box.querySelectorAll('[data-ox]').forEach(b => b.addEventListener('click', () => { haptic(); close(); }));
+    if (!RM) box.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: SPRING });
+    ready(box, close); kpBind(box); return; }
+  sheet(html, s => { s.querySelectorAll('[data-ox]').forEach(b => b.addEventListener('click', () => closeSheet())); ready(s, () => closeSheet()); });
+}
+const nOX = `<button class="x" data-ox aria-label="Close">${ICON.x}</button>`;
+/* Find nutrients: database first (names in Russian or English), Open Food Facts online, a label, or by hand.
+   o = { name, k, src, done(pick), hand(), scan(), none() }  — pick = { src, m, n } */
+function nFind(o) {
+  const html = `<div class="sh-head"><span class="sh-kick">Find nutrients</span><span class="nu-sht">${esc(o.name || 'New product')}</span>${nOX}</div>
+    <label class="tfield"><input class="nu-q" value="${esc(o.name || '')}" placeholder="Apple, яблоко, chicken…" autocomplete="off" enterkeyhint="search" aria-label="Search"></label>
+    <div class="nu-fl"></div>
+    <div class="btnrow wide"><button class="sbtn plain" data-fa="scan">${SCAN_IC}Scan label</button><button class="sbtn plain" data-fa="hand">Enter by hand</button></div>
+    ${o.none ? '<button class="sbtn plain nu-unk" data-fa="none">Leave unknown</button>' : ''}`;
+  nOver(html, (box, close) => {
+    const L = box.querySelector('.nu-fl'), q = box.querySelector('.nu-q'); let online = null, onQ = '';
+    const kc = k => k == null ? '' : `${r0(k)}<i> kcal</i>`;
+    const row = (attr, a, b, k, on) => `<button class="bal-r nu-fr${on ? ' on' : ''}" ${attr}><b><span>${a}</span>${b ? `<small>${b}</small>` : ''}</b><em>${kc(k)}</em></button>`;
+    const draw = () => { const t = q.value.trim();
+      if (!NDB.ok) { L.innerHTML = `<p class="note nu-fn">${NDB.err ? 'The database didn’t load — check the connection.' : 'Loading the database…'}</p>`; }
+      else { const ask = o.src && o.src.t === 'ask' && t === (o.name || '').trim() ? o.src.c : [];
+        const ids = [...new Set([...ask, ...(t ? ndbSearch(t, true, 30).map(z => z.id) : [])])].slice(0, 30);
+        L.innerHTML = `<div class="cap">${ask.length ? 'Possible matches · USDA database' : 'USDA database'}<span class="r">per 100 g</span></div>
+          ${ids.length ? `<div class="bal-rows">${ids.map(id => { const r = NDB.by.get(id); return row(`data-db="${id}"`, esc(r.ru || r.d), r.ru ? esc(r.d) : esc(r.g), r.k, o.src && o.src.t === 'db' && o.src.id === id); }).join('')}</div>` : `<p class="note nu-fn">${t ? 'Nothing in the database.' : 'Type a product name.'}</p>`}`; }
+      L.innerHTML += `<div class="cap">Online · Open Food Facts<span class="r">brands, barcodes</span></div>` + (online && onQ === t
+        ? (online.length ? `<div class="bal-rows">${online.map((x, i) => row(`data-off="${i}"`, esc(x.d), esc([x.brand, x.cnt ? `${x.cnt} nutrients` : 'KBJU only'].filter(Boolean).join(' · ')), x.n.k)).join('')}</div>` : '<p class="note nu-fn">Nothing found online.</p>')
+        : `<button class="so-chip nu-addday" data-fa="online"${t ? '' : ' disabled'}>${online === false ? 'Searching…' : `Search “${esc(t || '…')}” online`}</button>`);
+      L.querySelectorAll('[data-db]').forEach(b => b.addEventListener('click', () => { haptic(); close(); o.done(nDbPick(b.dataset.db)); }));
+      L.querySelectorAll('[data-off]').forEach(b => b.addEventListener('click', () => { haptic(); const x = online[+b.dataset.off]; close(); o.done({ src: { t: 'off', code: x.code, d: x.d }, m: x.m, n: x.n }); }));
+      const on = L.querySelector('[data-fa="online"]'); if (on) on.addEventListener('click', () => { if (!t || online === false) return; haptic(); online = false; onQ = t; draw();
+        offSearch(t).then(r => { online = r; }).catch(() => { online = []; toast('Open Food Facts didn’t answer — try again'); }).finally(() => { if (box.isConnected) draw(); }); }); };
+    let qt; q.addEventListener('input', () => { clearTimeout(qt); qt = setTimeout(draw, 120); });
+    q.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); q.blur(); } });
+    box.querySelector('[data-fa="scan"]').addEventListener('click', () => { haptic(); o.scan(close, box); });
+    box.querySelector('[data-fa="hand"]').addEventListener('click', () => { haptic(); close(); o.hand(); });
+    const un = box.querySelector('[data-fa="none"]'); if (un) un.addEventListener('click', () => { haptic(); close(); o.none(); });
+    draw(); if (!NDB.ok) ndbLoad().then(draw).catch(() => { NDB.err = true; if (box.isConnected) draw(); });
+  });
+}
+/* values per 100 g — typed in, or what a scan read (to check before saving). n = macros (shown when given) */
+function nValSheet(o) {   // o = { name, kick, n, m, done({n, m}) }
+  const d = {}; Object.entries(o.m || {}).forEach(([k, v]) => { if (NUT.some(z => z.id === k)) d[k] = v; });
+  const mac = o.n ? `<div class="cap">Per 100 g</div><div class="card c4">${fnum('vP', 'Protein', o.n.p ?? '', 'g')}${fnum('vF', 'Fat', o.n.f ?? '', 'g')}${fnum('vC', 'Carbs', o.n.c ?? '', 'g')}${fnum('vK', 'kcal', o.n.k ?? '', '', '0')}</div><div class="cap">Vitamins, minerals and more</div>` : '';
+  nOver(`<div class="sh-head"><span class="sh-kick">${o.kick}</span><span class="nu-sht">${esc(o.name)}</span>${nOX}</div>
+    <p class="note nu-vn">${o.n || o.scan ? 'Check it against the label — the reader can mix up numbers.' : 'Copy what the label says. Whatever you leave out stays unknown — better than a guess.'}</p>${mac}
+    <div class="card c3" id="lbT"></div><button class="sbtn primary" id="lbSave">Save</button>`, (box, close) => {
+    nTiles(box.querySelector('#lbT'), d);
+    box.querySelector('#lbSave').addEventListener('click', () => { const m = {}; Object.entries(d).forEach(([k, v]) => { if (v !== '' && v != null) m[k] = +v; });
+      const g = id => { const i = box.querySelector('#' + id); return i ? numIn(i.value) : null; };
+      const n = o.n ? { p: g('vP'), f: g('vF'), c: g('vC'), k: g('vK') } : null; haptic(); close(); o.done({ n, m }); });
+  });
+}
+/* scan: barcode → Open Food Facts; otherwise read the label text (eng, rus, srp, srp_latn). Libraries load from jsDelivr on first use. */
+const SCAN_IC = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 9v6M11 9v6M14 9v6M17 9v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+const CDN_ZX = 'https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js', CDN_TS = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+const loadJS = (() => { const P = {}; return src => P[src] || (P[src] = new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.crossOrigin = 'anonymous'; s.onload = ok; s.onerror = () => { delete P[src]; no(Error('load ' + src)); }; document.head.append(s); })); })();
+async function nCanvas(file, max) { const url = URL.createObjectURL(file); try { const img = new Image(); img.src = url; await img.decode();
+  const sc = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); return c; } finally { URL.revokeObjectURL(url); } }
+async function nBarcode(file) {
+  const cs = [await nCanvas(file, 1600), await nCanvas(file, 900)];
+  if ('BarcodeDetector' in window) { try { const bd = new BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e'] }); for (const c of cs) { const r = await bd.detect(c); if (r[0]) return r[0].rawValue; } } catch (e) {} }
+  await loadJS(CDN_ZX); const Z = window.ZXing, hints = new Map();
+  hints.set(Z.DecodeHintType.POSSIBLE_FORMATS, [Z.BarcodeFormat.EAN_13, Z.BarcodeFormat.EAN_8, Z.BarcodeFormat.UPC_A, Z.BarcodeFormat.UPC_E]); hints.set(Z.DecodeHintType.TRY_HARDER, true);
+  for (const c of cs) { try { return new Z.MultiFormatReader().decode(new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(c))), hints).getText(); } catch (e) {} }
+  return null;
+}
+let nTW = null, nTWp = null;
+async function nOcr(file, prog) {
+  await loadJS(CDN_TS);
+  if (!nTW) nTW = await (nTWp || (nTWp = Tesseract.createWorker(['eng', 'rus', 'srp', 'srp_latn'], 1, { logger: m => nOcr.prog && m.progress != null && nOcr.prog(m.status, m.progress) }).catch(e => { nTWp = null; throw e; })));
+  nOcr.prog = prog; const { data } = await nTW.recognize(await nCanvas(file, 2000)); return data.text || '';
+}
+/* Open Food Facts: values are per 100 g, vitamins and minerals in grams */
+const OFF = 'https://world.openfoodfacts.org', OFF_F = 'code,product_name,product_name_ru,product_name_sr,product_name_en,brands,nutriments';
+const OFF_N = { fiber: ['fib', 1], sugars: ['sug', 1], 'saturated-fat': ['sat', 1], 'trans-fat': ['trans', 1], 'monounsaturated-fat': ['mono', 1], 'polyunsaturated-fat': ['poly', 1], cholesterol: ['ch', 1e3], sodium: ['na', 1e3], caffeine: ['caf', 1e3],
+  'vitamin-a': ['vA', 1e6], 'vitamin-d': ['vD', 1e6], 'vitamin-e': ['vE', 1e3], 'vitamin-k': ['vK', 1e6], 'vitamin-c': ['vC', 1e3], 'vitamin-b1': ['b1', 1e3], 'vitamin-b2': ['b2', 1e3], 'vitamin-pp': ['b3', 1e3], 'pantothenic-acid': ['b5', 1e3],
+  'vitamin-b6': ['b6', 1e3], biotin: ['b7', 1e6], 'vitamin-b9': ['b9', 1e6], folates: ['b9', 1e6], 'vitamin-b12': ['b12', 1e6], calcium: ['ca', 1e3], phosphorus: ['p', 1e3], iron: ['fe', 1e3], magnesium: ['mg', 1e3], zinc: ['zn', 1e3], copper: ['cu', 1e3],
+  manganese: ['mn', 1e3], selenium: ['se', 1e6], iodine: ['io', 1e6], potassium: ['k', 1e3], chloride: ['cl', 1e3], chromium: ['cr', 1e6], molybdenum: ['mo', 1e6], fluoride: ['fl', 1e3], choline: ['cho', 1e3] };
+function offItem(p) { const N = p.nutriments || {}, g = k => { const v = N[k + '_100g']; return v === '' || v == null || isNaN(+v) ? null : +v; };
+  const kc = g('energy-kcal') ?? (g('energy') != null ? g('energy') / 4.184 : null), m = {};
+  Object.entries(OFF_N).forEach(([k, [id, mul]]) => { const v = g(k); if (v != null && !(id in m)) m[id] = +(v * mul).toPrecision(3); });
+  if (m.na == null && g('salt') != null) m.na = Math.round(g('salt') * 400);
+  return { code: p.code, d: (p.product_name_ru || p.product_name || p.product_name_sr || p.product_name_en || '').trim() || p.code, brand: (p.brands || '').split(',')[0].trim(),
+    n: { k: kc == null ? null : Math.round(kc), p: g('proteins'), f: g('fat'), c: g('carbohydrates') }, m, cnt: Object.keys(m).length }; }
+async function offCode(code) { const r = await fetch(`${OFF}/api/v2/product/${encodeURIComponent(code)}.json?fields=${OFF_F}`); if (!r.ok) return null; const j = await r.json(); return j && j.status === 1 && j.product ? offItem(j.product) : null; }
+async function offSearch(q) { const r = await fetch(`${OFF}/cgi/search.pl?search_terms=${encodeURIComponent(q)}&search_simple=1&action=process&json=1&page_size=24&fields=${OFF_F}`); if (!r.ok) throw Error('off ' + r.status);
+  const j = await r.json(); return (j.products || []).map(offItem).filter(x => x.n.k != null).slice(0, 15); }
+/* reading a label: every known word on the page, then the first number after it (until the next word).
+   Russian, Serbian (Latin and Cyrillic) and English; «per 100 g» is the first column on almost every label. */
+const NLBL = [
+  ['sat', 's', /saturat|zasicen|zasićen|насыщ|засичен/], ['trans', 's', /trans[- ]?(?:fat|masn|жир)|транс[- ]?жир|(?:^|[^a-z])trans(?![a-z])/], ['mono', 's', /mononezasic|monounsat|мононенасыщ|мононезасич/], ['poly', 's', /polinezasic|polyunsat|полиненасыщ|полинезасич/],
+  ['sug', 's', /sugar|secer|сахар|шечер|seceri/], ['fib', 's', /fib(?:re|er)|vlakn|влакн|волокн|клетчатк/], ['salt', 's', /(?:^|[^a-zа-я])(?:salt|so|со|соль|sol)(?![a-zа-я])/], ['na', 's', /sodium|natrij|натри/],
+  ['ch', 's', /cholester|holester|холестер/], ['caf', 's', /caffein|kofein|кофеин/],
+  ['p', 'g', /protein|belancevin|бел(?:ок|ки|ков)|беланчевин|протеин/], ['c', 'g', /carbohydrat|ugljen|ugljikohidr|углевод|угльен/], ['f', 'g', /(?:^|[^a-zа-я])(?:fats?|total fat|masti?|жир[ыа]?|масти?)(?![a-zа-я])/],
+  ['vA', 's', /vitamin\s*a(?![a-z0-9])|витамин\s*[аa](?![а-яa-z0-9])|retinol|ретинол/], ['vC', 's', /vitamin\s*c(?![a-z0-9])|витамин\s*[сc](?![а-яa-z0-9])|askorbin|аскорбин|ascorbic/],
+  ['vD', 's', /vitamin\s*d\d?(?![a-z])|витамин\s*[дd]\d?(?![а-яa-z])|холекальциф|cholecalcif/], ['vE', 's', /vitamin\s*e(?![a-z0-9])|витамин\s*[еe](?![а-яa-z0-9])|tokoferol|токоферол|tocopher/],
+  ['vK', 's', /vitamin\s*k\d?(?![a-z])|витамин\s*[кk]\d?(?![а-яa-z])|филлохин|phylloquin/], ['b12', 's', /(?:vitamin|витамин)\s*[bв]\s*12|(?:^|[^a-zа-я])b12|cobalamin|kobalamin|кобаламин/],
+  ['b1', 's', /(?:vitamin|витамин)\s*[bв]\s*1(?!\d)|thiamin|tiamin|тиамин/], ['b2', 's', /(?:vitamin|витамин)\s*[bв]\s*2(?!\d)|riboflavin|рибофлавин/], ['b3', 's', /(?:vitamin|витамин)\s*(?:[bв]\s*3(?!\d)|pp|рр)|niacin|nijacin|ниацин|никотин/],
+  ['b5', 's', /(?:vitamin|витамин)\s*[bв]\s*5(?!\d)|pantoten|pantothen|пантотен/], ['b6', 's', /(?:vitamin|витамин)\s*[bв]\s*6(?!\d)|piridoksin|pyridox|пиридоксин/], ['b7', 's', /(?:vitamin|витамин)\s*[bв]\s*7(?!\d)|biotin|биотин/],
+  ['b9', 's', /(?:vitamin|витамин)\s*[bв]\s*9(?!\d)|folic|folat|folna|фолиев|фолат|фолна/],
+  ['ca', 's', /calcium|kalcij|кальци|калци/], ['fe', 's', /(?:^|[^a-z])iron|gvozdj|gvozd|железо|гвожд/], ['mg', 's', /magnesium|magnezij|магни|магнези/], ['zn', 's', /zinc|cink|цинк/], ['k', 's', /potassium|kalij|калий|калиј/],
+  ['p_', 's', /phosphor|fosfor|фосфор/], ['io', 's', /iodine|jod(?![a-z])|йод/], ['se', 's', /selen|селен/], ['cu', 's', /copper|bakar|медь|бакар/], ['mn', 's', /mangan|марган|манган/],
+  ['cr', 's', /chrom|hrom|хром/], ['mo', 's', /molybd|molibden|молибден/], ['cl', 's', /chlorid|hlorid|хлорид/], ['cho', 's', /cholin(?!e?ster)|holin|холин/],
+];
+function parseLabel(txt) {
+  const T = ' ' + String(txt || '').toLowerCase().replace(/ё/g, 'е').replace(/љ/g, 'ль').replace(/њ/g, 'нь').replace(/ј/g, 'й').replace(/ћ/g, 'ч').replace(/[ђџ]/g, 'дж').replace(/μ/g, 'µ').replace(/[čć]/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z').replace(/đ/g, 'dj')
+    .replace(/([^0-9])100\s*(?:g|г|gr|ml|мл)(?![a-zа-я])/g, '$1 ').replace(/\s+/g, ' ') + ' ';
+  const n = {}, m = {}, num = s => parseFloat(s.replace(',', '.'));
+  // energy: kcal wins, kJ / 4.184 otherwise
+  const all = re => [...T.matchAll(re)].map(x => num(x[1].replace(/ /g, ''))).filter(v => v > 0 && v !== 2000 && v !== 8400);   // 2000 kcal / 8400 kJ = the reference-intake footnote
+  const kc = all(/(\d[\d ]{0,5}(?:[.,]\d+)?)\s*(?:kcal|kca[l1i|]|ккал|kkal)/g), kj = all(/(\d[\d ]{0,5}(?:[.,]\d+)?)\s*(?:kj|кдж|kдж)/g);
+  if (kc.length) n.k = Math.round(kc[0]); else if (kj.length) n.k = Math.round(kj[0] / 4.184);
+  const hits = [];
+  NLBL.forEach(([id, kind, re]) => { const g = new RegExp(re.source, 'g'); let x; while ((x = g.exec(T))) { hits.push({ id, kind, a: x.index, b: x.index + x[0].length }); if (!x[0].length) g.lastIndex++; } });
+  hits.sort((x, y) => x.a - y.a || (x.kind === 's' ? -1 : 1));
+  const H = []; hits.forEach(h => { const L = H[H.length - 1];   // words in a row with no number between → one item («saturated fat», «Masti / Fat / Жиры»)
+    if (L && h.a < L.b + 34 && !/\d/.test(T.slice(L.b, h.a))) { if (h.a < L.b && h.kind === L.kind) return; if (L.kind === 's' && h.kind === 'g') return; if (h.kind === 's' && L.kind === 'g') { H[H.length - 1] = h; return; } if (h.id === L.id) { L.b = h.b; return; } }
+    H.push(h); });
+  const U = { mg: 1e-3, мг: 1e-3, 'µg': 1e-6, mcg: 1e-6, мкг: 1e-6, ug: 1e-6, g: 1, г: 1, gr: 1 };
+  H.forEach((h, i) => { const end = Math.min(i + 1 < H.length ? H[i + 1].a : T.length, h.b + 40), seg = T.slice(h.b, end);
+    const re = /(<\s*)?(\d+(?:[.,]\d+)?)\s*(mg|мг|µg|mcg|мкг|ug|gr|g|г|%|kj|kcal|ккал|кдж)?(?![a-zа-я])/g; let x, v = null, u = null;
+    while ((x = re.exec(seg))) { if (x[3] === '%' || /kj|kcal|ккал|кдж/.test(x[3] || '')) continue; v = x[1] ? 0 : num(x[2]); u = x[3] || null; break; }
+    if (v == null) return; const key = h.id === 'p_' ? 'p' : h.id;
+    if (h.kind === 'g') { if (n[key] == null) n[key] = v; return; }
+    if (key === 'salt') { if (m.na == null) m.na = Math.round(v * 400); return; }
+    const z = NUT.find(q => q.id === key), our = z ? { g: 1, mg: 1e-3, 'µg': 1e-6, ml: 1 }[z.u] || 1 : 1;
+    const val = u && U[u] ? v * U[u] / our : v; if (m[key] == null || key === 'na') m[key] = +val.toPrecision(3); });
+  return { n, m, cnt: Object.keys(n).length + Object.keys(m).length };
+}
+/* the whole scan; ui = { busy(text|null) } → { src, n, m, name } or null */
+async function nScan(file, ui) {
+  try {
+    ui.busy('Looking for a barcode…');
+    const code = await nBarcode(file).catch(() => null);
+    if (code) { ui.busy(`Barcode ${code} · asking Open Food Facts…`); const x = await offCode(code).catch(() => null);
+      if (x && x.n.k != null) return { src: { t: 'off', code, d: x.d }, n: x.n, m: x.m, name: x.d, via: 'barcode' }; }
+    ui.busy('Reading the label…');
+    const txt = await nOcr(file, (st, p) => ui.busy(/load|initial/.test(st) ? `Getting the reader ready · ${Math.round(p * 100)}%` : `Reading the label · ${Math.round(p * 100)}%`));
+    const r = parseLabel(txt); if (!r.cnt) return null;
+    return { src: { t: 'label' }, n: r.n, m: r.m, via: 'label' };
+  } finally { ui.busy(null); }
+}
+function nPickFile(cb) { const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.style.display = 'none';
+  i.addEventListener('change', () => { const f = i.files && i.files[0]; i.remove(); if (f) cb(f); }); i.addEventListener('cancel', () => i.remove()); document.body.append(i); i.click(); }
+/* the busy line inside a sheet: a grey capsule with a spinner */
+function nBusy(anchor) { let el = null; return t => { if (!t) { if (el) el.remove(); el = null; return; }
+  if (!el) { el = document.createElement('div'); el.className = 'nu-busy'; el.innerHTML = '<i></i><span></span>'; anchor.after(el); }
+  el.querySelector('span').textContent = t; }; }
 
 /* ================= nutrients (v5, 24 Oct) =================
    Average per day over the chosen days (Every day / By weekday / In order).
@@ -3299,9 +3615,8 @@ function nNeeds() {
 }
 let NEED = null, NM = new WeakMap();
 const need = n => ({ t: NEED.t[n.id] ?? n.t, lim: NEED.l[n.id] ?? n.lim, ul: n.ul, uls: n.uls });
-function nMap(e) { if (NM.has(e)) return NM.get(e); const base = NFOOD[e.name] || (NCAT[e.name] && NCAT[e.name].m) || null;
-  const m = e.m ? Object.assign({}, base || {}, e.m) : base; NM.set(e, m); return m; }
-function nVal(e, k) { const m = nMap(e); if (!m) return undefined; if (k in m) return m[k]; return m.full && !NRARE.has(k) ? 0 : undefined; }
+function nMap(e) { return e.m && Object.keys(e.m).some(k => k !== 'full') ? e.m : null; }
+function nVal(e, k) { const m = nMap(e), v = m && m[k]; return typeof v === 'number' ? v : undefined; }
 function nPlanItems(p) {   // [food, grams eaten, dish] for a plan; a dish is split by its portion
   const out = []; S.items.forEach(e => {
     if (e.t !== 'g') { const g = p.g[e.id] || 0; if (g) out.push([e, g, null]); return; }
@@ -3330,10 +3645,10 @@ let nMore = false;
 function nRows() { const T = nTotals(); return { ...T, R: NUT.map(n => ({ n, a: T.acc[n.id], ...nStatus(n, T.acc[n.id]) })) }; }
 function nTitle() { const { mix } = nMix(); if (!mix.length) return 'No plan'; return mix.length === 1 ? mix[0][0].name : `${mix[0][0].name} +${mix.length - 1}`; }
 function nPeriod(days) { return nst().mode === 'every' ? 'every day' : `${days} ${days === 1 ? 'day' : 'days'}`; }
-function nMissing(mix) {   // counted products with no data, and built-in ones that are only partly known (brands)
-  const seen = new Set(), none = [], part = [];
-  mix.forEach(([p]) => nPlanItems(p).forEach(([e]) => { if (seen.has(e.id)) return; seen.add(e.id); const m = nMap(e); if (!m) none.push(e); else if (!m.full && !e.m) part.push(e); }));
-  return { none, part }; }
+function nMissing(mix) {   // counted products whose vitamins and minerals are unknown
+  const seen = new Set(), none = [];
+  mix.forEach(([p]) => nPlanItems(p).forEach(([e]) => { if (seen.has(e.id)) return; seen.add(e.id); if (!nMap(e)) none.push(e); }));
+  return { none }; }
 const nRow = (x, attr) => `<li class="row" ${attr}><div class="rc"><span class="pill nst-${x.ig ? 'ig' : x.s}">${nTile(x)}</span><div class="info"><div class="name">${x.n.n}</div><div class="mac">${x.ig ? '<i>ignored ·</i> ' : ''}${nAmt(x)}</div></div></div></li>`;
 function renderNut() {
   const el = $('#nutBody'); if (!el) return; const { R, days, mix, grams } = nRows();
@@ -3455,20 +3770,29 @@ function suppSheet(sp) {
   });
 }
 function nMissingSheet() {
-  nPrep(); const { none, part } = nMissing(nMix().mix);
+  nPrep(); const { none } = nMissing(nMix().mix), ask = none.filter(e => e.src && e.src.t === 'ask'), unk = none.filter(e => !(e.src && e.src.t === 'ask'));
   const row = (e, t) => `<button class="bal-r" data-lb="${e.id}"><b>${esc(e.name)}</b><em class="nu-nf">${t}</em></button>`;
-  sheet(`<h3>Unknown data${XBTN}</h3><p class="note">Nutrients these products bring aren’t counted. Add what the label says — per 100 g.</p>
-    ${none.length ? `<div class="cap">No data</div><div class="bal-rows">${none.map(e => row(e, 'Add')).join('')}</div>` : ''}
-    ${part.length ? `<div class="cap">Partly known · check the label</div><div class="bal-rows">${part.map(e => row(e, 'Check')).join('')}</div>` : ''}
-    ${!none.length && !part.length ? '<p class="note">Every counted product has data. Unknown nutrients (iodine, chromium…) are rarely on labels.</p>' : ''}`, s => {
-    s.querySelectorAll('[data-lb]').forEach(b => b.addEventListener('click', () => { haptic(); let e = null; walk(S.items, x => { if (x.id === b.dataset.lb) e = x; }); if (e) labelSheet(e); })); });
+  sheet(`<h3>Unknown data${XBTN}</h3><p class="note">Vitamins and minerals of these products aren’t counted. Find them in the database or online, scan the label, or type them in.</p>
+    ${ask.length ? `<div class="cap">Not sure · pick a match</div><div class="bal-rows">${ask.map(e => row(e, 'Pick')).join('')}</div>` : ''}
+    ${unk.length ? `<div class="cap">Unknown</div><div class="bal-rows">${unk.map(e => row(e, 'Find')).join('')}</div>` : ''}
+    ${!none.length ? '<p class="note">Every counted product has data. Iodine, chromium and a few others are rarely known.</p>' : ''}`, s => {
+    s.querySelectorAll('[data-lb]').forEach(b => b.addEventListener('click', () => { haptic(); let e = null; walk(S.items, x => { if (x.id === b.dataset.lb) e = x; }); if (!e) return; closeSheet(true); nFindFor(e, () => { renderNut(); if (nMissing(nMix().mix).none.length) nMissingSheet(); }); })); });
 }
-function labelSheet(e) {
-  const base = nMap(e) || {}, d = {}; Object.keys(base).forEach(k => { if (k !== 'full' && NUT.some(n => n.id === k)) d[k] = base[k]; });
-  sheet(`<div class="sh-head"><span class="sh-kick">Per 100 g · from the label</span><span class="nu-sht">${esc(e.name)}</span>${XBTN}</div>
-    <div class="card c3" id="lbT"></div><button class="sbtn primary" id="lbSave">Save</button>`, s => {
-    nTiles(s.querySelector('#lbT'), d);
-    s.querySelector('#lbSave').addEventListener('click', () => { const m = {}; Object.entries(d).forEach(([k, v]) => { if (v !== '') m[k] = +v; }); e.m = m; save(); closeSheet(); haptic(); renderNut(); toast(`${e.name} · ${Object.keys(m).length} nutrients saved`); }); });
+/* Find nutrients for a saved product (from the unknown list, or the product sheet). after() runs once something is saved. */
+function nFindFor(e, after, sh) {   // sh = the open product sheet's hooks { macros(n) } — macros then go into its tiles instead
+  const keep = () => ({ src: e.src, m: e.m, n: e.n }), back = k => () => { e.src = k.src; if (k.m) e.m = k.m; else delete e.m; e.n = k.n; NM = new WeakMap(); save(); renderAll(true); after && after(); };
+  const put = (pick, label) => { const k = keep(); nSet(e, pick); save(); renderAll(true); after && after(); toast(label, { label: 'Undo', fn: back(k) }); };
+  const done = pick => put(pick, pick.src.t === 'db' ? `Nutrients from ${NDB.by.get(pick.src.id).ru || pick.src.d}` : `Nutrients from ${pick.src.d || 'Open Food Facts'}`);
+  nFind({ name: e.name, k: e.n && e.n.k, src: e.src, done,
+    hand: () => nValSheet({ kick: 'Per 100 g · type them in', name: e.name, m: e.m, done: ({ m }) => put({ src: { t: 'hand' }, m }, `${e.name} · ${Object.keys(m).length} nutrients saved`) }),
+    scan: (closeFind, box) => nPickFile(f => { const busy = nBusy(box.querySelector('.sh-head'));
+      nScan(f, { busy }).then(r => { if (!r) return toast('Couldn’t read the label — try closer, in good light');
+        closeFind(); const n0 = e.n || {}; nValSheet({ kick: r.via === 'barcode' ? 'Per 100 g · Open Food Facts' : 'Per 100 g · from the label', scan: true, name: e.name,
+          n: sh ? null : { p: r.n.p ?? n0.p, f: r.n.f ?? n0.f, c: r.n.c ?? n0.c, k: r.n.k ?? n0.k }, m: r.m,
+          done: ({ n, m }) => { if (n) e.n = { p: n.p || 0, f: n.f || 0, c: n.c || 0, k: n.k ?? r0((n.p || 0) * 4 + (n.f || 0) * 9 + (n.c || 0) * 4) }; else if (sh) sh.macros(r.n);
+            put({ src: r.src, m }, `${e.name} · ${Object.keys(m).length} nutrients from the ${r.via === 'barcode' ? 'barcode' : 'label'}`); } }); })
+      .catch(() => toast('Scanning needs the internet the first time')); }),
+    none: e.src && e.src.t !== 'none' ? () => put({ src: { t: 'none' } }, `${e.name} · left unknown`) : null });
 }
 function nutPick(done, standalone) {   // search the full list; inside a sheet it slides over it, alone it is its own sheet
   const html = `<h3>${standalone ? 'Find a nutrient' : 'Add a nutrient'}<button class="x" aria-label="Close" data-np-x>${ICON.x}</button></h3><label class="tfield"><input class="nu-q" placeholder="Vitamin, mineral…" autocomplete="off"></label><div class="nu-pl-l"></div>`;
@@ -3500,9 +3824,9 @@ function fixCands(p, kept, C) {
     const mx = e.ch.reduce((s, c) => s + (p.g[c.id] || 0), 0); if (!mx || (p.g[e.id] ?? mx) < mx) return;   // recipe edits only for a dish eaten whole
     e.ch.forEach(c => { const g = p.g[c.id] || 0; if (!g || !c.n || !nMap(c) || kept.has(c.id)) return; out.push({ ...mk(c, g), parent: e, lo: Math.round(g * .4 / 5) * 5, hi: Math.max(g, Math.round(g * 1.6 / 5) * 5) }); });
   });
-  if (S.ui.fixNew !== false) { const have = new Set(); walk(S.items, e => have.add(e.name));
-    Object.entries(NCAT).forEach(([name, c]) => { const id = 'cat:' + name; if (have.has(name) || kept.has(id)) return;
-      out.push({ id, name, cat: c, isNew: true, x0: 0, v: c.n.map(x => x / 100), mm: vec(k => k in c.m ? c.m[k] : (NRARE.has(k) ? undefined : 0)), lo: 0, hi: c.cap, step: 5, por: c.por, min: c.por * .5 }); }); }
+  if (S.ui.fixNew !== false) { const have = new Set(); walk(S.items, e => { have.add(e.name); if (e.src && e.src.t === 'db') have.add('db:' + e.src.id); });
+    Object.entries(NCAT).forEach(([name, c]) => { const id = 'cat:' + name; if (have.has(name) || have.has('db:' + c.id) || kept.has(id)) return;
+      out.push({ id, name, cat: c, isNew: true, x0: 0, v: c.n.map(x => x / 100), mm: vec(k => c.m[k]), lo: 0, hi: c.cap, step: 5, por: c.por, min: c.por * .5 }); }); }
   return out;
 }
 function fixSearch(base, cands, maxCh, banned, allowNew) {
@@ -3559,7 +3883,7 @@ function fixAmt(ch) { const e = ch.c.e, u = e ? uLab(e) : 'g', f = e ? toU(e, ch
   return ch.from === 0 ? `+${F(t)} ${u}` : `${F(f)} → ${F(t)} ${u}`; }
 function fixApply(p, sol) {
   sol.changes.forEach(ch => { const c = ch.c; let id = c.id;
-    if (c.isNew) { const e = { id: uid(), t: 'f', name: c.name, g: 0, n: { k: c.cat.n[0], p: c.cat.n[1], f: c.cat.n[2], c: c.cat.n[3] }, m: { ...c.cat.m } }; S.items.push(e); id = e.id; }
+    if (c.isNew) { const e = { id: uid(), t: 'f', name: c.name, g: 0, n: { k: r0(c.cat.n[0]), p: r1(c.cat.n[1]), f: r1(c.cat.n[2]), c: r1(c.cat.n[3]) }, m: { ...c.cat.m }, src: { t: 'db', id: c.cat.id, d: c.cat.d || c.name } }; S.items.push(e); id = e.id; }
     p.g[id] = ch.to;
     if (c.parent) p.g[c.parent.id] = c.parent.ch.reduce((s, x) => s + (p.g[x.id] || 0), 0); });
   if (p === plan()) applyGrams(p); save();
@@ -3607,7 +3931,7 @@ function fixStart() {
 $('#nutPlanBtn').addEventListener('click', () => { haptic(); nPicker(); });
 $('#nutFix').addEventListener('click', () => { haptic(); fixStart(); });
 $('#nutSearch').addEventListener('click', () => { haptic(); nutPick(k => { closeSheet(true); nDetail(k); }, true); });
-window.__nut = { fixOptions, fixCtx, nRows, fixApply, renderNut, plan: () => plan(), S: () => S };   // debugging handle
+window.__nut = { fixOptions, fixCtx, nRows, fixApply, renderNut, plan: () => plan(), S: () => S, parseLabel, ndbMatch, ndbSearch, ndbLoad, offItem, NDB };   // debugging handle
 
 /* ================= wiring ================= */
 $('#searchBtn').insertAdjacentHTML('beforeend', '<span class="slab">Search</span>');
@@ -3668,6 +3992,7 @@ addEventListener('scroll', () => { if (stuckRaf) return; stuckRaf = requestAnima
 
 /* ================= boot ================= */
 syncTabs(); renderAll(false); $('#planName').textContent = plan().name;
+setTimeout(ndbAuto, 1200);
 if (!RM) document.querySelectorAll('.plan > *, .tabsec:not([hidden]) > .list-head, .tabsec:not([hidden]) .list > *').forEach((el, i) => el.animate(
   [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 520, delay: Math.min(i, 14) * 28, easing: SPRING, fill: 'backwards' }));
 })();
