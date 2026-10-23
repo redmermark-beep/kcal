@@ -1061,6 +1061,20 @@ body.v2 .zhead[hidden]{display:none}
 #secMeal .just-added>.rc,#secMeal .just-added>.ghead{animation:justAdded 1.6s ease-out}
 @keyframes justAdded{0%,35%{background:rgba(35,95,208,.14)}100%{background:transparent}}
 #secMeal .just-added>.rc{border-radius:16px}
+
+/* balance the plan (S2) */
+#balBtn{color:var(--blue)}
+#balBtn[hidden]{display:none}
+.bal-rows{display:flex;flex-direction:column;gap:6px}
+.bal-r{display:flex;align-items:center;gap:10px;min-height:52px;padding:0 14px;border-radius:16px;background:var(--fill-6)}
+.bal-r b{flex:1;min-width:0;display:flex;align-items:center;gap:6px;font-size:16px;font-weight:510;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bal-r b svg{flex:none;opacity:.5}
+.bal-r em{font-style:normal;font-family:var(--mono);font-size:15px;font-weight:600}
+.bal-r em.p{color:var(--blue)}
+.bal-res{margin:12px 4px 16px;font-family:var(--mono);font-size:13px;color:var(--ink-50)}
+.bal-res b{color:var(--blue)}
+.bal-alt{display:block;width:100%;height:44px;margin-top:6px;font-size:14px;font-weight:510;color:var(--ink-50)}
+.bal-none{margin:4px 4px 8px;font-size:15px;line-height:21px;color:var(--ink-50)}
 </style>
 
 <div class="app" id="app">
@@ -1105,6 +1119,7 @@ body.v2 .zhead[hidden]{display:none}
       <button class="dots" id="planBtn" aria-label="Meal plans"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
       <span class="lsum" id="lsum"></span>
       <div class="tools">
+      <button class="ibtn" id="balBtn" aria-label="Balance the plan" hidden><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5l2.1 5.4 5.4 2.1-5.4 2.1L14 19.5l-2.1-5.4L6.5 12l5.4-2.1z"/><path d="M21.5 17.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></svg></button>
       <button class="ibtn" id="ghostBtn" aria-label="Try-out mode" aria-pressed="false"><svg viewBox="0 0 28 28" fill="none"><path d="M10.9375 14C11.6624 14 12.25 13.4124 12.25 12.6875C12.25 11.9626 11.6624 11.375 10.9375 11.375C10.2126 11.375 9.625 11.9626 9.625 12.6875C9.625 13.4124 10.2126 14 10.9375 14Z" fill="currentColor"/><path d="M17.0625 14C17.7874 14 18.375 13.4124 18.375 12.6875C18.375 11.9626 17.7874 11.375 17.0625 11.375C16.3376 11.375 15.75 11.9626 15.75 12.6875C15.75 13.4124 16.3376 14 17.0625 14Z" fill="currentColor"/><path d="M23 23L20.0003 20.5217L16.9997 23L14 20.5217L11.0003 23L7.99966 20.5217L5 23V13.087C5 10.6769 5.94821 8.36564 7.63604 6.66151C9.32387 4.95737 11.6131 4 14 4C16.3869 4 18.6761 4.95737 20.364 6.66151C22.0518 8.36564 23 10.6769 23 13.087V23Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="ibtn" id="sortBtn" aria-label="Sort"><svg viewBox="0 0 28 28" fill="none"><path d="M3 13H13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20H10" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 19L21 24L26 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24V12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="ibtn" id="searchBtn" aria-label="Search"><svg viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/><path d="M19 19L24 24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button>
@@ -1511,6 +1526,7 @@ function renderHV(g, t) {
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
+  { const bb = $('#balBtn'); if (bb) bb.hidden = allOk; }
   if (allOk !== wasAllOk && wasAllOk !== null && allOk) haptic();
   wasAllOk = allOk;
 }
@@ -2181,6 +2197,69 @@ function ghostOff() {
   S.items = JSON.parse(ghostSnap); ghostSnap = null;
   document.body.classList.remove('ghost'); $('#ghostBtn').setAttribute('aria-pressed', 'false');
 }
+
+/* ================= balance the plan (S2, 23 Oct) =================
+   Up to three portion changes that bring kcal, P, F and C into their ranges.
+   A dish (group) only changes as a whole portion, never its recipe. */
+function goalRange(k, g = goal()) { return g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)]; }
+function balanceOptions() {
+  const g = goal(), K = ['k', 'p', 'f', 'c'], t0 = totals();
+  const R = K.map(k => goalRange(k, g)), C = R.map(([a, b]) => (a + b) / 2), W = R.map(([a, b]) => Math.max(1, (b - a) / 2));
+  const cand = S.items.map(e => {
+    if (e.t === 'g') { const mx = maxOf(e); if (!mx) return null; const full = mac({ ...e, g: mx }); return { e, v: K.map(k => full[k] / mx), lo: 0, hi: mx, step: 5, g0: e.g }; }
+    if (!e.n) return null; const pc = isPc(e);
+    return { e, v: K.map(k => (e.n[k] || 0) / 100), lo: 0, hi: e.g + 600, step: pc ? e.uw : 5, g0: e.g };
+  }).filter(x => x && x.v.some(n => n > 0));
+  const fits = t => K.every((k, i) => t[i] >= R[i][0] - 1e-6 && t[i] <= R[i][1] + 1e-6);
+  const T0 = K.map(k => t0[k]);
+  const err = t => t.reduce((s, x, i) => s + ((x - C[i]) / W[i]) ** 2, 0);
+  const solve = set => {   // weighted least squares on the chosen items, m ≤ 3
+    const m = set.length, A = [], b = [];
+    for (let i = 0; i < 4; i++) { A.push(set.map(c => c.v[i] / W[i])); b.push((C[i] - T0[i]) / W[i]); }
+    const N = Array.from({ length: m }, (_, r) => Array.from({ length: m }, (_, c) => A.reduce((s, row) => s + row[r] * row[c], 0) + (r === c ? 1e-6 : 0)));
+    const y = Array.from({ length: m }, (_, r) => A.reduce((s, row, i) => s + row[r] * b[i], 0));
+    for (let i = 0; i < m; i++) { let p = i; for (let j = i + 1; j < m; j++) if (Math.abs(N[j][i]) > Math.abs(N[p][i])) p = j; [N[i], N[p]] = [N[p], N[i]]; [y[i], y[p]] = [y[p], y[i]];
+      if (Math.abs(N[i][i]) < 1e-12) return null; for (let j = i + 1; j < m; j++) { const f = N[j][i] / N[i][i]; for (let c = i; c < m; c++) N[j][c] -= f * N[i][c]; y[j] -= f * y[i]; } }
+    const d = Array(m).fill(0); for (let i = m - 1; i >= 0; i--) { let s2 = y[i]; for (let c = i + 1; c < m; c++) s2 -= N[i][c] * d[c]; d[i] = s2 / N[i][i]; }
+    return d;
+  };
+  const sols = [], n = cand.length;
+  const tryset = set => {
+    const d = solve(set); if (!d) return;
+    let gs = set.map((c, i) => { const v = Math.min(c.hi, Math.max(c.lo, c.g0 + d[i])); return Math.round(v / c.step) * c.step; });
+    const tot = gs2 => T0.map((x, i) => x + set.reduce((s, c, j) => s + c.v[i] * (gs2[j] - c.g0), 0));
+    // nudge each rounded value by ±1 step if that gets closer
+    for (let pass = 0; pass < 2; pass++) set.forEach((c, j) => { let best = gs, be = err(tot(gs));
+      for (const s2 of [-1, 1]) { const t2 = gs.slice(); t2[j] = Math.min(c.hi, Math.max(c.lo, t2[j] + s2 * c.step)); const e2 = err(tot(t2)); if (e2 < be) { be = e2; best = t2; } } gs = best; });
+    if (set.some((c, j) => Math.abs(gs[j] - c.g0) < c.step / 2)) return;   // a no-op change: a smaller set covers it
+    const t = tot(gs); if (!fits(t)) return;
+    const cost = set.length * 10 + err(t) * 2 + set.reduce((s, c, j) => s + Math.abs(gs[j] - c.g0) * (c.v[0] || 1) / 100 + Math.abs(gs[j] - c.g0) / Math.max(c.g0, 100) * 6 + (c.g0 === 0 ? 3 : 0), 0);
+    sols.push({ changes: set.map((c, j) => ({ e: c.e, from: c.g0, to: gs[j] })), t: { k: t[0], p: t[1], f: t[2], c: t[3] }, cost });
+  };
+  for (let a = 0; a < n; a++) tryset([cand[a]]);
+  for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) tryset([cand[a], cand[b2]]);
+  if (sols.length < 4) for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) for (let c2 = b2 + 1; c2 < n; c2++) tryset([cand[a], cand[b2], cand[c2]]);
+  return sols.sort((x, y) => x.cost - y.cost).slice(0, 8);
+}
+const BOWL_I = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18a9 9 0 0 1-18 0z"/></svg>';
+function balanceSheet() {
+  const opts = balanceOptions(); let i = 0;
+  const fmtD = ch => { const e = ch.e, d = e.t === 'g' ? ch.to - ch.from : toU(e, ch.to) - toU(e, ch.from), u = e.t === 'g' ? 'g' : uLab(e);
+    return `${d > 0 ? '+' : '−'}${Math.abs(Math.round(d * 10) / 10)} ${u}`; };
+  const body = () => { if (!opts.length) return `<p class="bal-none">No way to fit with up to three changes.<br>Try changing the plan by hand.</p>`;
+    const o = opts[i];
+    return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}${esc(ch.e.name)}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fmtD(ch)}</em></div>`).join('')}</div>
+      <div class="bal-res">→ <b>${r0(o.t.k)}</b> kcal · P <b>${r0(o.t.p)}</b> · F <b>${r0(o.t.f)}</b> · C <b>${r0(o.t.c)}</b></div>`; };
+  sheet(`<h3>Balance the plan${XBTN}</h3><div id="balBody">${body()}</div>
+    ${opts.length ? `<button class="sbtn primary" id="balGo">Apply</button>${opts.length > 1 ? '<button type="button" class="bal-alt" id="balAlt">Another way</button>' : ''}` : ''}`, s => {
+    const alt = s.querySelector('#balAlt'); if (alt) alt.addEventListener('click', () => { haptic(); i = (i + 1) % opts.length; s.querySelector('#balBody').innerHTML = body(); });
+    const go = s.querySelector('#balGo'); if (go) go.addEventListener('click', () => {
+      const undo = opts[i].changes.map(ch => [ch.e, ch.from]);
+      opts[i].changes.forEach(ch => setGrams(ch.e, ch.to)); save(); closeSheet(); haptic(); renderAll(true);
+      toast('Plan balanced', { label: 'Undo', fn: () => { undo.forEach(([e, g]) => setGrams(e, g)); save(); renderAll(true); } }); });
+  });
+}
+$('#balBtn').addEventListener('click', () => { haptic(); balanceSheet(); });
 $('#ghostBtn').addEventListener('click', () => {
   document.body.classList.add('ghost-anim'); clearTimeout(window.__ga); window.__ga = setTimeout(() => document.body.classList.remove('ghost-anim'), 900);
   if (!ghostSnap) { save(); ghostSnap = JSON.stringify(S.items); document.body.classList.add('ghost'); $('#ghostBtn').setAttribute('aria-pressed', 'true'); toast('Try-out mode · changes are temporary'); }
