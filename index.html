@@ -3442,7 +3442,7 @@ function suppSheet(sp) {
     const host = s.querySelector('#spT');
     const eff = () => { const { R } = nRows(), out = []; Object.entries(d.n).forEach(([k, v]) => { const x = R.find(r => r.n.id === k); if (!x || v === '') return;
         const old = sp ? (sp.n[k] || 0) * sp.pcs : 0, add = (+v || 0) * (d.pcs || 1), tv = x.v - old + add, base = x.q.t || x.q.lim, ul = x.n.ul && x.n.uls ? x.n.ul : null, pills = x.a.sv - old + add;
-        out.push(`<div class="bal-r"><b>${x.n.n}${ul ? `<small class="bal-in">pills ${nFmt(pills)} of ${nFmt(ul)} ${x.n.u} limit</small>` : ''}</b><em class="${ul && pills > ul ? '' : 'p'}">${base ? `${Math.round(x.v / base * 100)}% → ${Math.round(tv / base * 100)}%` : nFmt(tv) + ' ' + x.n.u}</em></div>`); });
+        out.push(`<div class="bal-r"><b>${x.n.n}${ul ? `<small class="bal-in">pills ${nFmt(pills)}/${nFmt(ul)} ${x.n.u}</small>` : ''}</b><em class="${ul && pills > ul ? '' : 'p'}">${base ? `${Math.round(x.v / base * 100)}% → ${Math.round(tv / base * 100)}%` : nFmt(tv) + ' ' + x.n.u}</em></div>`); });
       s.querySelector('#spEff').innerHTML = out.length ? `<div class="bal-rows">${out.join('')}</div>` : ''; };
     host._after = () => host.querySelectorAll('[data-nk]').forEach(i => i.addEventListener('input', eff));
     nTiles(host, d.n); eff();
