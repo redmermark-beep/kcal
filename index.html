@@ -1105,75 +1105,92 @@ body.lv-01 #mhead #addBtn{width:40px!important;height:40px!important;border-radi
 #mhead .mtitle h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #mhead .mtitle .pchev{flex:none}
 
-/* ---------- Nutrients (reference v4) ---------- */
+/* ---------- Nutrients (v5, 24 Oct): Meal's grid and components — goal line, list header, .row/.pill/.info, Budget hero and captions, Balance rows ---------- */
 body.tab-nutrients .plan>:not(.title-row){display:none}
-.nu-line{height:1px;background:var(--line);margin:12px 0 10px}
-.nu-top{display:flex;align-items:center;gap:8px;height:40px}
-.nu-top h1{margin:0;font-size:20px;line-height:24px;font-weight:600;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nu-top .mtitle svg{width:12px;height:12px;margin-left:6px}
-.nu-hero{display:flex;align-items:center;gap:10px;margin-top:12px}
-.nu-big{font-size:28px;line-height:32px;font-weight:600;letter-spacing:-.6px}
-.nu-sub{font-size:13px;line-height:18px;color:var(--ink-50);margin-top:2px}
-.nu-sub em,.nu-sec em{font-style:normal;font-weight:600;color:var(--blue)}
-.nu-how{font-size:13px;font-weight:510;color:var(--ink);text-decoration:underline;text-underline-offset:2px;padding:0}
-.nu-cards{display:grid;gap:8px;margin-top:14px}
-.nu-card{display:block;width:100%;text-align:left;background:var(--fill-6);border-radius:20px;padding:12px 14px}
-.nu-card:active{transform:scale(.985)}
-.nu-ch{display:flex;align-items:center;gap:8px}.nu-ch b{flex:1;font-size:17px;font-weight:600}
-.nu-pl{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:11px;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--fill-8);flex:none}
-.nu-pl.ok{background:var(--blue);color:#fff}.nu-pl.over{background:var(--over);color:#fff}
-.nu-bar{position:relative;height:6px;border-radius:3px;background:var(--fill-8);margin-top:8px}
+body.gr.ma.tab-nutrients .plan .title-row{margin-left:calc(var(--cx) + var(--cp) - 16px);margin-right:calc(var(--cx) + var(--cp) - 16px)}
+body.gr.ma.tab-nutrients #secNut{padding:0 calc(var(--lx) - 16px)}
+.nu-line{height:1px;background:var(--line);margin:12px 0 8px}
+.nu-head{display:flex;align-items:center;height:40px}
+.nu-head .mtitle{min-width:0;flex:1 1 auto;overflow:hidden}
+.nu-head h2{margin:0;min-width:0;font-size:20px;line-height:24px;font-weight:510;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu-head .mtitle .pchev{flex:none;width:12px;height:12px;margin-left:4px}
+.nu-head .tools{display:flex;align-items:center;gap:2px;margin-left:auto;padding-left:12px}
+body .nu-head .tools .ibtn{width:38px;height:38px;border-radius:19px;display:grid;place-items:center}
+body .nu-head .tools .ibtn svg{width:22px;height:22px;margin:0;opacity:1}
+.nu-head #nutFix{color:var(--blue)}
+#secNut .bud-hero{margin-top:14px}
+.bh-sub em,.bcap em{font-style:normal;font-weight:600;color:var(--blue)}
+.nu-lk{font-size:13px;line-height:17px;color:var(--ink);font-weight:510;text-decoration:underline;text-decoration-color:var(--ink-28);text-underline-offset:2px;padding:0}
+/* problem cards */
+.nu-cards{display:grid;gap:8px;margin-top:18px}
+.nu-cw{position:relative;border-radius:16px}
+.nu-ign{position:absolute;right:0;top:0;bottom:0;width:84px;border-radius:16px;background:var(--fill-8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;font-weight:590;opacity:0;transition:opacity .2s}
+.nu-cw.open .nu-ign{opacity:1}
+.nu-card{position:relative;z-index:1;display:block;width:100%;text-align:left;background:var(--fill-6);border-radius:16px;padding:12px 14px 13px;transition:transform .45s var(--spring);touch-action:pan-y}
+.nu-cw.open .nu-card{background:#ececec}
+.nu-ch{display:flex;align-items:center;gap:8px}
+.nu-ch .name{flex:1;min-width:0;font-weight:510;letter-spacing:-.16px}
+#secNut .nu-ch em,.nu-dbig em{flex:none;font-style:normal;display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:11px;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--fill-8)}
+em.nst-ok{background:var(--blue)!important;color:#fff}em.nst-over{background:var(--over)!important;color:#fff}
+.nu-bar{position:relative;height:6px;border-radius:3px;background:var(--fill-8);margin:10px 0 6px}
 .nu-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:rgba(0,0,0,.35)}
-.nu-bar.over i{background:var(--over)}.nu-bar.ok i{background:var(--blue)}
+.nu-bar.nst-over i{background:var(--over)}.nu-bar.nst-ok i{background:var(--blue)}
 .nu-bar u{position:absolute;right:0;top:-3px;bottom:-3px;width:2px;border-radius:1px;background:#000}
-.nu-am{font-family:var(--mono);font-size:12px;color:var(--ink-50);margin-top:6px}
 .nu-why{font-size:14px;line-height:19px;margin-top:8px}
 .nu-from{font-size:13px;line-height:17px;color:var(--ink-50);margin-top:2px}
 .nu-more{width:100%;height:40px;border-radius:20px;box-shadow:inset 0 0 0 1px var(--fill-8);font-size:14px;font-weight:510;margin-top:8px}
-.nu-ignrow{display:block;width:100%;text-align:left;padding:12px 4px 0}
-.nu-ignrow b{display:block;font-size:16px;font-weight:510}.nu-ignrow span{font-size:13px;color:var(--ink-50)}
-.nu-sec{display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px;font-size:13px;color:var(--ink-50)}
-.nu-sec b{font-size:17px;font-weight:600;color:var(--ink)}
-.nu-add{height:32px;padding:0 12px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--fill-8);font-size:14px;font-weight:510;color:var(--ink)}
-.nu-empty{font-size:14px;color:var(--ink-50);padding:4px 2px}
-.nu-row{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;margin-bottom:8px;text-align:left}
-.nu-t{flex:none;width:72px;height:40px;border-radius:10px;background:var(--fill-8);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:600}
-.nu-t.ok{background:var(--blue);color:#fff}.nu-t.over{background:var(--over);color:#fff}
-.nu-t.nd{background:transparent;box-shadow:inset 0 0 0 1.5px var(--fill-8);color:var(--ink-50)}
-.nu-t.none,.nu-t.ig{background:var(--fill-3);color:var(--ink-50)}
-.nu-nm{flex:1;min-width:0}.nu-nm b{display:block;font-size:16px;line-height:20px;font-weight:510;letter-spacing:-.16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nu-nm span{display:block;font-family:var(--mono);font-size:12px;line-height:16px;color:var(--ink-50);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nu-sht{flex:1;font-size:24px;line-height:30px;font-weight:600;letter-spacing:-.5px}
-.nu-dbig{display:flex;align-items:baseline;gap:8px;margin:2px 2px 12px}.nu-dbig b{font-family:var(--mono);font-size:34px;font-weight:600;letter-spacing:-1px}.nu-dbig>span:not(.nu-pl){font-family:var(--mono);font-size:13px;color:var(--ink-50)}.nu-dbig .nu-pl{margin-left:auto}
+/* rows: exactly Meal's product rows */
+#secNut .list.nu-l,.sheet .list.nu-l{margin:0;gap:8px}
+#secNut .rc,.sheet .nu-l .rc{align-items:center;gap:10px}
+#secNut .pill,.sheet .nu-l .pill,.nu-how-l .pill{box-sizing:border-box;min-width:72px;height:40px;padding:0 10px;justify-content:center;font-weight:500;background:rgba(0,0,0,.08)}
+#secNut .name,.sheet .nu-l .name{font-weight:510;letter-spacing:-.16px}
+#secNut .mac,.sheet .nu-l .mac{gap:8px;color:#000}
+#secNut .mac i,.sheet .nu-l .mac i{font-style:normal;color:rgba(0,0,0,.5)}
+#secNut .row{cursor:pointer}
+.pill.nst-ok{background:var(--blue)!important;color:#fff}
+.pill.nst-over{background:var(--over)!important;color:#fff}
+.pill.nst-nd{background:transparent!important;box-shadow:inset 0 0 0 1.5px var(--fill-8);color:var(--ink-50)}
+.pill.nst-none,.pill.nst-ig{background:rgba(0,0,0,.04)!important;color:var(--ink-50)}
+.nu-igl{margin-top:16px!important}
+.nu-empty{margin:0 4px}
+/* sheets */
+.nu-sht{flex:1;min-width:0;font-size:24px;line-height:30px;font-weight:600;letter-spacing:-.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu-dbig{margin:2px 2px 14px;align-items:center}.nu-dbig em{margin-left:auto}
 .nu-txt{background:var(--fill-6);border-radius:16px;padding:10px 14px;font-size:14px;line-height:19px;margin-top:6px}
-.nu-txt b{display:block;font-size:11px;font-weight:590;letter-spacing:.3px;color:var(--ink-50);margin-bottom:2px}
-.nu-src{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:0 14px;border-radius:14px;background:var(--fill-6);margin-top:4px;font-size:15px}
-.nu-src .mono{font-family:var(--mono);font-size:13px;color:var(--ink-50)}
-.sheet .sbtn.plain#nuIg{width:100%;height:50px;margin:14px 0 0;font-size:17px}
-.nu-how-l{display:grid;gap:6px}.nu-how-l>div{display:flex;gap:12px;padding:12px 14px;border-radius:16px;background:var(--fill-6)}
-.nu-how-l .nu-t{width:58px;height:34px;font-size:13px}.nu-how-l p{margin:0;font-size:14px;line-height:19px;color:var(--ink-50)}.nu-how-l p b{display:block;font-size:15px;font-weight:600;color:var(--ink)}
-.nu-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
-.nu-seg button{height:40px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--fill-8);font-size:14px;font-weight:510}
-.nu-seg button.on{background:var(--fill-8);box-shadow:none;font-weight:600}
-#nuPB{display:grid;gap:4px;max-height:52vh;overflow:auto}
-.nu-prow{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 6px 0 14px;border-radius:14px;background:var(--fill-6);font-size:15px}
-.nu-prow>span:first-child{color:var(--ink-50);width:96px;flex:none}
-.nu-prow select{flex:1;min-width:0;height:44px;border:0;background:none;font:inherit;font-size:16px;font-weight:510;color:var(--ink);-webkit-appearance:none;appearance:none;outline:none}
-.nu-num{width:30px!important;height:30px;border-radius:15px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)!important}
+.nu-txt b{display:block;font-size:12px;line-height:15px;font-weight:510;color:var(--ink-50);margin-bottom:2px}
+button.bal-r{width:100%;text-align:left;color:var(--ink)}
+.bal-r select{flex:1;min-width:0;height:48px;border:0;background:none;font:inherit;font-size:16px;font-weight:510;color:var(--ink);-webkit-appearance:none;appearance:none;outline:none;text-align:left}
+.nu-pr>span:first-child{width:100px;flex:none;font-size:15px;color:var(--ink-50)}
+.nu-num{width:30px!important;height:30px;border-radius:15px;background:var(--card);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)!important}
 .nu-del{width:34px;height:34px;display:grid;place-items:center;opacity:.45}.nu-del svg{width:10px;height:10px}
-.nu-addday{width:100%;justify-content:center;height:44px;margin-top:4px}
-.nu-hint{margin:0 4px 8px;font-size:14px;line-height:19px;color:var(--ink-50)}
-.nu-stp{display:flex;align-items:center;gap:6px;margin-left:auto}.nu-stp button{width:36px;height:36px;border-radius:18px;background:#fff;font-size:20px}.nu-stp b{font-family:var(--mono);width:26px;text-align:center}
-.nu-vts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.nu-vts .vt b input{flex:1;min-width:0;width:auto;font-size:24px;font-weight:600;caret-color:auto;-webkit-user-select:text;user-select:text;cursor:text}
-.nu-addn{align-items:center;justify-content:center;background:transparent;box-shadow:inset 0 0 0 1.5px var(--fill-8);color:var(--ink-50);font-size:14px;font-weight:510}
-.nu-pick{position:absolute;inset:0;background:var(--bg);border-radius:inherit;padding:16px;overflow:auto;z-index:5}
-.nu-pick h3{display:flex;align-items:center}.nu-pick h3 .x{margin-left:auto}
-.nu-q{width:100%;height:48px;border:0;border-radius:16px;background:var(--fill-6);padding:0 14px;font:inherit;font-size:16px;outline:none;box-sizing:border-box}
-.nu-pi{display:flex;justify-content:space-between;width:100%;height:44px;align-items:center;padding:0 14px;border-radius:14px;font-size:16px;font-weight:510}
-.nu-pi span{font-size:13px;color:var(--ink-50);font-weight:400}
-.nu-pi:active{background:var(--fill-6)}
-.nu-list{display:grid;gap:4px}
+#nuPB{max-height:52vh;overflow:auto;margin-top:12px}
+#nuPB .note{margin:0 4px 6px}
+.nu-addday{width:100%;justify-content:center;height:44px;margin-top:2px}
+.nu-nf{color:var(--ink-50)!important;font-family:var(--sans)!important;font-weight:510!important;font-size:14px!important}
+.nst-t-ok{color:var(--blue)}.nst-t-nd,.nst-t-none{color:var(--ink-50)}
+.nu-how-l{display:grid;gap:6px}.nu-how-l>div{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:var(--fill-6)}
+.nu-how-l .pill{flex:none;font-family:var(--mono);font-size:14px;display:flex;align-items:center;border-radius:10px}
+.nu-how-l p{margin:0;font-size:14px;line-height:19px;color:var(--ink-50)}.nu-how-l p b{display:block;font-size:15px;line-height:20px;font-weight:600;color:var(--ink)}
+.nu-needs{margin-top:8px}
+.nu-addn{align-items:center;justify-content:center;background:transparent!important;box-shadow:inset 0 0 0 1.5px var(--fill-8)!important;color:var(--ink-50);font-size:14px;font-weight:510}
+.nu-eff:not(:empty){margin-top:12px}
+.nu-pick{position:absolute;inset:0;z-index:5;background:var(--bg);border-radius:inherit;padding:16px;overflow:auto}
+.nu-pick h3,.sheet .nu-pl-l+*{display:flex;align-items:center}
+.nu-pick .x{margin-left:auto}
+.nu-pl-l{max-height:56vh;overflow:auto}
+.nu-pl-l .cap{margin:14px 4px 6px}
+.nu-pl-l .bal-rows{max-height:none}
+.nu-q{width:100%;border:0;background:none;font:inherit;font-size:16px;outline:none;height:100%}
+/* fix */
+.nu-kept{background:transparent!important;box-shadow:inset 0 0 0 1px var(--fill-8)}
+.nu-kept b{color:var(--ink-50)}.nu-kept em{display:flex;align-items:center;gap:4px;font-family:var(--sans)!important;font-size:13px!important;font-weight:510!important;color:var(--ink-50)}
+.nu-hint{margin:8px 4px 0;font-size:13px;line-height:17px;color:var(--ink-50)}
+.nu-res{display:flex;align-items:center;gap:6px;margin:0 4px;font-size:15px;line-height:20px;white-space:nowrap}
+.nu-res svg{flex:none}
+.nu-res svg{color:var(--blue)}.nu-res b{font-family:var(--mono);font-weight:600}
+.nu-res .r{margin-left:auto;font-size:13px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#fxB .br1{margin:12px 0 12px}
+#fxB .bal-nav{margin:4px 0 -2px}
 </style>
 
 <div class="app" id="app">
@@ -1264,7 +1281,8 @@ body.tab-nutrients .plan>:not(.title-row){display:none}
 
   <section class="tabsec" id="secNut" hidden>
     <div class="nu-line"></div>
-    <div class="nu-top"><button class="mtitle" id="nutPlanBtn" aria-label="Choose what you eat"><h1 id="nutTitle">Пробы</h1><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    <div class="nu-head"><button class="mtitle" id="nutPlanBtn" aria-label="Choose what you eat"><h2 id="nutTitle">Пробы</h2><svg class="pchev" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="tools"><button class="ibtn" id="nutFix" aria-label="Fix the plans" hidden><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5l2.1 5.4 5.4 2.1-5.4 2.1L14 19.5l-2.1-5.4L6.5 12l5.4-2.1z"/><path d="M21.5 17.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></svg></button><button class="ibtn" id="nutSearch" aria-label="Find a nutrient"><svg viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/><path d="M19 19L24 24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button></div></div>
     <div id="nutBody"></div>
   </section>
 
@@ -1773,6 +1791,10 @@ function renderSettings() {
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
         <div class="st-seg">${[1, 5, 10].map(v => `<button data-step="${v}" class="${(u.step || 5) === v ? 'on' : ''}">${v} g</button>`).join('')}</div></div>
+    </div>
+    <div class="st-h">Nutrients</div>
+    <div class="st-g">
+      <div class="st-r"><div><b>Fix may suggest new products</b><span>From a built-in list: spinach, salmon, nuts, beans…</span></div>${swHTML('fixNew', u.fixNew !== false)}</div>
     </div>
     <div class="st-h">Data</div>
     <div class="st-g">
@@ -3220,11 +3242,43 @@ const NFOOD = {
  'Сок': { full:1, vA:10,vC:50,vE:.04,b1:.09,b2:.03,b3:.4,b6:.04,b9:30,cho:6, ca:11,p:17,mg:11,na:1,k:200,fe:.2,zn:.05,cu:.04,mn:.01, sug:8.4,water:88 },
  'Апельсин': { full:1, vA:11,vC:53,vE:.18,b1:.09,b2:.04,b3:.28,b5:.25,b6:.06,b9:30,cho:8, ca:40,p:14,mg:10,na:0,k:181,fe:.1,zn:.07,cu:.04,mn:.03,se:.5, fib:2.4,sug:9,water:87 },
 };
+// Built-in product list for Fix (per 100 g, USDA-based). n = kcal, protein, fat, carbs; por = a normal portion, cap = most it may suggest.
+const NCAT = {
+ 'Шпинат': { n: [23, 2.9, .4, 3.6], por: 100, cap: 200, m: { full: 1, vA: 469, vC: 28, vE: 2, vK: 483, b1: .08, b2: .19, b3: .72, b5: .07, b6: .2, b9: 194, cho: 19, ca: 99, p: 49, mg: 79, na: 79, k: 558, fe: 2.7, zn: .53, cu: .13, mn: .9, se: 1, fib: 2.2, sug: .4, ala: .14, la: .03, water: 91 } },
+ 'Брокколи': { n: [34, 2.8, .4, 6.6], por: 150, cap: 300, m: { full: 1, vA: 31, vC: 89, vE: .8, vK: 102, b1: .07, b2: .12, b3: .64, b5: .57, b6: .18, b9: 63, cho: 19, ca: 47, p: 66, mg: 21, na: 33, k: 316, fe: .73, zn: .41, cu: .05, mn: .21, se: 2.5, fib: 2.6, sug: 1.7, ala: .02, water: 89 } },
+ 'Морковь': { n: [41, .9, .2, 9.6], por: 100, cap: 200, m: { full: 1, vA: 835, vC: 5.9, vE: .66, vK: 13, b1: .07, b2: .06, b3: .98, b5: .27, b6: .14, b9: 19, cho: 9, ca: 33, p: 35, mg: 12, na: 69, k: 320, fe: .3, zn: .24, cu: .05, mn: .14, se: .1, fib: 2.8, sug: 4.7, water: 88 } },
+ 'Перец сладкий': { n: [31, 1, .3, 6], por: 150, cap: 300, m: { full: 1, vA: 157, vC: 128, vE: 1.6, vK: 4.9, b1: .05, b2: .09, b3: .98, b6: .29, b9: 46, cho: 6, ca: 7, p: 26, mg: 12, na: 4, k: 211, fe: .43, zn: .25, mn: .11, fib: 2.1, sug: 4.2, water: 92 } },
+ 'Картофель': { n: [77, 2, .1, 17], por: 200, cap: 400, m: { full: 1, vC: 19.7, vK: 2, b1: .08, b2: .03, b3: 1.1, b5: .3, b6: .3, b9: 15, cho: 12, ca: 12, p: 57, mg: 23, na: 6, k: 425, fe: .8, zn: .3, cu: .11, mn: .15, se: .4, fib: 2.2, sug: .8, water: 79 } },
+ 'Батат': { n: [86, 1.6, .1, 20], por: 200, cap: 400, m: { full: 1, vA: 709, vC: 2.4, vE: .26, vK: 1.8, b1: .08, b2: .06, b3: .56, b5: .8, b6: .21, b9: 11, cho: 12, ca: 30, p: 47, mg: 25, na: 55, k: 337, fe: .61, zn: .3, cu: .15, mn: .26, se: .6, fib: 3, sug: 4.2, water: 77 } },
+ 'Авокадо': { n: [160, 2, 15, 8.5], por: 70, cap: 150, m: { full: 1, vA: 7, vC: 10, vE: 2.1, vK: 21, b1: .07, b2: .13, b3: 1.7, b5: 1.4, b6: .26, b9: 81, cho: 14, ca: 12, p: 52, mg: 29, na: 7, k: 485, fe: .55, zn: .64, cu: .19, mn: .14, se: .4, fib: 6.7, sug: .7, sat: 2.1, mono: 9.8, poly: 1.8, ala: .11, la: 1.7, water: 73 } },
+ 'Черника': { n: [57, .7, .3, 14], por: 100, cap: 200, m: { full: 1, vA: 3, vC: 9.7, vE: .57, vK: 19, b1: .04, b2: .04, b3: .42, b6: .05, b9: 6, cho: 6, ca: 6, p: 12, mg: 6, k: 77, fe: .28, zn: .16, cu: .06, mn: .34, fib: 2.4, sug: 10, water: 84 } },
+ 'Лосось': { n: [208, 20, 13, 0], por: 120, cap: 200, m: { full: 1, vA: 58, vD: 11, vE: 3.6, b1: .21, b2: .16, b3: 8.7, b5: 1.5, b6: .64, b9: 26, b12: 3.2, cho: 78, ca: 9, p: 240, mg: 27, na: 59, k: 363, fe: .34, zn: .36, cu: .05, se: 24, sat: 3.1, mono: 3.8, poly: 3.9, ala: .1, epa: 2000, la: .6, ch: 55, water: 65, leu: 1.6, ile: .9, val: 1, lys: 1.8, met: .8, phe: 1.5, thr: .9, trp: .22, his: .6 } },
+ 'Сардины в масле': { n: [208, 25, 11, 0], por: 90, cap: 150, m: { full: 1, vA: 32, vD: 4.8, vE: 2, vK: 2.6, b1: .08, b2: .23, b3: 5.2, b5: .64, b6: .17, b9: 10, b12: 8.9, cho: 75, ca: 382, p: 490, mg: 39, na: 307, k: 397, fe: 2.9, zn: 1.3, cu: .19, mn: .11, se: 53, sat: 1.5, mono: 3.9, poly: 5.1, ala: .5, epa: 980, la: 3.5, ch: 142, water: 60 } },
+ 'Говядина постная': { n: [150, 21, 7, 0], por: 150, cap: 250, m: { full: 1, vE: .2, vK: 1.5, b1: .06, b2: .17, b3: 5.5, b5: .6, b6: .5, b9: 7, b12: 2.6, cho: 70, ca: 12, p: 200, mg: 21, na: 60, k: 330, fe: 2.1, zn: 4.8, cu: .08, se: 20, sat: 2.9, mono: 3, poly: .3, la: .2, ch: 65, water: 71, leu: 1.7, ile: 1, val: 1.1, lys: 1.8, met: .8, phe: 1.6, thr: .9, trp: .14, his: .7 } },
+ 'Говяжья печень': { n: [135, 20, 3.6, 3.9], por: 60, cap: 100, m: { full: 1, vA: 4968, vC: 1.3, vD: 1.2, vE: .4, vK: 3, b1: .19, b2: 2.8, b3: 13, b5: 7.2, b6: 1.1, b9: 290, b12: 59, cho: 333, ca: 5, p: 387, mg: 18, na: 69, k: 313, fe: 4.9, zn: 4, cu: 9.8, mn: .31, se: 40, sat: 1.2, ch: 275, water: 71 } },
+ 'Кефир 2,5%': { n: [53, 3, 2.5, 4], por: 250, cap: 500, m: { full: 1, vA: 25, vD: .1, b1: .03, b2: .17, b3: .1, b5: .3, b6: .04, b9: 7, b12: .4, cho: 15, ca: 120, p: 95, mg: 12, na: 40, k: 150, zn: .4, se: 2, io: 15, sug: 4, sat: 1.5, mono: .7, ch: 8, water: 89 } },
+ 'Творог 5%': { n: [121, 17, 5, 1.8], por: 150, cap: 250, m: { full: 1, vA: 40, vD: .1, b2: .27, b3: .2, b5: .5, b6: .08, b9: 12, b12: .9, cho: 18, ca: 164, p: 220, mg: 23, na: 41, k: 112, zn: .4, se: 9, io: 10, sug: 1.8, sat: 3, mono: 1.3, ch: 9, water: 71 } },
+ 'Сыр твёрдый': { n: [402, 25, 33, 1.3], por: 30, cap: 60, m: { full: 1, vA: 265, vD: .6, vE: .7, vK: 2.8, b2: .43, b12: 1.1, ca: 721, p: 512, mg: 28, na: 621, k: 76, zn: 3.1, se: 14, sat: 19, mono: 9, poly: 1, ch: 105, water: 37 } },
+ 'Гречка': { n: [343, 13, 3.4, 72], por: 80, cap: 150, m: { full: 1, vE: .3, b1: .1, b2: .43, b3: 7, b5: 1.2, b6: .21, b9: 30, cho: 54, ca: 18, p: 347, mg: 231, na: 1, k: 460, fe: 2.2, zn: 2.4, cu: 1.1, mn: 1.3, se: 8.3, fib: 10, sat: .74, mono: 1, poly: 1, ala: .08, la: .96, water: 10 } },
+ 'Чечевица': { n: [352, 25, 1.1, 63], por: 70, cap: 150, m: { full: 1, vE: .5, vK: 5, b1: .87, b2: .21, b3: 2.6, b5: 2.1, b6: .54, b9: 479, cho: 96, ca: 35, p: 281, mg: 47, na: 6, k: 677, fe: 6.5, zn: 3.3, cu: .75, mn: 1.4, se: .1, fib: 11, sug: 2, ala: .04, la: .14, water: 8, leu: 1.8, ile: 1.1, val: 1.3, lys: 1.8, met: .55, phe: 2, thr: .9, trp: .22, his: .7 } },
+ 'Фасоль красная': { n: [333, 24, .8, 60], por: 70, cap: 150, m: { full: 1, vK: 19, b1: .53, b2: .22, b3: 2.1, b5: .78, b6: .4, b9: 394, cho: 66, ca: 83, p: 406, mg: 140, na: 12, k: 1406, fe: 8.2, zn: 2.8, cu: .96, mn: 1.1, se: 3.2, fib: 15, sug: 2, ala: .2, la: .1, water: 11 } },
+ 'Хлеб цельнозерновой': { n: [250, 13, 3.5, 43], por: 60, cap: 120, m: { full: 1, vE: .4, b1: .4, b2: .16, b3: 4.4, b5: .6, b6: .2, b9: 42, cho: 27, ca: 125, p: 212, mg: 76, na: 450, k: 250, fe: 2.5, zn: 1.8, cu: .3, mn: 2, se: 26, fib: 7, sug: 4, sat: .7, la: 1.2, water: 38 } },
+ 'Грецкий орех': { n: [654, 15, 65, 14], por: 20, cap: 40, m: { full: 1, vE: .7, vK: 2.7, b1: .34, b2: .15, b3: 1.1, b5: .57, b6: .54, b9: 98, cho: 39, ca: 98, p: 346, mg: 158, na: 2, k: 441, fe: 2.9, zn: 3.1, cu: 1.6, mn: 3.4, se: 4.9, fib: 6.7, sug: 2.6, sat: 6.1, mono: 8.9, poly: 47, ala: 9.1, la: 38, water: 4 } },
+ 'Миндаль': { n: [579, 21, 50, 22], por: 20, cap: 40, m: { full: 1, vE: 25.6, b1: .2, b2: 1.1, b3: 3.6, b5: .47, b6: .14, b9: 44, cho: 52, ca: 269, p: 481, mg: 270, na: 1, k: 733, fe: 3.7, zn: 3.1, cu: 1, mn: 2.2, se: 4.1, fib: 12.5, sug: 4.4, sat: 3.8, mono: 31, poly: 12, la: 12, water: 4.4 } },
+ 'Семечки подсолнуха': { n: [584, 21, 51, 20], por: 20, cap: 40, m: { full: 1, vE: 35, b1: 1.5, b2: .36, b3: 8.3, b5: 1.1, b6: 1.3, b9: 227, cho: 55, ca: 78, p: 660, mg: 325, na: 9, k: 645, fe: 5.2, zn: 5, cu: 1.8, mn: 1.9, se: 53, fib: 8.6, sug: 2.6, sat: 4.5, mono: 18.5, poly: 23, la: 23, water: 5 } },
+ 'Тыквенные семечки': { n: [559, 30, 49, 11], por: 20, cap: 40, m: { full: 1, vE: 2.2, vK: 7.3, b1: .27, b2: .15, b3: 5, b6: .14, b9: 58, cho: 63, ca: 46, p: 1233, mg: 592, na: 7, k: 809, fe: 8.8, zn: 7.8, cu: 1.3, mn: 4.5, se: 9.4, fib: 6, sug: 1.4, sat: 8.7, mono: 16, poly: 21, la: 21, water: 5 } },
+ 'Семена льна': { n: [534, 18, 42, 29], por: 10, cap: 25, m: { full: 1, vE: .3, vK: 4.3, b1: 1.6, b2: .16, b3: 3.1, b6: .47, b9: 87, cho: 79, ca: 255, p: 642, mg: 392, na: 30, k: 813, fe: 5.7, zn: 4.3, cu: 1.2, mn: 2.5, se: 25, fib: 27, sug: 1.6, sat: 3.7, mono: 7.5, poly: 29, ala: 22.8, la: 5.9, water: 7 } },
+ 'Квашеная капуста': { n: [19, .9, .1, 4.3], por: 100, cap: 200, m: { full: 1, vC: 15, vK: 13, b6: .13, b9: 24, ca: 30, p: 20, mg: 13, na: 661, k: 170, fe: 1.5, fib: 2.9, sug: 1.8, water: 92 } },
+};
 
-/* ================= nutrients (reference v4, 23 Oct) =================
-   Average per day over the chosen days (Every day / By weekday / In order), NIH needs + safe upper limits.
-   Micros per 100 g come from the product (e.m) or the built-in table by name; unknown stays unknown. */
+/* ================= nutrients (v5, 24 Oct) =================
+   Average per day over the chosen days (Every day / By weekday / In order).
+   Needs: NIH by sex and age from the body profile; amino acids by the last weigh-in; fiber, sugar, saturated fat by goal calories.
+   Micros per 100 g: product's own label values (e.m) over the built-in tables; anything else stays unknown. */
 const WD = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const N_SPARK = '<svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5l2.1 5.4 5.4 2.1-5.4 2.1L14 19.5l-2.1-5.4L6.5 12l5.4-2.1z"/><path d="M21.5 17.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></svg>';
+const N_EYE = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M3 12s3.5-6 9-6c2 0 3.7.8 5 1.8M21 12s-3.5 6-9 6c-2 0-3.7-.8-5-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4 20L20 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+const N_LOCK = '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.6"/></svg>';
 function nst() { if (!S.nut) S.nut = {}; const n = S.nut; if (!n.mode) n.mode = 'every'; if (!n.ign) n.ign = [];
   const ok = id => S.plans.some(p => p.id === id); if (!ok(n.every)) n.every = S.active;
   if (!Array.isArray(n.week) || n.week.length !== 7) n.week = Array(7).fill(S.active); n.week = n.week.map(id => ok(id) ? id : null);
@@ -3232,113 +3286,167 @@ function nst() { if (!S.nut) S.nut = {}; const n = S.nut; if (!n.mode) n.mode = 
   if (!S.supp) S.supp = []; return n; }
 function nMix() { const n = nst(), days = n.mode === 'every' ? [n.every] : n.mode === 'week' ? n.week.filter(Boolean) : n.order;
   const c = {}; days.forEach(id => c[id] = (c[id] || 0) + 1); return { mix: Object.entries(c).map(([id, d]) => [S.plans.find(p => p.id === id), d]).filter(x => x[0]), days: days.length }; }
-function nVal(e, k) { const m = e.m || NFOOD[e.name]; if (!m) return undefined; if (k in m) return m[k]; return m.full && !NRARE.has(k) ? 0 : undefined; }
-function nPlanItems(p) {   // [food, grams eaten] for a plan, dishes split by their portion
+function lastW() { const L = (S.log || []).filter(e => e.w).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0); return L.length ? L[L.length - 1].w : null; }
+function nNeeds() {
+  const b = S.body || {}, f = b.sex === 'f', a = +b.age || 30, kc = goal().k || 2500, w = lastW() || (f ? 60 : 72), t = {}, l = {};
+  if (f) Object.assign(t, { vA: 700, vC: 75, vK: 90, b1: 1.1, b2: 1.1, b3: 14, cho: 425, fe: a <= 50 ? 18 : 8, zn: 8, mg: a <= 30 ? 310 : 320, k: 2600, mn: 1.8, cr: a <= 50 ? 25 : 20, ala: 1.1, la: a <= 50 ? 12 : 11, b6: a <= 50 ? 1.3 : 1.5, ca: a <= 50 ? 1000 : 1200 });
+  else Object.assign(t, { mg: a <= 30 ? 400 : 420, b6: a <= 50 ? 1.3 : 1.7, ca: a <= 70 ? 1000 : 1200, cr: a <= 50 ? 35 : 30, la: a <= 50 ? 17 : 14 });
+  if (a > 70) t.vD = 20;
+  t.fib = Math.round(kc / 1000 * 14); l.sug = Math.round(kc * .1 / 4); l.sat = Math.round(kc * .1 / 9);
+  const AA = { his: 10, ile: 20, leu: 39, lys: 30, met: 15, phe: 25, thr: 15, trp: 4, val: 26 };   // WHO, mg per kg
+  for (const k in AA) t[k] = Math.round(AA[k] * w) / 1000;
+  return { t, l, set: !!S.body, f, a, w, kc };
+}
+let NEED = null, NM = new WeakMap();
+const need = n => ({ t: NEED.t[n.id] ?? n.t, lim: NEED.l[n.id] ?? n.lim, ul: n.ul, uls: n.uls });
+function nMap(e) { if (NM.has(e)) return NM.get(e); const base = NFOOD[e.name] || (NCAT[e.name] && NCAT[e.name].m) || null;
+  const m = e.m ? Object.assign({}, base || {}, e.m) : base; NM.set(e, m); return m; }
+function nVal(e, k) { const m = nMap(e); if (!m) return undefined; if (k in m) return m[k]; return m.full && !NRARE.has(k) ? 0 : undefined; }
+function nPlanItems(p) {   // [food, grams eaten, dish] for a plan; a dish is split by its portion
   const out = []; S.items.forEach(e => {
-    if (e.t !== 'g') { const g = p.g[e.id] || 0; if (g) out.push([e, g]); return; }
+    if (e.t !== 'g') { const g = p.g[e.id] || 0; if (g) out.push([e, g, null]); return; }
     const mx = e.ch.reduce((s, c) => s + (p.g[c.id] || 0), 0); if (!mx) return;
-    const r = Math.min(1, (p.g[e.id] ?? mx) / mx); e.ch.forEach(c => { const g = (p.g[c.id] || 0) * r; if (g) out.push([c, g]); }); });
+    const r = Math.min(1, (p.g[e.id] ?? mx) / mx); e.ch.forEach(c => { const g = (p.g[c.id] || 0) * r; if (g) out.push([c, g, e]); }); });
   return out; }
+function nPrep() { NM = new WeakMap(); NEED = nNeeds(); if (!ghostSnap) syncGrams(); }
 function nTotals() {
-  syncGrams(); const { mix, days } = nMix(), acc = {}; NUT.forEach(n => acc[n.id] = { v: 0, cov: 0, sv: 0, src: {} });
-  mix.forEach(([p, d]) => { const it = nPlanItems(p), tot = it.reduce((s, x) => s + x[1], 0) || 1;
+  nPrep(); const { mix, days } = nMix(), acc = {}; let grams = 0; NUT.forEach(n => acc[n.id] = { v: 0, cov: 0, sv: 0, src: {} });
+  mix.forEach(([p, d]) => { const it = nPlanItems(p), tot = it.reduce((s, x) => s + x[1], 0); grams += tot; if (!tot) return;
     NUT.forEach(n => { const a = acc[n.id]; let known = 0;
       it.forEach(([e, g]) => { const x = nVal(e, n.id); if (x === undefined) return; known += g; const v = x * g / 100 * d / days; a.v += v; if (v > 0) a.src[e.name] = (a.src[e.name] || 0) + v; });
       a.cov += known / tot * d / days; }); });
   S.supp.forEach(s => Object.entries(s.n || {}).forEach(([k, x]) => { if (acc[k]) { acc[k].sv += x * (s.pcs || 1); acc[k].src[s.name] = (acc[k].src[s.name] || 0) + x * (s.pcs || 1); } }));
-  return { acc, days, mix }; }
-function nStatus(n, a) { const v = a.v + a.sv, ig = nst().ign.includes(n.id);
-  let s; if (a.cov < .5 && !a.sv) s = 'nd'; else if (n.lim) s = v > n.lim ? 'over' : 'ok'; else if (!n.t) s = 'none';
-  else if (n.ul && (n.uls ? a.sv > n.ul : v > n.ul)) s = 'over'; else s = v >= n.t * .9 ? 'ok' : 'short';
-  return { s, ig, v, p: (n.t || n.lim) ? Math.round(v / (n.t || n.lim) * 100) : null }; }
+  return { acc, days, mix, grams }; }
+function nStatus(n, a) { const q = need(n), v = a.v + a.sv, ig = nst().ign.includes(n.id);
+  let s; if (a.cov < .5 && !a.sv) s = 'nd'; else if (q.lim) s = v > q.lim ? 'over' : 'ok'; else if (!q.t) s = 'none';
+  else if (q.ul && (q.uls ? a.sv > q.ul : v > q.ul)) s = 'over'; else s = v >= q.t * .9 ? 'ok' : 'short';
+  return { s, ig, v, q, p: (q.t || q.lim) ? Math.round(v / (q.t || q.lim) * 100) : null }; }
 const nFmt = v => v >= 1000 ? Math.round(v).toLocaleString('en-US').replace(/,/g, ' ') : v >= 10 ? String(Math.round(v)) : v >= 1 ? (+v.toFixed(1)).toString() : v === 0 ? '0' : (+v.toFixed(2)).toString();
-const nAmt = (n, x) => x.s === 'nd' ? 'no data' : n.t ? `${nFmt(x.v)} of ${nFmt(n.t)} ${n.u}` : n.lim ? `${nFmt(x.v)} · limit ${nFmt(n.lim)} ${n.u}` : `${nFmt(x.v)} ${n.u}`;
+const nAmt = x => x.s === 'nd' ? '<i>no data</i>' : x.q.t ? `${nFmt(x.v)} <i>of</i> ${nFmt(x.q.t)} <i>${x.n.u}</i>` : x.q.lim ? `${nFmt(x.v)} <i>· limit</i> ${nFmt(x.q.lim)} <i>${x.n.u}</i>` : `${nFmt(x.v)} <i>${x.n.u}</i>`;
 const nTile = x => x.s === 'nd' ? '?' : x.p === null ? nFmt(x.v) : x.p + '%';
-const nWhy = (n, x) => (x.s === 'over' ? n.hi : n.lo).replace(/\.$/, '');
+const nWhy = x => (x.s === 'over' ? x.n.hi : x.n.lo).replace(/\.$/, '');
+const nBad = R => R.filter(x => !x.ig && (x.s === 'short' || x.s === 'over')).sort((a, b) => (b.s === 'over') - (a.s === 'over') || a.p - b.p);
 let nMore = false;
 function nRows() { const T = nTotals(); return { ...T, R: NUT.map(n => ({ n, a: T.acc[n.id], ...nStatus(n, T.acc[n.id]) })) }; }
-function nTitle() { const n = nst(), { mix } = nMix(); if (!mix.length) return 'No plan'; const ps = mix.map(m => m[0].name);
-  return ps.length === 1 ? ps[0] : `${ps[0]} +${ps.length - 1}`; }
+function nTitle() { const { mix } = nMix(); if (!mix.length) return 'No plan'; return mix.length === 1 ? mix[0][0].name : `${mix[0][0].name} +${mix.length - 1}`; }
+function nPeriod(days) { return nst().mode === 'every' ? 'every day' : `${days} ${days === 1 ? 'day' : 'days'}`; }
+function nMissing(mix) {   // counted products with no data, and built-in ones that are only partly known (brands)
+  const seen = new Set(), none = [], part = [];
+  mix.forEach(([p]) => nPlanItems(p).forEach(([e]) => { if (seen.has(e.id)) return; seen.add(e.id); const m = nMap(e); if (!m) none.push(e); else if (!m.full && !e.m) part.push(e); }));
+  return { none, part }; }
+const nRow = (x, attr) => `<li class="row" ${attr}><div class="rc"><span class="pill nst-${x.ig ? 'ig' : x.s}">${nTile(x)}</span><div class="info"><div class="name">${x.n.n}</div><div class="mac">${x.ig ? '<i>ignored ·</i> ' : ''}${nAmt(x)}</div></div></div></li>`;
 function renderNut() {
-  const el = $('#nutBody'); if (!el) return; const { R, days, mix } = nRows();
-  const bad = R.filter(x => !x.ig && (x.s === 'short' || x.s === 'over')).sort((a, b) => (b.s === 'over') - (a.s === 'over') || a.p - b.p);
-  const ok = R.filter(x => x.s === 'ok').length, nd = R.filter(x => x.s === 'nd').length, ign = R.filter(x => x.ig);
-  $('#nutTitle').textContent = nTitle();
-  const card = x => `<button class="nu-card" data-n="${x.n.id}"><div class="nu-ch"><b>${x.n.n}</b><span class="nu-pl ${x.s}">${x.p}%</span></div>
-    <div class="nu-bar ${x.s}"><i style="width:${Math.min(100, x.p)}%"></i>${x.s === 'over' ? '' : '<u></u>'}</div>
-    <div class="nu-am">${nAmt(x.n, x)} a day</div><div class="nu-why">${esc(nWhy(x.n, x))}.</div>${(() => { const t = Object.entries(x.a.src).sort((p, q) => q[1] - p[1]).slice(0, 3).map(z => esc(z[0])); return t.length ? `<div class="nu-from">Mostly from ${t.join(', ')}</div>` : ''; })()}</button>`;
+  const el = $('#nutBody'); if (!el) return; const { R, days, mix, grams } = nRows();
+  const bad = nBad(R), ok = R.filter(x => x.s === 'ok').length, nd = R.filter(x => x.s === 'nd').length, ign = R.filter(x => x.ig);
+  $('#nutTitle').textContent = nTitle(); $('#nutFix').hidden = !bad.length || !grams;
+  if (!grams) { el.innerHTML = `<div class="bud-hero"><div class="bh-num"><span>0</span><span class="bh-u">counted</span></div><div class="bh-sub">${mix.length ? `${esc(mix.map(m => m[0].name).join(', '))} ${mix.length > 1 ? 'have' : 'has'} no portions yet — add them on Meal.` : 'Pick what you eat above.'}</div></div>`; return; }
+  const card = x => { const src = Object.entries(x.a.src).sort((p, q) => q[1] - p[1]).slice(0, 3).map(z => esc(z[0]));
+    return `<div class="nu-cw" data-cw="${x.n.id}"><button class="nu-ign" data-ign="${x.n.id}" tabindex="-1">${N_EYE}<span>Ignore</span></button><button class="nu-card" data-n="${x.n.id}"><div class="nu-ch"><span class="name">${x.n.n}</span><em class="nst-${x.s}">${x.p}%</em></div>
+    <div class="nu-bar nst-${x.s}"><i style="width:${Math.min(100, x.p)}%"></i>${x.s === 'over' ? '' : '<u></u>'}</div>
+    <div class="mac">${nAmt(x)} <i>a day</i></div><div class="nu-why">${esc(nWhy(x))}.</div>${src.length ? `<div class="nu-from">${x.s === 'over' ? 'Mostly from' : 'Now from'} ${src.join(', ')}</div>` : ''}</button></div>`; };
   const shown = nMore ? bad : bad.slice(0, 3);
-  const row = x => `<button class="nu-row" data-n="${x.n.id}"><span class="nu-t ${x.ig ? 'ig' : x.s}">${nTile(x)}</span><span class="nu-nm"><b>${x.n.n}</b><span>${x.ig ? 'ignored · ' : ''}${nAmt(x.n, x)}</span></span></button>`;
-  const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="nu-sec"><b>${NG[g]}</b><span><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div>${xs.map(row).join('')}`; };
-  el.innerHTML = `<div class="nu-hero"><div><div class="nu-big">${bad.length ? `${bad.length} to fix` : 'All good'}</div>
-      <div class="nu-sub"><em>${ok} ok</em> · ${nd} unknown · ${days} ${days === 1 ? 'day' : 'days'} · <button class="nu-how" id="nuHow">how</button></div></div></div>
+  const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="bcap">${NG[g]}<span class="r"><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div><ul class="list nu-l">${xs.map(x => nRow(x, `data-n="${x.n.id}"`)).join('')}</ul>`; };
+  const sup = S.supp.map(s => `<li class="row" data-s="${s.id}"><div class="rc"><span class="pill">${s.pcs}pc</span><div class="info"><div class="name">${esc(s.name)}</div><div class="mac">${Object.entries(s.n || {}).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? `<span><i>${n.s}</i>${nFmt(v * s.pcs)}</span>` : ''; }).join('') || '<i>no nutrients yet</i>'}</div></div></div></li>`).join('');
+  el.innerHTML = `<div class="bud-hero"><div class="bh-num"><span>${bad.length}</span><span class="bh-u">to fix</span></div>
+      <div class="bh-sub"><em>${ok} ok</em> · <button class="nu-lk" id="nuUnk">${nd} unknown</button> · ${nPeriod(days)} · <button class="nu-lk" id="nuHow">how</button></div></div>
     ${bad.length ? `<div class="nu-cards">${shown.map(card).join('')}</div>${bad.length > 3 ? `<button class="nu-more" id="nuMore">${nMore ? 'Show less' : `Show ${bad.length - 3} more`}</button>` : ''}` : ''}
-    ${ign.length ? `<button class="nu-ignrow" id="nuIgn"><b>Ignored · ${ign.length}</b><span>${ign.map(x => x.n.n).join(', ')} — not counted</span></button>` : ''}
-    <div class="nu-sec nu-sup"><b>Supplements</b><button class="nu-add" id="nuAddSup">+ Add</button></div>
-    ${S.supp.length ? S.supp.map(s => `<button class="nu-row" data-s="${s.id}"><span class="nu-t">${s.pcs}pc</span><span class="nu-nm"><b>${esc(s.name)}</b><span>${Object.entries(s.n || {}).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? `${n.s} ${nFmt(v * s.pcs)} ${n.u}` : ''; }).join(' · ') || 'no nutrients yet'}</span></span></button>`).join('') : '<div class="nu-empty">Pills you take every day, whatever the plan</div>'}
+    ${ign.length ? `<ul class="list nu-l nu-igl"><li class="row" id="nuIgn"><div class="rc"><span class="pill">${ign.length}</span><div class="info"><div class="name">Ignored</div><div class="mac"><i>${ign.map(x => x.n.n).join(', ')} — not counted</i></div></div></div></li></ul>` : ''}
+    <div class="bcap">Supplements<button id="nuAddSup">+ Add</button></div>
+    ${sup ? `<ul class="list nu-l">${sup}</ul>` : '<p class="note nu-empty">Pills you take every day, whatever the plan.</p>'}
     ${['vit', 'min', 'fat', 'carb', 'amino'].map(grp).join('')}`;
-  el.querySelectorAll('[data-n]').forEach(b => b.addEventListener('click', () => { haptic(); nDetail(b.dataset.n); }));
+  el.querySelectorAll('[data-n]').forEach(b => b.addEventListener('click', () => { if (b.closest('.nu-cw.open')) return nSwClose(); haptic(); nDetail(b.dataset.n); }));
+  el.querySelectorAll('[data-ign]').forEach(b => b.addEventListener('click', () => { haptic(); nIgnore(b.dataset.ign); }));
   el.querySelectorAll('[data-s]').forEach(b => b.addEventListener('click', () => { haptic(); suppSheet(S.supp.find(s => s.id === b.dataset.s)); }));
   const m = $('#nuMore'); if (m) m.addEventListener('click', () => { haptic(); nMore = !nMore; renderNut(); });
-  $('#nuHow').addEventListener('click', e => { e.stopPropagation(); haptic(); nHow(); });
+  $('#nuHow').addEventListener('click', () => { haptic(); nHow(); });
+  $('#nuUnk').addEventListener('click', () => { haptic(); nMissingSheet(); });
   $('#nuAddSup').addEventListener('click', () => { haptic(); suppSheet(null); });
   const ig = $('#nuIgn'); if (ig) ig.addEventListener('click', () => { haptic(); nIgnored(); });
+  el.querySelectorAll('.nu-cw').forEach(nSwBind);
 }
+/* swipe a card left → Ignore (same distance and spring as the list swipe on Meal) */
+let nSwOpen = null;
+function nSwClose() { if (!nSwOpen) return; const c = nSwOpen; nSwOpen = null; c.classList.remove('open'); c.querySelector('.nu-card').style.transform = ''; }
+function nSwBind(w) {
+  const card = w.querySelector('.nu-card'); let x0 = 0, y0 = 0, dx = 0, mode = null;
+  w.addEventListener('touchstart', e => { if (nSwOpen && nSwOpen !== w) nSwClose(); x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; mode = null; card.style.transition = 'none'; }, { passive: true });
+  w.addEventListener('touchmove', e => { const mx = e.touches[0].clientX - x0, my = e.touches[0].clientY - y0;
+    if (!mode) { if (Math.abs(mx) < 8 && Math.abs(my) < 8) return; mode = Math.abs(mx) > Math.abs(my) ? 'x' : 'y'; }
+    if (mode !== 'x') return; const base = w.classList.contains('open') ? -92 : 0; dx = Math.min(0, Math.max(-130, base + mx)); card.style.transform = `translateX(${dx}px)`; }, { passive: true });
+  w.addEventListener('touchend', () => { card.style.transition = ''; if (mode !== 'x') return; const open = dx < -46; w.classList.toggle('open', open); card.style.transform = open ? 'translateX(-92px)' : ''; if (open) { nSwOpen = w; haptic(); } else if (nSwOpen === w) nSwOpen = null; });
+}
+function nIgnore(id) { const ig = nst().ign, n = NUT.find(z => z.id === id), i = ig.indexOf(id);
+  if (i >= 0) ig.splice(i, 1); else ig.push(id); save(); nSwOpen = null; renderNut();
+  toast(i >= 0 ? `${n.n} counted again` : `${n.n} ignored`, i >= 0 ? null : { label: 'Undo', fn: () => { const k = ig.indexOf(id); if (k >= 0) ig.splice(k, 1); save(); renderNut(); } }); }
 function nDetail(id) {
-  const n = NUT.find(z => z.id === id), { R } = nRows(), x = R.find(r => r.n.id === id), src = Object.entries(x.a.src).sort((a, b) => b[1] - a[1]).slice(0, 4), tot = src.reduce((s, z) => s + z[1], 0) || 1;
+  const { R } = nRows(), x = R.find(r => r.n.id === id), n = x.n, src = Object.entries(x.a.src).sort((a, b) => b[1] - a[1]).slice(0, 4), tot = src.reduce((s, z) => s + z[1], 0) || 1;
   sheet(`<div class="sh-head"><span class="sh-kick">${NG[n.g]}</span><span class="nu-sht">${n.n}</span>${XBTN}</div>
-    <div class="nu-dbig"><b>${x.s === 'nd' ? '?' : nFmt(x.v)}</b><span>${n.t ? `of ${nFmt(n.t)} ${n.u} a day` : n.lim ? `limit ${nFmt(n.lim)} ${n.u}` : n.u}</span>${x.p !== null && x.s !== 'nd' ? `<span class="nu-pl ${x.s}">${x.p}%</span>` : ''}</div>
-    <div class="nu-txt"><b>WHAT IT DOES</b>${esc(n.d)}</div>${n.lo !== '—' ? `<div class="nu-txt"><b>TOO LITTLE</b>${esc(n.lo)}</div>` : ''}${n.hi !== '—' ? `<div class="nu-txt"><b>TOO MUCH</b>${esc(n.hi)}</div>` : ''}
-    ${src.length ? `<div class="cap">Where it comes from</div>${src.map(([f, v]) => `<div class="nu-src"><span>${esc(f)}</span><span class="mono">${Math.round(v / tot * 100)}%</span></div>`).join('')}` : ''}
-    ${x.s === 'short' || x.s === 'over' || x.ig ? `<button class="sbtn plain" id="nuIg">${x.ig ? 'Count it again' : 'Ignore'}</button>` : ''}`, s => {
-    const b = s.querySelector('#nuIg'); if (b) b.addEventListener('click', () => { const ig = nst().ign; const i = ig.indexOf(id);
-      if (i >= 0) ig.splice(i, 1); else ig.push(id); save(); closeSheet(); haptic(); renderNut(); toast(i >= 0 ? `${n.n} counted again` : `${n.n} ignored`); }); });
+    <div class="bh-num nu-dbig"><span>${x.s === 'nd' ? '?' : nFmt(x.v)}</span><span class="bh-u">${x.q.t ? `of ${nFmt(x.q.t)} ${n.u} a day` : x.q.lim ? `limit ${nFmt(x.q.lim)} ${n.u}` : `${n.u} a day`}</span>${x.p !== null && x.s !== 'nd' ? `<em class="nst-${x.s}">${x.p}%</em>` : ''}</div>
+    <div class="nu-txt"><b>What it does</b>${esc(n.d)}</div>${n.lo !== '—' ? `<div class="nu-txt"><b>Too little</b>${esc(n.lo)}</div>` : ''}${n.hi !== '—' ? `<div class="nu-txt"><b>Too much</b>${esc(n.hi)}</div>` : ''}
+    ${src.length ? `<div class="cap">Where it comes from</div><div class="bal-rows">${src.map(([f, v]) => `<div class="bal-r"><b>${esc(f)}</b><em>${Math.round(v / tot * 100)}%</em></div>`).join('')}</div>` : ''}
+    ${x.s === 'short' || x.s === 'over' || x.ig ? `<div class="btnrow wide"><button class="sbtn plain" id="nuIg">${x.ig ? 'Count it again' : 'Ignore'}</button></div>` : ''}`, s => {
+    const b = s.querySelector('#nuIg'); if (b) b.addEventListener('click', () => { closeSheet(); haptic(); nIgnore(id); }); });
 }
 function nIgnored() { const ig = nst().ign;
-  sheet(`<h3>Ignored${XBTN}</h3><div class="nu-list">${ig.map(id => { const n = NUT.find(z => z.id === id); return n ? `<div class="nu-src"><span>${n.n}</span><button class="so-chip" data-un="${id}">Count again</button></div>` : ''; }).join('')}</div>`, s => {
+  sheet(`<h3>Ignored${XBTN}</h3><p class="note">Not counted as problems, and Fix leaves them alone.</p><div class="bal-rows">${ig.map(id => { const n = NUT.find(z => z.id === id); return n ? `<div class="bal-r"><b>${n.n}</b><button class="so-chip" data-un="${id}">Count again</button></div>` : ''; }).join('')}</div>`, s => {
     s.querySelectorAll('[data-un]').forEach(b => b.addEventListener('click', () => { ig.splice(ig.indexOf(b.dataset.un), 1); save(); haptic(); closeSheet(); renderNut(); })); });
 }
 function nHow() {
-  const b = S.body || {};
+  const q = nNeeds(), who = q.set ? `${q.f ? 'Female' : 'Male'}, ${q.a}` : 'not set';
   sheet(`<h3>How it’s counted${XBTN}</h3><div class="nu-how-l">
-    <div><span class="nu-t short">62%</span><p><b>To fix · not enough</b>Below 90% of the daily need, on average over the chosen days. Needs are the NIH daily values for ${b.sex === 'f' ? 'a woman' : 'a man'}, ${b.age || 30}.</p></div>
-    <div><span class="nu-t over">232%</span><p><b>To fix · too much</b>Above the safe upper limit — or above the limit for sugar, salt, saturated and trans fat.</p></div>
-    <div><span class="nu-t ok">104%</span><p><b>OK</b>90% of the need or more, and under the limit.</p></div>
-    <div><span class="nu-t nd">?</span><p><b>Unknown</b>More than half of the food has no data for it. Not counted as a problem.</p></div></div>
-    <button class="sbtn primary" data-close>Got it</button>`);
+    <div><span class="pill nst-short">62%</span><p><b>To fix · not enough</b>Below 90% of the daily need, on average over the chosen days.</p></div>
+    <div><span class="pill nst-over">232%</span><p><b>To fix · too much</b>Above the safe upper limit — or above the limit for sugar, salt, saturated and trans fat.</p></div>
+    <div><span class="pill nst-ok">104%</span><p><b>OK</b>90% of the need or more, and under the limit.</p></div>
+    <div><span class="pill nst-nd">?</span><p><b>Unknown</b>More than half of the food has no data for it. Not counted as a problem.</p></div></div>
+    <div class="bal-rows nu-needs"><button class="bal-r" id="nuProf"><b>Needs for</b><em class="nu-nf">${who} · ${Math.round(q.w)} kg</em></button></div>
+    <p class="note">NIH daily values. Weight is your last weigh-in; fiber, sugar and saturated fat follow ${esc(goal().name)} calories.</p>
+    <button class="sbtn primary" data-close>Got it</button>`, s => {
+    s.querySelector('#nuProf').addEventListener('click', () => { haptic(); profileSheet(() => renderNut()); }); });
 }
 function nPicker() {
   const n = nst(); let mode = n.mode; const week = n.week.slice(), order = n.order.slice(); let every = n.every;
   const opt = (sel, none) => (none ? `<option value="">No plan</option>` : '') + S.plans.map(p => `<option value="${p.id}"${p.id === sel ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
-  const body = () => mode === 'every' ? `<div class="nu-prow"><span>Every day</span><select data-k="every">${opt(every)}</select></div>`
-    : mode === 'week' ? WD.map((d, i) => `<div class="nu-prow"><span>${d}</span><select data-k="w${i}">${opt(week[i], true)}</select></div>`).join('')
-    : `<p class="nu-hint">Day 1, day 2, day 3… then the list starts over. A different menu every day of the month — just add 30 days.</p>${order.map((id, i) => `<div class="nu-prow"><span class="nu-num">${i + 1}</span><select data-k="o${i}">${opt(id)}</select><button class="nu-del" data-del="${i}" aria-label="Remove day">${ICON.x}</button></div>`).join('')}<button class="so-chip nu-addday" id="nuAddDay">+ Add a day</button>`;
-  sheet(`<h3>What do you eat?${XBTN}</h3><div class="nu-seg">${[['every', 'Every day'], ['week', 'By weekday'], ['order', 'In order']].map(([v, l]) => `<button data-m="${v}" class="${v === mode ? 'on' : ''}">${l}</button>`).join('')}</div>
-    <div id="nuPB"></div><button class="sbtn primary" id="nuDone">Done</button>`, s => {
-    const draw = () => { s.querySelector('#nuPB').innerHTML = body(); s.querySelectorAll('.nu-seg button').forEach(b => b.classList.toggle('on', b.dataset.m === mode));
+  const body = () => mode === 'every' ? `<div class="bal-r nu-pr"><span>Every day</span><select data-k="every">${opt(every)}</select></div>`
+    : mode === 'week' ? WD.map((d, i) => `<div class="bal-r nu-pr"><span>${d}</span><select data-k="w${i}">${opt(week[i], true)}</select></div>`).join('')
+    : `<p class="note">Day 1, day 2, day 3… then the list starts over. A different menu every day of the month — just add 30 days.</p>${order.map((id, i) => `<div class="bal-r nu-pr"><span class="nu-num">${i + 1}</span><select data-k="o${i}">${opt(id)}</select><button class="nu-del" data-del="${i}" aria-label="Remove day">${ICON.x}</button></div>`).join('')}<button class="so-chip nu-addday" id="nuAddDay">+ Add a day</button>`;
+  sheet(`<h3>What do you eat?${XBTN}</h3><div class="seg" data-v="${mode}"><i class="thumb"></i><button data-v="every">Every day</button><button data-v="week">By weekday</button><button data-v="order">In order</button></div>
+    <div class="bal-rows" id="nuPB"></div><button class="sbtn primary" id="nuDone">Done</button>`, s => {
+    const draw = () => { s.querySelector('#nuPB').innerHTML = body();
       s.querySelectorAll('select').forEach(sel => sel.addEventListener('change', () => { const k = sel.dataset.k, v = sel.value || null;
         if (k === 'every') every = v; else if (k[0] === 'w') week[+k.slice(1)] = v; else order[+k.slice(1)] = v; }));
       s.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => { if (order.length > 1) { order.splice(+b.dataset.del, 1); haptic(); draw(); } }));
-      const ad = s.querySelector('#nuAddDay'); if (ad) ad.addEventListener('click', () => { order.push(order[order.length - 1] || S.active); haptic(); draw(); }); };
-    s.querySelectorAll('.nu-seg button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.m; haptic(); draw(); }));
+      const ad = s.querySelector('#nuAddDay'); if (ad) ad.addEventListener('click', () => { order.push(order[order.length - 1] || S.active); haptic(); draw(); const pb = s.querySelector('#nuPB'); pb.scrollTop = pb.scrollHeight; }); };
+    const seg = s.querySelector('.seg'); seg.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.v; segSet(seg, mode); haptic(); draw(); }));
     draw();
-    s.querySelector('#nuDone').addEventListener('click', () => { Object.assign(n, { mode, every, week, order }); save(); closeSheet(); haptic(); renderNut(); });
+    s.querySelector('#nuDone').addEventListener('click', () => { Object.assign(n, { mode, every, week, order }); nMore = false; save(); closeSheet(); haptic(); renderNut(); });
   });
 }
+/* tiles of nutrient values — shared by the supplement sheet and «from the label» */
+const nVt = (f, label, val, unit, attr) => `<div class="vt" data-f="${f}"><span class="l">${label}</span><b><span class="v"></span><i class="cr"></i><span class="u">${unit || ''}</span><input ${attr || ''} inputmode="decimal" enterkeyhint="next" value="${val ?? ''}" placeholder="0" autocomplete="off" aria-label="${label}"></b></div>`;
+function nTiles(host, d, extraFirst) { let first = true;
+  const draw = () => { host.innerHTML = (extraFirst || '') + Object.entries(d).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? nVt('n-' + k, n.n, v, n.u, `data-nk="${k}"`) : ''; }).join('') + `<button type="button" class="vt nu-addn">+ Nutrient</button>`;
+    if (!first) kpBind(host); first = false;
+    host.querySelectorAll('[data-nk]').forEach(i => i.addEventListener('input', () => { const t = i.value.replace(',', '.'); d[i.dataset.nk] = t === '' ? '' : (parseFloat(t) || 0); }));
+    host.querySelector('.nu-addn').addEventListener('click', () => { haptic(); nutPick(k => { if (!(k in d)) d[k] = ''; draw(); const i = host.querySelector(`[data-nk="${k}"]`); if (i) i.focus(); }); });
+    if (host._after) host._after(); };
+  draw(); return draw;
+}
 function suppSheet(sp) {
-  const isNew = !sp; const d = sp ? JSON.parse(JSON.stringify(sp)) : { id: uid(), name: '', pcs: 1, n: {} };
-  const tiles = () => Object.entries(d.n).map(([k, v]) => { const n = NUT.find(z => z.id === k); return `<label class="vt"><span class="l">${n.n}</span><b><input inputmode="decimal" data-nk="${k}" value="${v}"><span class="u">${n.u}</span></b></label>`; }).join('') + `<button class="vt nu-addn" id="nuAddN">+ Nutrient</button>`;
-  sheet(`<div class="sh-head"><span class="sh-kick">${isNew ? 'New supplement' : 'Supplement'}</span><input class="sh-name" id="spName" placeholder="Name" value="${esc(d.name)}">${isNew ? '' : `<button class="sh-ic red" id="spDel" aria-label="Delete">${ICON.trash || '×'}</button>`}${XBTN}</div>
+  const isNew = !sp, d = sp ? JSON.parse(JSON.stringify(sp)) : { id: uid(), name: '', pcs: 1, n: {} };
+  sheet(`<div class="sh-head"><span class="sh-kick">${isNew ? 'New supplement' : 'Supplement'}</span><input class="sh-name" id="spName" placeholder="Name" value="${esc(d.name)}" autocomplete="off">${isNew ? '' : `<button class="sh-ic red" id="spDel" aria-label="Delete">${ICON.trash}</button>`}${XBTN}</div>
     <div class="cap">Taken every day, whatever the plan</div>
-    <div class="nu-prow"><span>Pieces a day</span><div class="nu-stp"><button id="spM">−</button><b id="spP">${d.pcs}</b><button id="spPl">+</button></div></div>
-    <div class="cap">In one piece · from the label</div><div class="nu-vts" id="spT"></div>
+    <div class="card c3">${nVt('spPcs', 'Pieces a day', d.pcs, '', 'id="spPcs"')}</div>
+    <div class="cap">In one piece · from the label</div><div class="card c3" id="spT"></div>
+    <div class="nu-eff" id="spEff"></div>
     <button class="sbtn primary" id="spSave">${isNew ? 'Add supplement' : 'Save'}</button>`, s => {
-    const drawT = () => { s.querySelector('#spT').innerHTML = tiles();
-      s.querySelectorAll('[data-nk]').forEach(i => i.addEventListener('input', () => { d.n[i.dataset.nk] = parseFloat(i.value.replace(',', '.')) || 0; }));
-      s.querySelector('#nuAddN').addEventListener('click', () => { haptic(); nutPick(k => { if (!(k in d.n)) d.n[k] = 0; drawT(); }); }); };
-    drawT();
-    s.querySelector('#spM').addEventListener('click', () => { d.pcs = Math.max(1, d.pcs - 1); s.querySelector('#spP').textContent = d.pcs; haptic(); });
-    s.querySelector('#spPl').addEventListener('click', () => { d.pcs = Math.min(20, d.pcs + 1); s.querySelector('#spP').textContent = d.pcs; haptic(); });
+    const host = s.querySelector('#spT');
+    const eff = () => { const { R } = nRows(), out = []; Object.entries(d.n).forEach(([k, v]) => { const x = R.find(r => r.n.id === k); if (!x || v === '') return;
+        const old = sp ? (sp.n[k] || 0) * sp.pcs : 0, add = (+v || 0) * (d.pcs || 1), tv = x.v - old + add, base = x.q.t || x.q.lim, ul = x.n.ul && x.n.uls ? x.n.ul : null, pills = x.a.sv - old + add;
+        out.push(`<div class="bal-r"><b>${x.n.n}${ul ? `<small class="bal-in">pills ${nFmt(pills)} of ${nFmt(ul)} ${x.n.u} limit</small>` : ''}</b><em class="${ul && pills > ul ? '' : 'p'}">${base ? `${Math.round(x.v / base * 100)}% → ${Math.round(tv / base * 100)}%` : nFmt(tv) + ' ' + x.n.u}</em></div>`); });
+      s.querySelector('#spEff').innerHTML = out.length ? `<div class="bal-rows">${out.join('')}</div>` : ''; };
+    host._after = () => host.querySelectorAll('[data-nk]').forEach(i => i.addEventListener('input', eff));
+    nTiles(host, d.n); eff();
+    s.querySelector('#spPcs').addEventListener('input', e => { d.pcs = Math.max(1, Math.min(20, parseInt(e.target.value) || 1)); eff(); });
     s.querySelector('#spSave').addEventListener('click', () => { d.name = s.querySelector('#spName').value.trim() || 'Supplement';
       Object.keys(d.n).forEach(k => { if (!d.n[k]) delete d.n[k]; });
       if (isNew) S.supp.push(d); else Object.assign(sp, d); save(); closeSheet(); haptic(); renderNut(); toast(isNew ? `${d.name} added` : 'Saved'); });
@@ -3346,15 +3454,160 @@ function suppSheet(sp) {
       toast(`${sp.name} deleted`, { label: 'Undo', fn: () => { S.supp.splice(i, 0, sp); save(); renderNut(); } }); });
   });
 }
-function nutPick(done) {   // a small second sheet over the supplement sheet: search the full list
-  const host = openSheet; const box = document.createElement('div'); box.className = 'nu-pick';
-  box.innerHTML = `<div class="nu-pick-in"><h3>Add a nutrient<button class="x" aria-label="Close">${ICON.x}</button></h3><input class="nu-q" placeholder="Search" inputmode="search"><div class="nu-pl-l"></div></div>`;
-  host.s.append(box); const L = box.querySelector('.nu-pl-l'), q = box.querySelector('.nu-q');
-  const draw = () => { const t = q.value.trim().toLowerCase(); L.innerHTML = ['vit', 'min', 'fat', 'carb', 'amino'].map(g => { const xs = NUT.filter(n => n.g === g && (!t || (n.n + ' ' + n.s).toLowerCase().includes(t))); return xs.length ? `<div class="cap">${NG[g]}</div>${xs.map(n => `<button class="nu-pi" data-k="${n.id}">${n.n}<span>${n.u}</span></button>`).join('')}` : ''; }).join('');
-    L.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => { haptic(); box.remove(); done(b.dataset.k); })); };
-  q.addEventListener('input', draw); box.querySelector('.x').addEventListener('click', () => box.remove()); draw();
+function nMissingSheet() {
+  nPrep(); const { none, part } = nMissing(nMix().mix);
+  const row = (e, t) => `<button class="bal-r" data-lb="${e.id}"><b>${esc(e.name)}</b><em class="nu-nf">${t}</em></button>`;
+  sheet(`<h3>Unknown data${XBTN}</h3><p class="note">Nutrients these products bring aren’t counted. Add what the label says — per 100 g.</p>
+    ${none.length ? `<div class="cap">No data</div><div class="bal-rows">${none.map(e => row(e, 'Add')).join('')}</div>` : ''}
+    ${part.length ? `<div class="cap">Partly known · check the label</div><div class="bal-rows">${part.map(e => row(e, 'Check')).join('')}</div>` : ''}
+    ${!none.length && !part.length ? '<p class="note">Every counted product has data. Unknown nutrients (iodine, chromium…) are rarely on labels.</p>' : ''}`, s => {
+    s.querySelectorAll('[data-lb]').forEach(b => b.addEventListener('click', () => { haptic(); let e = null; walk(S.items, x => { if (x.id === b.dataset.lb) e = x; }); if (e) labelSheet(e); })); });
+}
+function labelSheet(e) {
+  const base = nMap(e) || {}, d = {}; Object.keys(base).forEach(k => { if (k !== 'full' && NUT.some(n => n.id === k)) d[k] = base[k]; });
+  sheet(`<div class="sh-head"><span class="sh-kick">Per 100 g · from the label</span><span class="nu-sht">${esc(e.name)}</span>${XBTN}</div>
+    <div class="card c3" id="lbT"></div><button class="sbtn primary" id="lbSave">Save</button>`, s => {
+    nTiles(s.querySelector('#lbT'), d);
+    s.querySelector('#lbSave').addEventListener('click', () => { const m = {}; Object.entries(d).forEach(([k, v]) => { if (v !== '') m[k] = +v; }); e.m = m; save(); closeSheet(); haptic(); renderNut(); toast(`${e.name} · ${Object.keys(m).length} nutrients saved`); }); });
+}
+function nutPick(done, standalone) {   // search the full list; inside a sheet it slides over it, alone it is its own sheet
+  const html = `<h3>${standalone ? 'Find a nutrient' : 'Add a nutrient'}<button class="x" aria-label="Close" data-np-x>${ICON.x}</button></h3><label class="tfield"><input class="nu-q" placeholder="Vitamin, mineral…" autocomplete="off"></label><div class="nu-pl-l"></div>`;
+  let box, R = null;
+  if (standalone) { R = nRows().R; sheet(html, s => { box = s; wire(); }); }
+  else { box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.append(box); wire(); }
+  function wire() { const L = box.querySelector('.nu-pl-l'), q = box.querySelector('.nu-q');
+    const draw = () => { const t = q.value.trim().toLowerCase(); L.innerHTML = ['vit', 'min', 'fat', 'carb', 'amino'].map(g => { const xs = NUT.filter(n => n.g === g && (!t || (n.n + ' ' + n.s).toLowerCase().includes(t))); return xs.length ? `<div class="cap">${NG[g]}</div><div class="bal-rows">${xs.map(n => { const x = R && R.find(r => r.n.id === n.id); return `<button class="bal-r" data-k="${n.id}"><b>${n.n}</b><em class="${x ? 'nst-t-' + x.s : 'nu-nf'}">${x ? nTile(x) : n.u}</em></button>`; }).join('')}</div>` : ''; }).join('');
+      L.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => { haptic(); if (standalone) { done(b.dataset.k); } else { box.remove(); done(b.dataset.k); } })); };
+    q.addEventListener('input', draw); box.querySelector('[data-np-x]').addEventListener('click', () => standalone ? closeSheet() : box.remove()); draw(); }
+}
+
+/* ================= Fix the plans =================
+   Changes are searched for all counted plans together (the average decides what’s missing) and shown one plan at a time.
+   Each plan stays inside the goal’s kcal/P/F/C ranges; a dish eaten whole may change its recipe; new products come from NCAT. */
+function fixCtx() {   // nutrients that can count as problems right now, with their current average
+  const { R, acc, days } = nRows(), C = R.filter(x => !x.ig && x.s !== 'nd' && x.s !== 'none').map(x => {
+    const q = x.q, lim = q.lim || (q.ul && !q.uls ? q.ul : null); return { id: x.n.id, n: x.n, t90: q.t && !q.lim ? q.t * .9 : null, lim, N0: x.v }; });
+  return { C, days, bad: nBad(R).length }; }
+const fixPen = (c, N) => (c.t90 && N < c.t90 ? 1 + (c.t90 - N) / c.t90 : 0) + (c.lim && N > c.lim ? 1 + (N - c.lim) / c.lim : 0);
+function fixCands(p, kept, C) {
+  const out = [], vec = get => C.map(c => { const v = get(c.id); return v === undefined ? 0 : v / 100; });
+  const mk = (e, x0) => { const d = e.n.k || 0, pc = isPc(e), ml = U(e) === 'ml';
+    const por = pc ? e.uw * 2 : ml ? 250 : d >= 450 ? 25 : d >= 300 ? 80 : d >= 150 ? 150 : 150;
+    const gcap = d >= 450 ? 60 : d >= 300 ? 200 : d >= 150 ? 300 : 400, cap = pc ? e.uw * Math.max(1, Math.min(4, Math.floor(gcap / e.uw))) : ml ? 750 : gcap;
+    return { id: e.id, name: e.name, e, x0, v: ['k', 'p', 'f', 'c'].map(k => (e.n[k] || 0) / 100), mm: vec(k => nVal(e, k)), lo: 0, hi: Math.max(x0, cap), step: pc ? e.uw : ml ? 10 : 5, por, min: pc ? e.uw : por * .4 }; };
+  S.items.forEach(e => {
+    if (e.t !== 'g') { if (e.n && nMap(e) && !kept.has(e.id)) out.push(mk(e, p.g[e.id] || 0)); return; }
+    const mx = e.ch.reduce((s, c) => s + (p.g[c.id] || 0), 0); if (!mx || (p.g[e.id] ?? mx) < mx) return;   // recipe edits only for a dish eaten whole
+    e.ch.forEach(c => { const g = p.g[c.id] || 0; if (!g || !c.n || !nMap(c) || kept.has(c.id)) return; out.push({ ...mk(c, g), parent: e, lo: Math.round(g * .4 / 5) * 5, hi: Math.max(g, Math.round(g * 1.6 / 5) * 5) }); });
+  });
+  if (S.ui.fixNew !== false) { const have = new Set(); walk(S.items, e => have.add(e.name));
+    Object.entries(NCAT).forEach(([name, c]) => { const id = 'cat:' + name; if (have.has(name) || kept.has(id)) return;
+      out.push({ id, name, cat: c, isNew: true, x0: 0, v: c.n.map(x => x / 100), mm: vec(k => k in c.m ? c.m[k] : (NRARE.has(k) ? undefined : 0)), lo: 0, hi: c.cap, step: 5, por: c.por, min: c.por * .5 }); }); }
+  return out;
+}
+function fixSearch(base, cands, maxCh, banned, allowNew) {
+  const { C, w, T0, R4, W4 } = base, n = cands.length, x = cands.map(c => c.x0), N = C.map(c => c.N0), T = T0.slice(), chg = new Set();
+  const kbPen = (T, wt) => T.reduce((s, t, i) => s + wt * ((Math.max(0, R4[i][0] - t) + Math.max(0, t - R4[i][1])) / W4[i]) ** 2, 0);
+  const cost = (i, xi) => { const c = cands[i]; if (xi === c.x0) return 0; return .8 + (c.isNew ? .7 : 0) + .5 * Math.abs(xi - c.x0) / Math.max(c.x0, c.por); };
+  const nutPen = N => C.reduce((s, c, j) => s + fixPen(c, N[j]), 0);
+  let fine = false;
+  const targets = (c, xi, small) => { const s = fine && !isPc(c.e || {}) ? 1 : c.step, P = c.por, set = new Set();
+    (small ? [xi + s, xi - s, xi + 2 * s, xi - 2 * s, xi + 4 * s, xi - 4 * s, xi + 10 * s, xi - 10 * s] : [xi + P, xi + 2 * P, xi - P, xi * .75, xi * .5, 0, xi + s, xi - s, xi + 4 * s, xi - 4 * s])
+      .forEach(t => { t = Math.round(Math.max(c.lo, Math.min(c.hi, t)) / s) * s; if (fine && t !== xi && Math.abs(t - c.x0) % c.step && Math.abs(t - xi) > 10) return; if (t !== xi && t >= 0 && !(c.x0 === 0 && t > 0 && t < c.min)) set.add(t); });
+    return [...set]; };
+  let newN = 0;
+  const run = (kbW, small, limit, iters) => {
+    let score = nutPen(N) * 10 + kbPen(T, kbW) + [...chg].reduce((s, i) => s + cost(i, x[i]), 0);
+    for (let it = 0; it < iters; it++) {
+      let best = null, bestS = score - 1e-6;
+      for (let i = 0; i < n; i++) { const c = cands[i]; if (banned.has(c.id) || (c.isNew && !allowNew)) continue;
+        const isCh = chg.has(i); if (!isCh && chg.size >= limit) continue; if (small && !isCh && c.x0 === 0) continue;
+        const ci = cost(i, x[i]);
+        if (!isCh && c.isNew && newN >= 2) continue;   // at most two new products in one option
+        for (const t of targets(c, x[i], small)) { const d = t - x[i];
+          const N2 = N.map((v, j) => v + w * c.mm[j] * d), T2 = T.map((v, k) => v + c.v[k] * d);
+          if (C.some((cc, j) => (cc.lim && N2[j] > cc.lim && N[j] <= cc.lim) || (fixPen(cc, cc.N0) === 0 && fixPen(cc, N2[j]) > 0))) continue;   // never create a new problem
+          const sc = score - ci + cost(i, t) + (nutPen(N2) - nutPen(N)) * 10 + kbPen(T2, kbW) - kbPen(T, kbW);
+          if (sc < bestS) { bestS = sc; best = [i, t]; } } }
+      if (!best) break; const [i, t] = best, d = t - x[i], c = cands[i];
+      for (let j = 0; j < N.length; j++) N[j] += w * c.mm[j] * d; for (let k = 0; k < 4; k++) T[k] += c.v[k] * d;
+      x[i] = t; if (t === c.x0) chg.delete(i); else chg.add(i); score = bestS; newN = [...chg].filter(k => cands[k].isNew).length;
+    } };
+  run(8, false, maxCh, 30);
+  const fits = () => T.every((t, i) => t >= R4[i][0] - 1e-6 && t <= R4[i][1] + 1e-6);
+  if (!fits()) run(200, true, maxCh + 2, 60);   // settle calories and macros with small steps
+  if (!fits()) { fine = true; run(400, true, maxCh + 2, 40); }   // last gram-level nudge
+  const changes = [...chg].map(i => ({ c: cands[i], from: cands[i].x0, to: x[i] })).sort((a, b) => Math.abs(b.to - b.from) * (b.c.v[0] || .01) - Math.abs(a.to - a.from) * (a.c.v[0] || .01));
+  return { changes, N: N.slice(), T: T.slice(), fits: fits(), after: C.filter((c, j) => fixPen(c, N[j]) > 0).length, fixed: C.filter((c, j) => fixPen(c, c.N0) > 0 && fixPen(c, N[j]) === 0).map(c => c.n.n) };
+}
+function fixOptions(p, days, kept) {
+  const ctx = fixCtx(), g = goal(), it = nPlanItems(p);
+  const T0 = ['k', 'p', 'f', 'c'].map(k => it.reduce((s, [e, gr]) => s + (e.n ? (e.n[k] || 0) * gr / 100 : 0), 0));
+  const R4 = ['k', 'p', 'f', 'c'].map(k => goalRange(k, g)), W4 = R4.map(([a, b]) => Math.max(1, (b - a) / 2));
+  const base = { C: ctx.C, w: days / ctx.days, T0, R4, W4 }, cands = fixCands(p, kept, ctx.C);
+  const before = ctx.C.filter(c => fixPen(c, c.N0) > 0).length, fitsBefore = T0.every((t, i) => t >= R4[i][0] && t <= R4[i][1]);
+  const sols = [], seen = new Set(), add = s => { if (!s.changes.length) return; const key = s.changes.map(c => c.c.id + ':' + c.to).sort().join('|');
+    if (seen.has(key)) return; seen.add(key); if (s.after < before || (s.fits && !fitsBefore && s.after <= before)) sols.push(s); };
+  const A = fixSearch(base, cands, 3, new Set(), true); add(A);
+  const B = fixSearch(base, cands, 4, new Set(), true); add(B);
+  add(fixSearch(base, cands, 4, new Set(), false));
+  [A, B].forEach(s => s.changes.slice(0, 2).forEach(ch => add(fixSearch(base, cands, 4, new Set([ch.c.id]), true))));
+  sols.sort((a, b) => (b.fits - a.fits) || a.after - b.after || a.changes.length - b.changes.length);
+  return { sols: sols.slice(0, 5), before, T0, R4 };
+}
+function fixAmt(ch) { const e = ch.c.e, u = e ? uLab(e) : 'g', f = e ? toU(e, ch.from) : ch.from, t = e ? toU(e, ch.to) : ch.to, F = v => nFmt(v);
+  return ch.from === 0 ? `+${F(t)} ${u}` : `${F(f)} → ${F(t)} ${u}`; }
+function fixApply(p, sol) {
+  sol.changes.forEach(ch => { const c = ch.c; let id = c.id;
+    if (c.isNew) { const e = { id: uid(), t: 'f', name: c.name, g: 0, n: { k: c.cat.n[0], p: c.cat.n[1], f: c.cat.n[2], c: c.cat.n[3] }, m: { ...c.cat.m } }; S.items.push(e); id = e.id; }
+    p.g[id] = ch.to;
+    if (c.parent) p.g[c.parent.id] = c.parent.ch.reduce((s, x) => s + (p.g[x.id] || 0), 0); });
+  if (p === plan()) applyGrams(p); save();
+}
+function fixStart() {
+  if (ghostSnap) { ghostOff(); toast('Try-out mode is off'); }
+  nPrep(); const order = nMix().mix.sort((a, b) => b[1] - a[1]); if (!order.length) return;
+  const snap = JSON.stringify({ items: S.items, g: S.plans.map(p => [p.id, p.g]) }), start = fixCtx().bad, log = [];
+  let step = 0, kept = new Set(), O = null, i = 0;
+  const undoAll = () => { const o = JSON.parse(snap); S.items = o.items; o.g.forEach(([id, g]) => { const p = S.plans.find(x => x.id === id); if (p) p.g = g; }); applyGrams(plan()); save(); renderAll(false); };
+  const show = () => {
+    const [p, d] = order[step]; O = fixOptions(p, d, kept); i = 0;
+    const tiles = s => `<div class="br1">${['k', 'p', 'f', 'c'].map((k, j) => { const ok = s.T[j] >= O.R4[j][0] - 1e-6 && s.T[j] <= O.R4[j][1] + 1e-6; return `<div><span>${{ k: 'KCAL', p: 'P', f: 'F', c: 'C' }[k]}</span><s>${r0(O.T0[j])}</s><b>${r0(s.T[j])}${ok ? CKs : ''}</b></div>`; }).join('')}</div>`;
+    const rows = s => s.changes.map(ch => `<button class="bal-r" data-keep="${ch.c.id}"><b>${ch.c.parent ? '' : ''}${esc(ch.c.name)}${ch.c.parent ? `<small class="bal-in">in ${esc(ch.c.parent.name)}</small>` : ch.c.isNew ? '<small class="bal-in">new</small>' : ''}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fixAmt(ch)}</em></button>`).join('')
+      + [...kept].map(id => { let nm = id.startsWith('cat:') ? id.slice(4) : ''; if (!nm) walk(S.items, e => { if (e.id === id) nm = e.name; }); return `<button class="bal-r nu-kept" data-keep="${id}"><b>${esc(nm)}</b><em>${N_LOCK} kept</em></button>`; }).join('');
+    const body = () => { const s = O.sols[i]; if (!s) return `<div class="bal-rows">${rows({ changes: [] })}</div><p class="bal-none">Nothing to improve in ${esc(p.name)} without leaving ${esc(goal().name)}.${kept.size ? ' Tap a kept product to let it change.' : ''}</p>`;
+      return `<div class="bal-rows">${rows(s)}</div><p class="nu-hint">Tap a product to keep it as is</p>
+        ${O.sols.length > 1 ? `<div class="bal-nav"><button type="button" id="fxPrev"${i === 0 ? ' disabled' : ''}>‹ Previous</button><span>${i + 1} of ${O.sols.length}</span><button type="button" id="fxAlt"${i === O.sols.length - 1 ? ' disabled' : ''}>Another way ›</button></div>` : ''}
+        ${tiles(s)}<p class="nu-res">${CKs}<span>To fix <b>${O.before} → ${s.after}</b></span><span class="r">${esc(s.fixed.slice(0, 3).join(', '))}</span></p>${s.fits ? '' : `<p class="note">Couldn’t keep ${esc(p.name)} inside ${esc(goal().name)} with these products.</p>`}`; };
+    const last = step === order.length - 1;
+    sheet(`<div class="sh-head"><span class="sh-kick">${order.length > 1 ? `${step + 1} of ${order.length} · ` : ''}${nst().mode === 'every' ? 'every day' : `${d} ${d === 1 ? 'day' : 'days'}`}</span><span class="nu-sht">${esc(p.name)}</span>${XBTN}</div>
+      <div id="fxB">${body()}</div><div class="btnrow wide"><button class="sbtn plain" id="fxSkip">${O.sols.length ? 'Skip' : (last ? 'Done' : 'Next')}</button>${O.sols.length ? `<button class="sbtn primary" id="fxGo">${last ? 'Apply' : 'Apply · next'}</button>` : ''}</div>`, s => {
+      const wire = () => { s.querySelector('#fxB').innerHTML = body();
+        s.querySelectorAll('[data-keep]').forEach(b => b.addEventListener('click', () => { haptic(); const id = b.dataset.keep; kept.has(id) ? kept.delete(id) : kept.add(id); O = fixOptions(p, d, kept); i = 0; wire(); syncBtns(); }));
+        const pv = s.querySelector('#fxPrev'), al = s.querySelector('#fxAlt');
+        if (pv) pv.addEventListener('click', () => { haptic(); i = Math.max(0, i - 1); wire(); });
+        if (al) al.addEventListener('click', () => { haptic(); i = Math.min(O.sols.length - 1, i + 1); wire(); }); };
+      const syncBtns = () => { const go = s.querySelector('#fxGo'), sk = s.querySelector('#fxSkip'); if (go) go.hidden = !O.sols.length; sk.textContent = O.sols.length ? 'Skip' : (last ? 'Done' : 'Next'); };
+      wire();
+      s.querySelector('#fxSkip').addEventListener('click', () => { haptic(); log.push([p, O.sols.length ? 'skipped' : 'nothing to change']); next(); });
+      const go = s.querySelector('#fxGo'); if (go) go.addEventListener('click', () => { const sol = O.sols[i]; if (!sol) return; haptic(); fixApply(p, sol); log.push([p, `${sol.changes.length} ${sol.changes.length === 1 ? 'change' : 'changes'}`, sol.fits]); next(); });
+    });
+  };
+  const next = () => { kept = new Set(); step++; if (step < order.length) show(); else done(); };
+  const done = () => { renderAll(false); const { R } = nRows(), left = nBad(R), applied = log.filter(l => l[2] !== undefined), changed = applied.length > 0, outside = applied.filter(l => !l[2]).map(l => l[0].name);
+    sheet(`<div class="sh-head"><span class="sh-kick">Fix · done</span><span class="nu-sht">${start} → ${left.length} to fix</span>${XBTN}</div>
+      <div class="bal-rows">${log.map(([p, t]) => `<div class="bal-r"><b>${esc(p.name)}</b><em class="nu-nf">${t}</em></div>`).join('')}</div>
+      ${left.length ? `<div class="cap">Still to fix</div><ul class="list nu-l">${left.slice(0, 4).map(x => nRow(x, '')).join('')}</ul>` : ''}
+      <p class="note">${!changed ? 'Nothing changed.' : outside.length ? `${esc(outside.join(', '))} ${outside.length > 1 ? 'are' : 'is'} still outside ${esc(goal().name)} — Balance on Meal can finish it.` : `Every changed plan fits ${esc(goal().name)}. You’ll see the new portions on Meal.`}</p>
+      <div class="btnrow wide">${changed ? '<button class="sbtn plain" id="fxUndo">Undo all</button>' : ''}<button class="sbtn primary" data-close>Done</button></div>`, s => {
+      const u = s.querySelector('#fxUndo'); if (u) u.addEventListener('click', () => { haptic(); undoAll(); closeSheet(); toast('Fix undone'); }); });
+  };
+  show();
 }
 $('#nutPlanBtn').addEventListener('click', () => { haptic(); nPicker(); });
+$('#nutFix').addEventListener('click', () => { haptic(); fixStart(); });
+$('#nutSearch').addEventListener('click', () => { haptic(); nutPick(k => { closeSheet(true); nDetail(k); }, true); });
+window.__nut = { fixOptions, fixCtx, nRows, fixApply, renderNut, plan: () => plan(), S: () => S };   // debugging handle
 
 /* ================= wiring ================= */
 $('#searchBtn').insertAdjacentHTML('beforeend', '<span class="slab">Search</span>');
