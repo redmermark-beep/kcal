@@ -2524,30 +2524,27 @@ function designMenu() {
 // Goal plans: a sheet (canvas Menus · Bulk plan 2) — the active plan with its targets, the others to switch to
 const DOTS = st => `<span class="sh-dots">${st.map(x => `<i class="${x}"></i>`).join('')}</span>`;
 function goalMenu() {
-  const g = goal(), t = totals(), w = latest('w');
-  const rate = g.rate || 0, wk = rate && g.tw != null && w != null ? (g.tw - w) / rate : null;
-  const eta = wk != null && wk > 0 ? new Date(Date.now() + wk * 7 * 864e5).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '';
-  const tile = (l, v) => `<div class="gm-t"><span>${l}</span><b>${r0(v)}</b></div>`;
-  const others = S.goals.filter(x => x.id !== g.id).map(x => `<button type="button" class="sh-row" data-gid="${x.id}"><span class="t"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>${DOTS(statusOf(t, x))}<span class="mck"></span></button>`).join('');
-  sheet(`<h3 class="h-ic">Goal plans<button type="button" class="sh-ic" data-a="new" aria-label="New goal plan">${SHI.plus}</button><button type="button" class="sh-ic" data-a="dup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" data-a="del" aria-label="Delete"${S.goals.length < 2 ? ' disabled' : ''}>${SHI.trash}</button>${XBTN}</h3>
-    <div class="gm-on"><div class="gm-h"><b>${esc(g.name)}</b><span>${esc(typeName(g.type))}${rate ? ` · ${sgn(rate)} kg/wk` : ''}</span>${DOTS(statusOf(t, g))}<span class="mck">${MI.check}</span></div>
-      <div class="gm-g">${tile('KCAL', g.k)}${tile('P', g.p)}${tile('F', g.f)}${tile('C', g.c)}</div>
-      ${w != null && g.tw != null ? `<div class="gm-f">${w.toFixed(1)} → ${(+g.tw).toFixed(1)} kg${eta ? ` · around ${eta}` : ''}</div>` : ''}</div>
-    ${others ? `<div class="cap">Switch to</div><div class="sh-rows">${others}</div>` : ''}
-    <button class="sbtn primary" data-a="edit">Edit plan</button>`, s => {
-    s.addEventListener('click', e => {
-      const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
-      haptic(); closeSheet();
-      setTimeout(() => {
-        if (r) return switchGoal(r.dataset.gid);
-        const k = a.dataset.a;
-        if (k === 'edit') goalSheet(g, false);
-        if (k === 'new') goalSheet(null, true);
-        if (k === 'dup') { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); }
-        if (k === 'del') confirmSheet('Delete goal plan?', `“${esc(g.name)}” targets will be removed. Your meals and measurements stay.`, 'Delete', () => {
-          const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); });
-      }, 420);
-    });
+  // GP3: same popup as the meal-plan menu — goal rows + a New / Duplicate / Edit / Delete tray
+  const g = goal(), t = totals();
+  const SL = { o: 'over', u: 'under', k: 'in range' }, ML = ['kcal', 'protein', 'fat', 'carbs'];
+  const rows = S.goals.map(x => { const st = statusOf(t, x), on = x.id === g.id;
+    return `<button class="mpr${on ? ' on' : ''}" data-gid="${x.id}" role="menuitemradio" aria-checked="${on}">
+      <span class="mpt"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>
+      <span class="mpd" aria-label="${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span><span class="mck">${on ? MI.check : ''}</span></button>`; }).join('');
+  const acts = [['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['edit', 'Edit', MI.pen], ['del', 'Delete', MI.trash]]
+    .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.goals.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
+  popup($('#goalName'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
+    const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
+    haptic(); closeMenu();
+    setTimeout(() => {
+      if (r) { if (r.dataset.gid !== g.id) switchGoal(r.dataset.gid); return; }
+      const k = a.dataset.a;
+      if (k === 'edit') goalSheet(g, false);
+      if (k === 'new') goalSheet(null, true);
+      if (k === 'dup') { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); }
+      if (k === 'del') confirmSheet('Delete goal plan?', `“${esc(g.name)}” targets will be removed. Your meals and measurements stay.`, 'Delete', () => {
+        const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); });
+    }, 60);
   });
 }
 function goalSheet(g0, isNew) {
@@ -2893,6 +2890,7 @@ $('#ptabs').addEventListener('click', e => { const b = e.target.closest('.ptab')
 $('#planBtn').addEventListener('click', () => planMenu($('#planBtn')));
 $('#planTitle').addEventListener('click', () => planMenu($('#planTitle')));
 $('#goalBtn').addEventListener('click', goalMenu);
+$('#goalName').addEventListener('click', goalMenu);
 $('#sortBtn').addEventListener('click', () => sortMenu());
 $('#addBtn').addEventListener('click', () => foodSheet(null, true));
 $('#metricBtn').addEventListener('click', metricMenu);
