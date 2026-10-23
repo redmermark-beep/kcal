@@ -1088,6 +1088,93 @@ body.ch-panel .hv53 .hc:not([data-m="k"]) .of .g::before{content:"/"}
 body.ch-panel .hv53 .hc:not([data-m="k"]) .ht{display:block!important;position:absolute;left:14px;right:14px;bottom:calc(12px - 2px * var(--c,0));height:3px}
 body.ch-panel .hv53 .hc:not([data-m="k"]) .ht .w{top:-2px;bottom:-2px}
 body.ch-panel .hv53 .hc:not([data-m="k"]) .ht .dt{width:10px;height:10px;margin:-5px 0 0 -5px}
+
+/* ---------- Chips · Split (IX1 + K/A, 23 Oct): KCAL left, P F C rows with sliders right, list rounded up into the panel; panel colour by calories (pc-k) or blue when the plan fits (pc-a) ---------- */
+body.ch-split header.plan>*{position:relative;z-index:1}
+body.ch-split .hv53 .hc{position:relative}
+body.ch-split header.plan::before{content:"";position:absolute;left:0;right:0;top:0;height:var(--ph,260px);background:#000;border-radius:0 0 30px 30px;z-index:0}
+body.ch-split #goalName{color:rgba(255,255,255,.7)!important}
+body.ch-split #goalBtn{filter:invert(1)}
+body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{background:transparent!important;box-shadow:none!important;height:auto!important;border-radius:0!important;padding:4px 0 18px!important}
+body.ch-split .hv53 .hc[data-m="k"]>div:nth-child(2){margin:6px 0 12px}
+body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:60px!important;letter-spacing:-3px!important;line-height:.95!important}
+body.ch-split .hv53 .hc[data-m="k"] .hc-top em{padding:3px 9px;border-radius:11px;background:rgba(255,255,255,.16)}
+body.ch-split .hv53 .hcs{row-gap:12px!important}
+body.ch-split .hv53 .hcs{grid-template-columns:1.35fr 1fr!important;grid-template-rows:repeat(3,auto);column-gap:14px!important;row-gap:6px!important}
+body.ch-split .hv53 .hc[data-m="k"]{grid-column:1!important;grid-row:1/4!important}
+body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{padding:2px 0 4px!important;justify-content:space-between!important}
+body.ch-split .hv53 .hc[data-m="k"]>div:nth-child(2){display:block!important;margin:4px 0 8px}
+body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:54px!important}
+body.ch-split .hv53 .hc[data-m="k"] .of{display:block;margin-top:4px!important}
+body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]){grid-column:2!important;height:38px!important;padding:0 12px!important;border-radius:12px!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:8px;color:#fff!important}
+body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top{order:1;flex:none}
+body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
+body.ch-split .hv53 .hc:not([data-m="k"])>div:nth-child(2){order:2}
+body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]) b{font-size:17px!important;letter-spacing:-.3px!important}
+body.ch-split .hv53 .hc:not([data-m="k"]) .of,body.ch-split .hv53 .hc:not([data-m="k"]) .ht{display:none!important}
+body.ch-split .hv53 .hc.over:not([data-m="k"]){background:rgba(255,255,255,.12)!important;box-shadow:none!important}
+body.ch-split .hv53 .hc.under:not([data-m="k"]){background:transparent!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)!important}
+body.ch-split .hv{padding-bottom:18px}
+body.ch-split .hv53 .hc{position:relative}
+body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top{position:static}
+body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{font-size:13px;opacity:.75}
+body.ch-split .hv53 .hc:not([data-m="k"]) .ht{display:block!important;position:absolute;height:3px}
+body.ch-split .hv53 .hc:not([data-m="k"]) .ht .w{top:-2px;bottom:-2px}
+body.ch-split .hv53 .hc:not([data-m="k"]) .ht .dt{width:10px;height:10px;margin:-5px 0 0 -5px}
+body.ch-split .hv53 .hc.under:not([data-m="k"]) .ht{background:rgba(255,255,255,.2)!important}
+body.ch-split .hv53 .hc.under:not([data-m="k"]) .ht .dt{background:#fff!important}
+body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]){height:52px!important;align-items:flex-start!important;padding-top:9px!important}
+body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{top:17px!important}
+body.ch-split .hv53 .hc:not([data-m="k"]) .ht{left:12px;right:12px;bottom:9px}
+body.ch-split .hv53 .hcs{row-gap:6px!important}
+body.ch-split header.plan::before{height:auto!important;bottom:0;border-radius:0!important}
+body.ch-split header.plan::after{content:"";position:absolute;left:0;right:0;top:var(--ph,260px);bottom:-1px;background:var(--bg,#f7f7f7);border-radius:var(--rr,28px) var(--rr,28px) 0 0;z-index:0}
+body.ch-split .hv{padding-bottom:0!important}
+body.ch-split header.plan{padding-bottom:var(--rr,28px)!important}
+body.ch-split header.plan{--rr:40px}
+body.ch-split.ma.tab-meal .mhead .list-head{padding-top:2px!important}
+body.ch-split .hv53 .hc{transition:none}
+body.ch-split header.plan::before{background:radial-gradient(120% 80% at 85% 30%,#1b2a4a 0%,#000 60%)!important}
+body.ch-split .hv53 .hc:not([data-m="k"]){background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 0 0 1px rgba(255,255,255,.08),0 8px 18px -10px rgba(0,0,0,.8)!important;-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
+body.ch-split .hv53 .hc.ok:not([data-m="k"]){background:linear-gradient(180deg,rgba(86,140,255,.95),rgba(35,95,208,.85))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 24px -10px rgba(35,95,208,.9)!important}
+body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:calc(54px - 26px * var(--c,0))!important}
+body.ch-split .hv53 .hc[data-m="k"] .of{opacity:calc(1 - var(--c,0) * 2)!important;max-height:calc(16px * (1 - var(--c,0)))!important;overflow:hidden}
+body.ch-split .hv53 .hc[data-m="k"]>div:nth-child(2){margin:calc(4px - 4px * var(--c,0)) 0 calc(8px - 6px * var(--c,0))!important}
+body.ch-split.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]){height:calc(52px - 16px * var(--c,0))!important;padding-top:calc(9px - 1px * var(--c,0))!important}
+body.ch-split .hv53 .hc:not([data-m="k"]) .ht{opacity:calc(1 - var(--c,0) * 1.6)}
+body.ch-split .hv53 .hc:not([data-m="k"]) .hc-top em{top:calc(17px - 1px * var(--c,0))!important}
+body.ch-split .hv53 .hcs{row-gap:calc(6px - 2px * var(--c,0))!important}
+body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{color:#fff!important}
+body.ch-split .hv53 .hc.under[data-m="k"] .ht{background:rgba(255,255,255,.2)!important}
+body.ch-split .hv53 .hc.under[data-m="k"] .ht .dt{background:#fff!important}
+body.ch-split.pc-k.kst-ok header.plan::before,body.ch-split.pc-a.allok header.plan::before{background:radial-gradient(110% 90% at 85% 15%,#5a8fff 0%,#2a62dc 50%,#1a47b4 100%)!important}
+body.ch-split.pc-k.kst-ok .hv53 .hc:not([data-m="k"]),body.ch-split.pc-a.allok .hv53 .hc:not([data-m="k"]){background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.1))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.12)!important}
+body.ch-split.pc-k.kst-ok .hv53 .hc.under:not([data-m="k"]){background:transparent!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)!important}
+body.ch-split.pc-k.kst-ok .hv53 .hc.over:not([data-m="k"]){background:rgba(0,0,0,.55)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)!important}
+body.ch-split.pc-k.kst-ok .hv53 .ht .w,body.ch-split.pc-a.allok .hv53 .ht .w{background:rgba(255,255,255,.4)!important}
+body.ch-split.pc-k.kst-ok .hv53 .ht,body.ch-split.pc-a.allok .hv53 .ht{background:rgba(255,255,255,.25)!important}
+body.ch-split.pc-k.kst-ok .hv53 .ht .dt,body.ch-split.pc-a.allok .hv53 .ht .dt{background:#fff!important}
+body.ch-split.pc-k.kst-ok .hv53 .hc[data-m="k"] .hc-top em,body.ch-split.pc-a.allok .hv53 .hc[data-m="k"] .hc-top em{background:rgba(255,255,255,.22)!important}
+body.ch-split.pc-k.kst-under header.plan::before{background:linear-gradient(180deg,#e9ebef,#dde0e6)!important}
+body.ch-split.pc-k.kst-under #goalName{color:rgba(0,0,0,.55)!important}
+body.ch-split.pc-k.kst-under #goalBtn{filter:none!important}
+body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc[data-m="k"]{color:#000!important}
+body.ch-split.pc-k.kst-under .hv53 .hc[data-m="k"] .hc-top em{background:rgba(0,0,0,.08)!important}
+body.ch-split.pc-k.kst-under .hv53 .hc[data-m="k"] .ht{background:rgba(0,0,0,.12)!important}
+body.ch-split.pc-k.kst-under .hv53 .hc[data-m="k"] .ht .dt{background:#000!important}
+body.ch-split.pc-k.kst-under .hv53 .hc:not([data-m="k"]){-webkit-backdrop-filter:none;backdrop-filter:none}
+body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc.under:not([data-m="k"]){background:rgba(255,255,255,.75)!important;color:#000!important;box-shadow:inset 0 1px 0 #fff,0 4px 12px -8px rgba(0,0,0,.3)!important}
+body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc.under:not([data-m="k"]) .ht{background:rgba(0,0,0,.12)!important}
+body.ch-split.pc-k.kst-under.gr.ma.tab-meal .hv53 .hc.under:not([data-m="k"]) .ht .dt{background:#000!important}
+body.ch-split.pc-k.kst-under .hv53 .hc.over:not([data-m="k"]){background:#111!important}
+body.ch-split.pc-k.kst-under .hv53 .hc.ok:not([data-m="k"]){background:var(--blue)!important}
+body.ch-split.pc-k.kst-under header.plan::after{background:var(--bg)}
+body.ch-split.pc-a:not(.allok) .hv53 .hc.ok[data-m="k"] b{color:#7ea8ff}
+body.ch-split.pc-a:not(.allok) .hv53 .hc.under[data-m="k"] b{color:rgba(255,255,255,.5)}
+body.ch-split.pc-a:not(.allok) .hv53 .hc.ok[data-m="k"] .hc-top em{background:var(--blue)!important}
+body.ch-split.gr.ma.tab-meal .hv53 .hc[data-m="k"]{color:#fff!important}
+body.ch-split .hv53 .hc.under[data-m="k"] .ht{background:rgba(255,255,255,.2)!important}
+body.ch-split .hv53 .hc.under[data-m="k"] .ht .dt{background:#fff!important}
 </style>
 
 <div class="app" id="app">
@@ -1318,7 +1405,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: 'plain', grid: '7', sheet: 'b', chips: 'panel', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: 'plain', grid: '7', sheet: 'b', chips: 'split', pcol: 'a', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
@@ -1538,6 +1625,7 @@ function renderHV(g, t) {
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
+  const kc = box.querySelector('[data-m="k"]'); ['ok', 'under', 'over'].forEach(x => document.body.classList.toggle('kst-' + x, !!kc && kc.classList.contains(x))); document.body.classList.toggle('allok', allOk);
   if (allOk !== wasAllOk && wasAllOk !== null && allOk) haptic();
   wasAllOk = allOk;
 }
@@ -1664,7 +1752,8 @@ const preInv = hex => { const c = [1, 3, 5].map(i => parseInt((hex.length === 4 
   return '#' + HR.map(r => Math.round(Math.min(1, Math.max(0, 1 - (r[0] * c[0] + r[1] * c[1] + r[2] * c[2]))) * 255).toString(16).padStart(2, '0')).join(''); };
 const swHTML = (k, on) => `<button class="swt${on ? ' on' : ''}" role="switch" aria-checked="${on}" data-set="${k}"><i></i></button>`;
 const GRIDS = [['cur', 'Current', 'Chips inside the card, list on 16'], ['3', 'Keyline 24', 'Everything on one line at 24 · 4 columns, gap 8'], ['4', '8-pt', 'Everything on 16 · 4 columns, gap 8, steps of 8'], ['7', '5 col', '5 columns, KCAL takes two · margins 20, gap 6']];
-const CHIP_STYLES = [['panel', 'Panel', 'Black top panel with KCAL, P F C pills with a slider below'], ['hero', 'Hero', 'KCAL full width on top, P F C below (5 col grid)'], ['row', 'Row', 'Four chips in one row']];
+const CHIP_STYLES = [['split', 'Split', 'Black panel: KCAL left, P F C rows with sliders right; the list rounds up into it'], ['panel', 'Panel', 'Black top panel with KCAL, P F C pills with a slider below'], ['hero', 'Hero', 'KCAL full width on top, P F C below (5 col grid)'], ['row', 'Row', 'Four chips in one row']];
+const PANEL_COLS = [['a', 'Plan fits', 'Black; turns blue when all four fit, calories number shows its state'], ['k', 'Calories', 'Black over, blue in range, light grey under']];
 const SHEET_STYLES = [['b', 'Tiles', 'Product sheet: four tiles, unit on top'], ['g', 'Chips', 'Product sheet: chips like the header, kcal per macro']];
 const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21', 'Card', 'Plan and chips on a white card']];
 function renderSettings() {
@@ -1679,8 +1768,10 @@ function renderSettings() {
         <div class="st-seg">${HS_STYLES.map(([k, l]) => `<button data-hs="${k}" class="${(u.hs || 'plain') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       <div class="st-r st-col"><div><b>Grid</b><span>${(GRIDS.find(x => x[0] === (u.grid || 'cur')) || GRIDS[0])[2]}</span></div>
         <div class="st-seg">${GRIDS.map(([k, l]) => `<button data-grid="${k}" class="${(u.grid || 'cur') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
-      <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'panel')) || CHIP_STYLES[0])[2]}</span></div>
-        <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'panel') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+      <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'split')) || CHIP_STYLES[0])[2]}</span></div>
+        <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'split') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+      ${(u.chips || 'split') === 'split' ? `<div class="st-r st-col"><div><b>Panel colour</b><span>${(PANEL_COLS.find(x => x[0] === (u.pcol || 'a')) || PANEL_COLS[0])[2]}</span></div>
+        <div class="st-seg">${PANEL_COLS.map(([k, l]) => `<button data-pcol="${k}" class="${(u.pcol || 'a') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` : ''}
       <div class="st-r st-col"><div><b>Sheets</b><span>${(SHEET_STYLES.find(x => x[0] === (u.sheet || 'b')) || SHEET_STYLES[0])[2]}</span></div>
         <div class="st-seg">${SHEET_STYLES.map(([k, l]) => `<button data-sheet="${k}" class="${(u.sheet || 'b') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
@@ -1705,6 +1796,8 @@ $('#secSettings').addEventListener('click', e => {
   if (hsb) { haptic(); S.ui.hs = hsb.dataset.hs; save(); syncTabs(); renderSettings(); return; }
   const shb = e.target.closest('[data-sheet]');
   if (shb) { haptic(); S.ui.sheet = shb.dataset.sheet; save(); renderSettings(); return; }
+  const pcb = e.target.closest('[data-pcol]');
+  if (pcb) { haptic(); S.ui.pcol = pcb.dataset.pcol; save(); syncTabs(); renderSettings(); return; }
   const chb = e.target.closest('[data-chips]');
   if (chb) { haptic(); S.ui.chips = chb.dataset.chips; save(); syncTabs(); renderSettings(); return; }
   const grb = e.target.closest('[data-grid]');
@@ -2890,11 +2983,11 @@ function syncTabs() {
   document.body.classList.toggle('lv-c', lv === '01' || lv === '03'); placeTools();
   document.body.classList.toggle('ma', !!S.ui.v2 && !!S.ui.ma);
   if (S.ui.hs === '11' || S.ui.hs === '22') S.ui.hs = '21';
-  if (!S.ui.chipsV) { S.ui.chipsV = 1; if (S.ui.chips === 'hero') S.ui.chips = 'panel'; }   // Bands / Sheet were tried and dropped (2026-10-21)
+  if ((S.ui.chipsV || 0) < 2) { S.ui.chipsV = 2; if (S.ui.chips === 'hero' || S.ui.chips === 'panel') S.ui.chips = 'split'; }   // Bands / Sheet were tried and dropped (2026-10-21)
   const hs = S.ui.v2 && S.ui.ma ? (S.ui.hs || 'plain') : 'plain';
   document.body.classList.toggle('hs-card', hs === '21'); document.body.classList.toggle('hs-f', hs === '21');
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
-  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); const chs = S.ui.chips || 'panel'; document.body.classList.toggle('ch-hero', gr === '7' && (chs === 'hero' || chs === 'panel')); document.body.classList.toggle('ch-panel', gr === '7' && chs === 'panel' && S.ui.tab === 'meal'); collapse && collapse(true);
+  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); const chs = S.ui.chips || 'split'; document.body.classList.toggle('ch-hero', gr === '7' && chs !== 'row'); document.body.classList.toggle('ch-split', gr === '7' && chs === 'split' && S.ui.tab === 'meal'); document.body.classList.toggle('pc-k', (S.ui.pcol || 'a') === 'k'); document.body.classList.toggle('pc-a', (S.ui.pcol || 'a') !== 'k'); document.body.classList.toggle('ch-panel', gr === '7' && chs === 'panel' && S.ui.tab === 'meal'); collapse && collapse(true);
   ['meal', 'measure', 'budget', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.documentElement.dataset.theme = S.ui.theme || 'light';
   document.body.classList.toggle('nocol', S.ui.collapse === false);
@@ -2950,7 +3043,9 @@ const maOn = () => document.body.classList.contains('ma') && S.ui.tab === 'meal'
 const setHH = () => document.documentElement.style.setProperty('--hh', (hdr.offsetHeight - (maOn() ? MA_TITLE : 0)) + 'px');
 let maC = -1;
 function phFit() {   // Chips · Panel: the black panel ends under the KCAL chip
-  if (!document.body.classList.contains('ch-panel')) return;
+  const b = document.body;
+  if (b.classList.contains('ch-split')) { const h = hdr.querySelector('.hv53'); if (h) hdr.style.setProperty('--ph', (h.getBoundingClientRect().bottom - hdr.getBoundingClientRect().top + 16).toFixed(1) + 'px'); return; }
+  if (!b.classList.contains('ch-panel')) return;
   const k = hdr.querySelector('.hv53 .hc[data-m="k"]'); if (k) hdr.style.setProperty('--ph', (k.getBoundingClientRect().bottom - hdr.getBoundingClientRect().top).toFixed(1) + 'px');
 }
 if (window.ResizeObserver) new ResizeObserver(phFit).observe($('#hv'));
