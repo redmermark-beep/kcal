@@ -22,7 +22,7 @@
   --bg:#f7f7f7; --ink:#000; --ink-50:rgba(0,0,0,.6); --ink-40:rgba(0,0,0,.55); --ink-28:rgba(0,0,0,.3);
   --fill-8:rgba(0,0,0,.1); --fill-6:rgba(0,0,0,.07); --fill-3:rgba(0,0,0,.035);
   --line:rgba(0,0,0,.1); --card:#ffffff; --merge:#ececec; --dot:#cecece;
-  --blue:#235fd0; --win:#9fb3d8;
+  --blue:#1f56c9; --over:#1c1c1e; --win:#9fb3d8;
   --ghost:#d57b0e; --ghost-ink:#905105; --ghost-fill:rgba(213,123,14,.16); --ghost-fill-0:rgba(213,123,14,.08); --ghost-ink-0:rgba(144,81,4,.5);
   --red:#d63a2f; --red-fill:rgba(214,58,47,.13);
   --key-sheet:rgba(209,212,218,.92); --key:#fff; --done:#3478f6;
@@ -1059,7 +1059,7 @@ body.v2 .zhead .n{font-family:var(--mono);font-size:12px}
 body.v2 .zhead[hidden]{display:none}
 /* a just-added product flashes once */
 #secMeal .just-added>.rc,#secMeal .just-added>.ghead{animation:justAdded 1.6s ease-out}
-@keyframes justAdded{0%,35%{background:rgba(35,95,208,.14)}100%{background:transparent}}
+@keyframes justAdded{0%,35%{background:rgba(31,86,201,.14)}100%{background:transparent}}
 #secMeal .just-added>.rc{border-radius:16px}
 
 /* balance the plan (S2) */
@@ -1087,6 +1087,17 @@ body.v2 .zhead[hidden]{display:none}
 
 /* list title spacing: 20 above / 14 to the list at rest → 12 / 12 around the divider when the chips collapse */
 body.v2.ma.tab-meal .mhead .list-head{padding:calc(20px - 8px * var(--c,0)) 0 calc(6px + 6px * var(--c,0))}
+
+/* ---------- Chips · Soft (Final 3, 23 Oct): Row + grey when under, r 18, gap 8, faint sheen, delta in a pill ---------- */
+body.ch-soft .hv53 .hcs{gap:8px!important}
+body.ch-soft .hv53 .hc{border-radius:18px!important}
+body.ch-soft .hv53 .hc.under{background-color:rgba(0,0,0,.075)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)!important}
+body.ch-soft .hv53 .hc.under .ht{background:rgba(0,0,0,.12)!important}
+body.ch-soft .hv53 .hc.over,body.ch-soft .hv53 .hc.ok{background-image:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0) 45%)!important}
+body.ch-soft .hv53 .hc-top span{flex:none;overflow:visible}
+body.ch-soft .hv53 .hc-top em{padding:2px 6px;border-radius:9px;background:rgba(255,255,255,.18);font-style:normal;font-size:11px!important;font-weight:600}
+body.ch-soft .hv53 .hc:not([data-m="k"]) .hc-top em{padding:1px 5px;font-size:10px!important}
+body.ch-soft .hv53 .hc.under .hc-top em{background:rgba(0,0,0,.08)}
 </style>
 
 <div class="app" id="app">
@@ -1103,7 +1114,7 @@ body.v2.ma.tab-meal .mhead .list-head{padding:calc(20px - 8px * var(--c,0)) 0 ca
           <circle class="arc" id="arc" cx="16" cy="16" r="14" stroke="#000" stroke-width="4" stroke-linecap="round" transform="rotate(-90 16 16)" stroke-dasharray="87.96" stroke-dashoffset="87.96"/>
           <circle class="lap" id="lap" cx="16" cy="16" r="14" stroke="#000" stroke-width="4" stroke-linecap="round" transform="rotate(-90 16 16)" stroke-dasharray="87.96" stroke-dashoffset="87.96" opacity="0"/>
           <g class="cap" id="cap" opacity="0"><circle cx="16" cy="2" r="2" fill="#000" filter="url(#capsh)"/></g>
-          <path class="chk" d="M10.5 16.64L14.1 20.5L22.5 11.5" stroke="#235FD0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="chk" d="M10.5 16.64L14.1 20.5L22.5 11.5" stroke="#1f56c9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <div class="kwrap"><div class="kcal"><span id="bCur">0</span><span class="sl">/</span><span id="bGoal">0</span> <span id="bUnit">kcal</span></div><div class="ksub" id="kSub"></div></div>
@@ -1229,7 +1240,7 @@ const ICON = {
   trash: '<svg viewBox="0 0 20 20" fill="none"><path d="M3.5 5.5h13M8 5.5V3.8h4v1.7M5.2 5.5l.8 10.7h8l.8-10.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.3 8.6v4.8M11.7 8.6v4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   x: '<svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="black" stroke-width="1.8" stroke-linecap="round"/></svg>',
   check: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  ok: '<svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#235FD0" stroke-width="2"/><path d="M4.4 7.2l1.8 1.9 3.5-3.8" stroke="#235FD0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  ok: '<svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1f56c9" stroke-width="2"/><path d="M4.4 7.2l1.8 1.9 3.5-3.8" stroke="#1f56c9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   spark: '<svg viewBox="0 0 14 14" fill="none"><path d="M7 1.5v3M7 9.5v3M1.5 7h3M9.5 7h3M3.2 3.2l1.6 1.6M9.2 9.2l1.6 1.6M10.8 3.2L9.2 4.8M4.8 9.2l-1.6 1.6" stroke="black" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/></svg>'
 };
 /* Haptics: Android has navigator.vibrate. iOS Safari (17.4+/18) gives a system tick when a switch-style
@@ -1318,7 +1329,7 @@ function seedGoals() {
     { id: uid(), name: 'Maintenance', type: 'maintain', k: 2350, p: 150, f: 70, c: 270, tw: 72, rate: 0, tbf: 13, sw: 72 }
   ];
 }
-const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: 'plain', grid: '7', sheet: 'b', chips: 'row', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
+const UI0 = { tab: 'meal', metric: 'w', period: 'm', logN: 14, sugHide: '', bdays: 15, cur: 'RSD', v2: true, zeroOpen: false, hv: '53', pv: '18', dv: 2, ma: true, hs: 'plain', grid: '7', sheet: 'b', chips: 'soft', lv: '01', theme: 'light', collapse: true, haptics: true, step: 5 };
 function seed() { const m = seedMeals(), goals = seedGoals();
   return { v: 2, ...m, goals, goalActive: goals[0].id, body: { sex: 'm', age: 28 }, log: seedLog(), ui: { ...UI0 } }; }
 function migrate(o) {
@@ -1430,7 +1441,7 @@ let wasDone = null, wasOver = null;
 function renderRing(ratio, done) {
   const C = 87.96, arc = $('#arc'), lap = $('#lap'), cap = $('#cap'), trk = $('#trk'), ring = $('#ring');
   ratio = isFinite(ratio) ? Math.max(0, ratio) : 0;
-  trk.style.stroke = done ? '#235FD0' : '#000'; trk.style.strokeOpacity = done ? 1 : .1;
+  trk.style.stroke = done ? '#1f56c9' : '#000'; trk.style.strokeOpacity = done ? 1 : .1;
   if (done) { arc.style.opacity = 0; lap.style.opacity = 0; cap.style.opacity = 0; }
   else if (ratio <= 1) {
     arc.style.opacity = 1; arc.style.strokeDashoffset = C * (1 - ratio);
@@ -1654,15 +1665,15 @@ function renderAll(flip = false) {
 
 /* ================= settings ================= */
 const THEMES = [
-  ['light', 'Light', '#f7f7f7', '#235fd0'], ['paper', 'Paper', '#f3eee6', '#c2562b'], ['paperblue', 'Paper blue', '#f2eee7', '#235fd0'],
-  ['stone', 'Stone', '#ecebe7', '#235fd0'], ['mist', 'Mist', '#eceef2', '#235fd0'], ['concrete', 'Concrete', '#e6e6e3', '#235fd0'], ['twotone', 'Two-tone', '#e9e8e4', '#235fd0'], ['black', 'Black', '#000', '#4d8af0']];
+  ['light', 'Light', '#f7f7f7', '#1f56c9'], ['paper', 'Paper', '#f3eee6', '#c2562b'], ['paperblue', 'Paper blue', '#f2eee7', '#1f56c9'],
+  ['stone', 'Stone', '#ecebe7', '#1f56c9'], ['mist', 'Mist', '#eceef2', '#1f56c9'], ['concrete', 'Concrete', '#e6e6e3', '#1f56c9'], ['twotone', 'Two-tone', '#e9e8e4', '#1f56c9'], ['black', 'Black', '#000', '#4d8af0']];
 // the Black theme inverts the page (invert + hue-rotate 180°); swatches are pre-inverted so they still show their real colours
 const HR = [[-0.574, 1.43, 0.144], [0.426, 0.43, 0.144], [0.426, 1.43, -0.856]];
 const preInv = hex => { const c = [1, 3, 5].map(i => parseInt((hex.length === 4 ? hex.replace(/(\w)/g, '$1$1') : hex).slice(i, i + 2), 16) / 255);
   return '#' + HR.map(r => Math.round(Math.min(1, Math.max(0, 1 - (r[0] * c[0] + r[1] * c[1] + r[2] * c[2]))) * 255).toString(16).padStart(2, '0')).join(''); };
 const swHTML = (k, on) => `<button class="swt${on ? ' on' : ''}" role="switch" aria-checked="${on}" data-set="${k}"><i></i></button>`;
 const GRIDS = [['cur', 'Current', 'Chips inside the card, list on 16'], ['3', 'Keyline 24', 'Everything on one line at 24 · 4 columns, gap 8'], ['4', '8-pt', 'Everything on 16 · 4 columns, gap 8, steps of 8'], ['7', '5 col', '5 columns, KCAL takes two · margins 20, gap 6']];
-const CHIP_STYLES = [['row', 'Row', 'Four chips in one row, KCAL takes two columns'], ['hero', 'Hero', 'KCAL full width on top, P F C below']];
+const CHIP_STYLES = [['soft', 'Soft', 'Four chips, softer: grey when under, rounded 18, a faint sheen, delta in a pill'], ['row', 'Row', 'Four chips in one row, KCAL takes two columns'], ['hero', 'Hero', 'KCAL full width on top, P F C below']];
 const SHEET_STYLES = [['b', 'Tiles', 'Product sheet: four tiles, unit on top'], ['g', 'Chips', 'Product sheet: chips like the header, kcal per macro']];
 const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21', 'Card', 'Plan and chips on a white card']];
 function renderSettings() {
@@ -1673,8 +1684,8 @@ function renderSettings() {
       <span class="st-sw${k === 'black' ? ' dk' : ''}" style="background:${cv(bg)}"><i style="background:${cv(k === 'black' ? '#f2f2f2' : '#000')}"></i><i style="background:${cv(ac)}"></i><i class="o"></i></span><span>${l}</span></button>`).join('')}</div>
     <div class="st-h">Main screen</div>
     <div class="st-g">
-      <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'row')) || CHIP_STYLES[0])[2]}</span></div>
-        <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'row') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+      <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'soft')) || CHIP_STYLES[0])[2]}</span></div>
+        <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'soft') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
@@ -3003,11 +3014,11 @@ function syncTabs() {
   document.body.classList.toggle('lv-c', lv === '01' || lv === '03'); placeTools();
   document.body.classList.toggle('ma', !!S.ui.v2 && !!S.ui.ma);
   if (S.ui.hs === '11' || S.ui.hs === '22') S.ui.hs = '21';
-  S.ui.hs = 'plain'; S.ui.grid = '7'; S.ui.sheet = 'b'; if (S.ui.chips !== 'hero') S.ui.chips = 'row';   // settled 23 Oct: Plain, 5 col, Tiles; chips Row or Hero   // Bands / Sheet were tried and dropped (2026-10-21)
+  S.ui.hs = 'plain'; S.ui.grid = '7'; S.ui.sheet = 'b'; if ((S.ui.chipsV || 0) < 4) { S.ui.chipsV = 4; if (S.ui.chips !== 'hero') S.ui.chips = 'soft'; } if (!['soft', 'row', 'hero'].includes(S.ui.chips)) S.ui.chips = 'soft';   // settled 23 Oct: Plain, 5 col, Tiles; chips Row or Hero   // Bands / Sheet were tried and dropped (2026-10-21)
   const hs = S.ui.v2 && S.ui.ma ? (S.ui.hs || 'plain') : 'plain';
   document.body.classList.toggle('hs-card', hs === '21'); document.body.classList.toggle('hs-f', hs === '21');
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
-  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); collapse && collapse(true);
+  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
   ['meal', 'measure', 'budget', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.documentElement.dataset.theme = S.ui.theme || 'light';
   document.body.classList.toggle('nocol', S.ui.collapse === false);
