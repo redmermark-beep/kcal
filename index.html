@@ -1104,6 +1104,76 @@ body.lv-01 #mhead #addBtn{width:40px!important;height:40px!important;border-radi
 #mhead .mtitle{min-width:0;flex:1 1 auto;max-width:100%;overflow:hidden}
 #mhead .mtitle h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #mhead .mtitle .pchev{flex:none}
+
+/* ---------- Nutrients (reference v4) ---------- */
+body.tab-nutrients .plan>:not(.title-row){display:none}
+.nu-line{height:1px;background:var(--line);margin:12px 0 10px}
+.nu-top{display:flex;align-items:center;gap:8px;height:40px}
+.nu-top h1{margin:0;font-size:20px;line-height:24px;font-weight:600;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu-top .mtitle svg{width:12px;height:12px;margin-left:6px}
+.nu-hero{display:flex;align-items:center;gap:10px;margin-top:12px}
+.nu-big{font-size:28px;line-height:32px;font-weight:600;letter-spacing:-.6px}
+.nu-sub{font-size:13px;line-height:18px;color:var(--ink-50);margin-top:2px}
+.nu-sub em,.nu-sec em{font-style:normal;font-weight:600;color:var(--blue)}
+.nu-how{font-size:13px;font-weight:510;color:var(--ink);text-decoration:underline;text-underline-offset:2px;padding:0}
+.nu-cards{display:grid;gap:8px;margin-top:14px}
+.nu-card{display:block;width:100%;text-align:left;background:var(--fill-6);border-radius:20px;padding:12px 14px}
+.nu-card:active{transform:scale(.985)}
+.nu-ch{display:flex;align-items:center;gap:8px}.nu-ch b{flex:1;font-size:17px;font-weight:600}
+.nu-pl{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:11px;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--fill-8);flex:none}
+.nu-pl.ok{background:var(--blue);color:#fff}.nu-pl.over{background:var(--over);color:#fff}
+.nu-bar{position:relative;height:6px;border-radius:3px;background:var(--fill-8);margin-top:8px}
+.nu-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:rgba(0,0,0,.35)}
+.nu-bar.over i{background:var(--over)}.nu-bar.ok i{background:var(--blue)}
+.nu-bar u{position:absolute;right:0;top:-3px;bottom:-3px;width:2px;border-radius:1px;background:#000}
+.nu-am{font-family:var(--mono);font-size:12px;color:var(--ink-50);margin-top:6px}
+.nu-why{font-size:14px;line-height:19px;margin-top:8px}
+.nu-from{font-size:13px;line-height:17px;color:var(--ink-50);margin-top:2px}
+.nu-more{width:100%;height:40px;border-radius:20px;box-shadow:inset 0 0 0 1px var(--fill-8);font-size:14px;font-weight:510;margin-top:8px}
+.nu-ignrow{display:block;width:100%;text-align:left;padding:12px 4px 0}
+.nu-ignrow b{display:block;font-size:16px;font-weight:510}.nu-ignrow span{font-size:13px;color:var(--ink-50)}
+.nu-sec{display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px;font-size:13px;color:var(--ink-50)}
+.nu-sec b{font-size:17px;font-weight:600;color:var(--ink)}
+.nu-add{height:32px;padding:0 12px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--fill-8);font-size:14px;font-weight:510;color:var(--ink)}
+.nu-empty{font-size:14px;color:var(--ink-50);padding:4px 2px}
+.nu-row{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;margin-bottom:8px;text-align:left}
+.nu-t{flex:none;width:72px;height:40px;border-radius:10px;background:var(--fill-8);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:600}
+.nu-t.ok{background:var(--blue);color:#fff}.nu-t.over{background:var(--over);color:#fff}
+.nu-t.nd{background:transparent;box-shadow:inset 0 0 0 1.5px var(--fill-8);color:var(--ink-50)}
+.nu-t.none,.nu-t.ig{background:var(--fill-3);color:var(--ink-50)}
+.nu-nm{flex:1;min-width:0}.nu-nm b{display:block;font-size:16px;line-height:20px;font-weight:510;letter-spacing:-.16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu-nm span{display:block;font-family:var(--mono);font-size:12px;line-height:16px;color:var(--ink-50);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu-sht{flex:1;font-size:24px;line-height:30px;font-weight:600;letter-spacing:-.5px}
+.nu-dbig{display:flex;align-items:baseline;gap:8px;margin:2px 2px 12px}.nu-dbig b{font-family:var(--mono);font-size:34px;font-weight:600;letter-spacing:-1px}.nu-dbig>span:not(.nu-pl){font-family:var(--mono);font-size:13px;color:var(--ink-50)}.nu-dbig .nu-pl{margin-left:auto}
+.nu-txt{background:var(--fill-6);border-radius:16px;padding:10px 14px;font-size:14px;line-height:19px;margin-top:6px}
+.nu-txt b{display:block;font-size:11px;font-weight:590;letter-spacing:.3px;color:var(--ink-50);margin-bottom:2px}
+.nu-src{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:0 14px;border-radius:14px;background:var(--fill-6);margin-top:4px;font-size:15px}
+.nu-src .mono{font-family:var(--mono);font-size:13px;color:var(--ink-50)}
+.sheet .sbtn.plain#nuIg{width:100%;height:50px;margin:14px 0 0;font-size:17px}
+.nu-how-l{display:grid;gap:6px}.nu-how-l>div{display:flex;gap:12px;padding:12px 14px;border-radius:16px;background:var(--fill-6)}
+.nu-how-l .nu-t{width:58px;height:34px;font-size:13px}.nu-how-l p{margin:0;font-size:14px;line-height:19px;color:var(--ink-50)}.nu-how-l p b{display:block;font-size:15px;font-weight:600;color:var(--ink)}
+.nu-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+.nu-seg button{height:40px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--fill-8);font-size:14px;font-weight:510}
+.nu-seg button.on{background:var(--fill-8);box-shadow:none;font-weight:600}
+#nuPB{display:grid;gap:4px;max-height:52vh;overflow:auto}
+.nu-prow{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 6px 0 14px;border-radius:14px;background:var(--fill-6);font-size:15px}
+.nu-prow>span:first-child{color:var(--ink-50);width:96px;flex:none}
+.nu-prow select{flex:1;min-width:0;height:44px;border:0;background:none;font:inherit;font-size:16px;font-weight:510;color:var(--ink);-webkit-appearance:none;appearance:none;outline:none}
+.nu-num{width:30px!important;height:30px;border-radius:15px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)!important}
+.nu-del{width:34px;height:34px;display:grid;place-items:center;opacity:.45}.nu-del svg{width:10px;height:10px}
+.nu-addday{width:100%;justify-content:center;height:44px;margin-top:4px}
+.nu-hint{margin:0 4px 8px;font-size:14px;line-height:19px;color:var(--ink-50)}
+.nu-stp{display:flex;align-items:center;gap:6px;margin-left:auto}.nu-stp button{width:36px;height:36px;border-radius:18px;background:#fff;font-size:20px}.nu-stp b{font-family:var(--mono);width:26px;text-align:center}
+.nu-vts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.nu-vts .vt b input{flex:1;min-width:0;width:auto;font-size:24px;font-weight:600;caret-color:auto;-webkit-user-select:text;user-select:text;cursor:text}
+.nu-addn{align-items:center;justify-content:center;background:transparent;box-shadow:inset 0 0 0 1.5px var(--fill-8);color:var(--ink-50);font-size:14px;font-weight:510}
+.nu-pick{position:absolute;inset:0;background:var(--bg);border-radius:inherit;padding:16px;overflow:auto;z-index:5}
+.nu-pick h3{display:flex;align-items:center}.nu-pick h3 .x{margin-left:auto}
+.nu-q{width:100%;height:48px;border:0;border-radius:16px;background:var(--fill-6);padding:0 14px;font:inherit;font-size:16px;outline:none;box-sizing:border-box}
+.nu-pi{display:flex;justify-content:space-between;width:100%;height:44px;align-items:center;padding:0 14px;border-radius:14px;font-size:16px;font-weight:510}
+.nu-pi span{font-size:13px;color:var(--ink-50);font-weight:400}
+.nu-pi:active{background:var(--fill-6)}
+.nu-list{display:grid;gap:4px}
 </style>
 
 <div class="app" id="app">
@@ -1190,6 +1260,12 @@ body.lv-01 #mhead #addBtn{width:40px!important;height:40px!important;border-radi
     <div class="bud-hero"><div class="bh-num"><span id="bhVal">0</span><span class="bh-u" id="bhCur">RSD</span></div><div class="bh-sub" id="bhSub"></div></div>
     <div class="seg" id="bseg" data-v="15"><i class="thumb"></i><button data-v="7">7 days</button><button data-v="15">15 days</button><button data-v="30">30 days</button></div>
     <div id="bcards"></div>
+  </section>
+
+  <section class="tabsec" id="secNut" hidden>
+    <div class="nu-line"></div>
+    <div class="nu-top"><button class="mtitle" id="nutPlanBtn" aria-label="Choose what you eat"><h1 id="nutTitle">Пробы</h1><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    <div id="nutBody"></div>
   </section>
 
   <section class="tabsec" id="secSettings" hidden>
@@ -1660,12 +1736,13 @@ function patchRow(id) {
   upd(r.e); if (r.parent) upd(r.parent); patchKr();
   renderHeader();
 }
-const TABS = ['budget', 'meal', 'measure', 'settings'];
-const secOf = t => $({ meal: '#secMeal', measure: '#secMeasure', budget: '#secBudget', settings: '#secSettings' }[t]);
+const TABS = ['budget', 'nutrients', 'meal', 'measure', 'settings'];
+const secOf = t => $({ meal: '#secMeal', measure: '#secMeasure', budget: '#secBudget', nutrients: '#secNut', settings: '#secSettings' }[t]);
 function renderAll(flip = false) {
   if (S.ui.tab === 'measure') { renderHeader(); renderMeasure(); }
   else if (S.ui.tab === 'budget') { renderHeader(); renderBudget(); }
   else if (S.ui.tab === 'settings') renderSettings();
+  else if (S.ui.tab === 'nutrients') { renderHeader(); renderNut(); }
   else renderMeal(flip);
 }
 
@@ -3034,11 +3111,11 @@ function syncTabs() {
   document.body.classList.toggle('hs-card', hs === '21'); document.body.classList.toggle('hs-f', hs === '21');
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
   ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
-  ['meal', 'measure', 'budget', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
+  ['meal', 'measure', 'budget', 'nutrients', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   document.documentElement.dataset.theme = S.ui.theme || 'light';
   document.body.classList.toggle('nocol', S.ui.collapse === false);
   document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
-  $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget'; $('#secSettings').hidden = S.ui.tab !== 'settings';
+  $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget'; $('#secSettings').hidden = S.ui.tab !== 'settings'; $('#secNut').hidden = S.ui.tab !== 'nutrients';
 }
 function switchTab(tab) {
   if (S.ui.tab !== tab) haptic();
@@ -3062,6 +3139,222 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   if (!RM) t.animate([{ transform: 'none' }, { transform: 'translateY(-4px)' }, { transform: 'none' }], { duration: 420, easing: SPRING });
   toast(`${t.dataset.tab} is coming later`);
 }));
+
+const NG = { vit: 'Vitamins', min: 'Minerals', fat: 'Fats', carb: 'Carbs & more', amino: 'Amino acids' };
+const NUT = [
+ // vitamins
+ { id:'vA', g:'vit', n:'Vitamin A', s:'A', u:'µg', t:900, ul:3000, d:'Vision in low light, skin, immune defence.', lo:'Night blindness, dry eyes and skin, more infections.', hi:'Headache, liver damage; in pregnancy — birth defects.' },
+ { id:'b1', g:'vit', n:'Thiamin', s:'B1', u:'mg', t:1.2, d:'Turns carbs into energy, nerve function.', lo:'Fatigue, irritability, numb feet; severe — beriberi.', hi:'No known harm from food.' },
+ { id:'b2', g:'vit', n:'Riboflavin', s:'B2', u:'mg', t:1.3, d:'Energy metabolism, skin and eyes.', lo:'Cracked lips and mouth corners, sore throat.', hi:'No known harm; bright yellow urine.' },
+ { id:'b3', g:'vit', n:'Niacin', s:'B3', u:'mg', t:16, ul:35, uls:true, d:'Energy from food, skin, nervous system.', lo:'Pellagra: rash, diarrhoea, confusion.', hi:'From pills: flushing, itching, liver strain.' },
+ { id:'b5', g:'vit', n:'Pantothenic acid', s:'B5', u:'mg', t:5, d:'Builds coenzyme A — fat and energy metabolism.', lo:'Rare: tingling, fatigue.', hi:'Very high doses — diarrhoea.' },
+ { id:'b6', g:'vit', n:'Vitamin B6', s:'B6', u:'mg', t:1.3, ul:100, d:'Protein metabolism, mood, red blood cells.', lo:'Anaemia, cracked lips, low mood.', hi:'Long-term pills — nerve damage, numbness.' },
+ { id:'b7', g:'vit', n:'Biotin', s:'B7', u:'µg', t:30, d:'Fat and sugar metabolism, hair and nails.', lo:'Rare: hair loss, rash.', hi:'No known harm; can skew lab tests.' },
+ { id:'b9', g:'vit', n:'Folate', s:'B9', u:'µg', t:400, ul:1000, uls:true, d:'DNA and new cells, red blood cells.', lo:'Anaemia, fatigue, mouth sores.', hi:'Folic-acid pills can hide B12 deficiency.' },
+ { id:'b12', g:'vit', n:'Vitamin B12', s:'B12', u:'µg', t:2.4, d:'Nerves, red blood cells, DNA.', lo:'Anaemia, numbness, memory and mood problems.', hi:'No known harm.' },
+ { id:'vC', g:'vit', n:'Vitamin C', s:'C', u:'mg', t:90, ul:2000, d:'Collagen, iron absorption, antioxidant.', lo:'Bleeding gums, slow healing, fatigue.', hi:'Upset stomach, kidney stones in some people.' },
+ { id:'vD', g:'vit', n:'Vitamin D', s:'D', u:'µg', t:15, ul:100, d:'Calcium for bones, muscles, immunity.', lo:'Weak bones and muscles, frequent illness. Sunlight also makes it.', hi:'Too much calcium in blood — nausea, kidney damage.' },
+ { id:'vE', g:'vit', n:'Vitamin E', s:'E', u:'mg', t:15, ul:1000, uls:true, d:'Protects cells and fats from oxidation.', lo:'Rare: nerve and muscle problems.', hi:'From pills — bleeding risk.' },
+ { id:'vK', g:'vit', n:'Vitamin K', s:'K', u:'µg', t:120, d:'Blood clotting, bones.', lo:'Easy bruising and bleeding.', hi:'No known harm; interacts with blood thinners.' },
+ { id:'cho', g:'vit', n:'Choline', s:'Ch', u:'mg', t:550, ul:3500, d:'Cell membranes, liver, memory.', lo:'Fatty liver, muscle damage.', hi:'Fishy body odour, low blood pressure.' },
+ // minerals
+ { id:'ca', g:'min', n:'Calcium', s:'Ca', u:'mg', t:1000, ul:2500, d:'Bones and teeth, muscles, nerves.', lo:'Bone loss over years, cramps.', hi:'Kidney stones, constipation.' },
+ { id:'p', g:'min', n:'Phosphorus', s:'P', u:'mg', t:700, ul:4000, d:'Bones, energy (ATP), cell membranes.', lo:'Rare: weakness, bone pain.', hi:'Can pull calcium from bones.' },
+ { id:'mg', g:'min', n:'Magnesium', s:'Mg', u:'mg', t:420, ul:350, uls:true, d:'300+ enzymes, muscles, sleep, blood sugar.', lo:'Cramps, twitching, poor sleep, fatigue.', hi:'From pills — diarrhoea. Food is safe.' },
+ { id:'na', g:'min', n:'Sodium', s:'Na', u:'mg', t:1500, lim:2300, d:'Fluid balance, nerves. Salt you add is not counted.', lo:'Rare from food; cramps after heavy sweating.', hi:'Higher blood pressure over time.' },
+ { id:'k', g:'min', n:'Potassium', s:'K', u:'mg', t:3400, d:'Heart rhythm, muscles, blood pressure.', lo:'Weakness, cramps, higher blood pressure.', hi:'Only a risk with kidney problems.' },
+ { id:'cl', g:'min', n:'Chloride', s:'Cl', u:'mg', t:2300, ul:3600, d:'Fluid balance, stomach acid. Mostly from salt.', lo:'Rare.', hi:'Comes with too much salt.' },
+ { id:'fe', g:'min', n:'Iron', s:'Fe', u:'mg', t:8, ul:45, d:'Carries oxygen in blood.', lo:'Anaemia: fatigue, pale skin, short breath.', hi:'Stomach upset; pills — organ damage.' },
+ { id:'zn', g:'min', n:'Zinc', s:'Zn', u:'mg', t:11, ul:40, d:'Immunity, testosterone, wound healing, taste.', lo:'Frequent colds, hair loss, poor taste.', hi:'Nausea; long-term — copper deficiency.' },
+ { id:'cu', g:'min', n:'Copper', s:'Cu', u:'mg', t:0.9, ul:10, d:'Iron use, connective tissue, nerves.', lo:'Anaemia, weak immunity.', hi:'Liver damage.' },
+ { id:'mn', g:'min', n:'Manganese', s:'Mn', u:'mg', t:2.3, ul:11, d:'Bones, metabolism, antioxidant enzymes.', lo:'Rare.', hi:'Nervous system problems.' },
+ { id:'se', g:'min', n:'Selenium', s:'Se', u:'µg', t:55, ul:400, d:'Thyroid, antioxidant protection.', lo:'Weak immunity, thyroid problems.', hi:'Hair and nail loss, garlic breath.' },
+ { id:'io', g:'min', n:'Iodine', s:'I', u:'µg', t:150, ul:1100, d:'Thyroid hormones. Iodised salt is not counted.', lo:'Goitre, fatigue, weight gain.', hi:'Thyroid problems.' },
+ { id:'cr', g:'min', n:'Chromium', s:'Cr', u:'µg', t:35, d:'Helps insulin work.', lo:'Rare.', hi:'No known harm from food.' },
+ { id:'mo', g:'min', n:'Molybdenum', s:'Mo', u:'µg', t:45, ul:2000, d:'Breaks down sulfur amino acids.', lo:'Very rare.', hi:'Gout-like symptoms.' },
+ { id:'fl', g:'min', n:'Fluoride', s:'F', u:'mg', t:4, ul:10, d:'Tooth enamel. Mostly from water and toothpaste.', lo:'More cavities.', hi:'Tooth and bone fluorosis.' },
+ // fats
+ { id:'sat', g:'fat', n:'Saturated fat', s:'Sat', u:'g', lim:33, d:'Energy; limit is 10% of calories.', lo:'—', hi:'Raises LDL cholesterol.' },
+ { id:'mono', g:'fat', n:'Monounsaturated', s:'MUFA', u:'g', d:'Heart-friendly fats: olive and canola oil, nuts.', lo:'—', hi:'—' },
+ { id:'poly', g:'fat', n:'Polyunsaturated', s:'PUFA', u:'g', d:'Omega-3 and omega-6 together.', lo:'—', hi:'—' },
+ { id:'ala', g:'fat', n:'Omega-3 ALA', s:'ALA', u:'g', t:1.6, d:'Plant omega-3: flax, canola, walnuts.', lo:'Dry skin, inflammation.', hi:'—' },
+ { id:'epa', g:'fat', n:'Omega-3 EPA+DHA', s:'EPA', u:'mg', t:250, ul:5000, d:'Heart, brain, eyes. From fish or fish oil.', lo:'Higher heart risk, worse recovery.', hi:'Bleeding risk at very high doses.' },
+ { id:'la', g:'fat', n:'Omega-6 LA', s:'LA', u:'g', t:17, d:'Skin, cell membranes.', lo:'Rare: dry skin.', hi:'—' },
+ { id:'trans', g:'fat', n:'Trans fat', s:'Trans', u:'g', lim:2, d:'Industrial fats in baked goods. Keep as low as possible.', lo:'—', hi:'Raises LDL, lowers HDL.' },
+ { id:'ch', g:'fat', n:'Cholesterol', s:'Chol', u:'mg', d:'No set limit; most comes from eggs and meat.', lo:'—', hi:'—' },
+ // carbs & more
+ { id:'fib', g:'carb', n:'Fiber', s:'Fib', u:'g', t:42, d:'Digestion, fullness, blood sugar, gut bacteria.', lo:'Constipation, energy crashes.', hi:'Bloating if raised too fast.' },
+ { id:'sug', g:'carb', n:'Sugars', s:'Sug', u:'g', lim:75, d:'Limit is 10% of calories from added sugar.', lo:'—', hi:'Teeth, energy swings, liver fat.' },
+ { id:'water', g:'carb', n:'Water', s:'H₂O', u:'ml', d:'From food and drinks in the plan, plus the plain water you drink.', lo:'Headache, fatigue, poor training.', hi:'—' },
+ { id:'caf', g:'carb', n:'Caffeine', s:'Caf', u:'mg', lim:400, d:'Alertness. Coffee and tea count if they are in the plan.', lo:'—', hi:'Poor sleep, anxiety, fast heart.' },
+ // essential amino acids (WHO, mg per kg × 71 kg)
+ { id:'leu', g:'amino', n:'Leucine', s:'Leu', u:'g', t:2.77, d:'Switches on muscle growth.', lo:'Slower muscle gain.', hi:'—' },
+ { id:'ile', g:'amino', n:'Isoleucine', s:'Ile', u:'g', t:1.42, d:'Muscle energy, blood sugar.', lo:'Fatigue.', hi:'—' },
+ { id:'val', g:'amino', n:'Valine', s:'Val', u:'g', t:1.85, d:'Muscle repair.', lo:'Fatigue.', hi:'—' },
+ { id:'lys', g:'amino', n:'Lysine', s:'Lys', u:'g', t:2.13, d:'Collagen, calcium uptake.', lo:'Low in grain-based diets.', hi:'—' },
+ { id:'met', g:'amino', n:'Methionine + cysteine', s:'Met', u:'g', t:1.07, d:'Sulfur amino acids: skin, hair, antioxidants.', lo:'Low in plant-only diets.', hi:'—' },
+ { id:'phe', g:'amino', n:'Phenylalanine + tyrosine', s:'Phe', u:'g', t:1.78, d:'Dopamine and thyroid hormones.', lo:'Low mood.', hi:'—' },
+ { id:'thr', g:'amino', n:'Threonine', s:'Thr', u:'g', t:1.07, d:'Collagen, gut lining.', lo:'—', hi:'—' },
+ { id:'trp', g:'amino', n:'Tryptophan', s:'Trp', u:'g', t:0.28, d:'Serotonin and melatonin.', lo:'Low mood, poor sleep.', hi:'—' },
+ { id:'his', g:'amino', n:'Histidine', s:'His', u:'g', t:0.71, d:'Histamine, red blood cells.', lo:'—', hi:'—' },
+];
+const NRARE = new Set(['b7','cl','io','cr','mo','fl']);
+const NFOOD = {
+ 'Молоко протеин': { full:1, vA:40,vD:.1,vE:.02,vK:.1,b1:.04,b2:.2,b3:.1,b5:.36,b6:.04,b9:5,b12:.5,cho:17, ca:160,p:130,mg:14,na:50,k:170,fe:.03,zn:.5,cu:.01,mn:.003,se:4,io:30, sug:4,sat:.6,mono:.25,poly:.04,ala:.01,la:.03,ch:6,water:88, leu:.59,ile:.33,val:.4,lys:.48,met:.21,phe:.58,thr:.27,trp:.08,his:.16 },
+ 'Йогурт греческий': { full:1, vA:90,vD:.1,vE:.2,vK:.4,b1:.02,b2:.25,b3:.2,b5:.3,b6:.06,b7:3,b9:7,b12:.6,cho:15, ca:110,p:135,mg:11,na:35,k:140,fe:.04,zn:.5,cu:.02,mn:.01,se:9,io:25, sug:4,sat:6,mono:2.4,poly:.3,ala:.05,la:.2,ch:30,water:77, leu:.4,ile:.22,val:.27,lys:.35,met:.14,phe:.4,thr:.18,trp:.06,his:.11 },
+ 'Кукурузный крахмал': { full:1, ca:2,p:13,mg:3,na:9,k:3,fe:.47,zn:.06,cu:.05,mn:.05,se:2.8, fib:.9,water:8 },
+ 'Несквик': { ca:40,p:100,mg:60,na:40,k:200,fe:2,zn:.8,cu:.4,mn:.4, fib:6,sug:75,sat:2.4,caf:7,water:1 },
+ 'Арахис': { full:1, vE:8.3,b1:.64,b2:.14,b3:12,b5:1.8,b6:.35,b7:34,b9:240,cho:52, ca:92,p:376,mg:168,na:18,k:705,fe:4.6,zn:3.3,cu:1.1,mn:1.9,se:7.2, fib:8.5,sug:4,sat:7,mono:24,poly:16,la:15.6,water:6.5, leu:1.67,ile:.9,val:1.08,lys:.93,met:.65,phe:2.4,thr:.88,trp:.25,his:.65 },
+ 'Рапсовое масло': { full:1, vE:17.5,vK:71, sat:7.4,mono:63,poly:28,ala:9.1,la:18.6,trans:.4 },
+ 'Овсянка': { full:1, vE:.4,vK:2,b1:.46,b2:.16,b3:1.1,b5:1.1,b6:.1,b7:20,b9:32,cho:40, ca:52,p:410,mg:138,na:6,k:360,fe:4.3,zn:3.6,cu:.4,mn:4.9,se:29, fib:10,sug:1,sat:1.2,mono:2,poly:2.5,ala:.1,la:2.4,water:9, leu:1,ile:.5,val:.7,lys:.55,met:.7,phe:1.1,thr:.44,trp:.18,his:.3 },
+ 'Протеин': { ca:450,p:350,mg:80,na:220,k:550,fe:.8,zn:1.6, sug:4,sat:1.2,ch:150,water:4, leu:9.5,ile:5.2,val:5,lys:8,met:4.2,phe:5.6,thr:5.5,trp:1.5,his:1.6 },
+ 'Кола': { full:1, p:10,na:4,k:2, sug:11,caf:10,water:89 },
+ 'Банан': { full:1, vA:3,vC:8.7,vE:.1,vK:.5,b1:.03,b2:.07,b3:.67,b5:.33,b6:.37,b9:20,cho:10, ca:5,p:22,mg:27,na:1,k:358,fe:.26,zn:.15,cu:.08,mn:.27,se:1, fib:2.6,sug:12,sat:.1,water:75, leu:.07,lys:.05,val:.05,ile:.03,met:.02,phe:.05,thr:.03,trp:.01,his:.08 },
+ 'Курица': { full:1, vA:9,vE:.2,b1:.09,b2:.14,b3:10.4,b5:1.5,b6:.8,b9:4,b12:.2,cho:73, ca:5,p:213,mg:28,na:45,k:334,fe:.37,zn:.7,cu:.04,mn:.01,se:22.8, sat:.6,mono:.7,poly:.4,la:.3,epa:20,ch:73,water:74, leu:1.9,ile:1.2,val:1.25,lys:2.1,met:.93,phe:1.85,thr:1.07,trp:.29,his:.75 },
+ 'Яйцо': { full:1, vA:160,vD:2,vE:1.05,vK:.3,b1:.04,b2:.46,b3:.08,b5:1.5,b6:.17,b7:20,b9:47,b12:.9,cho:294, ca:56,p:198,mg:12,na:142,k:138,fe:1.75,zn:1.3,cu:.07,mn:.03,se:30.7,io:50, sug:.4,sat:3.1,mono:3.7,poly:1.9,ala:.05,la:1.6,epa:70,ch:372,water:76, leu:1.09,ile:.67,val:.86,lys:.91,met:.66,phe:1.18,thr:.56,trp:.17,his:.31 },
+ 'Тапиока': { full:1, ca:20,p:7,mg:1,na:1,k:11,fe:1.6,zn:.1,cu:.02,mn:.1,se:.8, fib:.9,sug:3.4,water:11 },
+ 'Печенье найлепше': { vE:2,vK:10,b1:.2,b2:.15,b3:2,b9:50, ca:30,p:90,mg:25,na:300,k:150,fe:2,zn:.6,cu:.2,mn:.4,se:5, fib:2.5,sug:30,sat:13,mono:9,poly:3,la:2.8,ala:.1,trans:.2,ch:5,water:3 },
+ 'Рис длинный': { full:1, vE:.1,b1:.07,b2:.05,b3:1.6,b5:1,b6:.16,b9:8,cho:6, ca:28,p:115,mg:25,na:5,k:115,fe:.8,zn:1.1,cu:.22,mn:1.1,se:15, fib:1.3,sat:.2,mono:.2,poly:.2,la:.2,water:12, leu:.6,ile:.3,val:.44,lys:.26,met:.35,phe:.76,thr:.25,trp:.08,his:.17 },
+ 'Мандарины оч.': { full:1, vA:34,vC:27,vE:.2,b1:.06,b2:.04,b3:.38,b6:.08,b9:16,cho:10, ca:37,p:20,mg:12,na:2,k:166,fe:.15,zn:.07,cu:.04,mn:.04,se:.1, fib:1.8,sug:10.6,water:85 },
+ 'Киви оч.': { full:1, vA:4,vC:93,vE:1.5,vK:40,b1:.03,b2:.03,b3:.34,b6:.06,b9:25,cho:8, ca:34,p:34,mg:17,na:3,k:312,fe:.3,zn:.14,cu:.13,mn:.1,se:.2, fib:3,sug:9,ala:.04,la:.25,water:83 },
+ 'Сок': { full:1, vA:10,vC:50,vE:.04,b1:.09,b2:.03,b3:.4,b6:.04,b9:30,cho:6, ca:11,p:17,mg:11,na:1,k:200,fe:.2,zn:.05,cu:.04,mn:.01, sug:8.4,water:88 },
+ 'Апельсин': { full:1, vA:11,vC:53,vE:.18,b1:.09,b2:.04,b3:.28,b5:.25,b6:.06,b9:30,cho:8, ca:40,p:14,mg:10,na:0,k:181,fe:.1,zn:.07,cu:.04,mn:.03,se:.5, fib:2.4,sug:9,water:87 },
+};
+
+/* ================= nutrients (reference v4, 23 Oct) =================
+   Average per day over the chosen days (Every day / By weekday / In order), NIH needs + safe upper limits.
+   Micros per 100 g come from the product (e.m) or the built-in table by name; unknown stays unknown. */
+const WD = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+function nst() { if (!S.nut) S.nut = {}; const n = S.nut; if (!n.mode) n.mode = 'every'; if (!n.ign) n.ign = [];
+  const ok = id => S.plans.some(p => p.id === id); if (!ok(n.every)) n.every = S.active;
+  if (!Array.isArray(n.week) || n.week.length !== 7) n.week = Array(7).fill(S.active); n.week = n.week.map(id => ok(id) ? id : null);
+  if (!Array.isArray(n.order) || !n.order.length) n.order = [S.active]; n.order = n.order.filter(ok); if (!n.order.length) n.order = [S.active];
+  if (!S.supp) S.supp = []; return n; }
+function nMix() { const n = nst(), days = n.mode === 'every' ? [n.every] : n.mode === 'week' ? n.week.filter(Boolean) : n.order;
+  const c = {}; days.forEach(id => c[id] = (c[id] || 0) + 1); return { mix: Object.entries(c).map(([id, d]) => [S.plans.find(p => p.id === id), d]).filter(x => x[0]), days: days.length }; }
+function nVal(e, k) { const m = e.m || NFOOD[e.name]; if (!m) return undefined; if (k in m) return m[k]; return m.full && !NRARE.has(k) ? 0 : undefined; }
+function nPlanItems(p) {   // [food, grams eaten] for a plan, dishes split by their portion
+  const out = []; S.items.forEach(e => {
+    if (e.t !== 'g') { const g = p.g[e.id] || 0; if (g) out.push([e, g]); return; }
+    const mx = e.ch.reduce((s, c) => s + (p.g[c.id] || 0), 0); if (!mx) return;
+    const r = Math.min(1, (p.g[e.id] ?? mx) / mx); e.ch.forEach(c => { const g = (p.g[c.id] || 0) * r; if (g) out.push([c, g]); }); });
+  return out; }
+function nTotals() {
+  syncGrams(); const { mix, days } = nMix(), acc = {}; NUT.forEach(n => acc[n.id] = { v: 0, cov: 0, sv: 0, src: {} });
+  mix.forEach(([p, d]) => { const it = nPlanItems(p), tot = it.reduce((s, x) => s + x[1], 0) || 1;
+    NUT.forEach(n => { const a = acc[n.id]; let known = 0;
+      it.forEach(([e, g]) => { const x = nVal(e, n.id); if (x === undefined) return; known += g; const v = x * g / 100 * d / days; a.v += v; if (v > 0) a.src[e.name] = (a.src[e.name] || 0) + v; });
+      a.cov += known / tot * d / days; }); });
+  S.supp.forEach(s => Object.entries(s.n || {}).forEach(([k, x]) => { if (acc[k]) { acc[k].sv += x * (s.pcs || 1); acc[k].src[s.name] = (acc[k].src[s.name] || 0) + x * (s.pcs || 1); } }));
+  return { acc, days, mix }; }
+function nStatus(n, a) { const v = a.v + a.sv, ig = nst().ign.includes(n.id);
+  let s; if (a.cov < .5 && !a.sv) s = 'nd'; else if (n.lim) s = v > n.lim ? 'over' : 'ok'; else if (!n.t) s = 'none';
+  else if (n.ul && (n.uls ? a.sv > n.ul : v > n.ul)) s = 'over'; else s = v >= n.t * .9 ? 'ok' : 'short';
+  return { s, ig, v, p: (n.t || n.lim) ? Math.round(v / (n.t || n.lim) * 100) : null }; }
+const nFmt = v => v >= 1000 ? Math.round(v).toLocaleString('en-US').replace(/,/g, ' ') : v >= 10 ? String(Math.round(v)) : v >= 1 ? (+v.toFixed(1)).toString() : v === 0 ? '0' : (+v.toFixed(2)).toString();
+const nAmt = (n, x) => x.s === 'nd' ? 'no data' : n.t ? `${nFmt(x.v)} of ${nFmt(n.t)} ${n.u}` : n.lim ? `${nFmt(x.v)} · limit ${nFmt(n.lim)} ${n.u}` : `${nFmt(x.v)} ${n.u}`;
+const nTile = x => x.s === 'nd' ? '?' : x.p === null ? nFmt(x.v) : x.p + '%';
+const nWhy = (n, x) => (x.s === 'over' ? n.hi : n.lo).replace(/\.$/, '');
+let nMore = false;
+function nRows() { const T = nTotals(); return { ...T, R: NUT.map(n => ({ n, a: T.acc[n.id], ...nStatus(n, T.acc[n.id]) })) }; }
+function nTitle() { const n = nst(), { mix } = nMix(); if (!mix.length) return 'No plan'; const ps = mix.map(m => m[0].name);
+  return ps.length === 1 ? ps[0] : `${ps[0]} +${ps.length - 1}`; }
+function renderNut() {
+  const el = $('#nutBody'); if (!el) return; const { R, days, mix } = nRows();
+  const bad = R.filter(x => !x.ig && (x.s === 'short' || x.s === 'over')).sort((a, b) => (b.s === 'over') - (a.s === 'over') || a.p - b.p);
+  const ok = R.filter(x => x.s === 'ok').length, nd = R.filter(x => x.s === 'nd').length, ign = R.filter(x => x.ig);
+  $('#nutTitle').textContent = nTitle();
+  const card = x => `<button class="nu-card" data-n="${x.n.id}"><div class="nu-ch"><b>${x.n.n}</b><span class="nu-pl ${x.s}">${x.p}%</span></div>
+    <div class="nu-bar ${x.s}"><i style="width:${Math.min(100, x.p)}%"></i>${x.s === 'over' ? '' : '<u></u>'}</div>
+    <div class="nu-am">${nAmt(x.n, x)} a day</div><div class="nu-why">${esc(nWhy(x.n, x))}.</div>${(() => { const t = Object.entries(x.a.src).sort((p, q) => q[1] - p[1]).slice(0, 3).map(z => esc(z[0])); return t.length ? `<div class="nu-from">Mostly from ${t.join(', ')}</div>` : ''; })()}</button>`;
+  const shown = nMore ? bad : bad.slice(0, 3);
+  const row = x => `<button class="nu-row" data-n="${x.n.id}"><span class="nu-t ${x.ig ? 'ig' : x.s}">${nTile(x)}</span><span class="nu-nm"><b>${x.n.n}</b><span>${x.ig ? 'ignored · ' : ''}${nAmt(x.n, x)}</span></span></button>`;
+  const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="nu-sec"><b>${NG[g]}</b><span><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div>${xs.map(row).join('')}`; };
+  el.innerHTML = `<div class="nu-hero"><div><div class="nu-big">${bad.length ? `${bad.length} to fix` : 'All good'}</div>
+      <div class="nu-sub"><em>${ok} ok</em> · ${nd} unknown · ${days} ${days === 1 ? 'day' : 'days'} · <button class="nu-how" id="nuHow">how</button></div></div></div>
+    ${bad.length ? `<div class="nu-cards">${shown.map(card).join('')}</div>${bad.length > 3 ? `<button class="nu-more" id="nuMore">${nMore ? 'Show less' : `Show ${bad.length - 3} more`}</button>` : ''}` : ''}
+    ${ign.length ? `<button class="nu-ignrow" id="nuIgn"><b>Ignored · ${ign.length}</b><span>${ign.map(x => x.n.n).join(', ')} — not counted</span></button>` : ''}
+    <div class="nu-sec nu-sup"><b>Supplements</b><button class="nu-add" id="nuAddSup">+ Add</button></div>
+    ${S.supp.length ? S.supp.map(s => `<button class="nu-row" data-s="${s.id}"><span class="nu-t">${s.pcs}pc</span><span class="nu-nm"><b>${esc(s.name)}</b><span>${Object.entries(s.n || {}).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? `${n.s} ${nFmt(v * s.pcs)} ${n.u}` : ''; }).join(' · ') || 'no nutrients yet'}</span></span></button>`).join('') : '<div class="nu-empty">Pills you take every day, whatever the plan</div>'}
+    ${['vit', 'min', 'fat', 'carb', 'amino'].map(grp).join('')}`;
+  el.querySelectorAll('[data-n]').forEach(b => b.addEventListener('click', () => { haptic(); nDetail(b.dataset.n); }));
+  el.querySelectorAll('[data-s]').forEach(b => b.addEventListener('click', () => { haptic(); suppSheet(S.supp.find(s => s.id === b.dataset.s)); }));
+  const m = $('#nuMore'); if (m) m.addEventListener('click', () => { haptic(); nMore = !nMore; renderNut(); });
+  $('#nuHow').addEventListener('click', e => { e.stopPropagation(); haptic(); nHow(); });
+  $('#nuAddSup').addEventListener('click', () => { haptic(); suppSheet(null); });
+  const ig = $('#nuIgn'); if (ig) ig.addEventListener('click', () => { haptic(); nIgnored(); });
+}
+function nDetail(id) {
+  const n = NUT.find(z => z.id === id), { R } = nRows(), x = R.find(r => r.n.id === id), src = Object.entries(x.a.src).sort((a, b) => b[1] - a[1]).slice(0, 4), tot = src.reduce((s, z) => s + z[1], 0) || 1;
+  sheet(`<div class="sh-head"><span class="sh-kick">${NG[n.g]}</span><span class="nu-sht">${n.n}</span>${XBTN}</div>
+    <div class="nu-dbig"><b>${x.s === 'nd' ? '?' : nFmt(x.v)}</b><span>${n.t ? `of ${nFmt(n.t)} ${n.u} a day` : n.lim ? `limit ${nFmt(n.lim)} ${n.u}` : n.u}</span>${x.p !== null && x.s !== 'nd' ? `<span class="nu-pl ${x.s}">${x.p}%</span>` : ''}</div>
+    <div class="nu-txt"><b>WHAT IT DOES</b>${esc(n.d)}</div>${n.lo !== '—' ? `<div class="nu-txt"><b>TOO LITTLE</b>${esc(n.lo)}</div>` : ''}${n.hi !== '—' ? `<div class="nu-txt"><b>TOO MUCH</b>${esc(n.hi)}</div>` : ''}
+    ${src.length ? `<div class="cap">Where it comes from</div>${src.map(([f, v]) => `<div class="nu-src"><span>${esc(f)}</span><span class="mono">${Math.round(v / tot * 100)}%</span></div>`).join('')}` : ''}
+    ${x.s === 'short' || x.s === 'over' || x.ig ? `<button class="sbtn plain" id="nuIg">${x.ig ? 'Count it again' : 'Ignore'}</button>` : ''}`, s => {
+    const b = s.querySelector('#nuIg'); if (b) b.addEventListener('click', () => { const ig = nst().ign; const i = ig.indexOf(id);
+      if (i >= 0) ig.splice(i, 1); else ig.push(id); save(); closeSheet(); haptic(); renderNut(); toast(i >= 0 ? `${n.n} counted again` : `${n.n} ignored`); }); });
+}
+function nIgnored() { const ig = nst().ign;
+  sheet(`<h3>Ignored${XBTN}</h3><div class="nu-list">${ig.map(id => { const n = NUT.find(z => z.id === id); return n ? `<div class="nu-src"><span>${n.n}</span><button class="so-chip" data-un="${id}">Count again</button></div>` : ''; }).join('')}</div>`, s => {
+    s.querySelectorAll('[data-un]').forEach(b => b.addEventListener('click', () => { ig.splice(ig.indexOf(b.dataset.un), 1); save(); haptic(); closeSheet(); renderNut(); })); });
+}
+function nHow() {
+  const b = S.body || {};
+  sheet(`<h3>How it’s counted${XBTN}</h3><div class="nu-how-l">
+    <div><span class="nu-t short">62%</span><p><b>To fix · not enough</b>Below 90% of the daily need, on average over the chosen days. Needs are the NIH daily values for ${b.sex === 'f' ? 'a woman' : 'a man'}, ${b.age || 30}.</p></div>
+    <div><span class="nu-t over">232%</span><p><b>To fix · too much</b>Above the safe upper limit — or above the limit for sugar, salt, saturated and trans fat.</p></div>
+    <div><span class="nu-t ok">104%</span><p><b>OK</b>90% of the need or more, and under the limit.</p></div>
+    <div><span class="nu-t nd">?</span><p><b>Unknown</b>More than half of the food has no data for it. Not counted as a problem.</p></div></div>
+    <button class="sbtn primary" data-close>Got it</button>`);
+}
+function nPicker() {
+  const n = nst(); let mode = n.mode; const week = n.week.slice(), order = n.order.slice(); let every = n.every;
+  const opt = (sel, none) => (none ? `<option value="">No plan</option>` : '') + S.plans.map(p => `<option value="${p.id}"${p.id === sel ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
+  const body = () => mode === 'every' ? `<div class="nu-prow"><span>Every day</span><select data-k="every">${opt(every)}</select></div>`
+    : mode === 'week' ? WD.map((d, i) => `<div class="nu-prow"><span>${d}</span><select data-k="w${i}">${opt(week[i], true)}</select></div>`).join('')
+    : `<p class="nu-hint">Day 1, day 2, day 3… then the list starts over. A different menu every day of the month — just add 30 days.</p>${order.map((id, i) => `<div class="nu-prow"><span class="nu-num">${i + 1}</span><select data-k="o${i}">${opt(id)}</select><button class="nu-del" data-del="${i}" aria-label="Remove day">${ICON.x}</button></div>`).join('')}<button class="so-chip nu-addday" id="nuAddDay">+ Add a day</button>`;
+  sheet(`<h3>What do you eat?${XBTN}</h3><div class="nu-seg">${[['every', 'Every day'], ['week', 'By weekday'], ['order', 'In order']].map(([v, l]) => `<button data-m="${v}" class="${v === mode ? 'on' : ''}">${l}</button>`).join('')}</div>
+    <div id="nuPB"></div><button class="sbtn primary" id="nuDone">Done</button>`, s => {
+    const draw = () => { s.querySelector('#nuPB').innerHTML = body(); s.querySelectorAll('.nu-seg button').forEach(b => b.classList.toggle('on', b.dataset.m === mode));
+      s.querySelectorAll('select').forEach(sel => sel.addEventListener('change', () => { const k = sel.dataset.k, v = sel.value || null;
+        if (k === 'every') every = v; else if (k[0] === 'w') week[+k.slice(1)] = v; else order[+k.slice(1)] = v; }));
+      s.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => { if (order.length > 1) { order.splice(+b.dataset.del, 1); haptic(); draw(); } }));
+      const ad = s.querySelector('#nuAddDay'); if (ad) ad.addEventListener('click', () => { order.push(order[order.length - 1] || S.active); haptic(); draw(); }); };
+    s.querySelectorAll('.nu-seg button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.m; haptic(); draw(); }));
+    draw();
+    s.querySelector('#nuDone').addEventListener('click', () => { Object.assign(n, { mode, every, week, order }); save(); closeSheet(); haptic(); renderNut(); });
+  });
+}
+function suppSheet(sp) {
+  const isNew = !sp; const d = sp ? JSON.parse(JSON.stringify(sp)) : { id: uid(), name: '', pcs: 1, n: {} };
+  const tiles = () => Object.entries(d.n).map(([k, v]) => { const n = NUT.find(z => z.id === k); return `<label class="vt"><span class="l">${n.n}</span><b><input inputmode="decimal" data-nk="${k}" value="${v}"><span class="u">${n.u}</span></b></label>`; }).join('') + `<button class="vt nu-addn" id="nuAddN">+ Nutrient</button>`;
+  sheet(`<div class="sh-head"><span class="sh-kick">${isNew ? 'New supplement' : 'Supplement'}</span><input class="sh-name" id="spName" placeholder="Name" value="${esc(d.name)}">${isNew ? '' : `<button class="sh-ic red" id="spDel" aria-label="Delete">${ICON.trash || '×'}</button>`}${XBTN}</div>
+    <div class="cap">Taken every day, whatever the plan</div>
+    <div class="nu-prow"><span>Pieces a day</span><div class="nu-stp"><button id="spM">−</button><b id="spP">${d.pcs}</b><button id="spPl">+</button></div></div>
+    <div class="cap">In one piece · from the label</div><div class="nu-vts" id="spT"></div>
+    <button class="sbtn primary" id="spSave">${isNew ? 'Add supplement' : 'Save'}</button>`, s => {
+    const drawT = () => { s.querySelector('#spT').innerHTML = tiles();
+      s.querySelectorAll('[data-nk]').forEach(i => i.addEventListener('input', () => { d.n[i.dataset.nk] = parseFloat(i.value.replace(',', '.')) || 0; }));
+      s.querySelector('#nuAddN').addEventListener('click', () => { haptic(); nutPick(k => { if (!(k in d.n)) d.n[k] = 0; drawT(); }); }); };
+    drawT();
+    s.querySelector('#spM').addEventListener('click', () => { d.pcs = Math.max(1, d.pcs - 1); s.querySelector('#spP').textContent = d.pcs; haptic(); });
+    s.querySelector('#spPl').addEventListener('click', () => { d.pcs = Math.min(20, d.pcs + 1); s.querySelector('#spP').textContent = d.pcs; haptic(); });
+    s.querySelector('#spSave').addEventListener('click', () => { d.name = s.querySelector('#spName').value.trim() || 'Supplement';
+      Object.keys(d.n).forEach(k => { if (!d.n[k]) delete d.n[k]; });
+      if (isNew) S.supp.push(d); else Object.assign(sp, d); save(); closeSheet(); haptic(); renderNut(); toast(isNew ? `${d.name} added` : 'Saved'); });
+    const del = s.querySelector('#spDel'); if (del) del.addEventListener('click', () => { const i = S.supp.indexOf(sp); S.supp.splice(i, 1); save(); closeSheet(); renderNut();
+      toast(`${sp.name} deleted`, { label: 'Undo', fn: () => { S.supp.splice(i, 0, sp); save(); renderNut(); } }); });
+  });
+}
+function nutPick(done) {   // a small second sheet over the supplement sheet: search the full list
+  const host = openSheet; const box = document.createElement('div'); box.className = 'nu-pick';
+  box.innerHTML = `<div class="nu-pick-in"><h3>Add a nutrient<button class="x" aria-label="Close">${ICON.x}</button></h3><input class="nu-q" placeholder="Search" inputmode="search"><div class="nu-pl-l"></div></div>`;
+  host.s.append(box); const L = box.querySelector('.nu-pl-l'), q = box.querySelector('.nu-q');
+  const draw = () => { const t = q.value.trim().toLowerCase(); L.innerHTML = ['vit', 'min', 'fat', 'carb', 'amino'].map(g => { const xs = NUT.filter(n => n.g === g && (!t || (n.n + ' ' + n.s).toLowerCase().includes(t))); return xs.length ? `<div class="cap">${NG[g]}</div>${xs.map(n => `<button class="nu-pi" data-k="${n.id}">${n.n}<span>${n.u}</span></button>`).join('')}` : ''; }).join('');
+    L.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => { haptic(); box.remove(); done(b.dataset.k); })); };
+  q.addEventListener('input', draw); box.querySelector('.x').addEventListener('click', () => box.remove()); draw();
+}
+$('#nutPlanBtn').addEventListener('click', () => { haptic(); nPicker(); });
 
 /* ================= wiring ================= */
 $('#searchBtn').insertAdjacentHTML('beforeend', '<span class="slab">Search</span>');
