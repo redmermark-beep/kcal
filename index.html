@@ -1088,16 +1088,10 @@ body.v2 .zhead[hidden]{display:none}
 /* list title spacing: 20 above / 14 to the list at rest → 12 / 12 around the divider when the chips collapse */
 body.v2.ma.tab-meal .mhead .list-head{padding:calc(20px - 8px * var(--c,0)) 0 calc(6px + 6px * var(--c,0))}
 
-/* ---------- Chips · Soft (Final 3, 23 Oct): Row + grey when under, r 18, gap 8, faint sheen, delta in a pill ---------- */
-body.ch-soft .hv53 .hcs{gap:8px!important}
+/* ---------- Chips · Soft (Final 1, 23 Oct): Row + grey when under, rounded 18; colours come from --blue / --over ---------- */
 body.ch-soft .hv53 .hc{border-radius:18px!important}
-body.ch-soft .hv53 .hc.under{background-color:rgba(0,0,0,.075)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)!important}
+body.ch-soft .hv53 .hc.under{background-color:rgba(0,0,0,.075)!important;box-shadow:none!important}
 body.ch-soft .hv53 .hc.under .ht{background:rgba(0,0,0,.12)!important}
-body.ch-soft .hv53 .hc.over,body.ch-soft .hv53 .hc.ok{background-image:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0) 45%)!important}
-body.ch-soft .hv53 .hc-top span{flex:none;overflow:visible}
-body.ch-soft .hv53 .hc-top em{padding:2px 6px;border-radius:9px;background:rgba(255,255,255,.18);font-style:normal;font-size:11px!important;font-weight:600}
-body.ch-soft .hv53 .hc:not([data-m="k"]) .hc-top em{padding:1px 5px;font-size:10px!important}
-body.ch-soft .hv53 .hc.under .hc-top em{background:rgba(0,0,0,.08)}
 </style>
 
 <div class="app" id="app">
@@ -1673,7 +1667,7 @@ const preInv = hex => { const c = [1, 3, 5].map(i => parseInt((hex.length === 4 
   return '#' + HR.map(r => Math.round(Math.min(1, Math.max(0, 1 - (r[0] * c[0] + r[1] * c[1] + r[2] * c[2]))) * 255).toString(16).padStart(2, '0')).join(''); };
 const swHTML = (k, on) => `<button class="swt${on ? ' on' : ''}" role="switch" aria-checked="${on}" data-set="${k}"><i></i></button>`;
 const GRIDS = [['cur', 'Current', 'Chips inside the card, list on 16'], ['3', 'Keyline 24', 'Everything on one line at 24 · 4 columns, gap 8'], ['4', '8-pt', 'Everything on 16 · 4 columns, gap 8, steps of 8'], ['7', '5 col', '5 columns, KCAL takes two · margins 20, gap 6']];
-const CHIP_STYLES = [['soft', 'Soft', 'Four chips, softer: grey when under, rounded 18, a faint sheen, delta in a pill'], ['row', 'Row', 'Four chips in one row, KCAL takes two columns'], ['hero', 'Hero', 'KCAL full width on top, P F C below']];
+const CHIP_STYLES = [['soft', 'Soft', 'Four chips, softer: grey when under, rounded 18'], ['row', 'Row', 'Four chips in one row, KCAL takes two columns'], ['hero', 'Hero', 'KCAL full width on top, P F C below']];
 const SHEET_STYLES = [['b', 'Tiles', 'Product sheet: four tiles, unit on top'], ['g', 'Chips', 'Product sheet: chips like the header, kcal per macro']];
 const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21', 'Card', 'Plan and chips on a white card']];
 function renderSettings() {
