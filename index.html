@@ -1071,14 +1071,22 @@ body.v2 .zhead[hidden]{display:none}
 .bal-r b svg{flex:none;opacity:.5}
 .bal-r em{font-style:normal;font-family:var(--mono);font-size:15px;font-weight:600}
 .bal-r em.p{color:var(--blue)}
-.bal-res{margin:12px 4px 16px;font-family:var(--mono);font-size:13px;color:var(--ink-50)}
-.bal-res b{color:var(--blue)}
+.bal-rows{max-height:44vh;overflow:auto}
+.br1{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:6px;margin:14px 0 16px}
+.br1>div{padding:9px 10px;border-radius:14px;background:var(--fill-6)}
+.br1 span{display:block;font-size:11px;font-weight:510;color:var(--ink-50)}
+.br1 s{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-50);margin-top:2px}
+.br1 b{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:17px;font-weight:600;color:var(--ink)}
+.br1 b svg{color:var(--blue)}
 .bal-nav{display:flex;align-items:center;margin-top:6px}
 .bal-nav button{flex:1;height:44px;font-size:14px;font-weight:510;color:var(--ink)}
 .bal-nav button:first-child{text-align:left;padding-left:6px}.bal-nav button:last-child{text-align:right;padding-right:6px}
 .bal-nav button:disabled{color:var(--ink-50);opacity:.45}
 .bal-nav span{font-family:var(--mono);font-size:12px;color:var(--ink-50)}
 .bal-none{margin:4px 4px 8px;font-size:15px;line-height:21px;color:var(--ink-50)}
+
+/* list title spacing: 20 above / 14 to the list at rest → 12 / 12 around the divider when the chips collapse */
+body.v2.ma.tab-meal .mhead .list-head{padding:calc(20px - 8px * var(--c,0)) 0 calc(6px + 6px * var(--c,0))}
 </style>
 
 <div class="app" id="app">
@@ -2206,18 +2214,37 @@ function ghostOff() {
    Up to three portion changes that bring kcal, P, F and C into their ranges.
    A dish (group) only changes as a whole portion, never its recipe. */
 function goalRange(k, g = goal()) { return g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)]; }
-function balanceOptions() {
+function balanceOptions(relax = 1) {
   const g = goal(), K = ['k', 'p', 'f', 'c'], t0 = totals();
   const R = K.map(k => goalRange(k, g)), C = R.map(([a, b]) => (a + b) / 2), W = R.map(([a, b]) => Math.max(1, (b - a) / 2));
+  // realistic limits: pieces ≤ 4, very dense (nuts, oil, cookies) ≤ 60 g, dry grains / powders ≤ 200 g, drinks ≤ 750 ml; `p` = a typical portion
   const cand = S.items.map(e => {
-    if (e.t === 'g') { const mx = maxOf(e); if (!mx) return null; const full = mac({ ...e, g: mx }); return { e, v: K.map(k => full[k] / mx), lo: 0, hi: mx, step: 5, g0: e.g }; }
-    if (!e.n) return null; const pc = isPc(e);
-    return { e, v: K.map(k => (e.n[k] || 0) / 100), lo: 0, hi: e.g + 600, step: pc ? e.uw : 5, g0: e.g };
+    if (e.t === 'g') { const mx = maxOf(e); if (!mx) return null; const full = mac({ ...e, g: mx }); return { e, v: K.map(k => full[k] / mx), lo: 0, hi: mx, step: 5, g0: e.g, p: mx, min: mx * .4 }; }
+    if (!e.n) return null;
+    const d = e.n.k || 0, pc = isPc(e), ml = U(e) === 'ml';
+    const p = pc ? e.uw * 1.5 : ml ? 250 : d >= 450 ? 30 : d >= 300 ? 80 : d >= 150 ? 150 : 200;
+    const gcap = d >= 450 ? 60 : d >= 300 ? 200 : d >= 150 ? 300 : 500;
+    const cap = (pc ? e.uw * Math.max(1, Math.min(4, Math.floor(gcap / e.uw))) : ml ? 750 : gcap) * relax;
+    return { e, v: K.map(k => (e.n[k] || 0) / 100), lo: 0, hi: Math.max(e.g, pc ? Math.floor(cap / e.uw) * e.uw : cap), step: pc ? e.uw : ml ? 10 : 5, g0: e.g, p, min: pc ? e.uw : p * .3 };
   }).filter(x => x && x.v.some(n => n > 0));
   const fits = t => K.every((k, i) => t[i] >= R[i][0] - 1e-6 && t[i] <= R[i][1] + 1e-6);
   const T0 = K.map(k => t0[k]);
   const err = t => t.reduce((s, x, i) => s + ((x - C[i]) / W[i]) ** 2, 0);
-  const solve = set => {   // weighted least squares on the chosen items, m ≤ 3
+  const totOf = (set, gs) => T0.map((x, i) => x + set.reduce((s, c, j) => s + c.v[i] * (gs[j] - c.g0), 0));
+  const sols = [], n = cand.length, seen = new Set();
+  const push = (set, gs, extra = 0) => {
+    const ch = set.map((c, j) => ({ e: c.e, from: c.g0, to: gs[j] })).filter(x => Math.abs(x.to - x.from) > 1e-6);
+    if (!ch.length) return; const key = ch.map(x => x.e.id + ':' + x.to).sort().join('|'); if (seen.has(key)) return; seen.add(key);
+    const t = totOf(set, gs);
+    const cost = ch.length * 10 + err(t) * 2 + extra + set.reduce((s, c, j) => s + Math.abs(gs[j] - c.g0) * (c.v[0] || 1) / 100 + Math.abs(gs[j] - c.g0) / Math.max(c.g0, c.p) * 6 + (c.g0 === 0 && gs[j] > 0 ? 3 : 0), 0);
+    sols.push({ changes: ch, t: { k: t[0], p: t[1], f: t[2], c: t[3] }, cost });
+  };
+  // greedy ± one step until it fits (or stops improving)
+  const repair = (set, gs) => { for (let it = 0; it < 60; it++) { const e0 = err(totOf(set, gs)); let best = null, be = e0;
+      set.forEach((c, j) => { for (const s2 of [-1, 1]) { const t2 = gs.slice(); t2[j] = Math.min(c.hi, Math.max(c.lo, t2[j] + s2 * c.step)); const e2 = err(totOf(set, t2)); if (e2 < be - 1e-9) { be = e2; best = t2; } } });
+      if (!best) break; gs = best; if (fits(totOf(set, gs)) && be < .5) break; } return gs; };
+  // 1) up to three changes (weighted least squares on the chosen items)
+  const solve = set => {
     const m = set.length, A = [], b = [];
     for (let i = 0; i < 4; i++) { A.push(set.map(c => c.v[i] / W[i])); b.push((C[i] - T0[i]) / W[i]); }
     const N = Array.from({ length: m }, (_, r) => Array.from({ length: m }, (_, c) => A.reduce((s, row) => s + row[r] * row[c], 0) + (r === c ? 1e-6 : 0)));
@@ -2227,34 +2254,72 @@ function balanceOptions() {
     const d = Array(m).fill(0); for (let i = m - 1; i >= 0; i--) { let s2 = y[i]; for (let c = i + 1; c < m; c++) s2 -= N[i][c] * d[c]; d[i] = s2 / N[i][i]; }
     return d;
   };
-  const sols = [], n = cand.length;
   const tryset = set => {
     const d = solve(set); if (!d) return;
-    let gs = set.map((c, i) => { const v = Math.min(c.hi, Math.max(c.lo, c.g0 + d[i])); return Math.round(v / c.step) * c.step; });
-    const tot = gs2 => T0.map((x, i) => x + set.reduce((s, c, j) => s + c.v[i] * (gs2[j] - c.g0), 0));
-    // nudge each rounded value by ±1 step if that gets closer
-    for (let pass = 0; pass < 2; pass++) set.forEach((c, j) => { let best = gs, be = err(tot(gs));
-      for (const s2 of [-1, 1]) { const t2 = gs.slice(); t2[j] = Math.min(c.hi, Math.max(c.lo, t2[j] + s2 * c.step)); const e2 = err(tot(t2)); if (e2 < be) { be = e2; best = t2; } } gs = best; });
-    if (set.some((c, j) => Math.abs(gs[j] - c.g0) < c.step / 2)) return;   // a no-op change: a smaller set covers it
-    const t = tot(gs); if (!fits(t)) return;
-    const cost = set.length * 10 + err(t) * 2 + set.reduce((s, c, j) => s + Math.abs(gs[j] - c.g0) * (c.v[0] || 1) / 100 + Math.abs(gs[j] - c.g0) / Math.max(c.g0, 100) * 6 + (c.g0 === 0 ? 3 : 0), 0);
-    sols.push({ changes: set.map((c, j) => ({ e: c.e, from: c.g0, to: gs[j] })), t: { k: t[0], p: t[1], f: t[2], c: t[3] }, cost });
+    let gs = set.map((c, i) => Math.round(Math.min(c.hi, Math.max(c.lo, c.g0 + d[i])) / c.step) * c.step);
+    gs = repair(set, gs);
+    if (set.some((c, j) => Math.abs(gs[j] - c.g0) < c.step / 2)) return;
+    if (set.some((c, j) => c.g0 === 0 && gs[j] > 0 && gs[j] < c.min)) return;   // no crumbs
+    if (fits(totOf(set, gs))) push(set, gs);
   };
-  for (let a = 0; a < n; a++) tryset([cand[a]]);
-  for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) tryset([cand[a], cand[b2]]);
-  if (sols.length < 4) for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) for (let c2 = b2 + 1; c2 < n; c2++) tryset([cand[a], cand[b2], cand[c2]]);
-  return sols.sort((x, y) => x.cost - y.cost).slice(0, 8);
+  const empty = t0.k < g.k * .6;
+  if (!empty) {
+    for (let a = 0; a < n; a++) tryset([cand[a]]);
+    for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) tryset([cand[a], cand[b2]]);
+    if (sols.length < 4) for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) for (let c2 = b2 + 1; c2 < n; c2++) tryset([cand[a], cand[b2], cand[c2]]);
+  }
+  const quick = sols.length;
+  // 2) build the plan: spread portions across products (coordinate descent with a pull towards a normal portion)
+  if (empty || quick < 2) {
+    const build = (lam, banned) => {
+      const x = cand.map(c => c.g0), locked = cand.map((c, i) => banned.has(c.e.id));
+      const sweep = () => { for (let it = 0; it < 120; it++) cand.forEach((c, i) => { if (locked[i]) return;
+        const t = totOf(cand, x); let a = lam / (c.p * c.p), bb = 0;
+        for (let k = 0; k < 4; k++) { const w = c.v[k] / W[k]; a += w * w; bb += w * ((t[k] - C[k]) / W[k]); }
+        bb -= 0; const xi = x[i] - (bb + lam * (x[i] - c.g0) / (c.p * c.p) - 0) / a;
+        x[i] = Math.min(c.hi, Math.max(c.lo, xi)); }); };
+      sweep();
+      // drop crumbs and keep at most 8 changes, then settle again
+      for (let r = 0; r < 3; r++) { const chg = cand.map((c, i) => ({ i, d: Math.abs(x[i] - c.g0) })).filter(o => !locked[o.i] && o.d > 1e-6);
+        chg.forEach(o => { const c = cand[o.i]; if (c.g0 === 0 && x[o.i] < c.min) { x[o.i] = c.g0; locked[o.i] = true; } });
+        const left = chg.filter(o => !locked[o.i]).sort((p2, q) => q.d * (cand[q.i].v[0] || 1) - p2.d * (cand[p2.i].v[0] || 1));
+        left.slice(8).forEach(o => { x[o.i] = cand[o.i].g0; locked[o.i] = true; });
+        sweep(); }
+      let gs = x.map((v, i) => Math.round(v / cand[i].step) * cand[i].step);
+      const act = cand.map((c, i) => i).filter(i => !locked[i]);
+      const sub = act.map(i => cand[i]); let gsub = act.map(i => gs[i]); gsub = repair(sub, gsub);
+      act.forEach((i, j) => { gs[i] = gsub[j]; });
+      cand.forEach((c, i) => { if (c.g0 === 0 && gs[i] > 0 && gs[i] < c.min) gs[i] = 0; });
+      if (fits(totOf(cand, gs))) { push(cand, gs, -5); return gs; }
+      return null;
+    };
+    const tried = new Set();
+    const first = build(.15, new Set());
+    [.08, .4].forEach(l => build(l, new Set()));
+    if (first) {   // alternatives: leave out the biggest contributors of the first plan, one at a time
+      const big = cand.map((c, i) => ({ id: c.e.id, k: Math.abs(first[i] - c.g0) * c.v[0] })).filter(o => o.k > 0).sort((a2, b3) => b3.k - a2.k).slice(0, 4);
+      big.forEach(o => { if (tried.has(o.id)) return; tried.add(o.id); build(.15, new Set([o.id])); });
+    }
+  }
+  return { opts: sols.sort((x, y) => x.cost - y.cost).slice(0, 8), build: empty || quick < 2 };
+}
+const CKs = '<svg viewBox="0 0 14 14" width="11" height="11" fill="none" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function balRes(t1) {   // R1: grey tiles, old value small and struck, new value bold, a blue check when it lands in range
+  const t0 = totals(), L = { k: 'KCAL', p: 'P', f: 'F', c: 'C' };
+  const ok = k => { const [a, b] = goalRange(k); return t1[k] >= a && t1[k] <= b; };
+  return `<div class="br1">${['k', 'p', 'f', 'c'].map(k => `<div><span>${L[k]}</span><s>${r0(t0[k])}</s><b>${r0(t1[k])}${ok(k) ? CKs : ''}</b></div>`).join('')}</div>`;
 }
 const BOWL_I = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18a9 9 0 0 1-18 0z"/></svg>';
 function balanceSheet() {
-  const opts = balanceOptions(); let i = 0;
+  let r = balanceOptions(); if (!r.opts.length) r = balanceOptions(1.5); if (!r.opts.length) r = balanceOptions(2);   // relax the portion limits only if nothing fits
+  const { opts, build } = r; let i = 0;
   const fmtD = ch => { const e = ch.e, d = e.t === 'g' ? ch.to - ch.from : toU(e, ch.to) - toU(e, ch.from), u = e.t === 'g' ? 'g' : uLab(e);
     return `${d > 0 ? '+' : '−'}${Math.abs(Math.round(d * 10) / 10)} ${u}`; };
-  const body = () => { if (!opts.length) return `<p class="bal-none">No way to fit with up to three changes.<br>Try changing the plan by hand.</p>`;
+  const body = () => { if (!opts.length) return `<p class="bal-none">Couldn't find a plan that fits with these products.<br>Add a few more products and try again.</p>`;
     const o = opts[i];
     return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}${esc(ch.e.name)}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fmtD(ch)}</em></div>`).join('')}</div>
-      <div class="bal-res">→ <b>${r0(o.t.k)}</b> kcal · P <b>${r0(o.t.p)}</b> · F <b>${r0(o.t.f)}</b> · C <b>${r0(o.t.c)}</b></div>`; };
-  sheet(`<h3>Balance the plan${XBTN}</h3><div id="balBody">${body()}</div>
+      ${balRes(o.t)}`; };
+  sheet(`<h3>${build ? 'Build the plan' : 'Balance the plan'}${XBTN}</h3><div id="balBody">${body()}</div>
     ${opts.length ? `<button class="sbtn primary" id="balGo">Apply</button>${opts.length > 1 ? `<div class="bal-nav"><button type="button" id="balPrev" disabled>‹ Previous</button><span id="balN">1 of ${opts.length}</span><button type="button" id="balAlt">Another way ›</button></div>` : ''}` : ''}`, s => {
     const nav = d => { haptic(); i = Math.max(0, Math.min(opts.length - 1, i + d)); s.querySelector('#balBody').innerHTML = body();
       s.querySelector('#balPrev').disabled = i === 0; s.querySelector('#balAlt').disabled = i === opts.length - 1; s.querySelector('#balN').textContent = `${i + 1} of ${opts.length}`; };
