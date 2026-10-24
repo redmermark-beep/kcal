@@ -848,7 +848,6 @@ body.gr-7 .hv53 .hc[data-m="k"]{grid-column:span 2}
 .sh-name:not(:placeholder-shown){flex:0 1 auto}
 @supports (field-sizing:content){.sh-name{field-sizing:content;flex:0 1 auto;max-width:100%}}
 @supports not (field-sizing:content){.sh-name:not(:placeholder-shown){flex:1}}
-@supports (field-sizing:content){.sh-head:has(#fDup) .sh-name{max-width:calc(100% - 168px)}.sh-head:has(#fScan) .sh-name{max-width:calc(100% - 96px)}}
 .sh-pen{flex:none;color:rgba(0,0,0,.3);display:grid;margin:0 4px 0 -4px}
 .sh-ic{flex:none;width:36px;height:36px;border-radius:18px;background:var(--fill-6);display:grid;place-items:center;color:var(--ink);transition:transform .2s var(--spring)}
 .sh-ic:active,.sheet .x:active{transform:scale(.9)}
@@ -1191,6 +1190,27 @@ button.bal-r{width:100%;text-align:left;color:var(--ink)}
 .nu-res svg{color:var(--blue)}.nu-res b{font-family:var(--mono);font-weight:600}
 .nu-res .r{margin-left:auto;font-size:13px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 #fxB .br1{margin:12px 0 12px}
+/* ---------- sheets: pinned head and foot, scrolling middle (24 Oct) ---------- */
+html.sh-lock,html.sh-lock body{overflow:hidden}
+.sheet{--pt:16px;--pb:18px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.nu-pick{--pt:16px;--pb:16px;overscroll-behavior:contain;z-index:10!important}
+.sheet:has(>.nu-pick){overflow:hidden}
+.sheet>.sh-head,.sheet>h3,.nu-pick>.sh-head,.nu-pick>h3{position:sticky;top:calc(-1 * var(--pt));z-index:6;background:var(--bg);margin:calc(-1 * var(--pt)) -16px 4px;padding:var(--pt) 16px 10px;transition:box-shadow .2s}
+.sheet.scrolled>.sh-head,.sheet.scrolled>h3{box-shadow:0 1px 0 var(--line)}
+.sh-foot{position:sticky;bottom:calc(-1 * var(--pb));z-index:6;background:var(--bg);margin:18px -16px calc(-1 * var(--pb));padding:0 16px var(--pb)}
+.sh-foot::before{content:"";position:absolute;left:0;right:0;top:-18px;height:18px;background:linear-gradient(to top,var(--bg),rgba(247,247,247,0));pointer-events:none}
+.sh-foot>.sbtn.primary,.sh-foot>.sh-act,.sh-foot>.btnrow{margin-top:0!important}
+.sh-foot>*+*{margin-top:10px!important}
+.sh-foot>.sh-act{display:flex}
+/* a long name wraps to two lines; the buttons keep their place */
+.sh-head textarea.sh-name:not(:focus){max-height:60px}
+.sh-head textarea.sh-name{flex:1 1 0;min-width:0;max-width:none;field-sizing:fixed;display:block;height:30px;resize:none;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit}
+.sh-head{align-items:center}
+.sh-head .sh-pen{align-self:center}
+.nu-sht{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+/* ---------- one grid on every tab: Meal's 20 px margins ---------- */
+body.gr.ma.tab-measure .plan .title-row{margin-left:calc(var(--cx) + var(--cp) - 16px);margin-right:calc(var(--cx) + var(--cp) - 16px)}
+body.gr.ma #secBudget,body.gr.ma #secMeasure,body.gr.ma #secSettings{padding:0 calc(var(--lx) - 16px)}
 /* where nutrients come from (24 Oct): the product sheet's section, Find, scanning */
 .nu-srcb{margin-top:10px}
 .nu-srcb .t{display:flex;flex-direction:column;gap:1px;min-width:0}
@@ -1855,8 +1875,7 @@ const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21'
 function renderSettings() {
   const u = S.ui, box = $('#setBody'), cv = c => u.theme === 'black' ? preInv(c) : c;
   box.innerHTML = `
-    <div class="st-h">Appearance</div>
-    <div class="st-themes">${THEMES.map(([k, l, bg, ac]) => `<button class="st-th${(u.theme || 'light') === k ? ' on' : ''}" data-th="${k}" aria-pressed="${(u.theme || 'light') === k}">
+    <div class="st-themes" hidden>${THEMES.map(([k, l, bg, ac]) => `<button class="st-th${(u.theme || 'light') === k ? ' on' : ''}" data-th="${k}" aria-pressed="${(u.theme || 'light') === k}">
       <span class="st-sw${k === 'black' ? ' dk' : ''}" style="background:${cv(bg)}"><i style="background:${cv(k === 'black' ? '#f2f2f2' : '#000')}"></i><i style="background:${cv(ac)}"></i><i class="o"></i></span><span>${l}</span></button>`).join('')}</div>
     <div class="st-h">Main screen</div>
     <div class="st-g">
@@ -2560,23 +2579,45 @@ function menu(anchor, items) {
 function closeMenu() { if (!openMenu) return; const { m, scrim } = openMenu; openMenu = null; scrim.remove(); m.classList.add('out'); setTimeout(() => m.remove(), 200); }
 
 let openSheet = null;
+/* every sheet and overlay: a long name wraps to two lines (textarea instead of input); the bottom button(s) are pinned in a foot */
+function shPrep(c) {
+  c.querySelectorAll('input.sh-name').forEach(i => { const t = document.createElement('textarea'); [...i.attributes].forEach(a => { if (a.name !== 'value' && a.name !== 'type') t.setAttribute(a.name, a.value); });
+    t.rows = 1; t.value = i.value; t.setAttribute('enterkeyhint', 'done'); i.replaceWith(t);
+    const fit = () => { t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px'; };
+    t.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); t.blur(); } });
+    t.addEventListener('input', () => { if (/\n/.test(t.value)) t.value = t.value.replace(/\s*\n\s*/g, ' '); fit(); });
+    requestAnimationFrame(fit); setTimeout(fit, 80); });
+  const kids = [...c.children].filter(k => !k.classList.contains('grab') && !k.classList.contains('nu-pick')), last = kids[kids.length - 1];
+  if (last && last.matches('.sbtn.primary, .sh-act, .btnrow.wide, .btnrow')) { const foot = [last]; let p = last.previousElementSibling;
+    while (p && p.matches('.btnrow.wide, .sbtn.primary') && foot.length < 2) { foot.unshift(p); p = p.previousElementSibling; }
+    const f = document.createElement('div'); f.className = 'sh-foot'; last.after(f); foot.forEach(x => f.append(x)); }
+}
 function sheet(html, onReady) {
   hideToast();
   closeSheet(true);
   const scrim = document.createElement('div'); scrim.className = 'scrim';
   const s = document.createElement('div'); s.className = 'sheet'; s.setAttribute('role', 'dialog');
   s.innerHTML = `<div class="grab"></div>${html}`;
-  document.body.append(scrim, s);
+  shPrep(s);
+  document.body.append(scrim, s); document.documentElement.classList.add('sh-lock');
   requestAnimationFrame(() => { scrim.classList.add('show'); s.classList.add('show'); });
   const born = performance.now();
   scrim.addEventListener('click', () => { if (performance.now() - born > 400) closeSheet(); });
   s.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closeSheet()));
   s.querySelectorAll('.field').forEach(f => f.addEventListener('click', ev => { const i = f.querySelector('input'); if (i && ev.target !== i && !ev.target.closest('button')) i.focus(); }));
   s.querySelectorAll('.seg').forEach(seg => requestAnimationFrame(() => segSet(seg, seg.dataset.v)));
-  let sy = null;
-  s.addEventListener('touchstart', e => { sy = s.scrollTop <= 0 && !e.target.closest('input,.seg') ? e.touches[0].clientY : null; }, { passive: true });
-  s.addEventListener('touchmove', e => { if (sy === null) return; const d = e.touches[0].clientY - sy; if (d > 0) { s.style.transition = 'none'; s.style.transform = `translateY(${d}px)`; } }, { passive: true });
-  s.addEventListener('touchend', e => { if (sy === null) return; const d = e.changedTouches[0].clientY - sy; sy = null; s.style.transition = ''; s.style.transform = ''; if (d > 110) closeSheet(); });
+  /* touch: content scrolls inside the sheet only; the page behind never moves; pulling down from the very top drags the sheet away */
+  const scroller = el => { for (let n = el; n && n !== document.body; n = n.parentElement) { if (n.scrollHeight > n.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(n).overflowY)) return n; if (n === s) break; } return null; };
+  let T = null;
+  s.addEventListener('touchstart', e => { const sc = scroller(e.target), t = e.touches[0]; T = { x: t.clientX, y: t.clientY, sc, drag: false, top: !sc || sc.scrollTop <= 0, field: !!e.target.closest('input,textarea,select,.seg') }; }, { passive: true });
+  s.addEventListener('touchmove', e => { if (!T) return; const t = e.touches[0], dy = t.clientY - T.y, dx = t.clientX - T.x;
+    if (!T.drag && !T.field && T.top && dy > 8 && dy > Math.abs(dx)) T.drag = true;
+    if (T.drag) { e.preventDefault(); s.style.transition = 'none'; s.style.transform = `translateY(${Math.max(0, dy - 8)}px)`; return; }
+    const sc = T.sc; if (!sc || (dy > 0 && sc.scrollTop <= 0) || (dy < 0 && sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 1)) { if (e.cancelable) e.preventDefault(); } }, { passive: false });
+  const tEnd = e => { if (!T) return; const drag = T.drag, d = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientY - T.y : 0; T = null; if (!drag) return; s.style.transition = ''; s.style.transform = ''; if (d > 110) closeSheet(); };
+  s.addEventListener('touchend', tEnd); s.addEventListener('touchcancel', tEnd);
+  scrim.addEventListener('touchmove', e => { if (e.cancelable) e.preventDefault(); }, { passive: false });
+  s.addEventListener('scroll', () => s.classList.toggle('scrolled', s.scrollTop > 2), { passive: true });
   const vv = window.visualViewport;
   const kbFit = () => {
     if (!vv) return;
@@ -2610,7 +2651,7 @@ function kpBind(s) {
   s.addEventListener('input', () => s.querySelectorAll('.vt[data-f] input').forEach(fit));
 }
 function closeSheet(fast) {
-  if (!openSheet) return; const { s, scrim, kbOff } = openSheet; openSheet = null; if (kbOff) kbOff();
+  if (!openSheet) return; const { s, scrim, kbOff } = openSheet; openSheet = null; if (kbOff) kbOff(); document.documentElement.classList.remove('sh-lock');
   if (document.activeElement && s.contains(document.activeElement)) document.activeElement.blur();
   s.classList.remove('show'); scrim.classList.remove('show'); setTimeout(() => { s.remove(); scrim.remove(); }, fast ? 0 : 450);
 }
@@ -3246,7 +3287,7 @@ function syncTabs() {
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
   ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
   ['meal', 'measure', 'budget', 'nutrients', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
-  document.documentElement.dataset.theme = S.ui.theme || 'light';
+  S.ui.theme = 'light'; document.documentElement.dataset.theme = 'light';   // themes are off for now
   document.body.classList.toggle('nocol', S.ui.collapse === false);
   document.querySelectorAll('.tab').forEach(t => { const on = t.dataset.tab.toLowerCase() === S.ui.tab; t.classList.toggle('on', on); t.toggleAttribute('aria-current', on); });
   $('#secMeal').hidden = S.ui.tab !== 'meal'; $('#secMeasure').hidden = S.ui.tab !== 'measure'; $('#secBudget').hidden = S.ui.tab !== 'budget'; $('#secSettings').hidden = S.ui.tab !== 'settings'; $('#secNut').hidden = S.ui.tab !== 'nutrients';
@@ -3479,7 +3520,7 @@ function nSecBind(s, st, onFind) {
 }
 /* an overlay inside the open sheet (like «Add a nutrient»), or its own sheet when nothing is open */
 function nOver(html, ready) {
-  if (openSheet) { const box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.append(box);
+  if (openSheet) { const box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; shPrep(box); openSheet.s.scrollTop = 0; openSheet.s.append(box);
     const close = () => box.remove(); box.querySelectorAll('[data-ox]').forEach(b => b.addEventListener('click', () => { haptic(); close(); }));
     if (!RM) box.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: SPRING });
     ready(box, close); kpBind(box); return; }
@@ -3492,7 +3533,7 @@ function nFind(o) {
   const html = `<div class="sh-head"><span class="sh-kick">Find nutrients</span><span class="nu-sht">${esc(o.name || 'New product')}</span>${nOX}</div>
     <label class="tfield"><input class="nu-q" value="${esc(o.name || '')}" placeholder="Apple, яблоко, chicken…" autocomplete="off" enterkeyhint="search" aria-label="Search"></label>
     <div class="nu-fl"></div>
-    <div class="btnrow wide"><button class="sbtn plain" data-fa="code">${SCAN_IC}Barcode</button><button class="sbtn plain" data-fa="table">${TABLE_IC}Nutrition table</button></div>
+    <div class="btnrow wide"><button class="sbtn plain" data-fa="code">Barcode</button><button class="sbtn plain" data-fa="table">Nutrition table</button></div>
     <div class="btnrow"><button class="sbtn plain" data-fa="hand">Enter by hand</button>${o.none ? '<button class="sbtn plain" data-fa="none">Leave unknown</button>' : ''}</div>`;
   nOver(html, (box, close) => {
     const L = box.querySelector('.nu-fl'), q = box.querySelector('.nu-q'); let online = null, onQ = '';
@@ -3954,7 +3995,7 @@ function nutPick(done, standalone) {   // search the full list; inside a sheet i
   const html = `<h3>${standalone ? 'Find a nutrient' : 'Add a nutrient'}<button class="x" aria-label="Close" data-np-x>${ICON.x}</button></h3><label class="tfield"><input class="nu-q" placeholder="Vitamin, mineral…" autocomplete="off"></label><div class="nu-pl-l"></div>`;
   let box, R = null;
   if (standalone) { R = nRows().R; sheet(html, s => { box = s; wire(); }); }
-  else { box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.append(box); wire(); }
+  else { box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.scrollTop = 0; openSheet.s.append(box); wire(); }
   function wire() { const L = box.querySelector('.nu-pl-l'), q = box.querySelector('.nu-q');
     const draw = () => { const t = q.value.trim().toLowerCase(); L.innerHTML = ['vit', 'min', 'fat', 'carb', 'amino'].map(g => { const xs = NUT.filter(n => n.g === g && (!t || (n.n + ' ' + n.s).toLowerCase().includes(t))); return xs.length ? `<div class="cap">${NG[g]}</div><div class="bal-rows">${xs.map(n => { const x = R && R.find(r => r.n.id === n.id); return `<button class="bal-r" data-k="${n.id}"><b>${n.n}</b><em class="${x ? 'nst-t-' + x.s : 'nu-nf'}">${x ? nTile(x) : n.u}</em></button>`; }).join('')}</div>` : ''; }).join('');
       L.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => { haptic(); if (standalone) { done(b.dataset.k); } else { box.remove(); done(b.dataset.k); } })); };
