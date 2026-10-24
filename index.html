@@ -1170,26 +1170,17 @@ body.lk-new.v2 .zhead{border-top:0;padding-top:0;margin:12px 4px 6px}
 body.lk-new #secMeal .just-added>.rc{border-radius:12px}
 /* Nutrients: a sentence, idea cards, a plain list of everything */
 #secNut.nu-allpg .nu-line,#secNut.nu-allpg .nu-head{display:none}
-.ni-q{margin-top:14px;font-size:28px;line-height:33px;font-weight:600;letter-spacing:-.6px}
-.ni-q em{font-style:normal;color:var(--ink-50)}
-.ni-sub{margin-top:8px;font-size:13px;line-height:17px;color:var(--ink-50)}
-.ni-sub em{font-style:normal;font-weight:600;color:var(--blue)}
 .ni-cards{display:grid;gap:8px;margin-top:16px}
 .ni-cards .nu-cw{border-radius:22px}
 .ni-cards .nu-ign{border-radius:22px;width:92px}
-.ni-card.nu-card{box-sizing:border-box;background:var(--card,#fff);border-radius:22px;padding:16px;cursor:default}
+.ni-card.nu-card{box-sizing:border-box;display:flex;align-items:center;gap:12px;background:var(--card,#fff);border-radius:22px;padding:14px 14px 14px 16px;cursor:default}
+.ni-tx{flex:1;min-width:0}
+.ni-t{font-size:17px;line-height:22px;font-weight:590;letter-spacing:-.2px}
+.ni-n{margin-top:2px;font-size:13px;line-height:17px;color:var(--ink-50)}
+.ni-a{margin-top:6px;font-size:14px;line-height:19px;color:var(--ink)}
+.ni-go{flex:none;height:32px;padding:0 14px;border-radius:16px;background:rgba(0,0,0,.06);font-size:15px;font-weight:590;color:var(--ink)}
+.ni-go:active{transform:scale(.96)}
 .nu-cw.open .ni-card.nu-card{background:var(--card,#fff);box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.ni-k{font-size:12px;line-height:15px;font-weight:600;color:var(--ink-50);letter-spacing:.3px;text-transform:uppercase}
-.ni-t{margin-top:6px;font-size:19px;line-height:24px;font-weight:600;letter-spacing:-.3px}
-.ni-ch{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.ni-ch span{height:28px;border-radius:14px;padding:0 10px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:510;background:rgba(0,0,0,.05)}
-.ni-ch b{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--blue)}
-.ni-kp{display:flex;align-items:flex-start;gap:6px;margin-top:12px;font-size:13px;line-height:17px;color:var(--ink-50)}
-.ni-kp svg{flex:none;margin-top:3px;color:var(--blue)}
-.ni-kp.bad svg{color:var(--ink)}
-.ni-bt{display:flex;gap:8px;margin-top:14px}
-.ni-bt button{flex:1;height:44px;border-radius:22px;font-size:15px;font-weight:600;background:rgba(0,0,0,.06);color:var(--ink)}
-.ni-bt button.p{background:var(--blue);color:#fff}
 .ni-all{width:100%;margin-top:8px;height:52px;border-radius:26px;background:rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:600;color:var(--ink)}
 .ni-all em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--ink-50)}
 .ni-none{margin-top:14px;font-size:15px;line-height:21px;color:var(--ink-50)}
@@ -1230,7 +1221,6 @@ body.gr.ma.tab-nutrients #secNut{padding:0 calc(var(--lx) - 16px)}
 .nu-head .tools{display:flex;align-items:center;gap:2px;margin-left:auto;padding-left:12px}
 body .nu-head .tools .ibtn{width:38px;height:38px;border-radius:19px;display:grid;place-items:center}
 body .nu-head .tools .ibtn svg{width:22px;height:22px;margin:0;opacity:1}
-.nu-head #nutFix{color:var(--blue)}
 #secNut .bud-hero{margin-top:14px}
 .bh-sub em,.bcap em{font-style:normal;font-weight:600;color:var(--blue)}
 .nu-lk{font-size:13px;line-height:17px;color:var(--ink);font-weight:510;text-decoration:underline;text-decoration-color:var(--ink-28);text-underline-offset:2px;padding:0}
@@ -1399,6 +1389,62 @@ body.gr.ma #secBudget,body.gr.ma #secMeasure,body.gr.ma #secSettings{padding:0 c
 .nu-busy i{flex:none;width:14px;height:14px;box-sizing:border-box;border-radius:50%;border:2px solid var(--fill-8);border-top-color:var(--ink);animation:nuspin .8s linear infinite}
 @keyframes nuspin{to{transform:rotate(360deg)}}
 #fxB .bal-nav{margin:4px 0 -2px}
+
+/* ---------- Meal list · MNS4 (24 Oct, the only design now): white cards x 12–378 r22, rows 46 / 44,
+   tiles 64×36 (ingredients 58×34) with the amount centred, name 12 px after the tile, kcal on the right as one number ---------- */
+body.lk-new #secMeal #list,body.lk-new #secMeal #rlist,body.lk-new #secMeal #zlist{margin-left:-8px;margin-right:-8px}
+body.lk-new #secMeal .slist>li{padding:5px 12px}
+body.lk-new #secMeal .slist>li.group{padding:10px 12px}
+body.lk-new #secMeal .rc{gap:12px!important}
+body.lk-new #secMeal .slist .pill{box-sizing:border-box;min-width:64px!important;width:64px;height:36px!important;padding:0 4px!important;justify-content:center;border-radius:10px!important;font-size:14px!important;line-height:36px!important;font-weight:500}
+body.lk-new #secMeal .kids .pill{min-width:58px!important;width:58px;height:34px!important;line-height:34px!important}
+body.lk-new #secMeal .kids>li{padding:4px 0!important}
+body.lk-new #secMeal .kids>li>.rc{min-height:36px}
+body.lk-new #secMeal .group>.kids{margin-top:0!important;gap:0!important}
+body.lk-new #secMeal .group>.ghead{padding-bottom:1px}
+body.lk-new #secMeal .slist .info>.name{position:relative;top:1px}
+body.lk-new #secMeal .slist .info>.mac{position:relative;top:-.5px}
+body.lk-new #secMeal .kr{display:flex!important;flex:none;flex-direction:row!important;align-items:center;justify-content:flex-end;min-width:40px!important;margin-left:8px}
+body.lk-new #secMeal .kr b{font-family:var(--mono);font-size:16px!important;line-height:20px!important;font-weight:600}
+body.lk-new #secMeal .kr small,body.lk-new #secMeal .kr .sh{display:none!important}
+body.lk-new #secMeal .zero>.rc>.kr b{color:rgba(0,0,0,.45);font-weight:500}
+body.lk-new #secMeal .mac .per{display:block!important;flex:none!important;margin:0!important;color:rgba(0,0,0,.3)}
+/* section captions between the cards: "To review · N" and "Other products · N" */
+body.lk-new.v2 #secMeal .zhead{border-top:0;padding:0;height:20px;margin:10px 5px 7px 2px;font-size:15px;line-height:20px;font-weight:400;color:var(--ink-50)}
+body.lk-new.v2 #secMeal .zhead .n{font-family:var(--sans,inherit);font-size:15px}
+body.lk-new #secMeal #rlist{margin-top:0;gap:0}
+body.lk-new #rlist>li{background:var(--card,#fff)}
+body.lk-new #rlist>li.row:first-child{border-top-left-radius:22px;border-top-right-radius:22px;padding-top:10px}
+body.lk-new #rlist>li.row:last-child{border-bottom-left-radius:22px;border-bottom-right-radius:22px;padding-bottom:10px;margin-bottom:8px}
+body.lk-new #secMeal #zlist{margin-top:0}
+/* To review: an empty tile with the suggested portion as a grey placeholder; under the name — why it was added */
+#secMeal .rev>.rc>.pill{background:rgba(0,0,0,.03)!important;color:rgba(0,0,0,.32)}
+#secMeal .rev .mac .why{display:block!important;margin:0!important;color:rgba(0,0,0,.5)!important;font-family:inherit;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#secMeal .rev>.rc>.info>.name{font-weight:510;color:var(--ink)!important}
+body.lk-new #secMeal .rev>.rc>.kr{display:none!important}
+#secMeal .rev .acts .sa.rm{width:auto;padding:0 16px;font-size:15px;font-weight:590;color:var(--ink);background:var(--fill-8)}
+
+/* Balance · kinds (LN1): three tiles under the title, the chosen one on a light grey fill; changes in one white card with lines */
+.bal-kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 14px}
+.bal-kinds button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;border-radius:18px;text-align:left;color:var(--ink);transition:background-color .2s}
+.bal-kinds button.on{background:rgba(0,0,0,.06)}
+.bal-kinds b{font-size:16px;line-height:20px;font-weight:590;letter-spacing:-.2px}
+.bal-kinds span{font-size:14px;line-height:18px;color:var(--ink-50);white-space:nowrap}
+#balBody .bal-rows{gap:0;background:var(--card,#fff);border-radius:22px;padding:0 16px}
+#balBody .bal-r{min-height:48px;padding:0;border-radius:0;background:none}
+#balBody .bal-r+.bal-r{box-shadow:inset 0 1px 0 var(--line)}
+#balBody .bal-nm{min-width:0;overflow:hidden;text-overflow:ellipsis}
+#balBody .bal-r em i{font-style:normal;font-weight:400;color:var(--ink-50)}
+.bal-new{flex:none;margin-left:2px;height:20px;padding:0 6px;border-radius:6px;background:rgba(0,0,0,.06);font-size:12px;line-height:20px;font-weight:510;color:var(--ink-50)}
+#balRes .br1{grid-template-columns:repeat(4,1fr);margin:12px 0 8px}
+#balRes .br1>div{padding:8px 10px 7px}
+#balRes .br1 span{display:flex;align-items:center;justify-content:space-between;font-size:12px}
+#balRes .br1 span svg{color:var(--blue)}
+#balRes .br1 b{font-size:18px;line-height:22px;margin-top:2px}
+#balRes .br1 s{margin-top:1px}
+.bal-fx{margin:0 4px 12px;font-size:14px;line-height:19px;color:var(--ink-50)}
+.bal-fx b{font-weight:590;color:var(--ink)}
+.bal-fx[hidden]{display:none}
 </style>
 
 <div class="app" id="app">
@@ -1457,6 +1503,8 @@ body.gr.ma #secBudget,body.gr.ma #secMeasure,body.gr.ma #secSettings{padding:0 c
     </div>
     </div>
     <ul class="list slist" id="list" data-list="meal"></ul>
+    <div class="zhead" id="rHead" role="separator" hidden></div>
+    <ul class="list slist" id="rlist" data-list="rev" hidden></ul>
     <div class="zhead" id="zHead" role="separator" hidden></div>
     <ul class="list slist" id="zlist" data-list="meal" hidden></ul>
   </section>
@@ -1490,7 +1538,7 @@ body.gr.ma #secBudget,body.gr.ma #secMeasure,body.gr.ma #secSettings{padding:0 c
   <section class="tabsec" id="secNut" hidden>
     <div class="nu-line"></div>
     <div class="nu-head"><button class="mtitle" id="nutPlanBtn" aria-label="Choose what you eat"><h2 id="nutTitle">Пробы</h2><svg class="pchev" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="tools"><button class="ibtn" id="nutFix" aria-label="Fix the plans" hidden><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5l2.1 5.4 5.4 2.1-5.4 2.1L14 19.5l-2.1-5.4L6.5 12l5.4-2.1z"/><path d="M21.5 17.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></svg></button><button class="ibtn" id="nutSearch" aria-label="Find a nutrient"><svg viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/><path d="M19 19L24 24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button></div></div>
+      <div class="tools"><button class="ibtn" id="nutSearch" aria-label="Find a nutrient"><svg viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/><path d="M19 19L24 24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button></div></div>
     <div id="nutBody"></div>
   </section>
 
@@ -1884,14 +1932,28 @@ const fmtAmt = (e, g) => e.t === 'g' ? `${g}g` : `${toU(e, g)}${uLab(e)}`;
 const money = v => Math.round(v).toLocaleString('ru-RU');
 const macHTML = m => `<span><i>KCAL</i>${r0(m.k)}</span><span><i>P</i>${r0(m.p)}</span><span><i>F</i>${r0(m.f)}</span><span><i>C</i>${r0(m.c)}</span>`;
 function fieldHTML(buf, ph, unit) { return buf ? `${buf}<i class="caret"></i>${unit}` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
+/* To review (24 Oct): products added from Nutrients wait under the plan with a suggested portion until they get grams */
+const revOf = (p = plan()) => (p.rev ||= {});
+const revGet = e => e && e.t !== 'g' && e.g === 0 && !ghostSnap ? revOf()[e.id] || null : null;
+function revPrune(p = plan()) { const r = revOf(p);
+  Object.keys(r).forEach(id => { const f = find(id), g = p === plan() ? (f ? f.e.g : 0) : (p.g[id] || 0); if (!f || f.parent || g > 0) delete r[id]; }); return r; }
 function pillHTML(e) {
-  if (editing && editing.id === e.id) return fieldHTML(editing.buf, e.t === 'g' ? maxOf(e) : toU(e, e.g), e.t === 'g' ? 'g' : uLab(e));
+  const rv = revGet(e);
+  if (editing && editing.id === e.id) return fieldHTML(editing.buf, e.t === 'g' ? maxOf(e) : toU(e, rv ? rv.ph : e.g), e.t === 'g' ? 'g' : uLab(e));
+  if (rv) return `<span class="ph">${fmtAmt(e, rv.ph)}</span>`;
   return fmtAmt(e, e.g);
+}
+/* the line under a name: macros of the portion; at 0 g — per 100 g; in To review — why it was added */
+function macRow(e) {
+  if (e.t !== 'g' && e.g === 0 && e.n) { const rv = revGet(e);
+    if (rv) { const w = rv.why || []; return `<span class="why">for ${esc(w.length > 3 ? w.slice(0, 3).join(' · ') + ` +${w.length - 3}` : w.join(' · '))}</span>`; }
+    return macHTML(mac({ ...e, g: 100 })) + `<span class="per">/100${U(e) === 'ml' ? 'ml' : 'g'}</span>`; }
+  return macHTML(mac(e));
 }
 const matches = e => !query || e.name.toLowerCase().includes(query) || (e.t === 'g' && e.ch.some(matches));
 // list styles 11/12/17: kcal on the right, share-of-day bar, kcal inside the tile
 let dayK = 1;
-const krHTML = e => { const k = r0(mac(e).k); return `<b>${k}</b><span class="sh"><i style="width:${Math.min(100, k / dayK * 100).toFixed(1)}%"></i></span><small>kcal</small>`; };
+const krHTML = e => { if (revGet(e)) return ''; const k = r0(mac(e.t !== 'g' && e.g === 0 && e.n ? { ...e, g: 100 } : e).k); return `<b>${k}</b><span class="sh"><i style="width:${Math.min(100, k / dayK * 100).toFixed(1)}%"></i></span><small>kcal</small>`; };
 function renderPTabs() {
   const box = $('#ptabs'); if (!box) return;
   const lsum = $('#lsum'), n = S.items.filter(e => e.g > 0).length;
@@ -1908,10 +1970,12 @@ function patchKr() {
     const kr = host.querySelector(':scope>.rc>.kr'), p = host.querySelector(':scope>.rc>.pill');
     if (kr) kr.innerHTML = krHTML(r.e); if (p) p.dataset.k = r0(mac(r.e).k); });
 }
+const ACTS_REV = `<div class="acts"><button class="sa rm" data-sw="rev" aria-label="Remove">Remove</button></div>`;
 function rowHTML(e, i) {
-  return `<li class="row${e.g === 0 ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">${ACTS}
+  const rv = revGet(e);
+  return `<li class="row${e.g === 0 ? ' zero' : ''}${rv ? ' rev' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">${rv ? ACTS_REV : ACTS}
     <div class="rc"><button class="pill" data-act="pill" data-k="${r0(mac(e).k)}" aria-label="${esc(e.name)}, ${e.g} grams">${pillHTML(e)}</button>
-    <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${macHTML(mac(e))}</div></div><div class="kr">${krHTML(e)}</div></div></li>`;
+    <div class="info" data-act="info"><div class="name">${esc(e.name)}</div><div class="mac">${macRow(e)}</div></div><div class="kr">${krHTML(e)}</div></div></li>`;
 }
 function groupHTML(e, i) {
   return `<li class="group${e.open ? ' open' : ''}${e.g === 0 ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">
@@ -1920,22 +1984,24 @@ function groupHTML(e, i) {
     <div class="mac">${macHTML(mac(e))}</div></div><div class="kr">${krHTML(e)}</div></div></div>
     <ul class="kids">${e.open ? e.ch.map((c, j) => rowHTML(c, i + j + 1)).join('') : ''}</ul></li>`;
 }
-const zlist = $('#zlist'), zHead = $('#zHead');
+const zlist = $('#zlist'), zHead = $('#zHead'), rlist = $('#rlist'), rHead = $('#rHead');
 function renderList() {
   swOpen = null;
   const items = S.items.filter(matches), v2 = !!S.ui.v2; dayK = Math.max(1, totals().k);
-  zHead.hidden = zlist.hidden = true; zlist.innerHTML = ''; requestAnimationFrame(() => typeof fitRoom === 'function' && fitRoom());
+  zHead.hidden = zlist.hidden = rHead.hidden = rlist.hidden = true; zlist.innerHTML = rlist.innerHTML = ''; requestAnimationFrame(() => typeof fitRoom === 'function' && fitRoom());
   if (!S.items.length) { list.innerHTML = `<li class="empty"><b>No products yet</b>Tap + to add the first one.</li>`; return; }
   if (!items.length) { list.innerHTML = `<li class="empty"><b>Nothing found</b>No product matches “${esc(query)}”.</li>`; return; }
   const html = (arr, o = 0) => arr.map((e, i) => e.t === 'g' ? groupHTML(e, i + o) : rowHTML(e, i + o)).join('');
   if (!v2) { list.innerHTML = html(items); return; }
   // eaten first; everything at 0 sits in a folded "not in plan" section
-  const on = items.filter(e => e.g > 0), off = items.filter(e => e.g === 0), open = true;   // 23 Oct: not-in-plan products always shown under a divider
+  // the plan → To review (added from Nutrients, no grams yet) → Other products (0 g)
+  const rv = ghostSnap ? {} : revPrune(), on = items.filter(e => e.g > 0), rev = items.filter(e => e.g === 0 && e.t !== 'g' && rv[e.id]), off = items.filter(e => e.g === 0 && !rev.includes(e));
   list.innerHTML = on.length ? html(on) : `<li class="empty"><b>Nothing in ${esc(plan().name)} yet</b>Set a portion for a product below or tap +.</li>`;
+  if (rev.length) { rHead.hidden = rlist.hidden = false; rHead.innerHTML = `<span>To review</span><span class="n">${rev.length}</span>`; rlist.innerHTML = rev.map((e, i) => rowHTML(e, on.length + i)).join(''); }
   if (off.length) {
-    zHead.hidden = false; zHead.classList.toggle('open', open);
-    zHead.innerHTML = `<span>Not in ${esc(plan().name)}</span><span class="n">${off.length}</span>`;
-    if (open) { zlist.hidden = false; zlist.innerHTML = html(off, on.length); }
+    zHead.hidden = false; zHead.classList.add('open');
+    zHead.innerHTML = `<span>Other products</span><span class="n">${off.length}</span>`;
+    zlist.hidden = false; zlist.innerHTML = html(off, on.length + rev.length);
   }
 }
 
@@ -1966,7 +2032,7 @@ function patchRow(id) {
   const upd = e => { const el = $('#secMeal').querySelector(`[data-id="${e.id}"]`); if (!el) return;
     const host = el.classList.contains('group') ? el.querySelector(':scope>.ghead') : el;
     host.querySelector(':scope>.rc>.pill').innerHTML = pillHTML(e);
-    host.querySelector(':scope>.rc .mac').innerHTML = macHTML(mac(e));
+    host.querySelector(':scope>.rc .mac').innerHTML = macRow(e);
     el.classList.toggle('zero', e.g === 0); };
   upd(r.e); if (r.parent) upd(r.parent); patchKr();
   renderHeader();
@@ -2001,8 +2067,6 @@ function renderSettings() {
       <span class="st-sw${k === 'black' ? ' dk' : ''}" style="background:${cv(bg)}"><i style="background:${cv(k === 'black' ? '#f2f2f2' : '#000')}"></i><i style="background:${cv(ac)}"></i><i class="o"></i></span><span>${l}</span></button>`).join('')}</div>
     <div class="st-h">Main screen</div>
     <div class="st-g">
-      <div class="st-r st-col"><div><b>Design</b><span>${u.look === 'classic' ? 'As before: list on the background, problem cards in Nutrients' : 'Meal list in white cards · Nutrients: idea cards and a plain list'}</span></div>
-        <div class="st-seg">${[['classic', 'Current'], ['new', 'New']].map(([k, l]) => `<button data-look="${k}" class="${(u.look === 'classic' ? 'classic' : 'new') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'soft')) || CHIP_STYLES[0])[2]}</span></div>
         <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'soft') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       ${(u.chips || 'soft') === 'hero' ? `<div class="st-r st-col"><div><b>Hero on scroll</b><span>${u.heroCol === 'stack' ? 'KCAL stays on top, P F C below — both rows shrink' : 'Folds into one row: KCAL two columns, then P F C'}</span></div>
@@ -2011,10 +2075,6 @@ function renderSettings() {
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
         <div class="st-seg">${[1, 5, 10].map(v => `<button data-step="${v}" class="${(u.step || 5) === v ? 'on' : ''}">${v} g</button>`).join('')}</div></div>
-    </div>
-    <div class="st-h">Nutrients</div>
-    <div class="st-g">
-      <div class="st-r"><div><b>Fix may suggest new products</b><span>From a built-in list: spinach, salmon, nuts, beans…</span></div>${swHTML('fixNew', u.fixNew !== false)}</div>
     </div>
     <div class="st-h">Data</div>
     <div class="st-g">
@@ -2031,8 +2091,6 @@ $('#secSettings').addEventListener('click', e => {
   if (st) { haptic(); S.ui.step = +st.dataset.step; save(); renderSettings(); return; }
   const vbb = e.target.closest('[data-vbs]');
   if (vbb) { haptic(); S.ui.vbs = vbb.dataset.vbs; save(); syncTabs(); renderAll(false); renderSettings(); return; }
-  const lkb = e.target.closest('[data-look]');
-  if (lkb) { haptic(); S.ui.look = lkb.dataset.look; save(); syncTabs(); renderSettings(); return; }
   const hcb = e.target.closest('[data-herocol]');
   if (hcb) { haptic(); S.ui.heroCol = hcb.dataset.herocol; save(); syncTabs(); renderSettings(); return; }
   const chb = e.target.closest('[data-chips]');
@@ -2091,7 +2149,7 @@ document.addEventListener('pointerdown', e => {
   const actEl = e.target.closest('[data-act]');
   G = { list: lst.dataset.list, id: item.dataset.id, el: item, host: e.target.closest('.row, .ghead'),
         act: actEl ? actEl.dataset.act : 'row', x: e.clientX, y: e.clientY, fired: false, sw: false };
-  if (G.list === 'meal') {
+  if (G.list === 'meal' || (G.list === 'rev' && G.act === 'pill')) {
     const g0 = G; G.pt = setTimeout(() => { if (G === g0 && !G.sw) item.classList.add('pressing'); }, 110);
     G.timer = setTimeout(() => {
       if (!G || G.sw) return; clearTimeout(G.pt); G.fired = true; lockScroll = true; item.classList.remove('pressing');
@@ -2147,8 +2205,21 @@ document.addEventListener('click', e => {
     swClose();
     if (lst.dataset.list === 'log') { const en = S.log.find(x => x.id === id); if (en) entrySheet(en); }
     else { const r = find(id); if (r) (r.e.t === 'g' ? groupSheet(r.e) : foodSheet(r.e)); }
-  } else removeWithUndo(lst.dataset.list, id, host);
+  } else if (b.dataset.sw === 'rev') revRemove(id, host);
+  else removeWithUndo(lst.dataset.list, id, host);
 });
+/* To review → swipe → Remove: a product that came from the database goes away entirely; one from your list goes back to Other products */
+function revRemove(id, host) {
+  haptic(); swOpen = null; host.classList.remove('sw-open');
+  const p = plan(), r = revOf(p), rv = r[id], f = find(id); if (!rv || !f) return;
+  const keep = JSON.stringify(S.items), keepG = S.plans.map(q => [q, q.g[id], q.rev && q.rev[id]]), name = f.e.name;
+  delete r[id];
+  if (rv.nw) { f.arr.splice(f.i, 1); S.plans.forEach(q => { delete q.g[id]; if (q.rev) delete q.rev[id]; }); }
+  save(); renderMeal(true);
+  toast(rv.nw ? `Removed ${name}` : `${name} is back in Other products`, { label: 'Undo', fn: () => {
+    if (rv.nw) { S.items = JSON.parse(keep); keepG.forEach(([q, g, x]) => { if (g != null) q.g[id] = g; if (x) revOf(q)[id] = x; }); }
+    revOf(p)[id] = rv; save(); renderMeal(true); } });
+}
 function removeWithUndo(kind, id, host) {
   haptic();
   const rc = host.querySelector(':scope>.rc'), acts = host.querySelector(':scope>.acts');
@@ -2615,7 +2686,7 @@ function balanceOptions(relax = 1) {
   if (!empty) {
     for (let a = 0; a < n; a++) tryset([cand[a]]);
     for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) tryset([cand[a], cand[b2]]);
-    if (sols.length < 4) for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) for (let c2 = b2 + 1; c2 < n; c2++) tryset([cand[a], cand[b2], cand[c2]]);
+    if (sols.length < 4 || n <= 40) for (let a = 0; a < n; a++) for (let b2 = a + 1; b2 < n; b2++) for (let c2 = b2 + 1; c2 < n; c2++) tryset([cand[a], cand[b2], cand[c2]]);
   }
   const quick = sols.length;
   // 2) build the plan: spread portions across products (coordinate descent with a pull towards a normal portion)
@@ -2650,34 +2721,72 @@ function balanceOptions(relax = 1) {
       big.forEach(o => { if (tried.has(o.id)) return; tried.add(o.id); build(.15, new Set([o.id])); });
     }
   }
-  return { opts: sols.sort((x, y) => x.cost - y.cost).slice(0, 8), build: empty || quick < 2 };
+  sols.sort((x, y) => x.cost - y.cost);
+  return { opts: sols.slice(0, 8), all: sols, build: empty || quick < 2 };
 }
 const CKs = '<svg viewBox="0 0 14 14" width="11" height="11" fill="none" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function balRes(t1) {   // R1: grey tiles, old value small and struck, new value bold, a blue check when it lands in range
   const t0 = totals(), L = { k: 'KCAL', p: 'P', f: 'F', c: 'C' };
   const ok = k => { const [a, b] = goalRange(k); return t1[k] >= a && t1[k] <= b; };
-  return `<div class="br1">${['k', 'p', 'f', 'c'].map(k => `<div><span>${L[k]}</span><s>${r0(t0[k])}</s><b>${r0(t1[k])}${ok(k) ? CKs : ''}</b></div>`).join('')}</div>`;
+  return `<div class="br1">${['k', 'p', 'f', 'c'].map(k => `<div><span>${L[k]}${ok(k) ? CKs : ''}</span><b>${r0(t1[k])}</b><s>${r0(t0[k])}</s></div>`).join('')}</div>`;
 }
 const BOWL_I = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18a9 9 0 0 1-18 0z"/></svg>';
+/* Balance · kinds of answer (24 Oct evening): Simplest / Nutrients / Cheapest — every option keeps KCAL P F C in range */
+function balFoods(ch) {   // grams per day each single food gains or loses with these changes
+  const m = new Map(), add = (e, d) => m.set(e, (m.get(e) || 0) + d);
+  ch.forEach(c => { if (c.e.t !== 'g') return add(c.e, c.to - c.from); const mx = maxOf(c.e); if (mx) c.e.ch.forEach(k => add(k, k.g * (c.to - c.from) / mx)); });
+  return m; }
+function balKinds(all) {
+  const out = { simple: all.slice(0, 8), nut: [], cheap: [] };
+  // nutrients: only when the open meal plan is part of what Nutrients counts
+  const mx = nMix(), me = mx.mix.find(x => x[0] === plan());
+  if (me) { const ctx = fixCtx(), w = me[1] / ctx.days, pen0 = ctx.C.map(c => fixPen(c, c.N0));
+    all.forEach(o => { const F = balFoods(o.changes), N = ctx.C.map(c => { let v = c.N0; F.forEach((d, e) => { const x = nVal(e, c.id); if (x) v += w * x * d / 100; }); return v; });
+      const pen1 = ctx.C.map((c, j) => fixPen(c, N[j]));
+      if (ctx.C.some((c, j) => pen0[j] === 0 && pen1[j] > 0)) return;   // never a new problem, never over a limit
+      const fixed = ctx.C.filter((c, j) => pen0[j] > 0 && pen1[j] === 0).map(c => c.n.n); if (!fixed.length) return;
+      out.nut.push({ ...o, fixed, rest: pen1.reduce((a, b) => a + b, 0), before: ctx.bad }); });
+    out.nut.sort((a, b) => b.fixed.length - a.fixed.length || a.rest - b.rest || a.cost - b.cost); out.nut = out.nut.slice(0, 6); }
+  // cheapest over the Budget period (packs × price); a change to a product without a price makes the option unknown
+  const days = S.ui.bdays || 15, base = new Map();
+  S.items.forEach(e => { if (e.t === 'g') { const m = maxOf(e), r = m ? Math.min(1, e.g / m) : 0; e.ch.forEach(c => base.set(c, (base.get(c) || 0) + c.g * r)); } else base.set(e, (base.get(e) || 0) + e.g); });
+  const pc = (e, g) => g > 1e-6 ? Math.ceil(g * days / e.pk - 1e-9) * e.pr : 0;
+  all.forEach(o => { const F = balFoods(o.changes); let d = 0, ok = true;
+    F.forEach((dg, e) => { if (Math.abs(dg) < 1e-6) return; if (!e.pk || !e.pr) { ok = false; return; } const g0 = base.get(e) || 0; d += pc(e, Math.max(0, g0 + dg)) - pc(e, g0); });
+    if (ok) out.cheap.push({ ...o, money: d }); });
+  out.cheap.sort((a, b) => a.money - b.money || a.cost - b.cost); out.cheap = out.cheap.slice(0, 6);
+  if (!out.cheap.length || out.cheap[0].money >= 0) out.cheap = [];   // only when something actually saves money
+  return out; }
 function balanceSheet() {
   let r = balanceOptions(); if (!r.opts.length) r = balanceOptions(1.5); if (!r.opts.length) r = balanceOptions(2);   // relax the portion limits only if nothing fits
-  const { opts, build } = r; let i = 0;
-  const fmtD = ch => { const e = ch.e, d = e.t === 'g' ? ch.to - ch.from : toU(e, ch.to) - toU(e, ch.from), u = e.t === 'g' ? 'g' : uLab(e);
-    return `${d > 0 ? '+' : '−'}${Math.abs(Math.round(d * 10) / 10)} ${u}`; };
-  const body = () => { if (!opts.length) return `<p class="bal-none">Couldn't find a plan that fits with these products.<br>Add a few more products and try again.</p>`;
-    const o = opts[i];
-    return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}${esc(ch.e.name)}${ch.parent ? `<small class="bal-in">in ${esc(ch.parent.name)}</small>` : ''}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fmtD(ch)}</em></div>`).join('')}</div>`; };
-  const res = () => opts.length ? balRes(opts[i].t) : '';
-  sheet(`<h3>${build ? 'Build the plan' : 'Balance the plan'}${XBTN}</h3><div id="balBody">${body()}</div>
-    ${opts.length > 1 ? `<div class="bal-nav"><button type="button" id="balPrev" disabled>‹ Previous</button><span id="balN">1 of ${opts.length}</span><button type="button" id="balAlt">Another way ›</button></div>` : ''}
-    <div id="balRes">${res()}</div>
-    ${opts.length ? `<button class="sbtn primary" id="balGo">Apply</button>` : ''}`, s => {
-    const nav = d => { haptic(); i = Math.max(0, Math.min(opts.length - 1, i + d)); s.querySelector('#balBody').innerHTML = body(); s.querySelector('#balRes').innerHTML = res();
-      s.querySelector('#balPrev').disabled = i === 0; s.querySelector('#balAlt').disabled = i === opts.length - 1; s.querySelector('#balN').textContent = `${i + 1} of ${opts.length}`; };
-    const alt = s.querySelector('#balAlt'); if (alt) { alt.addEventListener('click', () => nav(1)); s.querySelector('#balPrev').addEventListener('click', () => nav(-1)); }
+  const { build } = r, K = balKinds(r.all || r.opts), cur = esc(S.ui.cur || 'RSD'), days = S.ui.bdays || 15;
+  const kinds = [['simple', 'Simplest'], ['nut', 'Nutrients'], ['cheap', 'Cheapest']].filter(([k]) => K[k].length);
+  let kind = 'simple', i = 0; const L = () => K[kind];
+  const sgn = v => (v < 0 ? '−' : '+') + money(Math.abs(v));
+  const tileSub = k => { const o = K[k][0]; return k === 'simple' ? `${o.changes.length} ${o.changes.length === 1 ? 'small change' : 'small changes'}` : k === 'nut' ? `fixes ${o.fixed.length}` : `${sgn(o.money)} ${cur}`; };
+  const amt = ch => { const e = ch.e, g = e.t === 'g', u = g ? 'g' : uLab(e), f = g ? ch.from : toU(e, ch.from), t = g ? ch.to : toU(e, ch.to), F = v => Math.round(v * 10) / 10;
+    return ch.from === 0 ? `${F(t)} ${u}` : `<i>${F(f)} →</i> ${F(t)} ${u}`; };
+  const body = () => { if (!L().length) return `<p class="bal-none">Couldn't find a plan that fits with these products.<br>Add a few more products and try again.</p>`;
+    const o = L()[i];
+    return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}<span class="bal-nm">${esc(ch.e.name)}</span>${ch.parent ? `<small class="bal-in">in ${esc(ch.parent.name)}</small>` : ch.from === 0 ? '<small class="bal-new">new</small>' : ''}</b><em class="${ch.to > ch.from ? 'p' : ''}">${amt(ch)}</em></div>`).join('')}</div>`; };
+  const nav = () => L().length > 1 ? `<button type="button" id="balPrev"${i === 0 ? ' disabled' : ''}>‹ Previous</button><span>${i + 1} of ${L().length}</span><button type="button" id="balAlt"${i === L().length - 1 ? ' disabled' : ''}>Another way ›</button>` : '';
+  const fx = () => { const o = L()[i]; if (!o) return '';
+    if (kind === 'nut') return `To fix <b>${o.before} → ${o.before - o.fixed.length}</b> · ${esc(o.fixed.join(', '))}`;
+    if (kind === 'cheap') return `<b>${sgn(o.money)} ${cur}</b> for ${days} days`; return ''; };
+  const tiles = () => kinds.length > 1 ? `<div class="bal-kinds">${kinds.map(([k, l]) => `<button type="button" data-kind="${k}" class="${k === kind ? 'on' : ''}" aria-pressed="${k === kind}"><b>${l}</b><span>${tileSub(k)}</span></button>`).join('')}</div>` : '';
+  sheet(`<h3>${build ? 'Build the plan' : 'Balance the plan'}${XBTN}</h3><div id="balK">${tiles()}</div><div id="balBody">${body()}</div>
+    <div class="bal-nav" id="balNav">${nav()}</div>
+    <div id="balRes">${L().length ? balRes(L()[i].t) : ''}</div><p class="bal-fx" id="balFx">${fx()}</p>
+    ${L().length ? `<button class="sbtn primary" id="balGo">Apply</button>` : ''}`, s => {
+    const paint = () => { s.querySelector('#balK').innerHTML = tiles(); s.querySelector('#balBody').innerHTML = body(); s.querySelector('#balNav').innerHTML = nav();
+      s.querySelector('#balRes').innerHTML = L().length ? balRes(L()[i].t) : ''; const f = fx(), fe = s.querySelector('#balFx'); fe.innerHTML = f; fe.hidden = !f; };
+    s.querySelector('#balFx').hidden = !fx();
+    s.addEventListener('click', e => { const k = e.target.closest('[data-kind]'), pv = e.target.closest('#balPrev'), al = e.target.closest('#balAlt');
+      if (k && k.dataset.kind !== kind) { haptic(); kind = k.dataset.kind; i = 0; paint(); }
+      else if (pv && i > 0) { haptic(); i--; paint(); } else if (al && i < L().length - 1) { haptic(); i++; paint(); } });
     const go = s.querySelector('#balGo'); if (go) go.addEventListener('click', () => {
-      const undo = opts[i].changes.map(ch => [ch.e, ch.from, ch.parent]);
-      opts[i].changes.forEach(ch => setGrams(ch.e, ch.to, ch.parent)); save(); closeSheet(); haptic(); renderAll(true);
+      const o = L()[i], undo = o.changes.map(ch => [ch.e, ch.from, ch.parent]);
+      o.changes.forEach(ch => setGrams(ch.e, ch.to, ch.parent)); save(); closeSheet(); haptic(); renderAll(true);
       toast('Plan balanced', { label: 'Undo', fn: () => { undo.forEach(([e, g, p]) => setGrams(e, g, p)); save(); renderAll(true); } }); });
   });
 }
@@ -3417,7 +3526,7 @@ function syncTabs() {
   const hs = S.ui.v2 && S.ui.ma ? (S.ui.hs || 'plain') : 'plain';
   document.body.classList.toggle('hs-card', hs === '21'); document.body.classList.toggle('hs-f', hs === '21');
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
-  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('hr4', S.ui.heroCol !== 'stack'); document.body.classList.toggle('lk-new', S.ui.look !== 'classic'); document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
+  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('hr4', S.ui.heroCol !== 'stack'); document.body.classList.add('lk-new'); delete S.ui.look; delete S.ui.fixNew; document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
   ['meal', 'measure', 'budget', 'nutrients', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   S.ui.theme = 'light'; document.documentElement.dataset.theme = 'light';   // themes are off for now
   document.body.classList.toggle('nocol', S.ui.collapse === false);
@@ -3983,97 +4092,104 @@ function nMissing(mix) {   // counted products whose vitamins and minerals are u
   mix.forEach(([p]) => nPlanItems(p).forEach(([e]) => { if (seen.has(e.id)) return; seen.add(e.id); if (!nMap(e)) none.push(e); }));
   return { none }; }
 const nRow = (x, attr) => `<li class="row" ${attr}><div class="rc"><span class="pill nst-${x.ig ? 'ig' : x.s}">${nTile(x)}</span><div class="info"><div class="name">${x.n.n}</div><div class="mac">${x.ig ? '<i>ignored ·</i> ' : ''}${nAmt(x)}</div></div></div></li>`;
-function renderNut() {
-  const el = $('#nutBody'); if (!el) return; $('#secNut').classList.toggle('nu-allpg', S.ui.look !== 'classic' && nAll);
-  if (S.ui.look !== 'classic') return renderNut2(el);
-  const { R, days, mix, grams } = nRows();
-  const bad = nBad(R), ok = R.filter(x => x.s === 'ok').length, nd = R.filter(x => x.s === 'nd').length, ign = R.filter(x => x.ig);
-  $('#nutTitle').textContent = nTitle(); $('#nutFix').hidden = !bad.length || !grams;
-  if (!grams) { el.innerHTML = `<div class="bud-hero"><div class="bh-num"><span>0</span><span class="bh-u">counted</span></div><div class="bh-sub">${mix.length ? `${esc(mix.map(m => m[0].name).join(', '))} ${mix.length > 1 ? 'have' : 'has'} no portions yet — add them on Meal.` : 'Pick what you eat above.'}</div></div>`; return; }
-  const card = x => { const src = Object.entries(x.a.src).sort((p, q) => q[1] - p[1]).slice(0, 3).map(z => esc(z[0]));
-    return `<div class="nu-cw" data-cw="${x.n.id}"><button class="nu-ign" data-ign="${x.n.id}" tabindex="-1">${N_EYE}<span>Ignore</span></button><button class="nu-card" data-n="${x.n.id}"><div class="nu-ch"><span class="name">${x.n.n}</span><em class="nst-${x.s}">${x.p}%</em></div>
-    <div class="nu-bar nst-${x.s}"><i style="width:${Math.min(100, x.p)}%"></i>${x.s === 'over' ? '' : '<u></u>'}</div>
-    <div class="mac">${nAmt(x)} <i>a day</i></div><div class="nu-why">${esc(nWhy(x))}.</div>${src.length ? `<div class="nu-from">${x.s === 'over' ? 'Mostly from' : 'Now from'} ${src.join(', ')}</div>` : ''}</button></div>`; };
-  const shown = nMore ? bad : bad.slice(0, 3);
-  const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="bcap">${NG[g]}<span class="r"><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div><ul class="list nu-l">${xs.map(x => nRow(x, `data-n="${x.n.id}"`)).join('')}</ul>`; };
-  const sup = S.supp.map(s => `<li class="row" data-s="${s.id}"><div class="rc"><span class="pill">${s.pcs}pc</span><div class="info"><div class="name">${esc(s.name)}</div><div class="mac">${Object.entries(s.n || {}).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? `<span><i>${n.s}</i>${nFmt(v * s.pcs)}</span>` : ''; }).join('') || '<i>no nutrients yet</i>'}</div></div></div></li>`).join('');
-  el.innerHTML = `<div class="bud-hero"><div class="bh-num"><span>${bad.length}</span><span class="bh-u">to fix</span></div>
-      <div class="bh-sub"><em>${ok} ok</em> · <button class="nu-lk" id="nuUnk">${nd} unknown</button> · ${nPeriod(days)} · <button class="nu-lk" id="nuHow">how</button></div></div>
-    ${bad.length ? `<div class="nu-cards">${shown.map(card).join('')}</div>${bad.length > 3 ? `<button class="nu-more" id="nuMore">${nMore ? 'Show less' : `Show ${bad.length - 3} more`}</button>` : ''}` : ''}
-    ${ign.length ? `<ul class="list nu-l nu-igl"><li class="row" id="nuIgn"><div class="rc"><span class="pill">${ign.length}</span><div class="info"><div class="name">Ignored</div><div class="mac"><i>${ign.map(x => x.n.n).join(', ')} — not counted</i></div></div></div></li></ul>` : ''}
-    <div class="bcap">Supplements<button id="nuAddSup">+ Add</button></div>
-    ${sup ? `<ul class="list nu-l">${sup}</ul>` : '<p class="note nu-empty">Pills you take every day, whatever the plan.</p>'}
-    ${['vit', 'min', 'fat', 'carb', 'amino'].map(grp).join('')}`;
-  el.querySelectorAll('[data-n]').forEach(b => b.addEventListener('click', () => { if (b.closest('.nu-cw.open')) return nSwClose(); haptic(); nDetail(b.dataset.n); }));
-  el.querySelectorAll('[data-ign]').forEach(b => b.addEventListener('click', () => { haptic(); nIgnore(b.dataset.ign); }));
-  el.querySelectorAll('[data-s]').forEach(b => b.addEventListener('click', () => { haptic(); suppSheet(S.supp.find(s => s.id === b.dataset.s)); }));
-  const m = $('#nuMore'); if (m) m.addEventListener('click', () => { haptic(); nMore = !nMore; renderNut(); });
-  $('#nuHow').addEventListener('click', () => { haptic(); nHow(); });
-  $('#nuUnk').addEventListener('click', () => { haptic(); nMissingSheet(); });
-  $('#nuAddSup').addEventListener('click', () => { haptic(); suppSheet(null); });
-  const ig = $('#nuIgn'); if (ig) ig.addEventListener('click', () => { haptic(); nIgnored(); });
-  el.querySelectorAll('.nu-cw').forEach(nSwBind);
-}
-/* ================= Nutrients · Design New (24 Oct): idea cards ================= 
-   An idea = one product move (the headline) + small changes that keep KCAL P F C on target — found by fixSearch with two changes
-   (plus up to two gram-level nudges). Each next idea bans the previous headlines, so ideas are different moves. */
+function renderNut() { const el = $('#nutBody'); if (el) renderNut2(el); }
+/* ================= Nutrients · product ideas (24 Oct evening) =================
+   An idea is a product: the nutrients it closes and roughly how much — as plain text. Add puts it into "To review" on Meal
+   (no grams are forced in; portions and KCAL P F C stay on Meal / Balance). Already in the plan but too little → a button to its row.
+   Too much of something → its main source and a button to its row. Products without nutrient data are never suggested. */
 let nAll = false, nIdeaKey = '', nIdeaVal = null;
 const N_CHEV = '<svg viewBox="0 0 8 14" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"><path d="M1 1l6 6-6 6"/></svg>';
 const N_BACK = '<svg viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2L2 10l8 8"/></svg>';
-function nIdeas(max) {
-  const n = nst(), order = nMix().mix.slice().sort((a, b) => b[1] - a[1]); if (!order.length) return { ideas: [], C: [] };
-  const [p, d] = order[0];
-  const key = JSON.stringify([p.id, p.g, S.items.length, n.hide, n.ign, n.mode, n.every, n.week, n.order, S.supp.length, S.ui.fixNew, goal(), max, S.body]);
+function nCap(e, kc) {   // a realistic portion ceiling — the same limits as Balance / Build the plan
+  const pc = e && isPc(e), ml = e && U(e) === 'ml', gcap = kc >= 450 ? 60 : kc >= 300 ? 200 : kc >= 150 ? 300 : 400;
+  return pc ? e.uw * Math.max(1, Math.min(4, Math.floor(gcap / e.uw))) : ml ? 750 : gcap; }
+function nRound(e, g, up) { const st = e && isPc(e) ? e.uw : g >= 100 ? 10 : 5; return Math.max(st, (up ? Math.ceil : Math.round)(g / st - 1e-9) * st); }
+const nQty = (e, g) => e && isPc(e) ? `${r0(g / e.uw)} pc` : `${r0(g)} ${e ? U(e) : 'g'}`;
+function nIdeas() {
+  const n = nst(), order = nMix().mix.slice().sort((a, b) => b[1] - a[1]); if (!order.length) return { ideas: [], p: null, hid: 0 };
+  const [p, d] = order[0], rv = revOf(p);
+  const key = JSON.stringify([p.id, p.g, S.items.map(e => e.id + (e.g || 0)), rv, n.hide, n.ign, n.mode, n.every, n.week, n.order, S.supp, goal(), S.body]);
   if (key === nIdeaKey && nIdeaVal) return nIdeaVal;
-  const ctx = fixCtx(), g = goal(), it = nPlanItems(p);
-  const T0 = ['k', 'p', 'f', 'c'].map(k => it.reduce((s, [e, gr]) => s + (e.n ? (e.n[k] || 0) * gr / 100 : 0), 0));
-  const R4 = ['k', 'p', 'f', 'c'].map(k => goalRange(k, g)), W4 = R4.map(([a, b]) => Math.max(1, (b - a) / 2));
-  const base = { C: ctx.C, w: d / ctx.days, T0, R4, W4 }, cands = fixCands(p, new Set(), ctx.C);
-  const pen0 = ctx.C.map(c => fixPen(c, c.N0)), P0 = pen0.reduce((a, b) => a + b, 0), banned = new Set(n.hide || []), ideas = [];
-  const gain = ch => { const dl = ch.to - ch.from; return ctx.C.reduce((s, c, j) => s + pen0[j] - fixPen(c, c.N0 + base.w * ch.c.mm[j] * dl), 0); };
-  for (let k = 0; k < max * 2 && ideas.length < max; k++) {
-    const s = fixSearch(base, cands, 2, banned, S.ui.fixNew !== false); if (!s.changes.length) break;
-    const hl = s.changes.slice().sort((a, b) => gain(b) - gain(a))[0]; banned.add(hl.c.id);
-    const pen1 = ctx.C.map((c, j) => fixPen(c, s.N[j])); if (pen1.reduce((a, b) => a + b, 0) > P0 - .05) continue;
-    const ref = c => c.t90 ? c.t90 / .9 : c.lim, chips = ctx.C.map((c, j) => ({ c, j, g: pen0[j] - pen1[j] })).filter(x => x.g > .01).sort((a, b) => b.g - a.g).slice(0, 4)
-      .map(x => [x.c.n.n, Math.round(x.c.N0 / ref(x.c) * 100), Math.round(s.N[x.j] / ref(x.c) * 100), !!x.c.t90]);
-    ideas.push({ s, hl, rest: s.changes.filter(c => c !== hl), p, chips });
-  }
-  nIdeaKey = key; nIdeaVal = { ideas, p, C: ctx.C }; return nIdeaVal;
-}
-function nIdeaTxt(ch) {   // headline title and the button verb
-  const e = ch.c.e, u = e ? uLab(e) : 'g', F = x => nFmt(e ? toU(e, x) : x), nm = esc(ch.c.name);
-  if (ch.from === 0) return [`Add ${F(ch.to)} ${u} ${nm}`, 'Add'];
-  if (ch.to === 0) return [`Drop ${nm}`, 'Drop'];
-  return [`${ch.to > ch.from ? 'More' : 'Less'} ${nm} · ${F(ch.from)} → ${F(ch.to)} ${u}`, ch.to > ch.from ? 'Add' : 'Cut'];
+  const { R, days } = nRows(), w = d / days, hide = new Set(n.hide || []);
+  const val = (m, k) => m && typeof m[k] === 'number' ? m[k] : undefined;
+  const lims = R.filter(x => !x.ig && x.s !== 'nd').map(x => ({ x, lim: x.q.lim || (x.q.ul && !x.q.uls ? x.q.ul : null) })).filter(z => z.lim);
+  const short = R.filter(x => !x.ig && x.s === 'short');
+  const gOf = e => p === plan() ? e.g : (p.g[e.id] || 0);
+  // who can be suggested: your own single products with data, then the built-in catalogue (from the same database)
+  const C = [], have = new Set();
+  walk(S.items, e => { have.add(e.name); if (e.src && e.src.t === 'db') have.add('db:' + e.src.id); });
+  S.items.forEach(e => { if (e.t === 'g' || !e.n || !nMap(e)) return; C.push({ id: e.id, name: e.name, e, m: e.m, g0: gOf(e), cap: nCap(e, e.n.k || 0) }); });
+  Object.entries(NCAT).forEach(([name, c]) => { if (have.has(name) || have.has('db:' + c.id)) return; C.push({ id: 'cat:' + name, name, cat: c, m: c.m, g0: 0, cap: c.cap, isNew: true }); });
+  const ideas = [];
+  C.forEach(c => { if (hide.has(c.id) || !short.length) return;
+    // the most we can add without pushing anything over its limit
+    let room = c.cap - c.g0; lims.forEach(({ x, lim }) => { const v = val(c.m, x.n.id); if (v > 0) room = Math.min(room, Math.max(0, (x.v >= lim ? lim * .05 : lim - x.v) / (w * v / 100))); });   // already over: only a trace more
+    if (room <= 0) return;
+    const need = short.map(x => { const v = val(c.m, x.n.id); return v > 0 ? { x, add: (x.q.t * .9 - x.v) / (w * v / 100), v } : null; }).filter(Boolean);
+    if (!need.length) return;
+    const fits = need.filter(o => o.add <= room).sort((a, b) => a.add - b.add);
+    let G, names, part = null;
+    if (fits.length) { G = nRound(c.e, c.g0 + fits[fits.length - 1].add, true); if (G - c.g0 > room + 1e-6) G = nRound(c.e, c.g0 + room, false);
+      names = need.filter(o => c.g0 + o.add <= G + 1e-6).map(o => o.x); }
+    else { const b = need.map(o => ({ o, pct: Math.min(.99, (o.x.v + w * o.v / 100 * room) / o.x.q.t) - o.x.v / o.x.q.t })).sort((a, b) => b.pct - a.pct)[0];
+      if (b.pct < .2) return; G = nRound(c.e, c.g0 + room, false); names = [b.o.x]; part = Math.round((b.o.x.v + w * b.o.v / 100 * (G - c.g0)) / b.o.x.q.t * 100); }
+    if (!names.length || G <= c.g0) return;
+    if (c.g0 > 0 && G < c.g0 * 1.5) return;   // in the plan already and close — not an idea
+    const kind = c.g0 > 0 ? 'more' : rv[c.id] ? 'rev' : 'add';
+    ideas.push({ kind, c, p, G, names: names.map(x => x.n.n), part, score: names.length * 10 + (part ? part / 20 : 4) - (c.isNew ? 1.5 : 0) - (kind === 'more' ? 2 : 0) });
+  });
+  ideas.sort((a, b) => b.score - a.score);
+  // too much: the biggest source in the plan, and how much of it still fits under the limit
+  const over = R.filter(x => !x.ig && x.s === 'over'), it = nPlanItems(p), seen = new Map();
+  over.forEach(x => { const lim = x.q.lim || x.q.ul; let top = null;
+    it.forEach(([e, g, dish]) => { const v = nVal(e, x.n.id); if (!v) return; const host = dish || e, add = v * g / 100; const t = seen.get('t' + host.id + x.n.id) || 0; seen.set('t' + host.id + x.n.id, t + add);
+      if (!top || t + add > top.a) top = { host, a: t + add }; });
+    if (!top || hide.has(top.host.id)) return;
+    const hg = gOf(top.host), cut = (x.v - lim) / w, keep = top.a > 0 ? nRound(top.host.t === 'g' ? null : top.host, Math.max(0, hg * (1 - cut / top.a)), false) : 0;
+    const ex = ideas.find(i => i.kind === 'over' && i.c.id === top.host.id);
+    if (ex) { ex.names.push(x.n.n); ex.G = Math.min(ex.G, cut >= top.a ? 0 : keep); return; }
+    ideas.unshift({ kind: 'over', c: { id: top.host.id, name: top.host.name, e: top.host }, p, G: cut >= top.a ? 0 : keep, names: [x.n.n], pct: x.p });
+  });
+  nIdeaKey = key; nIdeaVal = { ideas, p, hid: hide.size }; return nIdeaVal;
 }
 function nIdeaCard(x, i) {
-  const [t, verb] = nIdeaTxt(x.hl), fx = x.s.fixed.length, e = x.hl.c.e;
-  const kick = (i === 0 ? 'Biggest win · ' : '') + (fx ? `fixes ${fx}` : 'helps') + (x.hl.c.isNew ? ' · new product' : x.hl.c.parent ? ` · in ${esc(x.hl.c.parent.name)}` : '');
-  const rest = x.rest.map(ch => { const ee = ch.c.e, u = ee ? uLab(ee) : 'g', dl = (ee ? toU(ee, ch.to) : ch.to) - (ee ? toU(ee, ch.from) : ch.from); return `${esc(ch.c.name)} ${dl > 0 ? '+' : '−'}${nFmt(Math.abs(dl))} ${u}`; });
-  const kp = x.s.fits ? `KCAL P F C stay on target${rest.length ? ' · ' + rest.join(', ') : ''}` : `Leaves the KCAL P F C target${rest.length ? ' · ' + rest.join(', ') : ''} — Balance on Meal can finish it`;
+  const e = x.c.e || null, them = x.names.length > 1 ? 'them' : 'it', q = g => nQty(e && e.t !== 'g' ? e : null, g);
+  const nm = x.names.length > 3 ? x.names.slice(0, 3).join(' · ') + ` +${x.names.length - 3}` : x.names.join(' · ');
+  let sub = esc(nm), txt, btn;
+  if (x.kind === 'over') { sub = esc(nm) + (x.pct ? ` · ${x.pct}% of the limit` : '');
+    txt = x.G > 0 ? `about ${q(x.G)} keeps ${them} under` : `without it ${them === 'it' ? 'it fits' : 'they fit'}`; btn = 'Show'; }
+  else { const cov = x.part ? `covers ${x.part}%` : `covers ${them}`;
+    txt = x.kind === 'more' ? `${q(x.c.g0)} in the plan · about ${q(x.G)} ${cov}` : `about ${q(x.G)} ${cov}`; btn = x.kind === 'add' ? 'Add' : 'Show'; }
   return `<div class="nu-cw" data-idea="${i}"><button class="nu-ign" data-hide="${i}" tabindex="-1">${N_EYE}<span>Hide</span></button><div class="nu-card ni-card">
-    <div class="ni-k">${kick}</div><div class="ni-t">${t}</div>
-    ${x.chips.length ? `<div class="ni-ch">${x.chips.map(([n, a, b, up]) => `<span>${esc(n)} <b>${a}% → ${up && b >= 100 ? '100%+' : b + '%'}</b></span>`).join('')}</div>` : ''}
-    <div class="ni-kp${x.s.fits ? '' : ' bad'}">${CKs}<span>${kp}</span></div>
-    <div class="ni-bt"><button type="button" data-hide="${i}">Hide</button><button type="button" class="p" data-go="${i}">${verb}</button></div></div></div>`;
+    <div class="ni-tx"><div class="ni-t">${esc(x.c.name)}${x.c.isNew ? '' : ''}</div><div class="ni-n">${sub}</div><div class="ni-a">${txt}</div></div>
+    <button type="button" class="ni-go" data-go="${i}">${btn}</button></div></div>`;
+}
+const gOf0 = x => x.p === plan() ? x.c.e.g : (x.p.g[x.c.id] || 0);
+function nGoMeal(id, p) {   // open Meal on the plan and flash the product's row
+  if (p && p !== plan()) { S.active = p.id; applyGrams(p); save(); }
+  switchTab('meal');
+  setTimeout(() => { const r = find(id); if (r && r.parent && !r.parent.open) { r.parent.open = true; renderMeal(false); }
+    const el = $('#secMeal').querySelector(`[data-id="${id}"]`); if (!el) return;
+    el.scrollIntoView({ block: 'center', behavior: RM ? 'auto' : 'smooth' }); el.classList.add('just-added'); setTimeout(() => el.classList.remove('just-added'), 1600); }, 480);
 }
 function nIdeaGo(x) {
-  const p = x.p, snap = JSON.stringify({ items: S.items, g: p.g }), [t] = nIdeaTxt(x.hl);
-  fixApply(p, x.s); nIdeaKey = ''; renderAll(false);
-  toast(t.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, ''), { label: 'Undo', fn: () => { const o = JSON.parse(snap); S.items = o.items; p.g = o.g; if (p === plan()) applyGrams(p); save(); nIdeaKey = ''; renderAll(false); } });
+  if (x.kind !== 'add') return nGoMeal(x.c.id, x.p);
+  const p = x.p; let e = x.c.e, nw = false;
+  if (x.c.cat) { const c = x.c.cat; e = { id: uid(), t: 'f', name: x.c.name, g: 0, n: { k: r0(c.n[0]), p: r1(c.n[1]), f: r1(c.n[2]), c: r1(c.n[3]) }, m: { ...c.m }, src: { t: 'db', id: c.id, d: c.d || x.c.name } }; S.items.push(e); nw = true; }
+  revOf(p)[e.id] = { ph: x.G, why: x.names, nw }; save(); nIdeaKey = ''; nSwOpen = null; renderNut();
+  toast(`${e.name} added to ${p.name}`, { label: 'Open', fn: () => nGoMeal(e.id, p) });
 }
 function nIdeaHide(x) {
-  const n = nst(); n.hide = n.hide || []; n.hide.push(x.hl.c.id); save(); nSwOpen = null; nIdeaKey = ''; renderNut();
-  toast('Idea hidden', { label: 'Undo', fn: () => { const k = n.hide.indexOf(x.hl.c.id); if (k >= 0) n.hide.splice(k, 1); save(); nIdeaKey = ''; renderNut(); } });
+  const n = nst(); n.hide = n.hide || []; n.hide.push(x.c.id); save(); nSwOpen = null; nIdeaKey = ''; renderNut();
+  toast('Hidden', { label: 'Undo', fn: () => { const k = n.hide.indexOf(x.c.id); if (k >= 0) n.hide.splice(k, 1); save(); nIdeaKey = ''; renderNut(); } });
 }
 const nRow2 = x => `<button class="nr${x.ig ? ' ig' : ''}" data-n="${x.n.id}"><span class="nm">${x.n.n}</span>${x.s === 'nd' || x.p === null ? '<span class="bar"></span>' : `<span class="bar nst-${x.s}"><i style="width:${Math.min(100, x.p)}%"></i></span>`}<span class="pv nst-${x.s}">${x.ig ? 'off' : x.s === 'nd' ? '?' : x.p === null ? nFmt(x.v) : x.p + '%'}</span>${N_CHEV}</button>`;
 function renderNut2(el) {
   const { R, days, mix, grams } = nRows();
   const bad = nBad(R), ok = R.filter(x => x.s === 'ok').length, nd = R.filter(x => x.s === 'nd').length, ign = R.filter(x => x.ig);
-  $('#nutTitle').textContent = nTitle(); $('#nutFix').hidden = !bad.length || !grams;
-  if (!grams) { nAll = false; $('#secNut').classList.remove('nu-allpg'); el.innerHTML = `<div class="ni-q">Nothing counted yet. <em>${mix.length ? 'Add portions on Meal.' : 'Pick what you eat above.'}</em></div>`; return; }
-  const I = bad.length ? nIdeas(12) : { ideas: [] }, ideas = I.ideas, hidN = (nst().hide || []).length;
+  $('#nutTitle').textContent = nTitle(); $('#secNut').classList.toggle('nu-allpg', nAll && !!grams);
+  if (!grams) { nAll = false; el.innerHTML = `<div class="bud-hero"><div class="bh-num"><span>0</span><span class="bh-u">counted</span></div><div class="bh-sub">${mix.length ? 'Add portions on Meal.' : 'Pick what you eat above.'}</div></div>`; return; }
+  const I = bad.length ? nIdeas() : { ideas: [], hid: 0 }, ideas = I.ideas;
   const bind = () => {
     el.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => { haptic(); nIdeaGo(ideas[+b.dataset.go]); }));
     el.querySelectorAll('[data-hide]').forEach(b => b.addEventListener('click', () => { haptic(); nIdeaHide(ideas[+b.dataset.hide]); }));
@@ -4083,22 +4199,21 @@ function renderNut2(el) {
   };
   if (nAll) {
     el.innerHTML = `<button class="ni-back" id="niBack">${N_BACK}Nutrients</button><div class="ni-pt">All ideas</div>
-      <div class="ni-sub">${ideas.length} ${ideas.length === 1 ? 'idea' : 'ideas'} for ${esc(I.p ? I.p.name : '')} · biggest first · each keeps KCAL P F C on target where it can</div>
       <div class="ni-cards">${ideas.map(nIdeaCard).join('')}</div>${ideas.length ? '' : '<p class="ni-none">No more ideas with these products.</p>'}
-      ${hidN ? `<button class="ni-hid" id="niUnhide">${hidN} hidden · show</button>` : ''}`;
+      ${I.hid ? `<button class="ni-hid" id="niUnhide">${I.hid} hidden · show</button>` : ''}`;
     $('#niBack').addEventListener('click', () => { haptic(); nAll = false; renderNut(); scrollTo(0, 0); });
     const uh = $('#niUnhide'); if (uh) uh.addEventListener('click', () => { haptic(); nst().hide = []; save(); nIdeaKey = ''; renderNut(); });
     bind(); return;
   }
-  const top = ideas.slice(0, 3), cover = new Set(top.flatMap(x => x.s.fixed)).size;
+  const top = ideas.slice(0, 3);
   const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="bcap">${NG[g]}<span class="r"><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div><div class="nr-l">${xs.map(nRow2).join('')}</div>`; };
   const sup = S.supp.map(s => `<li class="row" data-s="${s.id}"><div class="rc"><span class="pill">${s.pcs}pc</span><div class="info"><div class="name">${esc(s.name)}</div><div class="mac">${Object.entries(s.n || {}).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? `<span><i>${n.s}</i>${nFmt(v * s.pcs)}</span>` : ''; }).join('') || '<i>no nutrients yet</i>'}</div></div></div></li>`).join('');
-  el.innerHTML = `<div class="ni-q">${bad.length ? `${bad.length} ${bad.length === 1 ? 'thing' : 'things'} to fix.` : 'Nothing to fix.'} <em>${!bad.length ? 'Every nutrient with data is in range.' : top.length ? (cover ? `${top.length === 1 ? 'One move covers' : `${top.length} moves cover`} ${cover} of them.` : 'Here’s what helps most.') : 'No simple move left with these products.'}</em></div>
-    <div class="ni-sub"><em>${ok} ok</em> · <button class="nu-lk" id="nuUnk">${nd} unknown</button> · ${nPeriod(days)} · <button class="nu-lk" id="nuHow">how</button></div>
+  el.innerHTML = `<div class="bud-hero"><div class="bh-num"><span>${bad.length}</span><span class="bh-u">to fix</span></div>
+      <div class="bh-sub"><em>${ok} ok</em> · <button class="nu-lk" id="nuUnk">${nd} unknown</button> · ${nPeriod(days)} · <button class="nu-lk" id="nuHow">how</button></div></div>
     ${top.length ? `<div class="ni-cards">${top.map(nIdeaCard).join('')}</div>` : ''}
-    ${ideas.length > 3 || hidN ? `<button class="ni-all" id="nuAll">See all ideas <em>${ideas.length}</em></button>` : ''}
+    ${ideas.length > 3 || I.hid ? `<button class="ni-all" id="nuAll">All ideas <em>${ideas.length}</em></button>` : ''}
     <div class="bcap">Supplements<button id="nuAddSup">+ Add</button></div>
-    ${sup ? `<ul class="list nu-l">${sup}</ul>` : '<p class="note nu-empty">Pills you take every day, whatever the plan.</p>'}
+    ${sup ? `<ul class="list nu-l">${sup}</ul>` : ''}
     ${['vit', 'min', 'fat', 'carb', 'amino'].map(grp).join('')}
     ${ign.length ? `<div class="bcap">Ignored<button id="nuIgn">${ign.length}</button></div>` : ''}`;
   bind();
@@ -4132,7 +4247,7 @@ function nDetail(id) {
     const b = s.querySelector('#nuIg'); if (b) b.addEventListener('click', () => { closeSheet(); haptic(); nIgnore(id); }); });
 }
 function nIgnored() { const ig = nst().ign;
-  sheet(`<h3>Ignored${XBTN}</h3><p class="note">Not counted as problems, and Fix leaves them alone.</p><div class="bal-rows">${ig.map(id => { const n = NUT.find(z => z.id === id); return n ? `<div class="bal-r"><b>${n.n}</b><button class="so-chip" data-un="${id}">Count again</button></div>` : ''; }).join('')}</div>`, s => {
+  sheet(`<h3>Ignored${XBTN}</h3><p class="note">Not counted as problems, ideas or in Balance.</p><div class="bal-rows">${ig.map(id => { const n = NUT.find(z => z.id === id); return n ? `<div class="bal-r"><b>${n.n}</b><button class="so-chip" data-un="${id}">Count again</button></div>` : ''; }).join('')}</div>`, s => {
     s.querySelectorAll('[data-un]').forEach(b => b.addEventListener('click', () => { ig.splice(ig.indexOf(b.dataset.un), 1); save(); haptic(); closeSheet(); renderNut(); })); });
 }
 function nHow() {
@@ -4239,125 +4354,8 @@ function fixCtx() {   // nutrients that can count as problems right now, with th
     const q = x.q, lim = q.lim || (q.ul && !q.uls ? q.ul : null); return { id: x.n.id, n: x.n, t90: q.t && !q.lim ? q.t * .9 : null, lim, N0: x.v }; });
   return { C, days, bad: nBad(R).length }; }
 const fixPen = (c, N) => (c.t90 && N < c.t90 ? 1 + (c.t90 - N) / c.t90 : 0) + (c.lim && N > c.lim ? 1 + (N - c.lim) / c.lim : 0);
-function fixCands(p, kept, C) {
-  const out = [], vec = get => C.map(c => { const v = get(c.id); return v === undefined ? 0 : v / 100; });
-  const mk = (e, x0) => { const d = e.n.k || 0, pc = isPc(e), ml = U(e) === 'ml';
-    const por = pc ? e.uw * 2 : ml ? 250 : d >= 450 ? 25 : d >= 300 ? 80 : d >= 150 ? 150 : 150;
-    const gcap = d >= 450 ? 60 : d >= 300 ? 200 : d >= 150 ? 300 : 400, cap = pc ? e.uw * Math.max(1, Math.min(4, Math.floor(gcap / e.uw))) : ml ? 750 : gcap;
-    return { id: e.id, name: e.name, e, x0, v: ['k', 'p', 'f', 'c'].map(k => (e.n[k] || 0) / 100), mm: vec(k => nVal(e, k)), lo: 0, hi: Math.max(x0, cap), step: pc ? e.uw : ml ? 10 : 5, por, min: pc ? e.uw : por * .4 }; };
-  S.items.forEach(e => {
-    if (e.t !== 'g') { if (e.n && nMap(e) && !kept.has(e.id)) out.push(mk(e, p.g[e.id] || 0)); return; }
-    const mx = e.ch.reduce((s, c) => s + (p.g[c.id] || 0), 0); if (!mx || (p.g[e.id] ?? mx) < mx) return;   // recipe edits only for a dish eaten whole
-    e.ch.forEach(c => { const g = p.g[c.id] || 0; if (!g || !c.n || !nMap(c) || kept.has(c.id)) return; out.push({ ...mk(c, g), parent: e, lo: Math.round(g * .4 / 5) * 5, hi: Math.max(g, Math.round(g * 1.6 / 5) * 5) }); });
-  });
-  if (S.ui.fixNew !== false) { const have = new Set(); walk(S.items, e => { have.add(e.name); if (e.src && e.src.t === 'db') have.add('db:' + e.src.id); });
-    Object.entries(NCAT).forEach(([name, c]) => { const id = 'cat:' + name; if (have.has(name) || have.has('db:' + c.id) || kept.has(id)) return;
-      out.push({ id, name, cat: c, isNew: true, x0: 0, v: c.n.map(x => x / 100), mm: vec(k => c.m[k]), lo: 0, hi: c.cap, step: 5, por: c.por, min: c.por * .5 }); }); }
-  return out;
-}
-function fixSearch(base, cands, maxCh, banned, allowNew) {
-  const { C, w, T0, R4, W4 } = base, n = cands.length, x = cands.map(c => c.x0), N = C.map(c => c.N0), T = T0.slice(), chg = new Set();
-  const kbPen = (T, wt) => T.reduce((s, t, i) => s + wt * ((Math.max(0, R4[i][0] - t) + Math.max(0, t - R4[i][1])) / W4[i]) ** 2, 0);
-  const cost = (i, xi) => { const c = cands[i]; if (xi === c.x0) return 0; return .8 + (c.isNew ? .7 : 0) + .5 * Math.abs(xi - c.x0) / Math.max(c.x0, c.por); };
-  const nutPen = N => C.reduce((s, c, j) => s + fixPen(c, N[j]), 0);
-  let fine = false;
-  const targets = (c, xi, small) => { const s = fine && !isPc(c.e || {}) ? 1 : c.step, P = c.por, set = new Set();
-    (small ? [xi + s, xi - s, xi + 2 * s, xi - 2 * s, xi + 4 * s, xi - 4 * s, xi + 10 * s, xi - 10 * s] : [xi + P, xi + 2 * P, xi - P, xi * .75, xi * .5, 0, xi + s, xi - s, xi + 4 * s, xi - 4 * s])
-      .forEach(t => { t = Math.round(Math.max(c.lo, Math.min(c.hi, t)) / s) * s; if (fine && t !== xi && Math.abs(t - c.x0) % c.step && Math.abs(t - xi) > 10) return; if (t !== xi && t >= 0 && !(c.x0 === 0 && t > 0 && t < c.min)) set.add(t); });
-    return [...set]; };
-  let newN = 0;
-  const run = (kbW, small, limit, iters) => {
-    let score = nutPen(N) * 10 + kbPen(T, kbW) + [...chg].reduce((s, i) => s + cost(i, x[i]), 0);
-    for (let it = 0; it < iters; it++) {
-      let best = null, bestS = score - 1e-6;
-      for (let i = 0; i < n; i++) { const c = cands[i]; if (banned.has(c.id) || (c.isNew && !allowNew)) continue;
-        const isCh = chg.has(i); if (!isCh && chg.size >= limit) continue; if (small && !isCh && c.x0 === 0) continue;
-        const ci = cost(i, x[i]);
-        if (!isCh && c.isNew && newN >= 2) continue;   // at most two new products in one option
-        for (const t of targets(c, x[i], small)) { const d = t - x[i];
-          const N2 = N.map((v, j) => v + w * c.mm[j] * d), T2 = T.map((v, k) => v + c.v[k] * d);
-          if (C.some((cc, j) => (cc.lim && N2[j] > cc.lim && N[j] <= cc.lim) || (fixPen(cc, cc.N0) === 0 && fixPen(cc, N2[j]) > 0))) continue;   // never create a new problem
-          const sc = score - ci + cost(i, t) + (nutPen(N2) - nutPen(N)) * 10 + kbPen(T2, kbW) - kbPen(T, kbW);
-          if (sc < bestS) { bestS = sc; best = [i, t]; } } }
-      if (!best) break; const [i, t] = best, d = t - x[i], c = cands[i];
-      for (let j = 0; j < N.length; j++) N[j] += w * c.mm[j] * d; for (let k = 0; k < 4; k++) T[k] += c.v[k] * d;
-      x[i] = t; if (t === c.x0) chg.delete(i); else chg.add(i); score = bestS; newN = [...chg].filter(k => cands[k].isNew).length;
-    } };
-  run(8, false, maxCh, 30);
-  const fits = () => T.every((t, i) => t >= R4[i][0] - 1e-6 && t <= R4[i][1] + 1e-6);
-  if (!fits()) run(200, true, maxCh + 2, 60);   // settle calories and macros with small steps
-  if (!fits()) { fine = true; run(400, true, maxCh + 2, 40); }   // last gram-level nudge
-  const changes = [...chg].map(i => ({ c: cands[i], from: cands[i].x0, to: x[i] })).sort((a, b) => Math.abs(b.to - b.from) * (b.c.v[0] || .01) - Math.abs(a.to - a.from) * (a.c.v[0] || .01));
-  return { changes, N: N.slice(), T: T.slice(), fits: fits(), after: C.filter((c, j) => fixPen(c, N[j]) > 0).length, fixed: C.filter((c, j) => fixPen(c, c.N0) > 0 && fixPen(c, N[j]) === 0).map(c => c.n.n) };
-}
-function fixOptions(p, days, kept) {
-  const ctx = fixCtx(), g = goal(), it = nPlanItems(p);
-  const T0 = ['k', 'p', 'f', 'c'].map(k => it.reduce((s, [e, gr]) => s + (e.n ? (e.n[k] || 0) * gr / 100 : 0), 0));
-  const R4 = ['k', 'p', 'f', 'c'].map(k => goalRange(k, g)), W4 = R4.map(([a, b]) => Math.max(1, (b - a) / 2));
-  const base = { C: ctx.C, w: days / ctx.days, T0, R4, W4 }, cands = fixCands(p, kept, ctx.C);
-  const before = ctx.C.filter(c => fixPen(c, c.N0) > 0).length, fitsBefore = T0.every((t, i) => t >= R4[i][0] && t <= R4[i][1]);
-  const sols = [], seen = new Set(), add = s => { if (!s.changes.length) return; const key = s.changes.map(c => c.c.id + ':' + c.to).sort().join('|');
-    if (seen.has(key)) return; seen.add(key); if (s.after < before || (s.fits && !fitsBefore && s.after <= before)) sols.push(s); };
-  const A = fixSearch(base, cands, 3, new Set(), true); add(A);
-  const B = fixSearch(base, cands, 4, new Set(), true); add(B);
-  add(fixSearch(base, cands, 4, new Set(), false));
-  [A, B].forEach(s => s.changes.slice(0, 2).forEach(ch => add(fixSearch(base, cands, 4, new Set([ch.c.id]), true))));
-  sols.sort((a, b) => (b.fits - a.fits) || a.after - b.after || a.changes.length - b.changes.length);
-  return { sols: sols.slice(0, 5), before, T0, R4 };
-}
-function fixAmt(ch) { const e = ch.c.e, u = e ? uLab(e) : 'g', f = e ? toU(e, ch.from) : ch.from, t = e ? toU(e, ch.to) : ch.to, F = v => nFmt(v);
-  return ch.from === 0 ? `+${F(t)} ${u}` : `${F(f)} → ${F(t)} ${u}`; }
-function fixApply(p, sol) {
-  sol.changes.forEach(ch => { const c = ch.c; let id = c.id;
-    if (c.isNew) { const e = { id: uid(), t: 'f', name: c.name, g: 0, n: { k: r0(c.cat.n[0]), p: r1(c.cat.n[1]), f: r1(c.cat.n[2]), c: r1(c.cat.n[3]) }, m: { ...c.cat.m }, src: { t: 'db', id: c.cat.id, d: c.cat.d || c.name } }; S.items.push(e); id = e.id; }
-    p.g[id] = ch.to;
-    if (c.parent) p.g[c.parent.id] = c.parent.ch.reduce((s, x) => s + (p.g[x.id] || 0), 0); });
-  if (p === plan()) applyGrams(p); save();
-}
-function fixStart() {
-  if (ghostSnap) { ghostOff(); toast('Try-out mode is off'); }
-  nPrep(); const order = nMix().mix.sort((a, b) => b[1] - a[1]); if (!order.length) return;
-  const snap = JSON.stringify({ items: S.items, g: S.plans.map(p => [p.id, p.g]) }), start = fixCtx().bad, log = [];
-  let step = 0, kept = new Set(), O = null, i = 0;
-  const undoAll = () => { const o = JSON.parse(snap); S.items = o.items; o.g.forEach(([id, g]) => { const p = S.plans.find(x => x.id === id); if (p) p.g = g; }); applyGrams(plan()); save(); renderAll(false); };
-  const show = () => {
-    const [p, d] = order[step]; O = fixOptions(p, d, kept); i = 0;
-    const tiles = s => `<div class="br1">${['k', 'p', 'f', 'c'].map((k, j) => { const ok = s.T[j] >= O.R4[j][0] - 1e-6 && s.T[j] <= O.R4[j][1] + 1e-6; return `<div><span>${{ k: 'KCAL', p: 'P', f: 'F', c: 'C' }[k]}</span><s>${r0(O.T0[j])}</s><b>${r0(s.T[j])}${ok ? CKs : ''}</b></div>`; }).join('')}</div>`;
-    const rows = s => s.changes.map(ch => `<button class="bal-r" data-keep="${ch.c.id}"><b>${ch.c.parent ? '' : ''}${esc(ch.c.name)}${ch.c.parent ? `<small class="bal-in">in ${esc(ch.c.parent.name)}</small>` : ch.c.isNew ? '<small class="bal-in">new</small>' : ''}</b><em class="${ch.to > ch.from ? 'p' : ''}">${fixAmt(ch)}</em></button>`).join('')
-      + [...kept].map(id => { let nm = id.startsWith('cat:') ? id.slice(4) : ''; if (!nm) walk(S.items, e => { if (e.id === id) nm = e.name; }); return `<button class="bal-r nu-kept" data-keep="${id}"><b>${esc(nm)}</b><em>${N_LOCK} kept</em></button>`; }).join('');
-    const body = () => { const s = O.sols[i]; if (!s) return `<div class="bal-rows">${rows({ changes: [] })}</div><p class="bal-none">Nothing to improve in ${esc(p.name)} without leaving ${esc(goal().name)}.${kept.size ? ' Tap a kept product to let it change.' : ''}</p>`;
-      return `<div class="bal-rows">${rows(s)}</div><p class="nu-hint">Tap a product to keep it as is</p>
-        ${O.sols.length > 1 ? `<div class="bal-nav"><button type="button" id="fxPrev"${i === 0 ? ' disabled' : ''}>‹ Previous</button><span>${i + 1} of ${O.sols.length}</span><button type="button" id="fxAlt"${i === O.sols.length - 1 ? ' disabled' : ''}>Another way ›</button></div>` : ''}
-        ${tiles(s)}<p class="nu-res">${CKs}<span>To fix <b>${O.before} → ${s.after}</b></span><span class="r">${esc(s.fixed.slice(0, 3).join(', '))}</span></p>${s.fits ? '' : `<p class="note">Couldn’t keep ${esc(p.name)} inside ${esc(goal().name)} with these products.</p>`}`; };
-    const last = step === order.length - 1;
-    sheet(`<div class="sh-head"><span class="sh-kick">${order.length > 1 ? `${step + 1} of ${order.length} · ` : ''}${nst().mode === 'every' ? 'every day' : `${d} ${d === 1 ? 'day' : 'days'}`}</span><span class="nu-sht">${esc(p.name)}</span>${XBTN}</div>
-      <div id="fxB">${body()}</div><div class="btnrow wide"><button class="sbtn plain" id="fxSkip">${O.sols.length ? 'Skip' : (last ? 'Done' : 'Next')}</button>${O.sols.length ? `<button class="sbtn primary" id="fxGo">${last ? 'Apply' : 'Apply · next'}</button>` : ''}</div>`, s => {
-      const wire = () => { s.querySelector('#fxB').innerHTML = body();
-        s.querySelectorAll('[data-keep]').forEach(b => b.addEventListener('click', () => { haptic(); const id = b.dataset.keep; kept.has(id) ? kept.delete(id) : kept.add(id); O = fixOptions(p, d, kept); i = 0; wire(); syncBtns(); }));
-        const pv = s.querySelector('#fxPrev'), al = s.querySelector('#fxAlt');
-        if (pv) pv.addEventListener('click', () => { haptic(); i = Math.max(0, i - 1); wire(); });
-        if (al) al.addEventListener('click', () => { haptic(); i = Math.min(O.sols.length - 1, i + 1); wire(); }); };
-      const syncBtns = () => { const go = s.querySelector('#fxGo'), sk = s.querySelector('#fxSkip'); if (go) go.hidden = !O.sols.length; sk.textContent = O.sols.length ? 'Skip' : (last ? 'Done' : 'Next'); };
-      wire();
-      s.querySelector('#fxSkip').addEventListener('click', () => { haptic(); log.push([p, O.sols.length ? 'skipped' : 'nothing to change']); next(); });
-      const go = s.querySelector('#fxGo'); if (go) go.addEventListener('click', () => { const sol = O.sols[i]; if (!sol) return; haptic(); fixApply(p, sol); log.push([p, `${sol.changes.length} ${sol.changes.length === 1 ? 'change' : 'changes'}`, sol.fits]); next(); });
-    });
-  };
-  const next = () => { kept = new Set(); step++; if (step < order.length) show(); else done(); };
-  const done = () => { renderAll(false); const { R } = nRows(), left = nBad(R), applied = log.filter(l => l[2] !== undefined), changed = applied.length > 0, outside = applied.filter(l => !l[2]).map(l => l[0].name);
-    sheet(`<div class="sh-head"><span class="sh-kick">Fix · done</span><span class="nu-sht">${start} → ${left.length} to fix</span>${XBTN}</div>
-      <div class="bal-rows">${log.map(([p, t]) => `<div class="bal-r"><b>${esc(p.name)}</b><em class="nu-nf">${t}</em></div>`).join('')}</div>
-      ${left.length ? `<div class="cap">Still to fix</div><ul class="list nu-l">${left.slice(0, 4).map(x => nRow(x, '')).join('')}</ul>` : ''}
-      <p class="note">${!changed ? 'Nothing changed.' : outside.length ? `${esc(outside.join(', '))} ${outside.length > 1 ? 'are' : 'is'} still outside ${esc(goal().name)} — Balance on Meal can finish it.` : `Every changed plan fits ${esc(goal().name)}. You’ll see the new portions on Meal.`}</p>
-      <div class="btnrow wide">${changed ? '<button class="sbtn plain" id="fxUndo">Undo all</button>' : ''}<button class="sbtn primary" data-close>Done</button></div>`, s => {
-      const u = s.querySelector('#fxUndo'); if (u) u.addEventListener('click', () => { haptic(); undoAll(); closeSheet(); toast('Fix undone'); }); });
-  };
-  show();
-}
-$('#nutPlanBtn').addEventListener('click', () => { haptic(); nPicker(); });
-$('#nutFix').addEventListener('click', () => { haptic(); fixStart(); });
 $('#nutSearch').addEventListener('click', () => { haptic(); nutPick(k => { closeSheet(true); nDetail(k); }, true); });
-window.__nut = { fixOptions, fixCtx, nRows, fixApply, renderNut, plan: () => plan(), S: () => S, parseLabel, ndbMatch, ndbSearch, ndbLoad, offItem, NDB, set: (name, gr) => { let e; walk(S.items, x => { if (x.name === name) e = x; }); plan().g[e.id] = gr; applyGrams(plan()); renderAll(false); } };   // debugging handle
+window.__nut = { fixCtx, nRows, nIdeas, renderNut, plan: () => plan(), S: () => S, parseLabel, ndbMatch, ndbSearch, ndbLoad, offItem, NDB, set: (name, gr) => { let e; walk(S.items, x => { if (x.name === name) e = x; }); plan().g[e.id] = gr; applyGrams(plan()); renderAll(false); } };   // debugging handle
 
 /* ================= wiring ================= */
 $('#searchBtn').insertAdjacentHTML('beforeend', '<span class="slab">Search</span>');
@@ -4423,7 +4421,7 @@ function fitRoom() {
   const app = document.querySelector('.app'); if (!app) return;
   if (!maOn()) { app.style.minHeight = ''; return; }
   // natural content height with the header fully open (measured without touching layout-affecting styles)
-  const last = [zlist, zHead, list].find(e => !e.hidden && e.offsetParent); if (!last) return;
+  const last = [zlist, zHead, rlist, rHead, list].find(e => !e.hidden && e.offsetParent); if (!last) return;
   const bottom = last.getBoundingClientRect().bottom + scrollY + parseFloat(getComputedStyle(app).paddingBottom);
   if (bottom - innerHeight > 1) app.style.minHeight = `calc(100vh + ${MA_TITLE + maShrink() + 4}px)`;
   else { app.style.minHeight = ''; if (scrollY > 0) scrollTo(0, 0); }
