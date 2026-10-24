@@ -1060,11 +1060,32 @@ body.v2 .zhead[hidden]{display:none}
 
 /* balance the plan (S2) */
 #balBtn{color:var(--blue)}
-.vbar{display:flex;align-items:center;gap:10px;height:52px;margin-top:8px;padding:0 7px 0 14px;box-sizing:border-box;border-radius:16px;background:rgba(0,0,0,.06)}
-.vbar .vb-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
-.vbar .vb-t b{font-size:14px;line-height:18px;font-weight:590;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vbar .vb-t span{font-size:12px;line-height:15px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vbar.ok .vb-t b{color:var(--blue)}
+.vbar{margin-top:8px;padding:9px 8px 9px 14px;box-sizing:border-box;border-radius:16px;background:rgba(0,0,0,.06);min-height:52px}
+.vbar b{font-size:15px;line-height:19px;font-weight:600;letter-spacing:-.25px}
+.vbar .vb-s{font-size:12px;line-height:16px;color:var(--ink-50)}
+.vbar .vb-h{display:flex;align-items:center;gap:8px;min-height:34px}
+.vbar .vb-h .vb-bal{margin-left:auto}
+.vbar.ok{display:flex;flex-direction:column;justify-content:center}
+.vbar.ok .vb-h{min-height:0}
+.vbar.ok b{color:var(--blue)}
+.vb-ck{width:20px;height:20px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;flex:none}
+.vb-ck svg{width:12px;height:12px}
+.vbar.ok .vb-s{padding-left:28px}
+/* a — words, wrapping */
+.vb-a:not(.ok){display:flex;align-items:center;gap:10px}
+.vb-a .vb-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+/* b — tags */
+.vb-tags{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+.vb-tag{height:24px;padding:0 8px;border-radius:12px;font-family:var(--mono);font-size:12px;font-weight:600;display:inline-flex;align-items:center;white-space:nowrap}
+.vb-tag.up{background:var(--over);color:#fff}.vb-tag.dn{background:rgba(0,0,0,.1)}
+.vb-tags .vb-s{flex-basis:100%;margin-top:1px}
+/* c — a line per miss */
+.vb-n{font-size:12px;color:var(--ink-50)}
+.vb-l{display:grid;grid-template-columns:64px auto 1fr;align-items:baseline;column-gap:10px;margin-top:6px;padding-right:6px}
+.vb-k{font-size:13px;font-weight:510;color:var(--ink-50)}
+.vb-v{font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap}
+.vb-v.dn{color:var(--ink-50)}
+.vb-l .vb-s{text-align:right}
 .vb-bal{flex:none;display:flex;align-items:center;gap:5px;height:38px;padding:0 14px 0 10px;border-radius:19px;background:var(--blue);color:#fff;font-size:15px;font-weight:590}
 .vb-bal[hidden]{display:none}
 .vb-bal:active{transform:scale(.96)}
@@ -1758,21 +1779,28 @@ let wasAllOk = null;
    Fits → «Plan fits». Off → what is off, counted from the edge of the range, most off first; where it mostly comes from; blue Balance. */
 function vbar(box, g, t, rngOf) {
   let el = box.querySelector(':scope > .vbar');
-  if (!el) { el = document.createElement('div'); el.className = 'vbar'; el.innerHTML = '<span class="vb-t"><b></b><span></span></span><button type="button" class="vb-bal">' + SPARK18 + 'Balance</button>'; box.append(el);
-    el.querySelector('.vb-bal').addEventListener('click', () => { haptic(); balanceSheet(); }); }
-  const W = { k: 'calories', p: 'protein', f: 'fat', c: 'carbs' }, off = [];
+  if (!el) { el = document.createElement('div'); box.append(el); el.addEventListener('click', e => { if (e.target.closest('.vb-bal')) { haptic(); balanceSheet(); } }); }
+  const st = S.ui.vbs || 'a'; el.className = 'vbar vb-' + st;
+  const W = { k: 'Calories', p: 'Protein', f: 'Fat', c: 'Carbs' }, SH = { k: 'kcal', p: 'P', f: 'F', c: 'C' }, off = [];
   ['k', 'p', 'f', 'c'].forEach(k => { const [lo, hi] = rngOf(k), v = t[k]; if (v > hi) off.push({ k, d: Math.max(1, r0(v - hi)), up: true, rel: (v - hi) / g[k] }); else if (v < lo) off.push({ k, d: Math.max(1, r0(lo - v)), up: false, rel: (lo - v) / g[k] }); });   // same test as the chips
   off.sort((a, b) => b.rel - a.rel);
-  const u = k => k === 'k' ? '' : ' g', b = el.querySelector('b'), sub = el.querySelector('.vb-t span');
-  el.classList.toggle('ok', !off.length); el.querySelector('.vb-bal').hidden = !off.length;
-  if (!off.length) { b.textContent = 'Plan fits'; sub.textContent = 'Calories and macros are within ' + (g.name || 'the goal') + '’s ranges'; return; }
-  const top = off[0], S2 = { k: 'kcal', p: 'P', f: 'F', c: 'C' };   // line 1: the biggest miss in words; line 2: where it comes from, then the rest
-  b.textContent = `${W[top.k].charAt(0).toUpperCase() + W[top.k].slice(1)} ${top.d}${u(top.k)} ${top.up ? 'over' : 'short'}`;
-  let src = [];
-  if (top.up) { const by = {}; nPlanItems(plan()).forEach(([e, gr, dish]) => { const nm = dish ? dish.name : e.name, v = (e.n[top.k] || 0) * gr / 100; by[nm] = (by[nm] || 0) + v; });
-    src = Object.entries(by).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]); }
-  const rest = off.slice(1).map(x => `${S2[x.k]} ${x.up ? '+' : '−'}${x.d}${u(x.k)}`).join(', ');
-  sub.textContent = [src.length ? 'Mostly ' + src.join(', ') : (top.up ? '' : 'Raise a portion or tap Balance'), rest ? 'also ' + rest : ''].filter(Boolean).join(' · ');
+  const u = k => k === 'k' ? '' : ' g', items = nPlanItems(plan());
+  const srcOf = k => { const by = {}; items.forEach(([e, gr, dish]) => { const nm = dish ? dish.name : e.name; by[nm] = (by[nm] || 0) + (e.n[k] || 0) * gr / 100; });
+    return Object.entries(by).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => esc(x[0])); };
+  const bal = `<button type="button" class="vb-bal">${SPARK18}Balance</button>`;
+  el.classList.toggle('ok', !off.length);
+  if (!off.length) { el.innerHTML = `<div class="vb-h"><span class="vb-ck"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Plan fits</b></div>${st === 'a' ? `<span class="vb-s">Calories and macros are within ${esc(g.name || 'the goal')}’s ranges</span>` : ''}`; return; }
+  const top = off[0], big = off.some(x => x.rel > .05), title = big ? 'Doesn’t fit yet' : 'Almost fits';
+  if (st === 'a') {   // the biggest miss in words, then sources and the rest — wraps, never cut
+    const src = top.up ? srcOf(top.k) : [], rest = off.slice(1).map(x => `${SH[x.k]} ${x.up ? '+' : '−'}${x.d}${u(x.k)}`).join(', ');
+    el.innerHTML = `<div class="vb-t"><b>${W[top.k]} ${top.d}${u(top.k)} ${top.up ? 'over' : 'short'}</b><span class="vb-s">${[src.length ? 'Mostly ' + src.join(', ') : (top.up ? '' : 'Raise a portion or tap Balance'), rest ? 'also ' + rest : ''].filter(Boolean).join(' · ')}</span></div>${bal}`;
+  } else if (st === 'b') {   // a verdict word, then every miss as a tag; sources of the biggest one
+    const src = top.up ? srcOf(top.k) : [];
+    el.innerHTML = `<div class="vb-h"><b>${title}</b>${bal}</div><div class="vb-tags">${off.map(x => `<span class="vb-tag ${x.up ? 'up' : 'dn'}">${SH[x.k]} ${x.up ? '+' : '−'}${x.d}${u(x.k)}</span>`).join('')}${src.length ? `<span class="vb-s">${SH[top.k] === 'kcal' ? 'calories' : W[top.k].toLowerCase()} mostly from ${src.join(', ')}</span>` : ''}</div>`;
+  } else {   // a line for each miss, with its own sources
+    el.innerHTML = `<div class="vb-h"><b>${title}</b><span class="vb-n">${off.length} to fix</span>${bal}</div>${off.map(x => { const src = x.up ? srcOf(x.k) : [];
+      return `<div class="vb-l"><span class="vb-k">${W[x.k]}</span><span class="vb-v ${x.up ? 'up' : 'dn'}">${x.up ? '+' : '−'}${x.d}${u(x.k)} ${x.up ? 'over' : 'short'}</span>${src.length ? `<span class="vb-s">${src.join(', ')}</span>` : '<span class="vb-s">raise a portion</span>'}</div>`; }).join('')}`;
+  }
 }
 
 /* ================= meal list ================= */
@@ -1906,6 +1934,8 @@ function renderSettings() {
     <div class="st-g">
       <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'soft')) || CHIP_STYLES[0])[2]}</span></div>
         <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'soft') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+      <div class="st-r st-col"><div><b>Verdict bar</b><span>${{ a: 'A · the biggest miss in words', b: 'B · a verdict and a tag for each miss', c: 'C · a line for each miss with its sources' }[u.vbs || 'a']}</span></div>
+        <div class="st-seg">${['a', 'b', 'c'].map(k => `<button data-vbs="${k}" class="${(u.vbs || 'a') === k ? 'on' : ''}">${k.toUpperCase()}</button>`).join('')}</div></div>
       <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
@@ -1928,6 +1958,8 @@ $('#secSettings').addEventListener('click', e => {
   if (th) { haptic(); S.ui.theme = th.dataset.th; save(); syncTabs(); renderSettings(); return; }
   if (sw) { const k = sw.dataset.set; S.ui[k] = S.ui[k] === false; save(); syncTabs(); renderSettings(); if (S.ui[k] !== false) haptic(); return; }
   if (st) { haptic(); S.ui.step = +st.dataset.step; save(); renderSettings(); return; }
+  const vbb = e.target.closest('[data-vbs]');
+  if (vbb) { haptic(); S.ui.vbs = vbb.dataset.vbs; save(); syncTabs(); renderAll(false); renderSettings(); return; }
   const chb = e.target.closest('[data-chips]');
   if (chb) { haptic(); S.ui.chips = chb.dataset.chips; save(); syncTabs(); renderSettings(); return; }
   if (!act) return;
@@ -4154,7 +4186,7 @@ function fixStart() {
 $('#nutPlanBtn').addEventListener('click', () => { haptic(); nPicker(); });
 $('#nutFix').addEventListener('click', () => { haptic(); fixStart(); });
 $('#nutSearch').addEventListener('click', () => { haptic(); nutPick(k => { closeSheet(true); nDetail(k); }, true); });
-window.__nut = { fixOptions, fixCtx, nRows, fixApply, renderNut, plan: () => plan(), S: () => S, parseLabel, ndbMatch, ndbSearch, ndbLoad, offItem, NDB };   // debugging handle
+window.__nut = { fixOptions, fixCtx, nRows, fixApply, renderNut, plan: () => plan(), S: () => S, parseLabel, ndbMatch, ndbSearch, ndbLoad, offItem, NDB, set: (name, gr) => { let e; walk(S.items, x => { if (x.name === name) e = x; }); plan().g[e.id] = gr; applyGrams(plan()); renderAll(false); } };   // debugging handle
 
 /* ================= wiring ================= */
 $('#searchBtn').insertAdjacentHTML('beforeend', '<span class="slab">Search</span>');
