@@ -1219,6 +1219,43 @@ button.bal-r{width:100%;text-align:left;color:var(--ink)}
 .nu-pick .tfield+.nu-fl{margin-top:2px}
 .nu-pick .btnrow.wide .sbtn svg,.sheet .btnrow.wide .sbtn svg{flex:none}
 .sheet .sbtn.nu-unk{display:flex}
+.cam{position:fixed;inset:0;z-index:58;background:#000;color:#fff;opacity:0;transition:opacity .25s;overflow:hidden;-webkit-user-select:none;user-select:none}
+.cam.show{opacity:1}
+.cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cam-frame{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);width:84vw;max-width:420px;height:32vw;max-height:170px;border-radius:22px;box-shadow:0 0 0 200vmax rgba(0,0,0,.6);transition:height .4s var(--spring)}
+.cam[data-m=table] .cam-frame{height:min(56vh,125vw);max-height:none}
+.cam-frame i{position:absolute;inset:0;border:2px solid rgba(255,255,255,.92);border-radius:inherit}
+.cam-still{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit}
+.cam-still[hidden]{display:none}
+.cam-top{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top) + 14px) 16px 0 20px}
+.cam-t{flex:1;font-size:17px;line-height:22px;font-weight:590;letter-spacing:-.3px}
+.cam-x{flex:none;width:36px;height:36px;border-radius:18px;background:rgba(255,255,255,.18);display:grid;place-items:center;color:#fff}
+.cam-x svg{width:11px;height:11px}
+.cam-msg{position:absolute;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom) + 160px);display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;background:rgba(28,28,30,.84);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font-size:14px;line-height:19px}
+.cam-msg[hidden]{display:none}
+.cam-msg .t{flex:1 1 200px}
+.cam-msg .c{display:flex;gap:6px;margin-left:auto}
+.cam-msg .c:empty{display:none}
+.cam-msg button{height:32px;padding:0 14px;border-radius:16px;background:#fff;color:#000;font-size:14px;font-weight:600}
+.cam-msg button.soft{background:rgba(255,255,255,.18);color:#fff}
+.cam-bot{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;gap:18px;padding:0 20px calc(env(safe-area-inset-bottom) + 20px)}
+.cam-seg{display:flex;gap:4px;padding:4px;border-radius:22px;background:rgba(255,255,255,.14)}
+.cam-seg button{height:36px;padding:0 16px;border-radius:18px;color:#fff;font-size:15px;font-weight:510}
+.cam-seg button.on{background:rgba(255,255,255,.9);color:#000}
+.cam-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%}
+.cam-ph{justify-self:start;height:36px;padding:0 16px;border-radius:18px;background:rgba(255,255,255,.18);color:#fff;font-size:15px;font-weight:510}
+.cam-shut{width:72px;height:72px;border-radius:36px;box-shadow:inset 0 0 0 4px #fff;display:grid;place-items:center}
+.cam-shut i{width:56px;height:56px;border-radius:28px;background:#fff;transition:transform .15s}
+.cam-shut:active i{transform:scale(.9)}
+.cam-lt{justify-self:end;height:36px;padding:0 14px;border-radius:18px;background:rgba(255,255,255,.18);color:#fff;font-size:15px;font-weight:510}
+.cam[data-m=code] .cam-lt{visibility:hidden}
+.nu-steps{margin:0 4px 14px;padding-left:20px;font-size:14px;line-height:20px;color:var(--ink-50)}
+.nu-steps b{color:var(--ink);font-weight:590}
+.nu-lt{display:block;width:100%;box-sizing:border-box;min-height:120px;max-height:30vh;padding:12px 14px;border:0;border-radius:16px;background:var(--fill-6);font:inherit;font-size:15px;line-height:20px;color:var(--ink);resize:none;outline:none;-webkit-user-select:text;user-select:text}
+.nu-lt::placeholder{color:var(--ink-28)}
+.nu-ltr .cap{margin:16px 4px 8px}
+.nu-ltr .bal-r{min-height:44px}
+.cam[data-m=code] .cam-shut{visibility:hidden}
 .nu-shint{flex-basis:100%;flex-wrap:wrap;margin:0 0 12px;align-items:center}
 .nu-shint .t{flex:1 1 180px}
 .nu-shc{display:flex;gap:6px;margin-left:auto}
@@ -2670,7 +2707,7 @@ function foodSheet(e, isNew) {
           if (r.t === 'db') { const p = nDbPick(r.id); setPend(p, true); if (canFill()) fill(p.n); } else { setPend({ src: r }, true); unfill(); } })
           .catch(() => { st.src = undefined; drawNut(); }); };
       nameIn.addEventListener('input', () => { clearTimeout(mt); mt = setTimeout(match, 350); });
-      const sb = s.querySelector('#fScan'); sb.addEventListener('click', () => { haptic(); menu(sb, [{ head: 'Fill in from the pack' }, { label: 'Scan the barcode', now: 1, do: () => headScan.start('code') }, { label: 'Scan the nutrition table', now: 1, do: () => headScan.start('table') }]); });
+      s.querySelector('#fScan').addEventListener('click', () => { haptic(); headScan.start('code'); });
     } else if (!e.src) ndbLoad().then(() => { const r = find(e.id); if (!r || r.e.src) return; const x = ndbMatch(r.e.name, r.e.n);
       if (x.t === 'db') nSet(r.e, nDbPick(x.id)); else r.e.src = x; save(); st.src = r.e.src; st.m = r.e.m; drawNut(); }).catch(() => { st.src = { t: 'none' }; drawNut(); });
     const setU = u => { s.querySelector('#fUwBox').hidden = u !== 'pc';
@@ -3514,16 +3551,20 @@ async function nBarcode(file) {
   return null;
 }
 let nTW = null, nTWp = null;
-async function nOcrCanvas(file) {   // grey, contrast stretched (2%–98%), long side ≈ 2000 px
-  const c = await nCanvas(file, 2000, true), x = c.getContext('2d'), d = x.getImageData(0, 0, c.width, c.height), a = d.data, H = new Uint32Array(256), L = new Uint8Array(a.length / 4);
+async function nOcrCanvas(src) {   // grey, contrast stretched (2%–98%), long side ≈ 2000 px
+  let c; if (src instanceof HTMLCanvasElement) { const k = Math.min(2.5, 2000 / Math.max(src.width, src.height)); c = document.createElement('canvas'); c.width = Math.round(src.width * k); c.height = Math.round(src.height * k); const g = c.getContext('2d'); g.imageSmoothingQuality = 'high'; g.drawImage(src, 0, 0, c.width, c.height); }
+  else c = await nCanvas(src, 2000, true); const x = c.getContext('2d'), d = x.getImageData(0, 0, c.width, c.height), a = d.data, H = new Uint32Array(256), L = new Uint8Array(a.length / 4);
   for (let i = 0, k = 0; i < a.length; i += 4, k++) { const y = (a[i] * 77 + a[i + 1] * 150 + a[i + 2] * 29) >> 8; L[k] = y; H[y]++; }
   let lo = 0, hi = 255, acc = 0; const n = L.length; for (; lo < 255 && (acc += H[lo]) < n * .02; lo++); acc = 0; for (; hi > 0 && (acc += H[hi]) < n * .02; hi--);
   const sp = Math.max(1, hi - lo); for (let i = 0, k = 0; i < a.length; i += 4, k++) { const v = Math.max(0, Math.min(255, (L[k] - lo) * 255 / sp)); a[i] = a[i + 1] = a[i + 2] = v; }
   x.putImageData(d, 0, 0); return c; }
 /* reads the photo as one block first (keeps table rows together); if that finds little, tries columns and auto layout and keeps the best */
-async function nOcr(file, prog) {
+async function nOcrWorker() {
   await loadJS(CDN_TS);
   if (!nTW) nTW = await (nTWp || (nTWp = Tesseract.createWorker(['eng', 'rus', 'srp', 'srp_latn'], 1, { logger: m => nOcr.prog && m.progress != null && nOcr.prog(m.status, m.progress) }).catch(e => { nTWp = null; throw e; })));
+  return nTW; }
+async function nOcr(file, prog) {
+  nOcr.prog = (st, p) => prog(st, p, 1); await nOcrWorker();
   const c = await nOcrCanvas(file), sc = r => (r.n.p != null) + (r.n.f != null) + (r.n.c != null) + (r.n.k != null) + Object.keys(r.m).length * .5;
   let best = null, all = '';
   for (const [i, psm] of ['6', '4', '3'].entries()) {
@@ -3551,8 +3592,8 @@ async function offSearch(q) { const r = await fetch(`${OFF}/cgi/search.pl?search
 /* reading a label: every known word on the page, then the first number after it (until the next word).
    Russian, Serbian (Latin and Cyrillic) and English; «per 100 g» is the first column on almost every label. */
 const NLBL = [
-  ['sat', 's', /saturat|zasicen|zasićen|насыщ|засичен/], ['trans', 's', /trans[- ]?(?:fat|masn|жир)|транс[- ]?жир|(?:^|[^a-z])trans(?![a-z])/], ['mono', 's', /mononezasic|monounsat|мононенасыщ|мононезасич/], ['poly', 's', /polinezasic|polyunsat|полиненасыщ|полинезасич/],
-  ['sug', 's', /sugar|secer|сахар|шечер|seceri/], ['fib', 's', /fib(?:re|er)|vlakn|влакн|волокн|клетчатк/], ['salt', 's', /(?:^|[^a-zа-я])(?:salt|so|со|соль|sol)(?![a-zа-я])/], ['na', 's', /sodium|natrij|натри/],
+  ['sat', 's', /saturat|zasicen|zasićen|zasiten|насыщ|засичен|заситен/], ['trans', 's', /trans[- ]?(?:fat|masn|жир)|транс[- ]?жир|(?:^|[^a-z])trans(?![a-z])/], ['mono', 's', /mononezasic|monounsat|мононенасыщ|мононезасич/], ['poly', 's', /polinezasic|polyunsat|полиненасыщ|полинезасич/],
+  ['sug', 's', /sugar|secer|сахар|шечер|seceri/], ['fib', 's', /fib(?:re|er)|vlakn|влакн|волокн|клетчатк/], ['salt', 's', /(?:^|[^a-zа-я])(?:salt|so|со|соль|сол|sol|kripe|kripë)(?![a-zа-я])/], ['na', 's', /sodium|natrij|натри/],
   ['ch', 's', /cholester|holester|холестер/], ['caf', 's', /caffein|kofein|кофеин/],
   ['p', 'g', /protein|belancevin|бел(?:ок|ки|ков)|беланчевин|протеин/], ['c', 'g', /carbohydrat|ugljen|ugljikohidr|углевод|угльен/], ['f', 'g', /(?:^|[^a-zа-я])(?:fats?|total fat|masti?|жир[ыа]?|масти?)(?![a-zа-я])/],
   ['vA', 's', /vitamin\s*a(?![a-z0-9])|витамин\s*[аa](?![а-яa-z0-9])|retinol|ретинол/], ['vC', 's', /vitamin\s*c(?![a-z0-9])|витамин\s*[сc](?![а-яa-z0-9])|askorbin|аскорбин|ascorbic/],
@@ -3581,7 +3622,7 @@ function parseLabel(txt) {
     if (L && h.a < L.b + 34 && !/\d/.test(T.slice(L.b, h.a))) { if (h.a < L.b && h.kind === L.kind) return; if (L.kind === 's' && h.kind === 'g') return; if (h.kind === 's' && L.kind === 'g') { H[H.length - 1] = h; return; } if (h.id === L.id) { L.b = h.b; return; } }
     H.push(h); });
   const U = { mg: 1e-3, мг: 1e-3, 'µg': 1e-6, mcg: 1e-6, мкг: 1e-6, ug: 1e-6, g: 1, г: 1, gr: 1 };
-  H.forEach((h, i) => { const end = Math.min(i + 1 < H.length ? H[i + 1].a : T.length, h.b + 40), seg = T.slice(h.b, end);
+  H.forEach((h, i) => { let seg = T.slice(h.b, Math.min(i + 1 < H.length ? H[i + 1].a : T.length, h.b + 40)); const nl = seg.indexOf('\n'), nl2 = nl < 0 ? -1 : seg.indexOf('\n', nl + 1); if (nl2 >= 0) seg = seg.slice(0, nl2);   // the value sits on the same line or the next
     const re = /(<\s*)?(\d+(?:[.,]\d+)?)\s*(mg|мг|µg|mcg|мкг|ug|gr|g|г|%|kj|kcal|ккал|кдж)?(?![a-zа-я])/g; let x, v = null, u = null;
     while ((x = re.exec(seg))) { if (x[3] === '%' || /kj|kcal|ккал|кдж/.test(x[3] || '')) continue; v = x[1] ? 0 : num(x[2]); u = x[3] || null; break; }
     if (v == null) return; const key = h.id === 'p_' ? 'p' : h.id;
@@ -3591,36 +3632,111 @@ function parseLabel(txt) {
     const val = u && U[u] ? v * U[u] / our : v; if (m[key] == null || key === 'na') m[key] = +val.toPrecision(3); });
   if (['p', 'f', 'c'].filter(k => n[k] != null).length < 2) {   // a table read column by column: words in one run of lines, numbers in another
     const keys = [], vals = []; T.split('\n').forEach(l => { const hs = NLBL.map(([id, kind, re]) => re.test(l) ? { id, kind } : null).filter(Boolean), num1 = /(<\s*)?(\d+(?:[.,]\d+)?)\s*(mg|мг|µg|mcg|мкг|ug|gr|g|г)?/.exec(l);
-      if (/kj|kcal|ккал|кдж|%/.test(l)) return; if (hs.length && !/\d/.test(l)) keys.push((hs.find(h => h.kind === 's') || hs[0]).id); else if (!hs.length && num1) vals.push(num1[1] ? 0 : num(num1[2])); });
-    if (keys.length >= 2 && vals.length >= keys.length) keys.forEach((id, i) => { const v = vals[i]; if (id === 'p' || id === 'f' || id === 'c') { if (n[id] == null) n[id] = v; } else if (id === 'salt') { if (m.na == null) m.na = Math.round(v * 400); } else if (m[id === 'p_' ? 'p' : id] == null) m[id === 'p_' ? 'p' : id] = v; }); }
+      if (/kj|kcal|ккал|кдж|%/.test(l)) return;
+      if (hs.length && !/\d/.test(l)) { const h = hs.find(q => q.kind === 's') || hs[0], last = keys[keys.length - 1];   // one item over several lines: «od kojih zasićene… / од кои заситени масти / of which saturates»
+        if (last && (last.id === h.id || (['sat', 'trans', 'mono', 'poly'].includes(last.id) && h.id === 'f' && !hs.some(q => q.kind === 's' && q.id !== last.id) && keys.lastLine === T.split('\n').indexOf(l) - 1))) { keys.lastLine = T.split('\n').indexOf(l); return; }
+        keys.push(h); keys.lastLine = T.split('\n').indexOf(l); }
+      else if (!hs.length && num1) vals.push(num1[1] ? 0 : num(num1[2])); });
+    if (keys.length >= 2 && vals.length >= keys.length) keys.map(h => h.id).forEach((id, i) => { const v = vals[i]; if (id === 'p' || id === 'f' || id === 'c') { if (n[id] == null) n[id] = v; } else if (id === 'salt') { if (m.na == null) m.na = Math.round(v * 400); } else if (m[id === 'p_' ? 'p' : id] == null) m[id === 'p_' ? 'p' : id] = v; }); }
   return { n, m, cnt: Object.keys(n).length + Object.keys(m).length };
 }
 /* scanning, two ways: a barcode (→ Open Food Facts) or the nutrition table (→ text reader). A miss tells what else to try, with a chip that does it.
    done({ src, n, m, name, via }) gets a result; a barcode without values is remembered, so the table read next keeps the product's name. */
-function nScanner(anchor, done) {
-  const busy = nBusy(anchor); let bar = null, carry = null;
-  const clear = () => { if (bar) bar.remove(); bar = null; };
-  const hint = (t, acts) => { clear(); bar = document.createElement('div'); bar.className = 'sh-warn nu-shint';
-    bar.innerHTML = `<span class="t">${t}</span><span class="nu-shc">${acts.map((a, i) => `<button type="button" class="sh-chip${a.soft ? ' soft' : ''}" data-i="${i}">${a.l}</button>`).join('')}</span>`; anchor.after(bar);
-    bar.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', () => { haptic(); acts[+b.dataset.i].fn(); })); haptic(); };
-  const start = mode => nPickFile(f => { clear(); mode === 'code' ? code(f) : table(f); });
-  const toTable = { l: 'Scan the table', fn: () => start('table') }, toCode = { l: 'Scan the barcode', fn: () => start('code') };
-  async function code(f) {
-    let c; try { busy('Looking for a barcode…'); c = await nBarcode(f); } catch (e) { busy(null); return hint('The barcode reader didn’t load — check the internet.', [{ l: 'Try again', fn: () => start('code') }, toTable]); }
-    if (!c) { busy(null); return hint('No barcode found in this photo. Take it sharp and close — or read the nutrition table instead.', [toTable, { l: 'Again', soft: 1, fn: () => start('code') }]); }
-    busy(`Barcode ${c} · asking Open Food Facts…`); let x = null, err = false; try { x = await offCode(c); } catch (e) { err = true; } busy(null);
-    if (err) return hint('Open Food Facts didn’t answer. Check the internet, or read the nutrition table.', [toTable]);
-    if (!x) return hint(`Barcode ${c} isn’t in Open Food Facts yet. Read the nutrition table on the pack.`, [toTable]);
-    if (x.n.k == null) { carry = { name: x.d, code: c }; return hint(`Found “${esc(x.d)}”, but without nutrition values. Read the table on the pack.`, [toTable]); }
-    done({ src: { t: 'off', code: c, d: x.d }, n: x.n, m: x.m, name: x.d, via: 'barcode' }); }
-  async function table(f) {
-    let o; try { busy('Reading the table…');
-      o = await nOcr(f, (st, p, pass) => busy(/load|initial/.test(st) ? `Getting the reader ready · ${Math.round(p * 100)}% · the first time only` : `Reading the table${pass > 1 ? ` · try ${pass}` : ''} · ${Math.round(p * 100)}%`)); }
-    catch (e) { busy(null); return hint('The text reader didn’t load — check the internet. The first time it downloads a few MB.', [{ l: 'Try again', fn: () => start('table') }, toCode]); }
-    busy(null); const r = o.r, mac = ['p', 'f', 'c', 'k'].filter(k => r.n[k] != null).length;
-    if (!mac && Object.keys(r.m).length < 2) return hint('Couldn’t find nutrition values. Photograph the table straight, close and in good light — or scan the barcode.', [toCode, { l: 'What it read', soft: 1, fn: () => nOver(`<div class="sh-head"><span class="sh-kick">The reader saw</span><span class="nu-sht">Text from the photo</span>${nOX}</div><pre class="nu-raw">${esc(o.txt.trim() || '(nothing)')}</pre>`, () => {}) }]);
-    done({ src: { t: 'label', ...(carry ? { code: carry.code } : {}) }, n: r.n, m: r.m, name: carry && carry.name, via: 'label', miss: ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null) }); carry = null; }
-  return { start, clear };
+function nScanner(anchor, done) { return { start: mode => nCam(mode, done), clear() {} }; }
+/* ================= camera scanner (24 Oct) =================
+   Full-screen camera with a frame. Barcode: read on its own, no button. Nutrition table: fit it in the frame and press the shutter — only the framed part is read.
+   A miss stays in the camera and says what to try next; «Photo» picks an existing picture instead. */
+let nZX = null;
+async function nZxRead(c) {
+  if ('BarcodeDetector' in window) { try { nZxRead.bd ||= new BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e'] }); const r = await nZxRead.bd.detect(c); if (r[0]) return r[0].rawValue; return null; } catch (e) {} }
+  if (!nZX) { await loadJS(CDN_ZX); const Z = window.ZXing, h = new Map(); h.set(Z.DecodeHintType.POSSIBLE_FORMATS, [Z.BarcodeFormat.EAN_13, Z.BarcodeFormat.EAN_8, Z.BarcodeFormat.UPC_A, Z.BarcodeFormat.UPC_E]); h.set(Z.DecodeHintType.TRY_HARDER, true);
+    nZX = { Z, r: new Z.MultiFormatReader() }; nZX.r.setHints(h); }
+  try { return nZX.r.decodeWithState(new nZX.Z.BinaryBitmap(new nZX.Z.HybridBinarizer(new nZX.Z.HTMLCanvasElementLuminanceSource(c)))).getText(); } catch (e) { return null; }
+}
+function nCam(mode0, done) {
+  const L = document.createElement('div'); L.className = 'cam'; L.setAttribute('role', 'dialog');
+  L.innerHTML = `<video playsinline muted autoplay></video><div class="cam-frame"><canvas class="cam-still" hidden></canvas><i></i></div>
+    <div class="cam-top"><span class="cam-t"></span><button class="cam-x" aria-label="Close">${ICON.x}</button></div>
+    <div class="cam-msg" hidden><span class="t"></span><span class="c"></span></div>
+    <div class="cam-bot"><div class="cam-seg"><button data-m="code">Barcode</button><button data-m="table">Nutrition table</button></div>
+      <div class="cam-row"><button class="cam-ph">Photo</button><button class="cam-shut" aria-label="Take the picture"><i></i></button><button class="cam-lt">Live Text</button></div></div>`;
+  document.body.append(L); requestAnimationFrame(() => L.classList.add('show'));
+  const V = L.querySelector('video'), still = L.querySelector('.cam-still'), fr = L.querySelector('.cam-frame'), msgEl = L.querySelector('.cam-msg');
+  let mode = null, stream = null, alive = true, busy = false, loop = 0, since = 0, carry = null, lastTxt = '';
+  const say = (t, acts = []) => { msgEl.hidden = !t; msgEl.querySelector('.t').innerHTML = t || '';
+    msgEl.querySelector('.c').innerHTML = acts.map((a, i) => `<button class="${a.soft ? 'soft' : ''}" data-i="${i}">${a.l}</button>`).join('');
+    msgEl.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', () => { haptic(); acts[+b.dataset.i].fn(); })); };
+  const close = () => { alive = false; clearInterval(loop); if (stream) stream.getTracks().forEach(t => t.stop()); L.classList.remove('show'); setTimeout(() => L.remove(), 300); };
+  const finish = r => { close(); done(r); };
+  const toTable = { l: 'Scan the table', fn: () => setMode('table') }, toCode = { l: 'Scan the barcode', fn: () => setMode('code') };
+  const live = () => { const c = carry; close(); nLiveText(done, c); }, toLive = { l: 'iPhone Live Text', fn: live };
+  function setMode(m, keepMsg) {
+    mode = m; L.dataset.m = m; L.querySelectorAll('.cam-seg button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+    L.querySelector('.cam-t').textContent = m === 'code' ? 'Point at the barcode' : 'Fit the nutrition table in the frame';
+    if (!keepMsg) say(''); still.hidden = true; if (V.paused && stream) V.play().catch(() => {}); since = performance.now();
+    if (m === 'table') nOcrWorker().catch(() => {}); else loadJS(CDN_ZX).catch(() => {}); }
+  /* the framed part of the picture, in video pixels */
+  function grab(max) {
+    const vw = V.videoWidth, vh = V.videoHeight; if (!vw) return null;
+    const b = L.getBoundingClientRect(), f = fr.getBoundingClientRect(), s = Math.max(b.width / vw, b.height / vh), ox = (b.width - vw * s) / 2, oy = (b.height - vh * s) / 2;
+    const x = Math.max(0, (f.left - b.left - ox) / s), y = Math.max(0, (f.top - b.top - oy) / s), w = Math.min(vw - x, f.width / s), h = Math.min(vh - y, f.height / s);
+    const k = Math.min(1, max / Math.max(w, h)), c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+    c.getContext('2d').drawImage(V, x, y, w, h, 0, 0, c.width, c.height); return c; }
+  async function lookup(code) {   // a barcode → Open Food Facts; a miss moves to the table
+    busy = true; haptic(); say(`Barcode ${code} · asking Open Food Facts…`); let x = null, err = false;
+    try { x = await offCode(code); } catch (e) { err = true; } busy = false; if (!alive) return;
+    if (x && x.n.k != null) return finish({ src: { t: 'off', code, d: x.d }, n: x.n, m: x.m, name: x.d, via: 'barcode' });
+    if (x) carry = { name: x.d, code };
+    setMode('table', true);
+    say(err ? 'Open Food Facts didn’t answer. Scan the nutrition table instead.' : x ? `Found “${esc(x.d)}”, but without nutrition values. Scan the table on the pack.` : `Barcode ${code} isn’t in Open Food Facts yet. Scan the nutrition table instead.`); }
+  async function tick() {
+    if (!alive || busy || mode !== 'code' || V.readyState < 2) return; busy = true;
+    let code = null; try { const c = grab(1100); if (c) code = await nZxRead(c); } catch (e) {} busy = false;
+    if (code && alive && mode === 'code') return lookup(code);
+    if (mode === 'code' && performance.now() - since > 9000 && msgEl.hidden) say('Can’t catch the barcode? Hold it closer and steady — or scan the nutrition table.', [toTable]); }
+  async function read(src) {   // src: the framed canvas or a picked photo
+    busy = true; let o;
+    try { say('Reading the table…'); o = await nOcr(src, (st, p, pass) => say(/load|initial/.test(st) ? `Getting the reader ready · ${Math.round(p * 100)}% · the first time only` : `Reading the table${pass > 1 ? ` · try ${pass}` : ''} · ${Math.round(p * 100)}%`)); }
+    catch (e) { busy = false; still.hidden = true; V.play().catch(() => {}); return say('The text reader didn’t load — check the internet. The first time it downloads a few MB.', [{ l: 'Try again', fn: shoot }]); }
+    busy = false; if (!alive) return; lastTxt = o.txt; const r = o.r, mac = ['p', 'f', 'c', 'k'].filter(k => r.n[k] != null).length;
+    if (mac >= 2 || (mac && Object.keys(r.m).length >= 2)) return finish({ src: { t: 'label', ...(carry ? { code: carry.code } : {}) }, n: r.n, m: r.m, name: carry && carry.name, via: 'label', miss: ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null) });
+    still.hidden = true; V.play().catch(() => {});
+    say('Couldn’t read the values. iPhone’s own text scan reads packs much better — or fill the frame with the table, hold it straight and avoid glare.', [toLive, toCode, { l: 'What it read', soft: 1, fn: () => nOver(`<div class="sh-head"><span class="sh-kick">The reader saw</span><span class="nu-sht">Text from the photo</span>${nOX}</div><pre class="nu-raw">${esc(lastTxt.trim() || '(nothing)')}</pre>`, () => {}) }]); }
+  function shoot() { if (busy || mode !== 'table') return; const c = grab(2400); if (!c) return; haptic();
+    still.width = c.width; still.height = c.height; still.getContext('2d').drawImage(c, 0, 0); still.hidden = false; V.pause(); read(c); }
+  L.querySelector('.cam-x').addEventListener('click', () => { haptic(); close(); });
+  L.querySelectorAll('.cam-seg button').forEach(b => b.addEventListener('click', () => { if (busy) return; haptic(); setMode(b.dataset.m); }));
+  L.querySelector('.cam-shut').addEventListener('click', shoot);
+  L.querySelector('.cam-lt').addEventListener('click', () => { haptic(); live(); });
+  L.querySelector('.cam-ph').addEventListener('click', () => { if (busy) return; haptic(); nPickFile(async f => {
+    if (mode === 'table') return read(f);
+    busy = true; say('Looking for a barcode…'); let c = null; try { c = await nBarcode(f); } catch (e) {} busy = false;
+    if (c) lookup(c); else say('No barcode in this photo — try the nutrition table.', [toTable]); }); });
+  setMode(mode0);
+  if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) say('No camera here — pick a photo instead.');
+  else navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } } })
+    .then(s => { if (!alive) return s.getTracks().forEach(t => t.stop()); stream = s; V.srcObject = s; V.play().catch(() => {}); loop = setInterval(tick, 220); })
+    .catch(() => say('The camera is off for this app. Allow it in Settings → Safari → Camera — or pick a photo.'));
+  return { close };
+}
+/* iPhone Live Text: the system «Scan Text» fills a text field; we read the values from it as it comes in */
+function nLiveText(done, carry) {
+  nOver(`<div class="sh-head"><span class="sh-kick">Nutrition table</span><span class="nu-sht">Scan with iPhone</span>${nOX}</div>
+    <ol class="nu-steps"><li>Tap the field below</li><li>Choose <b>Scan Text</b> in the menu or on the keyboard</li><li>Point at the table — the whole table, values too — and tap <b>Insert</b></li></ol>
+    <textarea class="nu-lt" placeholder="Tap here, then «Scan Text»" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+    <div class="nu-ltr"></div><button class="sbtn primary" id="ltUse" disabled>Use these values</button>`, (box, closeBox) => {
+    const ta = box.querySelector('.nu-lt'), R = box.querySelector('.nu-ltr'), use = box.querySelector('#ltUse'); let r = null;
+    const NM = { p: 'Protein', f: 'Fat', c: 'Carbs', k: 'kcal' };
+    const draw = () => { const t = ta.value.trim(); r = t ? parseLabel(t) : null; const mac = r ? ['p', 'f', 'c', 'k'].filter(k => r.n[k] != null) : [];
+      use.disabled = mac.length < 2;
+      if (!t) { R.innerHTML = ''; return; }
+      const rows = mac.map(k => [NM[k], nFmt(r.n[k]) + (k === 'k' ? '' : ' g')]).concat(Object.entries(r.m).map(([k, v]) => { const z = NUT.find(q => q.id === k); return z ? [z.n, nFmt(v) + ' ' + z.u] : null; }).filter(Boolean));
+      const miss = ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null).map(k => NM[k].toLowerCase());
+      R.innerHTML = rows.length ? `<div class="cap">Found · per 100 g${miss.length ? `<span class="r">not found: ${miss.join(', ')}</span>` : ''}</div><div class="bal-rows">${rows.map(([a, b]) => `<div class="bal-r"><b>${a}</b><em>${b}</em></div>`).join('')}</div>`
+        : '<p class="note nu-fn">No values in this text yet. Scan the whole table, numbers included.</p>'; };
+    ta.addEventListener('input', draw);
+    use.addEventListener('click', () => { if (!r) return; haptic(); closeBox(); done({ src: { t: 'label', ...(carry ? { code: carry.code } : {}) }, n: r.n, m: r.m, name: carry && carry.name, via: 'label', miss: ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null) }); });
+    ta.focus(); });
 }
 const nMissTxt = r => r.miss && r.miss.length ? ` · not found: ${r.miss.map(k => ({ p: 'protein', f: 'fat', c: 'carbs', k: 'kcal' })[k]).join(', ')}` : '';
 function nPickFile(cb) { const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.style.display = 'none';
