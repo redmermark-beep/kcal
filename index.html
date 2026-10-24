@@ -1044,6 +1044,19 @@ body.ch-hero .hv53 .hc-top span{font-size:13px;font-weight:600;opacity:.75}
 body.ch-hero .hv53 .hc-top em{font-size:13px;font-weight:600}
 body.ch-hero .hv53 .hc .ht{height:5px;border-radius:3px}
 body.ch-hero .hv53 .hc .ht .dt{width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:7px}
+/* Hero → one row of four on scroll (24 Oct, canvas HCL2). Same chips, colours and type as Hero; JS (heroLay) places them.
+   --v: 0→1 KCAL narrows to two columns and P F C slide right under it · --u: 0→1 P F C rise into the row, all shrink to 56 */
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hcs{display:block;position:relative}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc{position:absolute;left:0;top:0;will-change:transform;
+  border-radius:calc(22px - 4px * var(--v,0) - 4px * var(--u,0));padding:calc(14px - 2px * var(--v,0) - 4px * var(--u,0)) calc(14px - 2px * var(--v,0) - 2px * var(--u,0))}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc[data-m="k"]{padding:calc(16px - 4px * var(--v,0) - 4px * var(--u,0)) calc(18px - 6px * var(--v,0) - 2px * var(--u,0))}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc[data-m="k"] b{font-size:calc(54px - 32px * var(--e,0) - 2px * var(--u,0));letter-spacing:calc(-2.4px + 1.6px * var(--e,0) + .2px * var(--u,0))}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc[data-m="k"] .of{font-size:calc(14px - 2px * var(--v,0) - 1px * var(--u,0));max-height:none;opacity:.6;white-space:nowrap}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]) b{font-size:calc(32px - 10px * var(--e,0) - 2px * var(--u,0));letter-spacing:calc(-1.2px + .6px * var(--e,0) + .1px * var(--u,0))}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc:not([data-m="k"]) .of{overflow:hidden;max-height:calc(16px * (1 - var(--v,0)));margin-top:calc(2px * (1 - var(--v,0)));opacity:max(0, calc(.6 - 1.2 * var(--v,0)))}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc-top span,body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc-top em{font-size:calc(13px - 1px * var(--u,0))}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc .ht{height:calc(5px - 1px * var(--v,0) - 1px * var(--u,0))}
+body.ch-hero.hr4.gr.ma.tab-meal .hv53 .hc .ht .dt{--d:calc(13px - 2px * var(--v,0) - 2px * var(--u,0));width:var(--d);height:var(--d);margin:calc(var(--d) / -2) 0 0 calc(var(--d) / -2)}
 
 
 
@@ -1778,7 +1791,7 @@ function hvMarkup(st) {
 function renderHV(g, t) {
   const box = $('#hv'), st = S.ui.hv || 'classic';
   if (!S.ui.v2 || st === 'classic') return;
-  if (box.dataset.s !== st) { box.dataset.s = st; box.className = 'hv hv' + st; box.innerHTML = hvMarkup(st); }
+  if (box.dataset.s !== st) { box.dataset.s = st; box.className = 'hv hv' + st; box.innerHTML = hvMarkup(st); if (typeof heroLay === 'function' && hdr) heroLay(Math.max(0, maC)); }
   const rngOf = k => g.rng && g.rng[k] ? g.rng[k] : [g[k] - (k === 'k' ? g.k * .02 : g[k] * .05), g[k] + (k === 'k' ? g.k * .02 : g[k] * .05)];
   let allOk = true;
   box.querySelectorAll('[data-m]').forEach(el => {
@@ -1937,6 +1950,8 @@ function renderSettings() {
     <div class="st-g">
       <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'soft')) || CHIP_STYLES[0])[2]}</span></div>
         <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'soft') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+      ${(u.chips || 'soft') === 'hero' ? `<div class="st-r st-col"><div><b>Hero on scroll</b><span>${u.heroCol === 'stack' ? 'KCAL stays on top, P F C below — both rows shrink' : 'Folds into one row: KCAL two columns, then P F C'}</span></div>
+        <div class="st-seg">${[['row', 'One row'], ['stack', 'Two rows']].map(([k, l]) => `<button data-herocol="${k}" class="${(u.heroCol === 'stack' ? 'stack' : 'row') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` : ''}
       <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
@@ -1961,6 +1976,8 @@ $('#secSettings').addEventListener('click', e => {
   if (st) { haptic(); S.ui.step = +st.dataset.step; save(); renderSettings(); return; }
   const vbb = e.target.closest('[data-vbs]');
   if (vbb) { haptic(); S.ui.vbs = vbb.dataset.vbs; save(); syncTabs(); renderAll(false); renderSettings(); return; }
+  const hcb = e.target.closest('[data-herocol]');
+  if (hcb) { haptic(); S.ui.heroCol = hcb.dataset.herocol; save(); syncTabs(); renderSettings(); return; }
   const chb = e.target.closest('[data-chips]');
   if (chb) { haptic(); S.ui.chips = chb.dataset.chips; save(); syncTabs(); renderSettings(); return; }
   if (!act) return;
@@ -3343,7 +3360,7 @@ function syncTabs() {
   const hs = S.ui.v2 && S.ui.ma ? (S.ui.hs || 'plain') : 'plain';
   document.body.classList.toggle('hs-card', hs === '21'); document.body.classList.toggle('hs-f', hs === '21');
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
-  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
+  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('hr4', S.ui.heroCol !== 'stack'); document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
   ['meal', 'measure', 'budget', 'nutrients', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   S.ui.theme = 'light'; document.documentElement.dataset.theme = 'light';   // themes are off for now
   document.body.classList.toggle('nocol', S.ui.collapse === false);
@@ -4206,19 +4223,45 @@ $('#addEntryBtn2').addEventListener('click', () => entrySheet(null));
 $('#searchBtn').addEventListener('click', () => { const s = $('#search'); if (s.hidden) { const b = snapRects(); s.hidden = false; playFlip(b); } $('#q').focus(); });
 $('#q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); renderMeal(true); });
 $('#qCancel').addEventListener('click', () => { query = ''; $('#q').value = ''; $('#q').blur(); const b = snapRects(); $('#search').hidden = true; renderList(); playFlip(b); });
-let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { fitRoom(); if (S.ui.tab === 'measure') drawChart(false); }, 150); });
+let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { collapse(true); fitRoom(); if (S.ui.tab === 'measure') drawChart(false); }, 150); });
 
 /* ---- meal: the plan header and list title stay put ---- */
 const mhead = $('#mhead'), hdr = document.querySelector('header.plan');
-const MA_TITLE = 48, MA_SHRINK = 54;   // A: goal row scrolls away, then chips shrink 118 → 64
+const MA_TITLE = 48;   // A: goal row scrolls away, then the chips shrink
+/* how many px the chips lose when they collapse; the scroll that collapses them is exactly that long, and the header keeps its
+   place in the page (margin), so the list under it moves 1:1 with the finger — no parallax */
+const HR4 = { k0: 120, p0: 118, mid: 80, end: 56, gap: 6 };   // Hero → row of four
+const hr4On = () => document.body.classList.contains('ch-hero') && document.body.classList.contains('hr4');
+const maShrink = () => document.body.classList.contains('ch-hero') ? (hr4On() ? HR4.k0 + HR4.gap + HR4.p0 - HR4.end : 110) : 48;
+const HR4_A = (HR4.k0 + HR4.p0 - 2 * HR4.mid) / (HR4.k0 + HR4.gap + HR4.p0 - HR4.end);   // share of the scroll for the first stage
+let hr4Was = false;
+function heroLay(c) {   // place the four Hero chips for collapse c (0 rest → 1 row of four)
+  const box = document.querySelector('#hv .hcs'), on = hr4On() && document.body.classList.contains('ma') && !!box;
+  if (!on) { if (hr4Was) { document.querySelectorAll('#hv .hcs, #hv .hc').forEach(e => { e.style.transform = e.style.width = e.style.height = ''; }); ['--v', '--u', '--e'].forEach(k => hdr.style.removeProperty(k)); } hr4Was = false; return; }
+  const W = box.clientWidth; if (!W) return; hr4Was = true;
+  const cl = x => Math.max(0, Math.min(1, x)), v = cl(c / HR4_A), u = cl((c - HR4_A) / (1 - HR4_A)), e = v * v * (3 - 2 * v);
+  const g = HR4.gap, col = (W - 4 * g) / 5, w0 = (W - 2 * g) / 3, mid = HR4.mid, d = mid - HR4.end;
+  const kh = HR4.k0 - (HR4.k0 - mid) * v - d * u, ph = HR4.p0 - (HR4.p0 - mid) * v - d * u;
+  const py = v < 1 ? kh + g : (mid + g) * (1 - u), kw = W + (2 * col + g - W) * e;
+  const at = (el, x, y, w, h) => { if (!el) return; el.style.transform = `translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0)`; el.style.width = w.toFixed(2) + 'px'; el.style.height = h.toFixed(2) + 'px'; };
+  const q = m => box.querySelector(`[data-m="${m}"]`);
+  at(q('k'), 0, 0, kw, kh);
+  // P F C slide right under KCAL; C, then F lift into the row as soon as KCAL has made room for them; P comes last (stage two)
+  ['p', 'f', 'c'].forEach((m, i) => { const x0 = (w0 + g) * i, x1 = (2 + i) * (col + g), x = x0 + (x1 - x0) * e;
+    const e0 = Math.min(1, (W + g - x0) / (x1 - x0 + W - 2 * col - g)), r = e0 >= 1 ? 0 : cl((e - e0) / (1 - e0)), rs = r * r * (3 - 2 * r);
+    at(q(m), x, i ? (v < 1 ? (kh + g) * (1 - rs) : 0) : py, w0 + (col - w0) * e, ph); });
+  box.style.height = Math.max(kh, py + ph).toFixed(2) + 'px';
+  hdr.style.setProperty('--v', v.toFixed(3)); hdr.style.setProperty('--u', u.toFixed(3)); hdr.style.setProperty('--e', e.toFixed(3));
+}
 const maOn = () => document.body.classList.contains('ma') && S.ui.tab === 'meal' && S.ui.collapse !== false;
 const setHH = () => document.documentElement.style.setProperty('--hh', (hdr.offsetHeight - (maOn() ? MA_TITLE : 0)) + 'px');
 let maC = -1;
 function collapse(force) {
   const on = maOn(), y = Math.max(0, scrollY);
-  const t = on ? Math.min(1, y / MA_TITLE) : 0, c = on ? Math.min(1, Math.max(0, (y - MA_TITLE) / MA_SHRINK)) : 0;
+  const sh = maShrink(), t = on ? Math.min(1, y / MA_TITLE) : 0, c = on ? Math.min(1, Math.max(0, (y - MA_TITLE) / sh)) : 0;
   if (!force && c === maC && t === 1) return;
   hdr.style.setProperty('--t', t.toFixed(3)); hdr.style.setProperty('--c', c.toFixed(3)); maC = c; mhead.style.setProperty('--c', c.toFixed(3));
+  heroLay(c); hdr.style.marginBottom = on ? ((sh + 2) * c).toFixed(2) + 'px' : '';   // +2: the list title's padding loses 2 px on the way
   hdr.classList.toggle('ma-col', c >= 1);
   setHH();
 }
@@ -4228,14 +4271,14 @@ function fitRoom() {
   if (!maOn()) { app.style.minHeight = ''; return; }
   // natural content height with the header fully open (measured without touching layout-affecting styles)
   const last = [zlist, zHead, list].find(e => !e.hidden && e.offsetParent); if (!last) return;
-  const bottom = last.getBoundingClientRect().bottom + scrollY + parseFloat(getComputedStyle(app).paddingBottom) + MA_SHRINK * Math.max(0, maC);
-  if (bottom - innerHeight > 1) app.style.minHeight = `calc(100vh + ${MA_TITLE + MA_SHRINK + 4}px)`;
+  const bottom = last.getBoundingClientRect().bottom + scrollY + parseFloat(getComputedStyle(app).paddingBottom);
+  if (bottom - innerHeight > 1) app.style.minHeight = `calc(100vh + ${MA_TITLE + maShrink() + 4}px)`;
   else { app.style.minHeight = ''; if (scrollY > 0) scrollTo(0, 0); }
 }
 let snapT;
 const snapHead = () => { clearTimeout(snapT); snapT = setTimeout(() => {
   if (!maOn() || touching || precise || drag || performance.now() - dragEndAt < 900) return;
-  const y = scrollY, end = MA_TITLE + MA_SHRINK;
+  const y = scrollY, end = MA_TITLE + maShrink();
   if (y > 2 && y < end - 2) scrollTo({ top: y < end / 2 ? 0 : end, behavior: RM ? 'auto' : 'smooth' });
 }, 140); };
 addEventListener('scroll', () => { collapse(); if (!touching) snapHead(); }, { passive: true });
