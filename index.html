@@ -1219,6 +1219,12 @@ button.bal-r{width:100%;text-align:left;color:var(--ink)}
 .nu-pick .tfield+.nu-fl{margin-top:2px}
 .nu-pick .btnrow.wide .sbtn svg,.sheet .btnrow.wide .sbtn svg{flex:none}
 .sheet .sbtn.nu-unk{display:flex}
+.nu-shint{flex-basis:100%;flex-wrap:wrap;margin:0 0 12px;align-items:center}
+.nu-shint .t{flex:1 1 180px}
+.nu-shc{display:flex;gap:6px;margin-left:auto}
+.nu-shint .sh-chip{margin-left:0}
+.sh-chip.soft{background:var(--fill-8);color:var(--ink)}
+.nu-raw{margin:0;padding:12px 14px;border-radius:16px;background:var(--fill-6);font-family:var(--mono);font-size:12px;line-height:16px;white-space:pre-wrap;word-break:break-word;max-height:60vh;overflow:auto}
 .nu-busy{display:flex;align-items:center;gap:10px;min-height:40px;padding:8px 14px;margin:0 0 12px;box-sizing:border-box;border-radius:20px;background:var(--fill-6);font-size:14px;line-height:18px;font-weight:510;flex-basis:100%}
 .nu-busy i{flex:none;width:14px;height:14px;box-sizing:border-box;border-radius:50%;border:2px solid var(--fill-8);border-top-color:var(--ink);animation:nuspin .8s linear infinite}
 @keyframes nuspin{to{transform:rotate(360deg)}}
@@ -2508,7 +2514,7 @@ function menu(anchor, items) {
   let top = a.bottom + 8; if (top + h > innerHeight - 12) top = Math.max(12, a.top - h - 8);
   m.style.left = left + 'px'; m.style.top = top + 'px';
   m.style.setProperty('--ox', (a.left + a.width / 2 - left) + 'px'); m.style.setProperty('--oy', (top > a.top ? 0 : h) + 'px');
-  m.addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; const it = items[+b.dataset.i]; closeMenu(); setTimeout(() => it.do(), 60); });
+  m.addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; const it = items[+b.dataset.i]; closeMenu(); if (it.now) it.do(); else setTimeout(() => it.do(), 60); });
   const scrim = document.createElement('div'); scrim.style.cssText = 'position:fixed;inset:0;z-index:49';
   scrim.addEventListener('pointerdown', e => { e.preventDefault(); closeMenu(); });
   document.body.appendChild(scrim);
@@ -2647,14 +2653,14 @@ function foodSheet(e, isNew) {
     const canFill = () => TI.every(id => !s.querySelector('#' + id).value) || (autoN && tv() === autoN);
     const unfill = () => { if (autoN && tv() === autoN) fill({}); autoN = null; };
     const setPend = (p, auto) => { pend = p ? { ...p, auto } : null; st.src = p ? p.src : undefined; st.m = p ? p.m : null; drawNut(); };
-    const scanNew = (anchor, closeFind) => nPickFile(f => nScan(f, { busy: nBusy(anchor) }).then(r => { if (!r) return toast('Couldn’t read the label — try closer, in good light');
-      closeFind && closeFind(); if (r.name && !nameIn.value.trim()) { nameIn.value = r.name; nameIn.dispatchEvent(new Event('input', { bubbles: true })); }
+    const scanned = (r, closeFind) => { closeFind && closeFind(); if (r.name && !nameIn.value.trim()) { nameIn.value = r.name; nameIn.dispatchEvent(new Event('input', { bubbles: true })); }
       fill(r.n, true); autoN = null; setPend({ src: r.src, m: r.m }, false); haptic();
-      toast(r.via === 'barcode' ? `Found by barcode · ${r.name}` : `Read ${Object.keys(r.n).length + Object.keys(r.m).length} values — check them`); }).catch(() => toast('Scanning needs the internet the first time')));
+      toast(r.via === 'barcode' ? `Found by barcode · ${r.name}` : `Read ${Object.keys(r.n).length + Object.keys(r.m).length} values — check them${nMissTxt(r)}`); };
+    const headScan = isNew ? nScanner(s.querySelector('.sh-head'), r => scanned(r)) : null;
     const onFind = () => { if (!isNew) { const r = find(e.id); if (r) nFindFor(r.e, () => { st.src = r.e.src || null; st.m = r.e.m; drawNut(); }, { macros: nn => fill(nn, true) }); return; }
       nFind({ name: nameIn.value.trim(), src: st.src, done: p => { setPend(p, false); if (canFill()) fill(p.n); },
         hand: () => nValSheet({ kick: 'Per 100 g · type them in', name: nameIn.value.trim() || 'New product', m: st.m, done: ({ m }) => setPend({ src: { t: 'hand' }, m }, false) }),
-        scan: (closeFind, box) => scanNew(box.querySelector('.sh-head'), closeFind),
+        scanned,
         none: st.src && st.src.t !== 'none' ? () => { setPend({ src: { t: 'none' } }, false); unfill(); } : null }); };
     drawNut = nSecBind(s, st, onFind);
     if (isNew) {
@@ -2664,7 +2670,7 @@ function foodSheet(e, isNew) {
           if (r.t === 'db') { const p = nDbPick(r.id); setPend(p, true); if (canFill()) fill(p.n); } else { setPend({ src: r }, true); unfill(); } })
           .catch(() => { st.src = undefined; drawNut(); }); };
       nameIn.addEventListener('input', () => { clearTimeout(mt); mt = setTimeout(match, 350); });
-      s.querySelector('#fScan').addEventListener('click', () => { haptic(); scanNew(s.querySelector('.sh-head'), null); });
+      const sb = s.querySelector('#fScan'); sb.addEventListener('click', () => { haptic(); menu(sb, [{ head: 'Fill in from the pack' }, { label: 'Scan the barcode', now: 1, do: () => headScan.start('code') }, { label: 'Scan the nutrition table', now: 1, do: () => headScan.start('table') }]); });
     } else if (!e.src) ndbLoad().then(() => { const r = find(e.id); if (!r || r.e.src) return; const x = ndbMatch(r.e.name, r.e.n);
       if (x.t === 'db') nSet(r.e, nDbPick(x.id)); else r.e.src = x; save(); st.src = r.e.src; st.m = r.e.m; drawNut(); }).catch(() => { st.src = { t: 'none' }; drawNut(); });
     const setU = u => { s.querySelector('#fUwBox').hidden = u !== 'pc';
@@ -3449,8 +3455,8 @@ function nFind(o) {
   const html = `<div class="sh-head"><span class="sh-kick">Find nutrients</span><span class="nu-sht">${esc(o.name || 'New product')}</span>${nOX}</div>
     <label class="tfield"><input class="nu-q" value="${esc(o.name || '')}" placeholder="Apple, яблоко, chicken…" autocomplete="off" enterkeyhint="search" aria-label="Search"></label>
     <div class="nu-fl"></div>
-    <div class="btnrow wide"><button class="sbtn plain" data-fa="scan">${SCAN_IC}Scan label</button><button class="sbtn plain" data-fa="hand">Enter by hand</button></div>
-    ${o.none ? '<button class="sbtn plain nu-unk" data-fa="none">Leave unknown</button>' : ''}`;
+    <div class="btnrow wide"><button class="sbtn plain" data-fa="code">${SCAN_IC}Barcode</button><button class="sbtn plain" data-fa="table">${TABLE_IC}Nutrition table</button></div>
+    <div class="btnrow"><button class="sbtn plain" data-fa="hand">Enter by hand</button>${o.none ? '<button class="sbtn plain" data-fa="none">Leave unknown</button>' : ''}</div>`;
   nOver(html, (box, close) => {
     const L = box.querySelector('.nu-fl'), q = box.querySelector('.nu-q'); let online = null, onQ = '';
     const kc = k => k == null ? '' : `${r0(k)}<i> kcal</i>`;
@@ -3470,7 +3476,9 @@ function nFind(o) {
         offSearch(t).then(r => { online = r; }).catch(() => { online = []; toast('Open Food Facts didn’t answer — try again'); }).finally(() => { if (box.isConnected) draw(); }); }); };
     let qt; q.addEventListener('input', () => { clearTimeout(qt); qt = setTimeout(draw, 120); });
     q.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); q.blur(); } });
-    box.querySelector('[data-fa="scan"]').addEventListener('click', () => { haptic(); o.scan(close, box); });
+    const sc = nScanner(box.querySelector('.sh-head'), r => o.scanned(r, close));
+    box.querySelector('[data-fa="code"]').addEventListener('click', () => { haptic(); sc.start('code'); });
+    box.querySelector('[data-fa="table"]').addEventListener('click', () => { haptic(); sc.start('table'); });
     box.querySelector('[data-fa="hand"]').addEventListener('click', () => { haptic(); close(); o.hand(); });
     const un = box.querySelector('[data-fa="none"]'); if (un) un.addEventListener('click', () => { haptic(); close(); o.none(); });
     draw(); if (!NDB.ok) ndbLoad().then(draw).catch(() => { NDB.err = true; if (box.isConnected) draw(); });
@@ -3490,11 +3498,12 @@ function nValSheet(o) {   // o = { name, kick, n, m, done({n, m}) }
   });
 }
 /* scan: barcode → Open Food Facts; otherwise read the label text (eng, rus, srp, srp_latn). Libraries load from jsDelivr on first use. */
+const TABLE_IC = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 8h9M7.5 12h9M7.5 16h9M13.5 8v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const SCAN_IC = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 9v6M11 9v6M14 9v6M17 9v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const CDN_ZX = 'https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js', CDN_TS = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
 const loadJS = (() => { const P = {}; return src => P[src] || (P[src] = new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.crossOrigin = 'anonymous'; s.onload = ok; s.onerror = () => { delete P[src]; no(Error('load ' + src)); }; document.head.append(s); })); })();
-async function nCanvas(file, max) { const url = URL.createObjectURL(file); try { const img = new Image(); img.src = url; await img.decode();
-  const sc = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
+async function nCanvas(file, max, up) { const url = URL.createObjectURL(file); try { const img = new Image(); img.src = url; await img.decode();
+  const sc = Math.min(up ? 2.5 : 1, max / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
   c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); return c; } finally { URL.revokeObjectURL(url); } }
 async function nBarcode(file) {
   const cs = [await nCanvas(file, 1600), await nCanvas(file, 900)];
@@ -3505,10 +3514,24 @@ async function nBarcode(file) {
   return null;
 }
 let nTW = null, nTWp = null;
+async function nOcrCanvas(file) {   // grey, contrast stretched (2%–98%), long side ≈ 2000 px
+  const c = await nCanvas(file, 2000, true), x = c.getContext('2d'), d = x.getImageData(0, 0, c.width, c.height), a = d.data, H = new Uint32Array(256), L = new Uint8Array(a.length / 4);
+  for (let i = 0, k = 0; i < a.length; i += 4, k++) { const y = (a[i] * 77 + a[i + 1] * 150 + a[i + 2] * 29) >> 8; L[k] = y; H[y]++; }
+  let lo = 0, hi = 255, acc = 0; const n = L.length; for (; lo < 255 && (acc += H[lo]) < n * .02; lo++); acc = 0; for (; hi > 0 && (acc += H[hi]) < n * .02; hi--);
+  const sp = Math.max(1, hi - lo); for (let i = 0, k = 0; i < a.length; i += 4, k++) { const v = Math.max(0, Math.min(255, (L[k] - lo) * 255 / sp)); a[i] = a[i + 1] = a[i + 2] = v; }
+  x.putImageData(d, 0, 0); return c; }
+/* reads the photo as one block first (keeps table rows together); if that finds little, tries columns and auto layout and keeps the best */
 async function nOcr(file, prog) {
   await loadJS(CDN_TS);
   if (!nTW) nTW = await (nTWp || (nTWp = Tesseract.createWorker(['eng', 'rus', 'srp', 'srp_latn'], 1, { logger: m => nOcr.prog && m.progress != null && nOcr.prog(m.status, m.progress) }).catch(e => { nTWp = null; throw e; })));
-  nOcr.prog = prog; const { data } = await nTW.recognize(await nCanvas(file, 2000)); return data.text || '';
+  const c = await nOcrCanvas(file), sc = r => (r.n.p != null) + (r.n.f != null) + (r.n.c != null) + (r.n.k != null) + Object.keys(r.m).length * .5;
+  let best = null, all = '';
+  for (const [i, psm] of ['6', '4', '3'].entries()) {
+    nOcr.prog = (st, p) => prog(st, p, i + 1); await nTW.setParameters({ tessedit_pageseg_mode: psm, preserve_interword_spaces: '1' });
+    const { data } = await nTW.recognize(c), txt = data.text || '', r = parseLabel(txt); all += (all ? '\n\n— pass ' + (i + 1) + ' —\n' : '') + txt;
+    if (!best || sc(r) > sc(best.r)) best = { r, txt };
+    if (sc(best.r) >= 4) break; }
+  return { r: best.r, txt: all };
 }
 /* Open Food Facts: values are per 100 g, vitamins and minerals in grams */
 const OFF = 'https://world.openfoodfacts.org', OFF_F = 'code,product_name,product_name_ru,product_name_sr,product_name_en,brands,nutriments';
@@ -3544,7 +3567,8 @@ const NLBL = [
 ];
 function parseLabel(txt) {
   const T = ' ' + String(txt || '').toLowerCase().replace(/ё/g, 'е').replace(/љ/g, 'ль').replace(/њ/g, 'нь').replace(/ј/g, 'й').replace(/ћ/g, 'ч').replace(/[ђџ]/g, 'дж').replace(/μ/g, 'µ').replace(/[čć]/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z').replace(/đ/g, 'dj')
-    .replace(/([^0-9])100\s*(?:g|г|gr|ml|мл)(?![a-zа-я])/g, '$1 ').replace(/\s+/g, ' ') + ' ';
+    .replace(/(\d)[oо](?=[\d.,]|\s?(?:g|г|mg|мг)(?![a-zа-я]))/g, (q, d) => d + '0').replace(/(^|\s)[oо]([.,]\d)/g, '$10$2')
+    .replace(/([^0-9])100\s*(?:g|г|gr|ml|мл)(?![a-zа-я])/g, '$1 ').replace(/[ \t]+/g, ' ') + ' ';
   const n = {}, m = {}, num = s => parseFloat(s.replace(',', '.'));
   // energy: kcal wins, kJ / 4.184 otherwise
   const all = re => [...T.matchAll(re)].map(x => num(x[1].replace(/ /g, ''))).filter(v => v > 0 && v !== 2000 && v !== 8400);   // 2000 kcal / 8400 kJ = the reference-intake footnote
@@ -3565,21 +3589,40 @@ function parseLabel(txt) {
     if (key === 'salt') { if (m.na == null) m.na = Math.round(v * 400); return; }
     const z = NUT.find(q => q.id === key), our = z ? { g: 1, mg: 1e-3, 'µg': 1e-6, ml: 1 }[z.u] || 1 : 1;
     const val = u && U[u] ? v * U[u] / our : v; if (m[key] == null || key === 'na') m[key] = +val.toPrecision(3); });
+  if (['p', 'f', 'c'].filter(k => n[k] != null).length < 2) {   // a table read column by column: words in one run of lines, numbers in another
+    const keys = [], vals = []; T.split('\n').forEach(l => { const hs = NLBL.map(([id, kind, re]) => re.test(l) ? { id, kind } : null).filter(Boolean), num1 = /(<\s*)?(\d+(?:[.,]\d+)?)\s*(mg|мг|µg|mcg|мкг|ug|gr|g|г)?/.exec(l);
+      if (/kj|kcal|ккал|кдж|%/.test(l)) return; if (hs.length && !/\d/.test(l)) keys.push((hs.find(h => h.kind === 's') || hs[0]).id); else if (!hs.length && num1) vals.push(num1[1] ? 0 : num(num1[2])); });
+    if (keys.length >= 2 && vals.length >= keys.length) keys.forEach((id, i) => { const v = vals[i]; if (id === 'p' || id === 'f' || id === 'c') { if (n[id] == null) n[id] = v; } else if (id === 'salt') { if (m.na == null) m.na = Math.round(v * 400); } else if (m[id === 'p_' ? 'p' : id] == null) m[id === 'p_' ? 'p' : id] = v; }); }
   return { n, m, cnt: Object.keys(n).length + Object.keys(m).length };
 }
-/* the whole scan; ui = { busy(text|null) } → { src, n, m, name } or null */
-async function nScan(file, ui) {
-  try {
-    ui.busy('Looking for a barcode…');
-    const code = await nBarcode(file).catch(() => null);
-    if (code) { ui.busy(`Barcode ${code} · asking Open Food Facts…`); const x = await offCode(code).catch(() => null);
-      if (x && x.n.k != null) return { src: { t: 'off', code, d: x.d }, n: x.n, m: x.m, name: x.d, via: 'barcode' }; }
-    ui.busy('Reading the label…');
-    const txt = await nOcr(file, (st, p) => ui.busy(/load|initial/.test(st) ? `Getting the reader ready · ${Math.round(p * 100)}%` : `Reading the label · ${Math.round(p * 100)}%`));
-    const r = parseLabel(txt); if (!r.cnt) return null;
-    return { src: { t: 'label' }, n: r.n, m: r.m, via: 'label' };
-  } finally { ui.busy(null); }
+/* scanning, two ways: a barcode (→ Open Food Facts) or the nutrition table (→ text reader). A miss tells what else to try, with a chip that does it.
+   done({ src, n, m, name, via }) gets a result; a barcode without values is remembered, so the table read next keeps the product's name. */
+function nScanner(anchor, done) {
+  const busy = nBusy(anchor); let bar = null, carry = null;
+  const clear = () => { if (bar) bar.remove(); bar = null; };
+  const hint = (t, acts) => { clear(); bar = document.createElement('div'); bar.className = 'sh-warn nu-shint';
+    bar.innerHTML = `<span class="t">${t}</span><span class="nu-shc">${acts.map((a, i) => `<button type="button" class="sh-chip${a.soft ? ' soft' : ''}" data-i="${i}">${a.l}</button>`).join('')}</span>`; anchor.after(bar);
+    bar.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', () => { haptic(); acts[+b.dataset.i].fn(); })); haptic(); };
+  const start = mode => nPickFile(f => { clear(); mode === 'code' ? code(f) : table(f); });
+  const toTable = { l: 'Scan the table', fn: () => start('table') }, toCode = { l: 'Scan the barcode', fn: () => start('code') };
+  async function code(f) {
+    let c; try { busy('Looking for a barcode…'); c = await nBarcode(f); } catch (e) { busy(null); return hint('The barcode reader didn’t load — check the internet.', [{ l: 'Try again', fn: () => start('code') }, toTable]); }
+    if (!c) { busy(null); return hint('No barcode found in this photo. Take it sharp and close — or read the nutrition table instead.', [toTable, { l: 'Again', soft: 1, fn: () => start('code') }]); }
+    busy(`Barcode ${c} · asking Open Food Facts…`); let x = null, err = false; try { x = await offCode(c); } catch (e) { err = true; } busy(null);
+    if (err) return hint('Open Food Facts didn’t answer. Check the internet, or read the nutrition table.', [toTable]);
+    if (!x) return hint(`Barcode ${c} isn’t in Open Food Facts yet. Read the nutrition table on the pack.`, [toTable]);
+    if (x.n.k == null) { carry = { name: x.d, code: c }; return hint(`Found “${esc(x.d)}”, but without nutrition values. Read the table on the pack.`, [toTable]); }
+    done({ src: { t: 'off', code: c, d: x.d }, n: x.n, m: x.m, name: x.d, via: 'barcode' }); }
+  async function table(f) {
+    let o; try { busy('Reading the table…');
+      o = await nOcr(f, (st, p, pass) => busy(/load|initial/.test(st) ? `Getting the reader ready · ${Math.round(p * 100)}% · the first time only` : `Reading the table${pass > 1 ? ` · try ${pass}` : ''} · ${Math.round(p * 100)}%`)); }
+    catch (e) { busy(null); return hint('The text reader didn’t load — check the internet. The first time it downloads a few MB.', [{ l: 'Try again', fn: () => start('table') }, toCode]); }
+    busy(null); const r = o.r, mac = ['p', 'f', 'c', 'k'].filter(k => r.n[k] != null).length;
+    if (!mac && Object.keys(r.m).length < 2) return hint('Couldn’t find nutrition values. Photograph the table straight, close and in good light — or scan the barcode.', [toCode, { l: 'What it read', soft: 1, fn: () => nOver(`<div class="sh-head"><span class="sh-kick">The reader saw</span><span class="nu-sht">Text from the photo</span>${nOX}</div><pre class="nu-raw">${esc(o.txt.trim() || '(nothing)')}</pre>`, () => {}) }]);
+    done({ src: { t: 'label', ...(carry ? { code: carry.code } : {}) }, n: r.n, m: r.m, name: carry && carry.name, via: 'label', miss: ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null) }); carry = null; }
+  return { start, clear };
 }
+const nMissTxt = r => r.miss && r.miss.length ? ` · not found: ${r.miss.map(k => ({ p: 'protein', f: 'fat', c: 'carbs', k: 'kcal' })[k]).join(', ')}` : '';
 function nPickFile(cb) { const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.style.display = 'none';
   i.addEventListener('change', () => { const f = i.files && i.files[0]; i.remove(); if (f) cb(f); }); i.addEventListener('cancel', () => i.remove()); document.body.append(i); i.click(); }
 /* the busy line inside a sheet: a grey capsule with a spinner */
@@ -3785,13 +3828,10 @@ function nFindFor(e, after, sh) {   // sh = the open product sheet's hooks { mac
   const done = pick => put(pick, pick.src.t === 'db' ? `Nutrients from ${NDB.by.get(pick.src.id).ru || pick.src.d}` : `Nutrients from ${pick.src.d || 'Open Food Facts'}`);
   nFind({ name: e.name, k: e.n && e.n.k, src: e.src, done,
     hand: () => nValSheet({ kick: 'Per 100 g · type them in', name: e.name, m: e.m, done: ({ m }) => put({ src: { t: 'hand' }, m }, `${e.name} · ${Object.keys(m).length} nutrients saved`) }),
-    scan: (closeFind, box) => nPickFile(f => { const busy = nBusy(box.querySelector('.sh-head'));
-      nScan(f, { busy }).then(r => { if (!r) return toast('Couldn’t read the label — try closer, in good light');
-        closeFind(); const n0 = e.n || {}; nValSheet({ kick: r.via === 'barcode' ? 'Per 100 g · Open Food Facts' : 'Per 100 g · from the label', scan: true, name: e.name,
+    scanned: (r, closeFind) => { closeFind(); const n0 = e.n || {}; nValSheet({ kick: r.via === 'barcode' ? 'Per 100 g · Open Food Facts' : 'Per 100 g · from the table' + nMissTxt(r), scan: true, name: e.name,
           n: sh ? null : { p: r.n.p ?? n0.p, f: r.n.f ?? n0.f, c: r.n.c ?? n0.c, k: r.n.k ?? n0.k }, m: r.m,
           done: ({ n, m }) => { if (n) e.n = { p: n.p || 0, f: n.f || 0, c: n.c || 0, k: n.k ?? r0((n.p || 0) * 4 + (n.f || 0) * 9 + (n.c || 0) * 4) }; else if (sh) sh.macros(r.n);
-            put({ src: r.src, m }, `${e.name} · ${Object.keys(m).length} nutrients from the ${r.via === 'barcode' ? 'barcode' : 'label'}`); } }); })
-      .catch(() => toast('Scanning needs the internet the first time')); }),
+            put({ src: r.src, m }, `${e.name} · ${Object.keys(m).length} nutrients from the ${r.via === 'barcode' ? 'barcode' : 'table'}`); } }); },
     none: e.src && e.src.t !== 'none' ? () => put({ src: { t: 'none' } }, `${e.name} · left unknown`) : null });
 }
 function nutPick(done, standalone) {   // search the full list; inside a sheet it slides over it, alone it is its own sheet
