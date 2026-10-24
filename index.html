@@ -1075,7 +1075,8 @@ body.v2 .zhead[hidden]{display:none}
 .vb-go{margin-left:auto;height:32px;padding:0 10px 0 8px;border-radius:10px;background:rgba(255,255,255,.18);display:flex;align-items:center;gap:4px;font-size:14px;font-weight:590}
 .vb-d.ok b,.vb-e.ok b{color:var(--blue)}
 .vbar.vb-d.ok,.vbar.vb-e.ok{flex-direction:row;justify-content:flex-start}
-#vfl{margin-left:auto;display:flex;align-items:center;gap:6px;height:32px}
+#vfl{margin-left:auto;height:34px!important;font-size:14px!important;padding:0 13px 0 9px!important}
+#vfl[hidden]{display:none}
 #vfl b{font-size:13px}
 #vfl.ok b{color:var(--blue)}
 #vfl .vb-ck{width:18px;height:18px}
@@ -1798,44 +1799,11 @@ function renderHV(g, t) {
 let wasAllOk = null;
 /* verdict bar under the chips: always there, same height (nothing jumps while you turn the ruler).
    Fits → «Plan fits». Off → what is off, counted from the edge of the range, most off first; where it mostly comes from; blue Balance. */
-function vbar(box, g, t, rngOf) {
-  let el = box.querySelector(':scope > .vbar');
-  if (!el) { el = document.createElement('div'); box.append(el); el.addEventListener('click', e => { if (e.target.closest('.vb-bal')) { haptic(); balanceSheet(); } }); }
-  const st = ['d', 'e', 'f'].includes(S.ui.vbs) ? S.ui.vbs : 'd'; el.className = 'vbar vb-' + st;
-  let tf = document.getElementById('vfl'); if (!tf) { tf = document.createElement('div'); tf.id = 'vfl'; document.querySelector('header.plan .title-row').append(tf);
-    tf.addEventListener('click', e => { if (e.target.closest('.vb-bal')) { haptic(); balanceSheet(); } }); }
-  tf.hidden = st !== 'f'; el.hidden = st === 'f';
-  const W = { k: 'Calories', p: 'Protein', f: 'Fat', c: 'Carbs' }, SH = { k: 'kcal', p: 'P', f: 'F', c: 'C' }, off = [];
-  ['k', 'p', 'f', 'c'].forEach(k => { const [lo, hi] = rngOf(k), v = t[k]; if (v > hi) off.push({ k, d: Math.max(1, r0(v - hi)), up: true, rel: (v - hi) / g[k] }); else if (v < lo) off.push({ k, d: Math.max(1, r0(lo - v)), up: false, rel: (lo - v) / g[k] }); });   // same test as the chips
-  off.sort((a, b) => b.rel - a.rel);
-  const u = k => k === 'k' ? '' : ' g', items = nPlanItems(plan());
-  const srcOf = k => { const by = {}; items.forEach(([e, gr, dish]) => { const nm = dish ? dish.name : e.name; by[nm] = (by[nm] || 0) + (e.n[k] || 0) * gr / 100; });
-    return Object.entries(by).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => esc(x[0])); };
-  const bal = `<button type="button" class="vb-bal">${SPARK18}Balance</button>`;
-  el.classList.toggle('ok', !off.length);
-  if (st !== 'a' && st !== 'b' && st !== 'c') {   // compact, one fixed line: the biggest miss + how many more; details on tap
-    const top = off[0], more = off.length - 1;
-    const txt = !off.length ? '' : `${W[top.k]} ${top.up ? '+' : '−'}${top.d}${u(top.k)} ${top.up ? 'over' : 'short'}`;
-    const ck = '<span class="vb-ck"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
-    const tag = more ? `<span class="vb-more">+${more}</span>` : '';
-    if (st === 'd') el.innerHTML = !off.length ? `${ck}<b>Plan fits</b>` : `<button type="button" class="vb-info"><b>${txt}</b>${tag}<svg class="vb-ch" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" class="vb-bal">${SPARK18}Balance</button>`;
-    else if (st === 'e') el.innerHTML = !off.length ? `${ck}<b>Plan fits</b>` : `<button type="button" class="vb-bal vb-whole"><b>${txt}</b>${tag}<span class="vb-go">${SPARK18}Balance</span></button>`;
-    else { tf.classList.toggle('ok', !off.length); tf.innerHTML = !off.length ? `${ck}<b>Plan fits</b>` : `<b>${txt}</b>${tag}<button type="button" class="vb-bal">${SPARK18}</button>`; }
-    const info = el.querySelector('.vb-info'); if (info) info.onclick = () => { haptic(); menu(info, off.map(x => { const src = x.up ? srcOf(x.k) : []; return { label: `${W[x.k]}${src.length ? ' · mostly ' + src[0].replace(/&amp;/g, '&') : ''}`, right: `${x.up ? '+' : '−'}${x.d}${u(x.k)}`, do: () => balanceSheet() }; })); };
-    return;
-  }
-  if (!off.length) { el.innerHTML = `<div class="vb-h"><span class="vb-ck"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Plan fits</b></div>${st === 'a' ? `<span class="vb-s">Calories and macros are within ${esc(g.name || 'the goal')}’s ranges</span>` : ''}`; return; }
-  const top = off[0], big = off.some(x => x.rel > .05), title = big ? 'Doesn’t fit yet' : 'Almost fits';
-  if (st === 'a') {   // the biggest miss in words, then sources and the rest — wraps, never cut
-    const src = top.up ? srcOf(top.k) : [], rest = off.slice(1).map(x => `${SH[x.k]} ${x.up ? '+' : '−'}${x.d}${u(x.k)}`).join(', ');
-    el.innerHTML = `<div class="vb-t"><b>${W[top.k]} ${top.d}${u(top.k)} ${top.up ? 'over' : 'short'}</b><span class="vb-s">${[src.length ? 'Mostly ' + src.join(', ') : (top.up ? '' : 'Raise a portion or tap Balance'), rest ? 'also ' + rest : ''].filter(Boolean).join(' · ')}</span></div>${bal}`;
-  } else if (st === 'b') {   // a verdict word, then every miss as a tag; sources of the biggest one
-    const src = top.up ? srcOf(top.k) : [];
-    el.innerHTML = `<div class="vb-h"><b>${title}</b>${bal}</div><div class="vb-tags">${off.map(x => `<span class="vb-tag ${x.up ? 'up' : 'dn'}">${SH[x.k]} ${x.up ? '+' : '−'}${x.d}${u(x.k)}</span>`).join('')}${src.length ? `<span class="vb-s">${SH[top.k] === 'kcal' ? 'calories' : W[top.k].toLowerCase()} mostly from ${src.join(', ')}</span>` : ''}</div>`;
-  } else {   // a line for each miss, with its own sources
-    el.innerHTML = `<div class="vb-h"><b>${title}</b><span class="vb-n">${off.length} to fix</span>${bal}</div>${off.map(x => { const src = x.up ? srcOf(x.k) : [];
-      return `<div class="vb-l"><span class="vb-k">${W[x.k]}</span><span class="vb-v ${x.up ? 'up' : 'dn'}">${x.up ? '+' : '−'}${x.d}${u(x.k)} ${x.up ? 'over' : 'short'}</span>${src.length ? `<span class="vb-s">${src.join(', ')}</span>` : '<span class="vb-s">raise a portion</span>'}</div>`; }).join('')}`;
-  }
+function vbar(box, g, t, rngOf) {   // Balance sits above the chips, at the right of «Bulk plan»; only when the plan doesn’t fit (the chips already say what is off)
+  let b = document.getElementById('vfl');
+  if (!b) { b = document.createElement('button'); b.type = 'button'; b.id = 'vfl'; b.className = 'vb-bal'; b.innerHTML = SPARK18 + 'Balance'; document.querySelector('header.plan .title-row').append(b);
+    b.addEventListener('click', () => { haptic(); balanceSheet(); }); }
+  b.hidden = ['k', 'p', 'f', 'c'].every(k => { const [lo, hi] = rngOf(k); return t[k] >= lo && t[k] <= hi; });
 }
 
 /* ================= meal list ================= */
@@ -1969,8 +1937,6 @@ function renderSettings() {
     <div class="st-g">
       <div class="st-r st-col"><div><b>Chips</b><span>${(CHIP_STYLES.find(x => x[0] === (u.chips || 'soft')) || CHIP_STYLES[0])[2]}</span></div>
         <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'soft') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
-      <div class="st-r st-col"><div><b>Verdict</b><span>${{ d: 'D · one line under the chips, tap for details', e: 'E · the line is the Balance button', f: 'F · next to Bulk plan, no extra row' }[['d', 'e', 'f'].includes(u.vbs) ? u.vbs : 'd']}</span></div>
-        <div class="st-seg">${['d', 'e', 'f'].map(k => `<button data-vbs="${k}" class="${(['d', 'e', 'f'].includes(u.vbs) ? u.vbs : 'd') === k ? 'on' : ''}">${k.toUpperCase()}</button>`).join('')}</div></div>
       <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
