@@ -652,7 +652,6 @@ body.ma.tab-meal .plan{top:-48px}
 body.ma.tab-meal .app{box-sizing:border-box}
 html,body{overflow-anchor:none}
 body.ma .title-row h1{font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.2px;color:var(--ink-50)}
-body.ma .title-row .dots{transform:scale(.85);transform-origin:left center}
 body.ma.tab-meal .title-row{opacity:calc(1 - var(--t,0));transition:none}
 body.ma.tab-meal .divider{display:none}
 body.ma.tab-meal .plan{padding-bottom:0}
@@ -810,10 +809,6 @@ body.lv-c #secMeal .kids .kr b{font-size:16px;line-height:20px}
 body.ma .tabbar{bottom:max(24px,calc(env(safe-area-inset-bottom,0px) - 10px))}
 body.ma .tab svg{opacity:.4}
 body.ma .tab.on svg{opacity:1}
-body.ma #goalBtn rect{fill-opacity:.07}
-body.ma #goalBtn circle{r:1.6px}
-body.ma #goalBtn circle:nth-of-type(1){cx:14.6px}
-body.ma #goalBtn circle:nth-of-type(3){cx:25.4px}
 body.ma.tab-meal::after{content:"";position:fixed;left:0;right:0;bottom:0;height:150px;z-index:29;pointer-events:none;background:linear-gradient(color-mix(in srgb,var(--hbg,var(--bg)) 0%,transparent),var(--hbg,var(--bg)) 60%)}
 /* ---------- main screen grids (Settings → Main screen → Grid), canvas page «Grids»: 3 = one keyline 24 · 4 = 8-pt strict · 7 = 5 columns, KCAL spans 2 ---------- */
 body.gr-7{--cx:8px;--cp:12px;--cpt:14px;--cpb:12px;--ct:16px;--cg:6px;--ch:112px;--cr:14px;--kr:26px;--lx:20px;--sg:16px}
@@ -1065,6 +1060,15 @@ body.v2 .zhead[hidden]{display:none}
 
 /* balance the plan (S2) */
 #balBtn{color:var(--blue)}
+.vbar{display:flex;align-items:center;gap:10px;height:52px;margin-top:8px;padding:0 7px 0 14px;box-sizing:border-box;border-radius:16px;background:rgba(0,0,0,.06)}
+.vbar .vb-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.vbar .vb-t b{font-size:14px;line-height:18px;font-weight:590;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vbar .vb-t span{font-size:12px;line-height:15px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vbar.ok .vb-t b{color:var(--blue)}
+.vb-bal{flex:none;display:flex;align-items:center;gap:5px;height:38px;padding:0 14px 0 10px;border-radius:19px;background:var(--blue);color:#fff;font-size:15px;font-weight:590}
+.vb-bal[hidden]{display:none}
+.vb-bal:active{transform:scale(.96)}
+body:not(.tab-meal) .vbar{display:none}
 #balBtn[hidden]{display:none}
 .bal-rows{display:flex;flex-direction:column;gap:6px}
 .bal-r{display:flex;align-items:center;gap:10px;min-height:52px;padding:0 14px;border-radius:16px;background:var(--fill-6)}
@@ -1744,11 +1748,34 @@ function renderHV(g, t) {
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
-  { const bb = $('#balBtn'); if (bb) bb.hidden = allOk; }
+  { const bb = $('#balBtn'); if (bb) bb.hidden = true; }   // Balance now lives in the verdict bar
+  vbar(box, g, t, rngOf);
   if (allOk !== wasAllOk && wasAllOk !== null && allOk) haptic();
   wasAllOk = allOk;
 }
 let wasAllOk = null;
+/* verdict bar under the chips: always there, same height (nothing jumps while you turn the ruler).
+   Fits → «Plan fits». Off → what is off, counted from the edge of the range, most off first; where it mostly comes from; blue Balance. */
+function vbar(box, g, t, rngOf) {
+  let el = box.querySelector(':scope > .vbar');
+  if (!el) { el = document.createElement('div'); el.className = 'vbar'; el.innerHTML = '<span class="vb-t"><b></b><span></span></span><button type="button" class="vb-bal">' + SPARK18 + 'Balance</button>'; box.append(el);
+    el.querySelector('.vb-bal').addEventListener('click', () => { haptic(); balanceSheet(); }); }
+  const W = { k: 'calories', p: 'protein', f: 'fat', c: 'carbs' }, off = [];
+  ['k', 'p', 'f', 'c'].forEach(k => { const [lo, hi] = rngOf(k), v = t[k]; if (v > hi) off.push({ k, d: Math.max(1, r0(v - hi)), up: true, rel: (v - hi) / g[k] }); else if (v < lo) off.push({ k, d: Math.max(1, r0(lo - v)), up: false, rel: (lo - v) / g[k] }); });   // same test as the chips
+  off.sort((a, b) => b.rel - a.rel);
+  const u = k => k === 'k' ? '' : ' g', b = el.querySelector('b'), sub = el.querySelector('.vb-t span');
+  el.classList.toggle('ok', !off.length); el.querySelector('.vb-bal').hidden = !off.length;
+  if (!off.length) { b.textContent = 'Plan fits'; sub.textContent = 'Calories and macros are within ' + (g.name || 'the goal') + '’s ranges'; return; }
+  const ups = off.filter(x => x.up), dns = off.filter(x => !x.up), parts = [];
+  if (ups.length) parts.push(ups.map(x => `${W[x.k]} +${x.d}${u(x.k)}`).join(', ') + ' over');
+  if (dns.length) parts.push(dns.map(x => `${W[x.k]} ${x.d}${u(x.k)}`).join(', ') + ' short');
+  const line = parts.join(' · '); b.textContent = line.charAt(0).toUpperCase() + line.slice(1);
+  const top = off[0];
+  if (top.up) { const by = {}; nPlanItems(plan()).forEach(([e, gr, dish]) => { const nm = dish ? dish.name : e.name, v = (e.n[top.k] || 0) * gr / 100; by[nm] = (by[nm] || 0) + v; });
+    const src = Object.entries(by).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]);
+    sub.textContent = src.length ? `Mostly ${src.join(', ')}` : ''; }
+  else sub.textContent = 'Raise a portion or tap Balance';
+}
 
 /* ================= meal list ================= */
 const list = $('#list');
@@ -3577,6 +3604,7 @@ function nValSheet(o) {   // o = { name, kick, n, m, done({n, m}) }
 }
 /* scan: barcode → Open Food Facts; otherwise read the label text (eng, rus, srp, srp_latn). Libraries load from jsDelivr on first use. */
 const TABLE_IC = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 8h9M7.5 12h9M7.5 16h9M13.5 8v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+const SPARK18 = '<svg width="18" height="18" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5l2.1 5.4 5.4 2.1-5.4 2.1L14 19.5l-2.1-5.4L6.5 12l5.4-2.1z"/><path d="M21.5 17.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></svg>';
 const SCAN_IC = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 9v6M11 9v6M14 9v6M17 9v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const CDN_ZX = 'https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js', CDN_TS = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
 const loadJS = (() => { const P = {}; return src => P[src] || (P[src] = new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.crossOrigin = 'anonymous'; s.onload = ok; s.onerror = () => { delete P[src]; no(Error('load ' + src)); }; document.head.append(s); })); })();
