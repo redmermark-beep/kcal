@@ -19,7 +19,7 @@
 /* Layout: one phone column (max 430px): shared plan header → divider → tab section (Meal | Measure) → floating tab bar.
    Tokens mirror Figma file "Jebal", Page 3; new components reuse the same surfaces: grey ground, #f6f6f6 cards r14, rgba pills r10, mono numbers. */
 :root{
-  --bg:#f7f7f7; --ink:#000; --ink-50:rgba(0,0,0,.6); --ink-40:rgba(0,0,0,.55); --ink-28:rgba(0,0,0,.3);
+  --bg:#e9e9eb; --ink:#000; --ink-50:rgba(0,0,0,.6); --ink-40:rgba(0,0,0,.55); --ink-28:rgba(0,0,0,.3);
   --fill-8:rgba(0,0,0,.1); --fill-6:rgba(0,0,0,.07); --fill-3:rgba(0,0,0,.035);
   --line:rgba(0,0,0,.1); --card:#ffffff; --merge:#ececec; --dot:#cecece;
   --blue:#1f56c9; --over:#1c1c1e; --win:#9fb3d8;
@@ -648,14 +648,14 @@ body.lv-03 #mhead .tools .ibtn{width:40px;height:40px;border-radius:20px;display
 body.lv-03 #mhead .tools .ibtn svg{width:22px;height:22px;margin:0}
 
 /* ---------- main screen A: chips on top, collapse on scroll (Design options → Main screen) ---------- */
-body.ma.tab-meal .plan{top:-48px}
+body.ma.tab-meal .plan{top:-56px}
 body.ma.tab-meal .app{box-sizing:border-box}
 html,body{overflow-anchor:none}
 body.ma .title-row h1{font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.2px;color:var(--ink-50)}
 body.ma.tab-meal .title-row{opacity:calc(1 - var(--t,0));transition:none}
 body.ma.tab-meal .divider{display:none}
 body.ma.tab-meal .plan{padding-bottom:0}
-body.ma.tab-meal .hv{margin-top:20px}
+body.ma.tab-meal .hv{margin-top:28px}
 body.ma.tab-meal .hv53 .hc{height:calc(118px - 54px * var(--c,0))}
 body.ma.tab-meal .hv53 .hc b{font-size:calc(22px - 5px * var(--c,0));line-height:calc(24px - 4px * var(--c,0))}
 body.ma.tab-meal .hv53 .hc .of{display:block;overflow:hidden;max-height:calc(14px * (1 - var(--c,0)));opacity:calc(.6 - var(--c,0) * 1.8)}
@@ -811,8 +811,10 @@ body.ma .tab svg{opacity:.4}
 body.ma .tab.on svg{opacity:1}
 body.ma.tab-meal::after{content:"";position:fixed;left:0;right:0;bottom:0;height:150px;z-index:29;pointer-events:none;background:linear-gradient(color-mix(in srgb,var(--hbg,var(--bg)) 0%,transparent),var(--hbg,var(--bg)) 60%)}
 /* ---------- main screen grids (Settings → Main screen → Grid), canvas page «Grids»: 3 = one keyline 24 · 4 = 8-pt strict · 7 = 5 columns, KCAL spans 2 ---------- */
-body.gr-7{--cx:8px;--cp:12px;--cpt:14px;--cpb:12px;--ct:16px;--cg:6px;--ch:112px;--cr:14px;--kr:26px;--lx:20px;--sg:16px}
-body.gr.ma.tab-meal .plan .title-row,body.gr.ma.tab-meal .plan .hv{margin-left:calc(var(--cx) + var(--cp) - 16px);margin-right:calc(var(--cx) + var(--cp) - 16px)}
+body.gr-7{--cx:8px;--cp:4px;--cpt:14px;--cpb:12px;--ct:16px;--cg:6px;--ch:112px;--cr:14px;--kr:26px;--lx:18px;--sg:16px}
+body.gr.ma.tab-meal .plan .hv{margin-left:calc(var(--cx) + var(--cp) - 16px);margin-right:calc(var(--cx) + var(--cp) - 16px)}
+body.gr.ma.tab-meal .plan .title-row,body.gr.ma.tab-nutrients .plan .title-row,body.gr.ma.tab-measure .plan .title-row{margin-left:calc(var(--tx,18px) - 16px)!important;margin-right:calc(var(--tx,18px) - 16px)!important}
+body.gr.ma .plan .title-row>*{position:relative;top:3px}
 body.gr.ma.tab-meal #secMeal{padding:0 calc(var(--lx) - 16px)}
 body.gr .hv53 .hcs{gap:var(--cg)}
 body.gr .hv53 .hc{border-radius:var(--cr)}
@@ -1148,12 +1150,12 @@ body:not(.tab-meal) .vbar{display:none}
 .bal-none{margin:4px 4px 8px;font-size:15px;line-height:21px;color:var(--ink-50)}
 
 /* list title spacing: 20 above / 14 to the list at rest → 12 / 12 around the divider when the chips collapse */
-body.v2.ma.tab-meal .mhead .list-head{padding:calc(20px - 8px * var(--c,0)) 0 calc(6px + 6px * var(--c,0))}
+body.v2.ma.tab-meal .mhead .list-head{padding:calc(24px - 12px * var(--c,0)) 0 calc(8px + 4px * var(--c,0))}
 
 /* ---------- Chips · Soft (Final 1, 23 Oct): Row + grey when under, rounded 18; colours come from --blue / --over ---------- */
 body.ch-soft .hv53 .hc{border-radius:18px!important}
-body.ch-soft .hv53 .hc.under{background-color:rgba(0,0,0,.075)!important;box-shadow:none!important}
-body.ch-soft .hv53 .hc.under .ht{background:rgba(0,0,0,.12)!important}
+body.ch-soft .hv53 .hc.under{background-color:rgba(0,0,0,.13)!important;box-shadow:none!important}
+body.ch-soft .hv53 .hc.under .ht{background:rgba(0,0,0,.16)!important}
 
 /* ---------- Design: New (24 Oct, canvas MNS4 / NUV13–15) — Settings → Main screen → Design ---------- */
 /* Meal: the list sits in white cards — a dish is one card, a run of single products is one card; no lines */
@@ -1213,7 +1215,7 @@ body.lv-01 #mhead #addBtn{width:40px!important;height:40px!important;border-radi
 body.tab-nutrients .plan>:not(.title-row){display:none}
 body.gr.ma.tab-nutrients .plan .title-row{margin-left:calc(var(--cx) + var(--cp) - 16px);margin-right:calc(var(--cx) + var(--cp) - 16px)}
 body.gr.ma.tab-nutrients #secNut{padding:0 calc(var(--lx) - 16px)}
-.nu-line{height:1px;background:var(--line);margin:12px 0 8px}
+.nu-line{display:none}
 .nu-head{display:flex;align-items:center;height:40px}
 .nu-head .mtitle{min-width:0;flex:1 1 auto;overflow:hidden}
 .nu-head h2{margin:0;min-width:0;font-size:20px;line-height:24px;font-weight:510;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1392,7 +1394,7 @@ body.gr.ma #secBudget,body.gr.ma #secMeasure,body.gr.ma #secSettings{padding:0 c
 
 /* ---------- Meal list · MNS4 (24 Oct, the only design now): white cards x 12–378 r22, rows 46 / 44,
    tiles 64×36 (ingredients 58×34) with the amount centred, name 12 px after the tile, kcal on the right as one number ---------- */
-body.lk-new #secMeal #list,body.lk-new #secMeal #rlist,body.lk-new #secMeal #zlist{margin-left:-8px;margin-right:-8px}
+body.lk-new #secMeal #list,body.lk-new #secMeal #rlist,body.lk-new #secMeal #zlist{margin-left:-6px;margin-right:-6px}
 body.lk-new #secMeal .slist>li{padding:5px 12px}
 body.lk-new #secMeal .slist>li.group{padding:10px 12px}
 body.lk-new #secMeal .rc{gap:12px!important}
@@ -1445,6 +1447,32 @@ body.lk-new #secMeal .rev>.rc>.kr{display:none!important}
 .bal-fx{margin:0 4px 12px;font-size:14px;line-height:19px;color:var(--ink-50)}
 .bal-fx b{font-weight:590;color:var(--ink)}
 .bal-fx[hidden]{display:none}
+
+/* MNS4 header (24 Oct): "Пробы" 22 px, toolbar buttons 44 wide, + is a 44 px circle */
+body.lk-new #mhead .mtitle h2{font-size:22px!important;line-height:26px!important}
+body.lv-01 #mhead .tools{gap:2px!important;padding-left:8px!important}
+body.lv-01 #mhead .tools .ibtn{width:44px!important;height:44px!important}
+body.lv-01 #mhead #addBtn{width:44px!important;height:44px!important;border-radius:22px!important}
+body.lv-01.tab-meal .mhead .list-head{height:44px!important}
+
+/* Nutrients · NUV14 layout (24 Oct): darker ground, the sentence on top, white cards, every group of the list in its own white card */
+.ni-q{margin-top:16px;font-size:28px;line-height:33px;font-weight:600;letter-spacing:-.6px}
+#secNut .ni-cards{margin-top:18px}
+#secNut .ni-cards .nu-cw{margin:0 -6px}
+.ni-card.nu-card{padding:18px 16px 18px 16px!important}
+.ni-t{font-size:19px!important;line-height:24px!important;font-weight:600!important;letter-spacing:-.3px!important}
+.ni-n{margin-top:4px!important}
+.ni-a{margin-top:8px!important}
+#secNut .ni-all{width:calc(100% + 12px);margin:8px -6px 0;height:52px;border-radius:26px;background:rgba(0,0,0,.06)}
+.ni-cap{margin-top:28px!important}
+.ni-cap .r .nu-lk{font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit;text-decoration:none}
+.ni-gc{margin-top:16px!important}
+.ni-card-l{margin:6px -6px 0!important;padding:0 16px;border-radius:22px;background:var(--card,#fff)}
+.ni-card-l .nr{height:44px}
+.ni-how{display:block;margin:20px auto 0;height:44px;padding:0 12px;font-size:14px;font-weight:510;color:var(--ink-50)}
+
+/* one grid (24 Oct): white cards sit at 12 px on every tab, text and captions at 18 */
+body.gr.ma #secBudget .bcard,body.gr.ma #secMeasure .lcard{margin-left:-6px;margin-right:-6px}
 </style>
 
 <div class="app" id="app">
@@ -4206,16 +4234,17 @@ function renderNut2(el) {
     bind(); return;
   }
   const top = ideas.slice(0, 3);
-  const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="bcap">${NG[g]}<span class="r"><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div><div class="nr-l">${xs.map(nRow2).join('')}</div>`; };
+  const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="bcap ni-gc">${NG[g]}<span class="r"><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div><div class="nr-l ni-card-l">${xs.map(nRow2).join('')}</div>`; };
   const sup = S.supp.map(s => `<li class="row" data-s="${s.id}"><div class="rc"><span class="pill">${s.pcs}pc</span><div class="info"><div class="name">${esc(s.name)}</div><div class="mac">${Object.entries(s.n || {}).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? `<span><i>${n.s}</i>${nFmt(v * s.pcs)}</span>` : ''; }).join('') || '<i>no nutrients yet</i>'}</div></div></div></li>`).join('');
-  el.innerHTML = `<div class="bud-hero"><div class="bh-num"><span>${bad.length}</span><span class="bh-u">to fix</span></div>
-      <div class="bh-sub"><em>${ok} ok</em> · <button class="nu-lk" id="nuUnk">${nd} unknown</button> · ${nPeriod(days)} · <button class="nu-lk" id="nuHow">how</button></div></div>
+  el.innerHTML = `<div class="ni-q">${bad.length ? `${bad.length} to fix` : 'Nothing to fix'}</div>
     ${top.length ? `<div class="ni-cards">${top.map(nIdeaCard).join('')}</div>` : ''}
-    ${ideas.length > 3 || I.hid ? `<button class="ni-all" id="nuAll">All ideas <em>${ideas.length}</em></button>` : ''}
+    ${ideas.length > 3 || I.hid ? `<button class="ni-all" id="nuAll">See all ideas <em>${ideas.length}</em></button>` : ''}
+    <div class="bcap ni-cap">All nutrients<span class="r"><em>${ok}</em> ok · <button class="nu-lk" id="nuUnk">${nd} no data</button></span></div>
+    ${['vit', 'min', 'fat', 'carb', 'amino'].map(grp).join('')}
     <div class="bcap">Supplements<button id="nuAddSup">+ Add</button></div>
     ${sup ? `<ul class="list nu-l">${sup}</ul>` : ''}
-    ${['vit', 'min', 'fat', 'carb', 'amino'].map(grp).join('')}
-    ${ign.length ? `<div class="bcap">Ignored<button id="nuIgn">${ign.length}</button></div>` : ''}`;
+    ${ign.length ? `<div class="bcap">Ignored<button id="nuIgn">${ign.length}</button></div>` : ''}
+    <button class="ni-how" id="nuHow">How it’s counted</button>`;
   bind();
   const a = $('#nuAll'); if (a) a.addEventListener('click', () => { haptic(); nAll = true; renderNut(); scrollTo(0, 0); });
   $('#nuHow').addEventListener('click', () => { haptic(); nHow(); });
@@ -4378,7 +4407,7 @@ let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(
 
 /* ---- meal: the plan header and list title stay put ---- */
 const mhead = $('#mhead'), hdr = document.querySelector('header.plan');
-const MA_TITLE = 48;   // A: goal row scrolls away, then the chips shrink
+const MA_TITLE = 56;   // A: goal row scrolls away, then the chips shrink
 /* how many px the chips lose when they collapse; the scroll that collapses them is exactly that long, and the header keeps its
    place in the page (margin), so the list under it moves 1:1 with the finger — no parallax */
 const HR4 = { k0: 120, p0: 118, mid: 80, end: 56, gap: 6 };   // Hero → row of four
