@@ -1766,15 +1766,13 @@ function vbar(box, g, t, rngOf) {
   const u = k => k === 'k' ? '' : ' g', b = el.querySelector('b'), sub = el.querySelector('.vb-t span');
   el.classList.toggle('ok', !off.length); el.querySelector('.vb-bal').hidden = !off.length;
   if (!off.length) { b.textContent = 'Plan fits'; sub.textContent = 'Calories and macros are within ' + (g.name || 'the goal') + '’s ranges'; return; }
-  const ups = off.filter(x => x.up), dns = off.filter(x => !x.up), parts = [];
-  if (ups.length) parts.push(ups.map(x => `${W[x.k]} +${x.d}${u(x.k)}`).join(', ') + ' over');
-  if (dns.length) parts.push(dns.map(x => `${W[x.k]} ${x.d}${u(x.k)}`).join(', ') + ' short');
-  const line = parts.join(' · '); b.textContent = line.charAt(0).toUpperCase() + line.slice(1);
-  const top = off[0];
+  const top = off[0], S2 = { k: 'kcal', p: 'P', f: 'F', c: 'C' };   // line 1: the biggest miss in words; line 2: where it comes from, then the rest
+  b.textContent = `${W[top.k].charAt(0).toUpperCase() + W[top.k].slice(1)} ${top.d}${u(top.k)} ${top.up ? 'over' : 'short'}`;
+  let src = [];
   if (top.up) { const by = {}; nPlanItems(plan()).forEach(([e, gr, dish]) => { const nm = dish ? dish.name : e.name, v = (e.n[top.k] || 0) * gr / 100; by[nm] = (by[nm] || 0) + v; });
-    const src = Object.entries(by).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]);
-    sub.textContent = src.length ? `Mostly ${src.join(', ')}` : ''; }
-  else sub.textContent = 'Raise a portion or tap Balance';
+    src = Object.entries(by).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]); }
+  const rest = off.slice(1).map(x => `${S2[x.k]} ${x.up ? '+' : '−'}${x.d}${u(x.k)}`).join(', ');
+  sub.textContent = [src.length ? 'Mostly ' + src.join(', ') : (top.up ? '' : 'Raise a portion or tap Balance'), rest ? 'also ' + rest : ''].filter(Boolean).join(' · ');
 }
 
 /* ================= meal list ================= */
