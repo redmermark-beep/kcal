@@ -1617,6 +1617,8 @@ body.lk-new.amt-q2 #secMeal .slist .editing>.rc .qv{border-color:rgba(0,0,0,.3)}
 body.lk-new #secMeal .slist .editing>.rc .caret{display:inline-block}
 body.lk-new #secMeal .slist>li.group.lifted,body.lk-new #secMeal .slist>li.group.drag-clone{background:#fff!important;border-radius:14px!important;box-shadow:0 8px 24px rgba(0,0,0,.12)!important;padding:0 10px!important;margin:0 -10px!important}
 #dragWrap{position:fixed;left:0;top:0;width:0;height:0;margin:0!important;padding:0!important;pointer-events:none;z-index:25;display:block!important;background:none!important}
+/* no hairline between a dish and its neighbours — the chevron already says it's a group; the 13 px gap stays */
+body.lk-new #secMeal .slist>li.group+li::after,body.lk-new #secMeal .slist>li+li.group::after{display:none!important}
 /* amounts · dotted underline (q4) */
 body.lk-new.amt-q4 #secMeal .slist .pill{font-weight:400!important}
 body.lk-new.amt-q4 #secMeal .slist .qv{background-image:radial-gradient(circle,rgba(0,0,0,.35) .9px,transparent 1.1px);background-size:4px 3px;background-repeat:repeat-x;background-position:0 100%;padding-bottom:4px}
