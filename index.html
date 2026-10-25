@@ -1509,7 +1509,7 @@ body.lk-new .hv53 .hc.under .ht .dt{background:#000!important}
 /* list title */
 body.lk-new #mhead .list-head{padding:24px 0 8px!important}
 body.lk-new.v2.ma.tab-meal #mhead .list-head{padding:calc(24px - 12px * var(--c,0)) 0 8px!important}
-body.lk-new #planName{font-size:22px!important;line-height:28px!important;font-weight:600!important;letter-spacing:-.4px!important;color:#000!important}
+body.lk-new #planName{font-size:20px!important;line-height:26px!important;font-weight:600!important;letter-spacing:-.3px!important;color:#000!important}
 body.lk-new #planTitle{gap:6px!important}
 body.lk-new #planTitle .pchev{width:12px!important;height:12px!important;margin:0!important}
 body.lk-new #mhead .tools{gap:2px!important;height:44px!important;padding:0!important;margin-left:auto;background:none!important;border-radius:0!important}
@@ -1535,7 +1535,7 @@ body.lk-new #secMeal .slist>li.group>.kids{margin:0!important}
 body.lk-new #secMeal .slist>li.group{gap:0!important}
 /* a dish and the products next to it are split by a hairline that starts at the names */
 body.lk-new #secMeal .slist>li.group+li,body.lk-new #secMeal .slist>li+li.group{margin-top:13px!important;position:relative}
-body.lk-new #secMeal .slist>li.group+li::before,body.lk-new #secMeal .slist>li+li.group::before{content:'';position:absolute;left:70px;right:0;bottom:auto;height:1px;background:rgba(0,0,0,.08);opacity:1!important;transform:none!important;box-shadow:none!important;border-radius:0!important;inset:auto 0 auto 70px;top:-7px!important}
+body.lk-new #secMeal .slist>li.group+li::after,body.lk-new #secMeal .slist>li+li.group::after{content:'';position:absolute;left:70px;right:0;bottom:auto;height:1px;background:rgba(0,0,0,.08);opacity:1!important;transform:none!important;box-shadow:none!important;border-radius:0!important;inset:auto 0 auto 70px;top:-7px!important}
 body.lk-new #secMeal .rc{gap:12px!important;align-items:center}
 /* the amount */
 body.lk-new #secMeal .slist .pill{display:block!important;font-family:var(--sans)!important;background:none!important;box-shadow:none!important;border-radius:0!important;width:58px!important;min-width:58px!important;height:auto!important;padding:0!important;text-align:left;font-size:17px!important;line-height:normal!important;font-weight:600!important;letter-spacing:-.3px;font-variant-numeric:tabular-nums;color:#000!important;white-space:nowrap}
@@ -1583,7 +1583,8 @@ body.lk-new #mhead .tools>button:not(#addBtn) svg [stroke-width="2"]{stroke-widt
 body.lk-new #mhead .tools>button:not(#addBtn){color:rgba(0,0,0,.85)!important}
 /* + floats above the tab bar, right */
 body.lk-new #addBtn{position:fixed!important;z-index:31;right:18px;bottom:calc(max(24px,calc(env(safe-area-inset-bottom,0px) - 10px)) + 76px);width:56px!important;height:56px!important;min-width:56px!important;border-radius:28px!important;background:#000!important;box-shadow:0 8px 24px rgba(0,0,0,.16)!important;transition:transform .3s var(--spring),opacity .2s}
-body.lk-new #addBtn svg{width:24px!important;height:24px!important}
+body.lk-new #addBtn{display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
+body.lk-new #addBtn svg{width:24px!important;height:24px!important;margin:0!important}
 body.lk-new #addBtn path{stroke:#fff!important;stroke-width:1.75!important}
 body.lk-new:not(.tab-meal) #addBtn,body.lk-new.kb-open #addBtn{opacity:0;pointer-events:none;transform:scale(.6)}
 /* hierarchy */
@@ -1596,16 +1597,26 @@ body.lk-new #secMeal .kr2 .kr b{font-size:15px!important;font-weight:400!importa
 body.lk-new #secMeal .kids .kr2 .kr b{font-size:14px!important;color:rgba(0,0,0,.5)!important}
 body.lk-new #secMeal .info .mac{color:rgba(0,0,0,.4)!important}
 /* amounts · capsules (q3 grey, q2 outline) */
-body.lk-new.amt-q3 #secMeal .slist .pill,body.lk-new.amt-q2 #secMeal .slist .pill{width:74px!important;min-width:74px!important;margin-left:-9px!important}
-body.lk-new.amt-q3 #secMeal .slist .qv,body.lk-new.amt-q2 #secMeal .slist .qv{display:inline-flex;align-items:baseline;box-sizing:border-box;height:32px;line-height:32px;padding:0 9px;border-radius:11px;font-size:16px}
-body.lk-new.amt-q3 #secMeal .kids .qv,body.lk-new.amt-q2 #secMeal .kids .qv{height:28px;line-height:28px;padding:0 8px;border-radius:9px;font-size:15px}
+body.lk-new.amt-q3 #secMeal .slist .pill,body.lk-new.amt-q2 #secMeal .slist .pill{width:70px!important;min-width:70px!important;margin-left:0!important}
+body.lk-new.amt-q3 #secMeal .rc,body.lk-new.amt-q2 #secMeal .rc{gap:10px!important}
+body.lk-new.amt-q3 #secMeal .slist .qv,body.lk-new.amt-q2 #secMeal .slist .qv{display:inline-flex;align-items:baseline;box-sizing:border-box;height:32px;line-height:32px;padding:0 8px;border-radius:11px;font-size:16px}
+body.lk-new.amt-q3 #secMeal .kids .qv,body.lk-new.amt-q2 #secMeal .kids .qv{height:28px;line-height:28px;padding:0 7px;border-radius:9px;font-size:15px}
 body.lk-new.amt-q3 #secMeal .slist .qv{background:rgba(0,0,0,.055)}
 body.lk-new.amt-q2 #secMeal .slist .qv{border:1px solid rgba(0,0,0,.12);line-height:31px}
 body.lk-new.amt-q2 #secMeal .kids .qv{line-height:27px}
-body.lk-new.amt-q3 #secMeal .slist>li.group+li::before,body.lk-new.amt-q3 #secMeal .slist>li+li.group::before,body.lk-new.amt-q2 #secMeal .slist>li.group+li::before,body.lk-new.amt-q2 #secMeal .slist>li+li.group::before{left:74px!important}
+body.lk-new.amt-q3 #secMeal .slist>li.group+li::after,body.lk-new.amt-q3 #secMeal .slist>li+li.group::after,body.lk-new.amt-q2 #secMeal .slist>li.group+li::after,body.lk-new.amt-q2 #secMeal .slist>li+li.group::after{left:80px!important}
 /* Other products / To review: more air above, a quiet caption */
 body.lk-new.v2 #secMeal .zhead{margin:32px 0 6px!important;padding:0!important;font-size:15px!important;font-weight:510!important;color:rgba(0,0,0,.45)!important}
 body.lk-new.v2 #secMeal .zhead .n{font-size:15px!important}
+/* selection while typing an amount: a light grey fill over the whole row; the lifted row while dragging: white, same shape */
+body.lk-new #secMeal .slist .pill,body.lk-new #secMeal .slist .lifted .pill,body.lk-new #secMeal .slist .editing .pill{background:none!important;box-shadow:none!important}
+body.lk-new #secMeal .slist>li.row::before{inset:0 -10px!important;border-radius:14px!important;background:#fff!important;box-shadow:0 8px 24px rgba(0,0,0,.12)!important}
+body.lk-new #secMeal .slist>li.row.editing::before{background:rgba(0,0,0,.05)!important;box-shadow:none!important;opacity:1!important;transform:none!important}
+body.lk-new.amt-q3 #secMeal .slist .editing>.rc .qv{background:rgba(0,0,0,.1)}
+body.lk-new.amt-q2 #secMeal .slist .editing>.rc .qv{border-color:rgba(0,0,0,.3)}
+body.lk-new #secMeal .slist .editing>.rc .caret{display:inline-block}
+body.lk-new #secMeal .slist>li.group.lifted,body.lk-new #secMeal .slist>li.group.drag-clone{background:#fff!important;border-radius:14px!important;box-shadow:0 8px 24px rgba(0,0,0,.12)!important;padding:0 10px!important;margin:0 -10px!important}
+#dragWrap{position:fixed;left:0;top:0;width:0;height:0;margin:0!important;padding:0!important;pointer-events:none;z-index:25;display:block!important;background:none!important}
 /* amounts · dotted underline (q4) */
 body.lk-new.amt-q4 #secMeal .slist .pill{font-weight:400!important}
 body.lk-new.amt-q4 #secMeal .slist .qv{background-image:radial-gradient(circle,rgba(0,0,0,.35) .9px,transparent 1.1px);background-size:4px 3px;background-repeat:repeat-x;background-position:0 100%;padding-bottom:4px}
@@ -2436,7 +2447,8 @@ function startDrag(id, el, x, y) {
   const rect = el.getBoundingClientRect(), clone = el.cloneNode(true);
   clone.classList.add('drag-clone', 'lifted'); clone.classList.remove('pressing', 'merge-target', 'slot');
   Object.assign(clone.style, { left: rect.left + 'px', top: rect.top + 'px', width: rect.width + 'px', transform: 'scale(1.03)' });
-  ($('#secMeal') || document.body).appendChild(clone);
+  let dw = $('#dragWrap'); if (!dw) { dw = document.createElement('ul'); dw.id = 'dragWrap'; dw.className = 'slist'; ($('#secMeal') || document.body).appendChild(dw); }
+  dw.appendChild(clone);   // inside a .slist, so the lifted row keeps the list's look
   if (!RM) clone.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.03)' }], { duration: 260, easing: SPRING });
   el.classList.add('slot');
   drag = { id, el, clone, rect, x0: x, y0: y, x, y, target: null, raf: 0, isGroup: find(id).e.t === 'g' };
