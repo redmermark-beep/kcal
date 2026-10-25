@@ -1478,16 +1478,16 @@ body.gr.ma #secBudget .bcard,body.gr.ma #secMeasure .lcard{margin-left:-6px;marg
    amount on the left, name with macros under it, kcal alone on the right; ingredients indented, no line ---------- */
 body.lk-new{--sat:env(safe-area-inset-top,0px)}
 /* goal row */
-body.lk-new.ma.tab-meal .plan{padding-top:calc(var(--sat) + 3px)!important;top:-53px!important}
+body.lk-new.ma.tab-meal .plan{padding-top:calc(var(--sat) + 3px)!important;top:-49px!important}
 body.lk-new.ma.tab-meal .plan .title-row{height:34px!important;gap:8px!important}
 body.lk-new.ma.tab-meal .plan .title-row>*{top:0!important}
 body.lk-new.ma .title-row h1#goalName{font-size:15px!important;line-height:normal!important;font-weight:400!important;letter-spacing:0!important;color:rgba(0,0,0,.5)!important}
 body.lk-new #vfl{height:34px!important;padding:0 14px!important;border-radius:17px!important;background:#1f56c9!important;color:#fff!important;font:600 15px/normal var(--sans)!important;letter-spacing:0!important;gap:6px!important;border:0!important;box-shadow:none!important}
 body.lk-new #vfl svg{width:18px!important;height:18px!important}
 /* chips: black over, blue in range, grey under */
-body.lk-new.gr-7{--ch:97px;--cg:6px}
+body.lk-new.gr-7{--ch:96px;--cg:6px}
 body.lk-new .hv53 .hcs{gap:6px!important}
-body.lk-new.gr.ma.tab-meal:not(.ch-hero) .hv53 .hc{height:calc(97px - 27px * var(--c,0))!important}
+body.lk-new.gr.ma.tab-meal:not(.ch-hero) .hv53 .hc{height:calc(96px - 24px * var(--c,0))!important}
 body.lk-new .hv53 .hc{border-radius:18px!important;padding:11px 12px 12px!important;box-sizing:border-box!important;box-shadow:none!important}
 body.lk-new .hv53 .hc.over{background:#1c1c1e!important;color:#fff!important}
 body.lk-new .hv53 .hc.ok{background:#1f56c9!important;color:#fff!important}
@@ -1642,6 +1642,33 @@ body.lk-new.amt-blue #secMeal .kids .qv{background:rgba(31,86,201,.06);color:rgb
 body.lk-new.amt-blue #secMeal .zero .qv{background:rgba(31,86,201,.04);color:rgba(15,47,115,.4)}
 body.lk-new.amt-blue #secMeal .slist .editing>.rc .qv{background:rgba(31,86,201,.16)}
 
+
+/* ---------- Meal · spacing pass (25 Oct): one grid for everything
+   containers (chips, capsules, Balance, +) sit on the 12 line, text (titles, names, kcal, icons) on the 24 line — like the text inside the chips;
+   vertical steps are multiples of 8: goal row → chips 24, chips → list title 24, rows 56 / 48 with 40 / 32 capsules (8 above and below), no extra gap around dishes ---------- */
+body.lk-new.ma.tab-meal .hv{margin-top:24px!important}
+body.lk-new.gr.ma.tab-meal .plan .title-row{margin-left:8px!important;margin-right:-4px!important}
+body.lk-new #mhead .list-head,body.lk-new.v2.ma.tab-meal #mhead .list-head{padding-left:6px!important;padding-right:6px!important}
+body.lk-new #secMeal #list,body.lk-new #secMeal #rlist,body.lk-new #secMeal #zlist{margin-left:-6px!important;margin-right:-6px!important}
+body.lk-new.v2 #secMeal .zhead{padding:0 6px!important;margin:32px 0 8px!important}
+body.lk-new #addBtn{right:12px!important}
+/* no gap around a dish */
+body.lk-new #secMeal .slist>li.group+li,body.lk-new #secMeal .slist>li+li.group{margin-top:0!important}
+/* rows and capsules */
+body.lk-new #secMeal .slist>li.row{min-height:56px}
+body.lk-new #secMeal .slist>li.row>.rc,body.lk-new #secMeal .slist>li.group>.ghead>.rc{min-height:56px}
+body.lk-new #secMeal .kids>li{min-height:48px}
+body.lk-new #secMeal .kids>li>.rc{min-height:48px!important}
+body.lk-new #secMeal .slist .qv{height:40px;line-height:40px;border-radius:12px}
+body.lk-new #secMeal .kids .qv{height:32px;line-height:32px;border-radius:10px}
+body.lk-new.amt-r4 #secMeal .slist .qv{height:40px;line-height:40px}
+body.lk-new.amt-r4 #secMeal .kids .qv{height:32px;line-height:32px}
+/* text on the 24 line: kcal ends 12 inside the list edge; in R4 names start 12 inside it */
+body.lk-new #secMeal .kr2{padding-right:12px}
+body.lk-new.amt-r4 #secMeal .slist .info{padding-left:12px}
+body.lk-new.amt-r4 #secMeal .kids .info{padding-left:28px!important}
+body.lk-new #secMeal .slist>li.row::before{inset:0 -6px!important}
+body.lk-new #secMeal .slist>li.group.lifted,body.lk-new #secMeal .slist>li.group.drag-clone{padding:0 6px!important;margin:0 -6px!important}
 </style>
 
 <div class="app" id="app">
@@ -4588,12 +4615,12 @@ let rzT; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(
 
 /* ---- meal: the plan header and list title stay put ---- */
 const mhead = $('#mhead'), hdr = document.querySelector('header.plan');
-const MA_TITLE = 53;   // A: goal row scrolls away, then the chips shrink
+const MA_TITLE = 49;   // A: goal row scrolls away, then the chips shrink
 /* how many px the chips lose when they collapse; the scroll that collapses them is exactly that long, and the header keeps its
    place in the page (margin), so the list under it moves 1:1 with the finger — no parallax */
 const HR4 = { k0: 120, p0: 118, mid: 80, end: 56, gap: 6 };   // Hero → row of four
 const hr4On = () => document.body.classList.contains('ch-hero') && document.body.classList.contains('hr4');
-const maShrink = () => document.body.classList.contains('ch-hero') ? (hr4On() ? HR4.k0 + HR4.gap + HR4.p0 - HR4.end : 110) : 27;
+const maShrink = () => document.body.classList.contains('ch-hero') ? (hr4On() ? HR4.k0 + HR4.gap + HR4.p0 - HR4.end : 110) : 24;
 const HR4_A = (HR4.k0 + HR4.p0 - 2 * HR4.mid) / (HR4.k0 + HR4.gap + HR4.p0 - HR4.end);   // share of the scroll for the first stage
 let hr4Was = false;
 function heroLay(c) {   // place the four Hero chips for collapse c (0 rest → 1 row of four)
