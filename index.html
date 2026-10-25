@@ -1570,7 +1570,7 @@ body.lk-new #secMeal .kids .kr2 .kr b{font-size:15px!important;font-weight:400!i
 body.lk-new #secMeal .zero .kr2 .kr b{color:rgba(0,0,0,.35)!important}
 
 /* ---------- Meal · Q (25 Oct, canvas → Q1–Q5): quiet badges, KCAL 26 / P F C 22, thin icons in the head,
-   + floats above the tab bar (Meal only), light names; amounts: Settings → Amounts (q3 grey capsule, q2 outline, q4 dotted) ---------- */
+   + floats above the tab bar (Meal only), light names; amounts: Settings → Amounts (R5 left, R4 right) + Blue amounts ---------- */
 body.lk-new .hv53 .hc-top em.d,body.lk-new .hv53 .hc.over em.d,body.lk-new .hv53 .hc.ok em.d,body.lk-new .hv53 .hc.under em.d{background:none!important;padding:0!important;min-width:0!important;height:auto!important;font-size:12px!important;font-weight:510!important;color:inherit!important;opacity:.7!important}
 body.lk-new .hv53 .hc.ok em.d{opacity:1!important}
 body.lk-new .hv53 .hc em.d svg{width:12px!important;height:12px!important}
@@ -1586,7 +1586,7 @@ body.lk-new #addBtn{position:fixed!important;z-index:31;right:18px;bottom:calc(m
 body.lk-new #addBtn{display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
 body.lk-new #addBtn svg{width:24px!important;height:24px!important;margin:0!important}
 body.lk-new #addBtn path{stroke:#fff!important;stroke-width:1.75!important}
-body.lk-new:not(.tab-meal) #addBtn,body.lk-new.kb-open #addBtn{opacity:0;pointer-events:none;transform:scale(.6)}
+body.lk-new:not(.tab-meal) #addBtn,body.lk-new.kb-open #addBtn,body.lk-new:has(.precise.show) #addBtn{opacity:0;pointer-events:none;transform:scale(.6)}
 /* hierarchy */
 body.lk-new #secMeal .slist .info>.name,body.lk-new #secMeal .slist>li.group>.ghead .info>.name{font-weight:400!important;letter-spacing:-.2px!important}
 body.lk-new #secMeal .kids .info>.name{color:rgba(0,0,0,.7)!important}
@@ -1597,14 +1597,6 @@ body.lk-new #secMeal .kr2 .kr b{font-size:15px!important;font-weight:400!importa
 body.lk-new #secMeal .kids .kr2 .kr b{font-size:14px!important;color:rgba(0,0,0,.5)!important}
 body.lk-new #secMeal .info .mac{color:rgba(0,0,0,.4)!important}
 /* amounts · capsules (q3 grey, q2 outline) */
-body.lk-new.amt-q3 #secMeal .slist .pill,body.lk-new.amt-q2 #secMeal .slist .pill{width:70px!important;min-width:70px!important;margin-left:0!important}
-body.lk-new.amt-q3 #secMeal .rc,body.lk-new.amt-q2 #secMeal .rc{gap:10px!important}
-body.lk-new.amt-q3 #secMeal .slist .qv,body.lk-new.amt-q2 #secMeal .slist .qv{display:inline-flex;align-items:baseline;box-sizing:border-box;height:32px;line-height:32px;padding:0 8px;border-radius:11px;font-size:16px}
-body.lk-new.amt-q3 #secMeal .kids .qv,body.lk-new.amt-q2 #secMeal .kids .qv{height:28px;line-height:28px;padding:0 7px;border-radius:9px;font-size:15px}
-body.lk-new.amt-q3 #secMeal .slist .qv{background:rgba(0,0,0,.055)}
-body.lk-new.amt-q2 #secMeal .slist .qv{border:1px solid rgba(0,0,0,.12);line-height:31px}
-body.lk-new.amt-q2 #secMeal .kids .qv{line-height:27px}
-body.lk-new.amt-q3 #secMeal .slist>li.group+li::after,body.lk-new.amt-q3 #secMeal .slist>li+li.group::after,body.lk-new.amt-q2 #secMeal .slist>li.group+li::after,body.lk-new.amt-q2 #secMeal .slist>li+li.group::after{left:80px!important}
 /* Other products / To review: more air above, a quiet caption */
 body.lk-new.v2 #secMeal .zhead{margin:32px 0 6px!important;padding:0!important;font-size:15px!important;font-weight:510!important;color:rgba(0,0,0,.45)!important}
 body.lk-new.v2 #secMeal .zhead .n{font-size:15px!important}
@@ -1612,17 +1604,44 @@ body.lk-new.v2 #secMeal .zhead .n{font-size:15px!important}
 body.lk-new #secMeal .slist .pill,body.lk-new #secMeal .slist .lifted .pill,body.lk-new #secMeal .slist .editing .pill{background:none!important;box-shadow:none!important}
 body.lk-new #secMeal .slist>li.row::before{inset:0 -10px!important;border-radius:14px!important;background:#fff!important;box-shadow:0 8px 24px rgba(0,0,0,.12)!important}
 body.lk-new #secMeal .slist>li.row.editing::before{background:rgba(0,0,0,.05)!important;box-shadow:none!important;opacity:1!important;transform:none!important}
-body.lk-new.amt-q3 #secMeal .slist .editing>.rc .qv{background:rgba(0,0,0,.1)}
-body.lk-new.amt-q2 #secMeal .slist .editing>.rc .qv{border-color:rgba(0,0,0,.3)}
 body.lk-new #secMeal .slist .editing>.rc .caret{display:inline-block}
 body.lk-new #secMeal .slist>li.group.lifted,body.lk-new #secMeal .slist>li.group.drag-clone{background:#fff!important;border-radius:14px!important;box-shadow:0 8px 24px rgba(0,0,0,.12)!important;padding:0 10px!important;margin:0 -10px!important}
 #dragWrap{position:fixed;left:0;top:0;width:0;height:0;margin:0!important;padding:0!important;pointer-events:none;z-index:25;display:block!important;background:none!important}
 /* no hairline between a dish and its neighbours — the chevron already says it's a group; the 13 px gap stays */
 body.lk-new #secMeal .slist>li.group+li::after,body.lk-new #secMeal .slist>li+li.group::after{display:none!important}
-/* amounts · dotted underline (q4) */
-body.lk-new.amt-q4 #secMeal .slist .pill{font-weight:400!important}
-body.lk-new.amt-q4 #secMeal .slist .qv{background-image:radial-gradient(circle,rgba(0,0,0,.35) .9px,transparent 1.1px);background-size:4px 3px;background-repeat:repeat-x;background-position:0 100%;padding-bottom:4px}
-body.lk-new.amt-q4 #secMeal .kids .qv{background-image:radial-gradient(circle,rgba(0,0,0,.22) .9px,transparent 1.1px)}
+/* amounts · R5 left (default): a fixed capsule as tall as name + macros; ingredients' capsules step in by 8 */
+body.lk-new #secMeal .slist>li.row{min-height:58px}
+body.lk-new #secMeal .slist>li.row>.rc,body.lk-new #secMeal .slist>li.group>.ghead>.rc{min-height:58px}
+body.lk-new #secMeal .kids>li{min-height:50px}
+body.lk-new #secMeal .kids>li>.rc{min-height:50px!important}
+body.lk-new #secMeal .slist .pill{width:72px!important;min-width:72px!important;margin:0!important}
+body.lk-new #secMeal .rc{gap:12px!important}
+body.lk-new #secMeal .slist .qv{display:flex;align-items:baseline;justify-content:center;box-sizing:border-box;width:72px;height:44px;line-height:44px;padding:0 6px;border-radius:13px;font-size:17px;background:rgba(0,0,0,.055)}
+body.lk-new #secMeal .kids .qv{width:64px;margin-left:8px;height:38px;line-height:38px;border-radius:11px;font-size:15px}
+body.lk-new #secMeal .kids .info{padding-left:0!important}
+body.lk-new #secMeal .slist .editing>.rc .qv{background:rgba(0,0,0,.1)}
+/* amounts · R4 right: names on the 18 line, a fixed capsule on the right, kcal goes into the macro line */
+body.lk-new.amt-r4 #secMeal .slist .pill{order:3;width:72px!important;min-width:72px!important}
+body.lk-new.amt-r4 #secMeal .kr2{display:none!important}
+body.lk-new.amt-r4 #secMeal .slist .qv{height:38px;line-height:38px}
+body.lk-new.amt-r4 #secMeal .kids .qv{width:64px;margin-left:8px;height:32px;line-height:32px}
+body.lk-new.amt-r4 #secMeal .kids .info{padding-left:16px!important}
+body.lk-new.amt-r4 #secMeal .info .mac span:first-child{display:inline!important}
+body.lk-new.amt-r4 #secMeal .info .mac span:first-child i{display:none}
+body.lk-new.amt-r4 #secMeal .info .mac span:first-child::after{content:' kcal'}
+body.lk-new.amt-r4 #secMeal .info .mac span:nth-child(2)::before{content:' · ';white-space:pre}
+/* the ruler follows the capsule: on the right in R4 */
+body.lk-new.amt-r4 .px-ruler{left:auto;right:0}
+body.lk-new.amt-r4 .px-ruler i{left:auto;right:0}
+body.lk-new.amt-r4 .px-mark{left:auto;right:0}
+body.lk-new.amt-r4 .px-info{left:0;right:96px;align-items:flex-end;text-align:right}
+/* blue amounts (Settings switch) */
+body.lk-new.amt-blue #secMeal .slist .qv{background:rgba(31,86,201,.09);color:#0f2f73}
+body.lk-new.amt-blue #secMeal .slist .qv small{color:rgba(15,47,115,.55)!important}
+body.lk-new.amt-blue #secMeal .kids .qv{background:rgba(31,86,201,.06);color:rgba(15,47,115,.8)}
+body.lk-new.amt-blue #secMeal .zero .qv{background:rgba(31,86,201,.04);color:rgba(15,47,115,.4)}
+body.lk-new.amt-blue #secMeal .slist .editing>.rc .qv{background:rgba(31,86,201,.16)}
+
 </style>
 
 <div class="app" id="app">
@@ -2239,7 +2258,8 @@ const preInv = hex => { const c = [1, 3, 5].map(i => parseInt((hex.length === 4 
 const swHTML = (k, on) => `<button class="swt${on ? ' on' : ''}" role="switch" aria-checked="${on}" data-set="${k}"><i></i></button>`;
 const GRIDS = [['cur', 'Current', 'Chips inside the card, list on 16'], ['3', 'Keyline 24', 'Everything on one line at 24 · 4 columns, gap 8'], ['4', '8-pt', 'Everything on 16 · 4 columns, gap 8, steps of 8'], ['7', '5 col', '5 columns, KCAL takes two · margins 20, gap 6']];
 const CHIP_STYLES = [['soft', 'Soft', 'Four chips, softer: grey when under, rounded 18'], ['row', 'Row', 'Four chips in one row, KCAL takes two columns'], ['hero', 'Hero', 'KCAL full width on top, P F C below']];
-const AMT_STYLES = [['q3', 'Grey', 'Amounts in a light grey capsule'], ['q2', 'Outline', 'Amounts in a thin outline capsule'], ['q4', 'Dotted', 'Amounts with a dotted underline']];
+const AMT_STYLES = [['r5', 'Left', 'Amount on the left, kcal on the right'], ['r4', 'Right', 'Amount on the right, kcal next to the macros']];
+const amtOf = () => ['r5', 'r4'].includes(S.ui.amt) ? S.ui.amt : 'r5';
 const SHEET_STYLES = [['b', 'Tiles', 'Product sheet: four tiles, unit on top'], ['g', 'Chips', 'Product sheet: chips like the header, kcal per macro']];
 const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21', 'Card', 'Plan and chips on a white card']];
 function renderSettings() {
@@ -2253,8 +2273,9 @@ function renderSettings() {
         <div class="st-seg">${CHIP_STYLES.map(([k, l]) => `<button data-chips="${k}" class="${(u.chips || 'soft') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
       ${(u.chips || 'soft') === 'hero' ? `<div class="st-r st-col"><div><b>Hero on scroll</b><span>${u.heroCol === 'stack' ? 'KCAL stays on top, P F C below — both rows shrink' : 'Folds into one row: KCAL two columns, then P F C'}</span></div>
         <div class="st-seg">${[['row', 'One row'], ['stack', 'Two rows']].map(([k, l]) => `<button data-herocol="${k}" class="${(u.heroCol === 'stack' ? 'stack' : 'row') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` : ''}
-      <div class="st-r st-col"><div><b>Amounts</b><span>${(AMT_STYLES.find(x => x[0] === (u.amt || 'q3')) || AMT_STYLES[0])[2]}</span></div>
-        <div class="st-seg">${AMT_STYLES.map(([k, l]) => `<button data-amt="${k}" class="${(u.amt || 'q3') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+      <div class="st-r st-col"><div><b>Amounts</b><span>${(AMT_STYLES.find(x => x[0] === amtOf()) || AMT_STYLES[0])[2]}</span></div>
+        <div class="st-seg">${AMT_STYLES.map(([k, l]) => `<button data-amt="${k}" class="${amtOf() === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+      <div class="st-r"><div><b>Blue amounts</b><span>Amounts tinted blue, like Balance</span></div>${swHTML('tint', !!u.tint)}</div>
       <div class="st-r"><div><b>Collapse header on scroll</b><span>Chips shrink when you scroll the list</span></div>${swHTML('collapse', u.collapse !== false)}</div>
       <div class="st-r"><div><b>Haptics</b><span>iPhone: iOS 18+, felt when you lift the finger</span></div>${swHTML('haptics', u.haptics !== false)}</div>
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
@@ -2271,7 +2292,7 @@ function renderSettings() {
 $('#secSettings').addEventListener('click', e => {
   const th = e.target.closest('.st-th[data-th]'), sw = e.target.closest('[data-set]'), st = e.target.closest('[data-step]'), act = e.target.closest('[data-act]');
   if (th) { haptic(); S.ui.theme = th.dataset.th; save(); syncTabs(); renderSettings(); return; }
-  if (sw) { const k = sw.dataset.set; S.ui[k] = S.ui[k] === false; save(); syncTabs(); renderSettings(); if (S.ui[k] !== false) haptic(); return; }
+  if (sw) { const k = sw.dataset.set; S.ui[k] = k === 'tint' ? !S.ui[k] : S.ui[k] === false; save(); syncTabs(); renderSettings(); if (S.ui[k] !== false) haptic(); return; }
   if (st) { haptic(); S.ui.step = +st.dataset.step; save(); renderSettings(); return; }
   const vbb = e.target.closest('[data-vbs]');
   if (vbb) { haptic(); S.ui.vbs = vbb.dataset.vbs; save(); syncTabs(); renderAll(false); renderSettings(); return; }
@@ -3714,7 +3735,7 @@ function syncTabs() {
   const hs = S.ui.v2 && S.ui.ma ? (S.ui.hs || 'plain') : 'plain';
   document.body.classList.toggle('hs-card', hs === '21'); document.body.classList.toggle('hs-f', hs === '21');
   const gr = S.ui.v2 && S.ui.ma ? (S.ui.grid || 'cur') : 'cur';
-  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('hr4', S.ui.heroCol !== 'stack'); document.body.classList.add('lk-new'); ['q2', 'q3', 'q4'].forEach(k => document.body.classList.toggle('amt-' + k, (S.ui.amt || 'q3') === k)); delete S.ui.look; delete S.ui.fixNew; document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
+  ['3', '4', '7'].forEach(k => document.body.classList.toggle('gr-' + k, gr === k)); document.body.classList.toggle('gr', gr !== 'cur'); document.body.classList.toggle('ch-hero', gr === '7' && S.ui.chips === 'hero'); document.body.classList.toggle('hr4', S.ui.heroCol !== 'stack'); document.body.classList.add('lk-new'); ['r5', 'r4'].forEach(k => document.body.classList.toggle('amt-' + k, amtOf() === k)); document.body.classList.toggle('amt-blue', !!S.ui.tint); delete S.ui.look; delete S.ui.fixNew; document.body.classList.toggle('ch-soft', gr === '7' && (S.ui.chips || 'soft') === 'soft'); collapse && collapse(true);
   ['meal', 'measure', 'budget', 'nutrients', 'settings'].forEach(t => document.body.classList.toggle('tab-' + t, S.ui.tab === t));
   S.ui.theme = 'light'; document.documentElement.dataset.theme = 'light';   // themes are off for now
   document.body.classList.toggle('nocol', S.ui.collapse === false);
