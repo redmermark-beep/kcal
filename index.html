@@ -1756,6 +1756,47 @@ body.lk-new #secNut .nr .pv.nst-ok{color:#1f56c9!important;font-weight:510!impor
 body.lk-new #secNut .nr .pv.nst-over{color:#000!important;font-weight:600!important}
 body.lk-new #secNut .nr .pv.nst-nd,body.lk-new #secNut .nr .pv.nst-none,body.lk-new #secNut .nr.ig .pv{color:rgba(0,0,0,.35)!important}
 body.lk-new #secNut .nr>svg{width:7px;height:12px;margin:0!important;opacity:.35}
+
+/* ---------- Nutrients · Z3 (25 Oct, canvas → Z3): coverage first, fixes (nutrient first, product second), then everything ---------- */
+body.lk-new #secNut .nz{margin:16px 6px 0}
+body.lk-new #secNut .nz-h{display:flex;justify-content:space-between;font-size:12px;font-weight:590;color:rgba(0,0,0,.5)}
+body.lk-new #secNut .nz-h2{margin-top:24px}
+body.lk-new #secNut .nz-big{display:flex;align-items:baseline;gap:8px;margin-top:4px}
+body.lk-new #secNut .nz-big b{font-size:52px;line-height:1;font-weight:600;letter-spacing:-1.8px;font-variant-numeric:tabular-nums}
+body.lk-new #secNut .nz-big span{font-size:15px;color:rgba(0,0,0,.5)}
+body.lk-new #secNut .nz-grp{position:relative;display:flex;gap:8px;margin-top:16px}
+body.lk-new #secNut .nz-g{min-width:30px}
+body.lk-new #secNut .nz-gc{display:flex;align-items:flex-end;gap:2px;height:96px}
+body.lk-new #secNut .nz-gc i{flex:1;max-width:10px;border-radius:2px;background:rgba(0,0,0,.28)}
+body.lk-new #secNut .nz-gc i.ok{background:#1f56c9}body.lk-new #secNut .nz-gc i.over{background:#1c1c1e}body.lk-new #secNut .nz-gc i.nd{background:rgba(0,0,0,.1)}
+body.lk-new #secNut .nz-gl{margin-top:6px;font-size:11px;font-weight:590;color:rgba(0,0,0,.45);white-space:nowrap}
+body.lk-new #secNut .nz-l100{position:absolute;left:0;right:0;bottom:81px;border-top:1px dashed rgba(0,0,0,.3);pointer-events:none}
+body.lk-new #secNut .nz-l100 em{position:absolute;right:0;top:-16px;font-style:normal;font-size:11px;color:rgba(0,0,0,.4)}
+body.lk-new #secNut .nz-gas{display:grid;gap:8px;margin-top:10px}
+body.lk-new #secNut .nz-gt{position:relative;height:6px;border-radius:3px;background:rgba(0,0,0,.08)}
+body.lk-new #secNut .nz-gt i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#1f56c9}
+body.lk-new #secNut .nz-gt i.over{background:#1c1c1e}body.lk-new #secNut .nz-gt i.nd{background:transparent}
+body.lk-new #secNut .nz-gt span{position:absolute;left:66.7%;top:-3px;width:2px;height:12px;border-radius:1px;background:#000}
+body.lk-new #secNut .nz-gn{margin-top:6px;font-size:11px;line-height:14px;color:rgba(0,0,0,.5)}
+body.lk-new #secNut .nz-gn span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.lk-new #secNut .nz-gn b{font-size:13px;font-weight:600;color:#1f56c9;font-variant-numeric:tabular-nums}
+body.lk-new #secNut .nz-gn b.over{color:#000}body.lk-new #secNut .nz-gn b.nd{color:rgba(0,0,0,.35)}
+body.lk-new #secNut .ni-fix{margin-top:28px!important}
+body.lk-new #secNut .ni-cap .r,body.lk-new #secNut .ni-fix .r{font-weight:510}
+/* idea card: nutrient first */
+body.lk-new #secNut .ni-t{display:flex;align-items:center;gap:8px;min-width:0}
+body.lk-new #secNut .ni-t>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.lk-new #secNut .ni-tag{flex:none;font-style:normal;font-size:12px;line-height:18px;font-weight:600;letter-spacing:0;padding:0 7px;border-radius:9px;background:rgba(0,0,0,.13);color:#000}
+body.lk-new #secNut .ni-tag.over{background:#1c1c1e;color:#fff}
+body.lk-new #secNut .ni-a{margin-top:6px!important;font-size:15px!important;line-height:20px!important;color:rgba(0,0,0,.6)!important}
+body.lk-new #secNut .ni-a b{font-weight:510;color:#000}
+body.lk-new #secNut .ni-go{align-self:flex-end}
+body.lk-new #secNut .ni-cards{margin-top:0!important}
+
+/* supplement sheet: scan the label (25 Oct) */
+.sp-scan{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;margin:0 0 8px;border-radius:13px;background:rgba(0,0,0,.06);font-size:15px;font-weight:600;color:#000}
+.sp-scan svg{width:20px;height:20px}
+.sp-scan:active{transform:scale(.97)}
 </style>
 
 <div class="app" id="app">
@@ -4230,13 +4271,15 @@ function parseLabel(txt) {
     H.push(h); });
   const U = { mg: 1e-3, мг: 1e-3, 'µg': 1e-6, mcg: 1e-6, мкг: 1e-6, ug: 1e-6, g: 1, г: 1, gr: 1 };
   H.forEach((h, i) => { let seg = T.slice(h.b, Math.min(i + 1 < H.length ? H[i + 1].a : T.length, h.b + 40)); const nl = seg.indexOf('\n'), nl2 = nl < 0 ? -1 : seg.indexOf('\n', nl + 1); if (nl2 >= 0) seg = seg.slice(0, nl2);   // the value sits on the same line or the next
-    const re = /(<\s*)?(\d+(?:[.,]\d+)?)\s*(mg|мг|µg|mcg|мкг|ug|gr|g|г|%|kj|kcal|ккал|кдж)?(?![a-zа-я])/g; let x, v = null, u = null;
+    const re = /(<\s*)?(\d+(?:[.,]\d+)?)\s*(iu|ме|ед|mg|мг|µg|mcg|мкг|ug|gr|g|г|%|kj|kcal|ккал|кдж)?(?![a-zа-я])/g; let x, v = null, u = null;
     while ((x = re.exec(seg))) { if (x[3] === '%' || /kj|kcal|ккал|кдж/.test(x[3] || '')) continue; v = x[1] ? 0 : num(x[2]); u = x[3] || null; break; }
     if (v == null) return; const key = h.id === 'p_' ? 'p' : h.id;
     if (h.kind === 'g') { if (n[key] == null) n[key] = v; return; }
     if (key === 'salt') { if (m.na == null) m.na = Math.round(v * 400); return; }
     const z = NUT.find(q => q.id === key), our = z ? { g: 1, mg: 1e-3, 'µg': 1e-6, ml: 1 }[z.u] || 1 : 1;
-    const val = u && U[u] ? v * U[u] / our : v; if (m[key] == null || key === 'na') m[key] = +val.toPrecision(3); });
+    const IU = { vD: .025, vA: .3, vE: .67 }, isIU = /^(iu|ме|ед)$/.test(u || '');   // supplements: vitamin D 1 IU = 0.025 µg, A 0.3 µg, E 0.67 mg
+    if (isIU && !IU[key]) return;
+    const val = isIU ? v * IU[key] : u && U[u] ? v * U[u] / our : v; if (m[key] == null || key === 'na') m[key] = +val.toPrecision(3); });
   if (['p', 'f', 'c'].filter(k => n[k] != null).length < 2) {   // a table read column by column: words in one run of lines, numbers in another
     const keys = [], vals = []; T.split('\n').forEach(l => { const hs = NLBL.map(([id, kind, re]) => re.test(l) ? { id, kind } : null).filter(Boolean), num1 = /(<\s*)?(\d+(?:[.,]\d+)?)\s*(mg|мг|µg|mcg|мкг|ug|gr|g|г)?/.exec(l);
       if (/kj|kcal|ккал|кдж|%/.test(l)) return;
@@ -4265,7 +4308,7 @@ function nCam(mode0, done) {
   L.innerHTML = `<video playsinline muted autoplay></video><div class="cam-frame"><canvas class="cam-still" hidden></canvas><i></i></div>
     <div class="cam-top"><span class="cam-t"></span><button class="cam-x" aria-label="Close">${ICON.x}</button></div>
     <div class="cam-msg" hidden><span class="t"></span><span class="c"></span></div>
-    <div class="cam-bot"><div class="cam-seg"><button data-m="code">Barcode</button><button data-m="table">Nutrition table</button></div>
+    <div class="cam-bot">${mode0 === 'supp' ? '' : '<div class="cam-seg"><button data-m="code">Barcode</button><button data-m="table">Nutrition table</button></div>'}
       <div class="cam-row"><button class="cam-ph">Photo</button><button class="cam-shut" aria-label="Take the picture"><i></i></button><button class="cam-lt">Live Text</button></div></div>`;
   document.body.append(L); requestAnimationFrame(() => L.classList.add('show'));
   const V = L.querySelector('video'), still = L.querySelector('.cam-still'), fr = L.querySelector('.cam-frame'), msgEl = L.querySelector('.cam-msg');
@@ -4276,12 +4319,12 @@ function nCam(mode0, done) {
   const close = () => { alive = false; clearInterval(loop); if (stream) stream.getTracks().forEach(t => t.stop()); L.classList.remove('show'); setTimeout(() => L.remove(), 300); };
   const finish = r => { close(); done(r); };
   const toTable = { l: 'Scan the table', fn: () => setMode('table') }, toCode = { l: 'Scan the barcode', fn: () => setMode('code') };
-  const live = () => { const c = carry; close(); nLiveText(done, c); }, toLive = { l: 'iPhone Live Text', fn: live };
+  const live = () => { const c = carry; close(); nLiveText(done, c, mode === 'supp'); }, toLive = { l: 'iPhone Live Text', fn: live };
   function setMode(m, keepMsg) {
     mode = m; L.dataset.m = m; L.querySelectorAll('.cam-seg button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
-    L.querySelector('.cam-t').textContent = m === 'code' ? 'Point at the barcode' : 'Fit the nutrition table in the frame';
+    L.querySelector('.cam-t').textContent = m === 'code' ? 'Point at the barcode' : m === 'supp' ? 'Fit the supplement facts in the frame' : 'Fit the nutrition table in the frame';
     if (!keepMsg) say(''); still.hidden = true; if (V.paused && stream) V.play().catch(() => {}); since = performance.now();
-    if (m === 'table') nOcrWorker().catch(() => {}); else loadJS(CDN_ZX).catch(() => {}); }
+    if (m === 'table' || m === 'supp') nOcrWorker().catch(() => {}); else loadJS(CDN_ZX).catch(() => {}); }
   /* the framed part of the picture, in video pixels */
   function grab(max) {
     const vw = V.videoWidth, vh = V.videoHeight; if (!vw) return null;
@@ -4306,17 +4349,18 @@ function nCam(mode0, done) {
     try { say('Reading the table…'); o = await nOcr(src, (st, p, pass) => say(/load|initial/.test(st) ? `Getting the reader ready · ${Math.round(p * 100)}% · the first time only` : `Reading the table${pass > 1 ? ` · try ${pass}` : ''} · ${Math.round(p * 100)}%`)); }
     catch (e) { busy = false; still.hidden = true; V.play().catch(() => {}); return say('The text reader didn’t load — check the internet. The first time it downloads a few MB.', [{ l: 'Try again', fn: shoot }]); }
     busy = false; if (!alive) return; lastTxt = o.txt; const r = o.r, mac = ['p', 'f', 'c', 'k'].filter(k => r.n[k] != null).length;
+    if (mode === 'supp' && Object.keys(r.m).length) return finish({ src: { t: 'label' }, n: {}, m: r.m, via: 'supp' });
     if (mac >= 2 || (mac && Object.keys(r.m).length >= 2)) return finish({ src: { t: 'label', ...(carry ? { code: carry.code } : {}) }, n: r.n, m: r.m, name: carry && carry.name, via: 'label', miss: ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null) });
     still.hidden = true; V.play().catch(() => {});
     say('Couldn’t read the values. iPhone’s own text scan reads packs much better — or fill the frame with the table, hold it straight and avoid glare.', [toLive, toCode, { l: 'What it read', soft: 1, fn: () => nOver(`<div class="sh-head"><span class="sh-kick">The reader saw</span><span class="nu-sht">Text from the photo</span>${nOX}</div><pre class="nu-raw">${esc(lastTxt.trim() || '(nothing)')}</pre>`, () => {}) }]); }
-  function shoot() { if (busy || mode !== 'table') return; const c = grab(2400); if (!c) return; haptic();
+  function shoot() { if (busy || (mode !== 'table' && mode !== 'supp')) return; const c = grab(2400); if (!c) return; haptic();
     still.width = c.width; still.height = c.height; still.getContext('2d').drawImage(c, 0, 0); still.hidden = false; V.pause(); read(c); }
   L.querySelector('.cam-x').addEventListener('click', () => { haptic(); close(); });
   L.querySelectorAll('.cam-seg button').forEach(b => b.addEventListener('click', () => { if (busy) return; haptic(); setMode(b.dataset.m); }));
   L.querySelector('.cam-shut').addEventListener('click', shoot);
   L.querySelector('.cam-lt').addEventListener('click', () => { haptic(); live(); });
   L.querySelector('.cam-ph').addEventListener('click', () => { if (busy) return; haptic(); nPickFile(async f => {
-    if (mode === 'table') return read(f);
+    if (mode === 'table' || mode === 'supp') return read(f);
     busy = true; say('Looking for a barcode…'); let c = null; try { c = await nBarcode(f); } catch (e) {} busy = false;
     if (c) lookup(c); else say('No barcode in this photo — try the nutrition table.', [toTable]); }); });
   setMode(mode0);
@@ -4327,7 +4371,7 @@ function nCam(mode0, done) {
   return { close };
 }
 /* iPhone Live Text: the system «Scan Text» fills a text field; we read the values from it as it comes in */
-function nLiveText(done, carry) {
+function nLiveText(done, carry, supp) {
   nOver(`<div class="sh-head"><span class="sh-kick">Nutrition table</span><span class="nu-sht">Scan with iPhone</span>${nOX}</div>
     <ol class="nu-steps"><li>Tap the field below</li><li>Choose <b>Scan Text</b> in the menu or on the keyboard</li><li>Point at the table — the whole table, values too — and tap <b>Insert</b></li></ol>
     <textarea class="nu-lt" placeholder="Tap here, then «Scan Text»" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
@@ -4335,14 +4379,14 @@ function nLiveText(done, carry) {
     const ta = box.querySelector('.nu-lt'), R = box.querySelector('.nu-ltr'), use = box.querySelector('#ltUse'); let r = null;
     const NM = { p: 'Protein', f: 'Fat', c: 'Carbs', k: 'kcal' };
     const draw = () => { const t = ta.value.trim(); r = t ? parseLabel(t) : null; const mac = r ? ['p', 'f', 'c', 'k'].filter(k => r.n[k] != null) : [];
-      use.disabled = mac.length < 2;
+      use.disabled = supp ? !(r && Object.keys(r.m).length) : mac.length < 2;
       if (!t) { R.innerHTML = ''; return; }
       const rows = mac.map(k => [NM[k], nFmt(r.n[k]) + (k === 'k' ? '' : ' g')]).concat(Object.entries(r.m).map(([k, v]) => { const z = NUT.find(q => q.id === k); return z ? [z.n, nFmt(v) + ' ' + z.u] : null; }).filter(Boolean));
       const miss = ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null).map(k => NM[k].toLowerCase());
-      R.innerHTML = rows.length ? `<div class="cap">Found · per 100 g${miss.length ? `<span class="r">not found: ${miss.join(', ')}</span>` : ''}</div><div class="bal-rows">${rows.map(([a, b]) => `<div class="bal-r"><b>${a}</b><em>${b}</em></div>`).join('')}</div>`
+      R.innerHTML = rows.length ? `<div class="cap">Found · ${supp ? 'in one piece' : 'per 100 g'}${miss.length ? `<span class="r">not found: ${miss.join(', ')}</span>` : ''}</div><div class="bal-rows">${rows.map(([a, b]) => `<div class="bal-r"><b>${a}</b><em>${b}</em></div>`).join('')}</div>`
         : '<p class="note nu-fn">No values in this text yet. Scan the whole table, numbers included.</p>'; };
     ta.addEventListener('input', draw);
-    use.addEventListener('click', () => { if (!r) return; haptic(); closeBox(); done({ src: { t: 'label', ...(carry ? { code: carry.code } : {}) }, n: r.n, m: r.m, name: carry && carry.name, via: 'label', miss: ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null) }); });
+    use.addEventListener('click', () => { if (!r) return; haptic(); closeBox(); if (supp) return done({ src: { t: 'label' }, n: {}, m: r.m, via: 'supp' }); done({ src: { t: 'label', ...(carry ? { code: carry.code } : {}) }, n: r.n, m: r.m, name: carry && carry.name, via: 'label', miss: ['p', 'f', 'c', 'k'].filter(k => r.n[k] == null) }); });
     ta.focus(); });
 }
 const nMissTxt = r => r.miss && r.miss.length ? ` · not found: ${r.miss.map(k => ({ p: 'protein', f: 'fat', c: 'carbs', k: 'kcal' })[k]).join(', ')}` : '';
@@ -4476,16 +4520,20 @@ function nIdeas() {
   });
   nIdeaKey = key; nIdeaVal = { ideas, p, hid: hide.size }; return nIdeaVal;
 }
-function nIdeaCard(x, i) {
+function nIdeaCard(x, i) {   // 25 Oct (Z3): what we fix comes first, the product second
   const e = x.c.e || null, them = x.names.length > 1 ? 'them' : 'it', q = g => nQty(e && e.t !== 'g' ? e : null, g);
-  const nm = x.names.length > 3 ? x.names.slice(0, 3).join(' · ') + ` +${x.names.length - 3}` : x.names.join(' · ');
-  let sub = esc(nm), txt, btn;
-  if (x.kind === 'over') { sub = esc(nm) + (x.pct ? ` · ${x.pct}% of the limit` : '');
+  const sym = nm => { const z = NUT.find(n => n.n === nm); return z ? (z.s && z.s.length <= 3 ? z.s : z.n) : nm; };
+  const tagOf = xs => xs.length > 3 ? xs.slice(0, 3).map(sym).join(' · ') + ` +${xs.length - 3}` : xs.map(sym).join(' · ');
+  let title, tag, tagCls = '', txt, btn;
+  if (x.kind === 'over') { title = x.names.length > 1 ? `${x.names.length} over the limit` : x.names[0]; tag = x.pct ? `${x.pct}% of limit` : 'over the limit'; tagCls = ' over';
     txt = x.G > 0 ? `about ${q(x.G)} keeps ${them} under` : `without it ${them === 'it' ? 'it fits' : 'they fit'}`; btn = 'Show'; }
-  else { const cov = x.part ? `covers ${x.part}%` : `covers ${them}`;
+  else { const z = x.names.map(nm => NUT.find(n => n.n === nm)).filter(Boolean), allVit = z.length && z.every(n => n.g === 'vit'), allMin = z.length && z.every(n => n.g === 'min');
+    title = x.names.length > 1 ? `${x.names.length} ${allVit ? 'vitamins' : allMin ? 'minerals' : 'nutrients'} short` : x.names[0];
+    tag = x.names.length > 1 ? tagOf(x.names) : x.part ? `${x.part}% covered` : 'short';
+    const cov = x.part ? `covers ${x.part}%` : `covers ${them}`;
     txt = x.kind === 'more' ? `${q(x.c.g0)} in the plan · about ${q(x.G)} ${cov}` : `about ${q(x.G)} ${cov}`; btn = x.kind === 'add' ? 'Add' : 'Show'; }
   return `<div class="nu-cw" data-idea="${i}"><button class="nu-ign" data-hide="${i}" tabindex="-1">${N_EYE}<span>Hide</span></button><div class="nu-card ni-card">
-    <div class="ni-tx"><div class="ni-t">${esc(x.c.name)}${x.c.isNew ? '' : ''}</div><div class="ni-n">${sub}</div><div class="ni-a">${txt}</div></div>
+    <div class="ni-tx"><div class="ni-t"><span>${esc(title)}</span><em class="ni-tag${tagCls}">${esc(tag)}</em></div><div class="ni-a"><b>${esc(x.c.name)}</b> · ${txt}</div></div>
     <button type="button" class="ni-go" data-go="${i}">${btn}</button></div></div>`;
 }
 const gOf0 = x => x.p === plan() ? x.c.e.g : (x.p.g[x.c.id] || 0);
@@ -4508,6 +4556,21 @@ function nIdeaHide(x) {
   toast('Hidden', { label: 'Undo', fn: () => { const k = n.hide.indexOf(x.c.id); if (k >= 0) n.hide.splice(k, 1); save(); nIdeaKey = ''; renderNut(); } });
 }
 const nRow2 = x => `<button class="nr${x.ig ? ' ig' : ''}" data-n="${x.n.id}"><span class="nm">${x.n.n}</span>${x.s === 'nd' || x.p === null ? '<span class="bar"></span>' : `<span class="bar nst-${x.s}"><i style="width:${Math.min(100, x.p)}%"></i></span>`}<span class="pv nst-${x.s}">${x.ig ? 'off' : x.s === 'nd' ? '?' : x.p === null ? nFmt(x.v) : x.p + '%'}</span>${N_CHEV}</button>`;
+/* 25 Oct (Z3): coverage on top — needs as bars by group (more is better), limits as gauges (less is better) */
+function nStats(R) {
+  const NEED = R.filter(x => !x.ig && x.q.t), LIMS = R.filter(x => !x.ig && x.q.lim).sort((a, b) => (b.p || 0) - (a.p || 0));
+  const known = NEED.filter(x => x.s !== 'nd' && x.p != null), avg = known.length ? Math.round(known.reduce((t, x) => t + Math.min(100, x.p), 0) / known.length) : 0;
+  const H = 96, bh = x => x.s === 'nd' || x.p == null ? 4 : Math.max(3, Math.round(Math.min(x.p, 150) / 150 * H));
+  const groups = ['vit', 'min', 'fat', 'carb', 'amino'].map(g => { const xs = NEED.filter(x => x.n.g === g); if (!xs.length) return '';
+    const srt = xs.filter(x => x.s !== 'nd').sort((a, b) => b.p - a.p).concat(xs.filter(x => x.s === 'nd'));
+    return `<div class="nz-g" style="flex:${xs.length} 0 0"><div class="nz-gc">${srt.map(x => `<i class="${x.s}" style="height:${bh(x)}px" title="${x.n.n}"></i>`).join('')}</div><div class="nz-gl">${{ vit: 'Vit', min: 'Min', fat: 'Fats', carb: 'Carbs', amino: 'Amino' }[g]}</div></div>`; }).join('');
+  const kept = LIMS.filter(x => x.s === 'ok').length, ga = LIMS.map(x => { const nm = { 'Saturated fat': 'Sat. fat' }[x.n.n] || x.n.n, w = x.s === 'nd' || x.p == null ? 0 : Math.min(x.p, 150) / 150 * 100;
+    return `<div class="nz-ga"><div class="nz-gt"><i class="${x.s}" style="width:${w.toFixed(0)}%"></i><span></span></div><div class="nz-gn"><span>${nm}</span><b class="${x.s}">${x.s === 'nd' ? '?' : x.p + '%'}</b></div></div>`; }).join('');
+  return `<div class="nz"><div class="nz-h"><span>NEEDS · MORE IS BETTER</span><span>${NEED.filter(x => x.s === 'ok').length} of ${NEED.length} ok</span></div>
+    <div class="nz-big"><b>${avg}%</b><span>of daily needs, on average</span></div>
+    <div class="nz-grp">${groups}<span class="nz-l100"><em>100%</em></span></div>
+    ${LIMS.length ? `<div class="nz-h nz-h2"><span>LIMITS · LESS IS BETTER</span><span>${kept} of ${LIMS.length} kept</span></div><div class="nz-gas" style="grid-template-columns:repeat(${LIMS.length},minmax(0,1fr))">${ga}</div>` : ''}</div>`;
+}
 function renderNut2(el) {
   const { R, days, mix, grams } = nRows();
   const bad = nBad(R), ok = R.filter(x => x.s === 'ok').length, nd = R.filter(x => x.s === 'nd').length, ign = R.filter(x => x.ig);
@@ -4532,9 +4595,9 @@ function renderNut2(el) {
   const top = ideas.slice(0, 3);
   const grp = g => { const xs = R.filter(x => x.n.g === g); return `<div class="bcap ni-gc">${NG[g]}<span class="r"><em>${xs.filter(x => x.s === 'ok').length}</em> of ${xs.length} ok</span></div><div class="nr-l ni-card-l">${xs.map(nRow2).join('')}</div>`; };
   const sup = S.supp.map(s => `<li class="row" data-s="${s.id}"><div class="rc"><span class="pill">${s.pcs}pc</span><div class="info"><div class="name">${esc(s.name)}</div><div class="mac">${Object.entries(s.n || {}).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? `<span><i>${n.s}</i>${nFmt(v * s.pcs)}</span>` : ''; }).join('') || '<i>no nutrients yet</i>'}</div></div></div></li>`).join('');
-  el.innerHTML = `<div class="ni-q">${bad.length ? `${bad.length} to fix` : 'Nothing to fix'}</div>
-    ${top.length ? `<div class="ni-cards">${top.map(nIdeaCard).join('')}</div>` : ''}
-    ${ideas.length > 3 || I.hid ? `<button class="ni-all" id="nuAll">See all ideas <em>${ideas.length}</em></button>` : ''}
+  el.innerHTML = `${nStats(R)}
+    ${top.length ? `<div class="bcap ni-cap ni-fix">Fix first<span class="r">${bad.length} to fix</span></div><div class="ni-cards">${top.map(nIdeaCard).join('')}</div>` : `<div class="bcap ni-cap ni-fix">${bad.length ? `${bad.length} to fix` : 'Nothing to fix'}</div>`}
+    ${ideas.length > 3 || I.hid ? `<button class="ni-all" id="nuAll">More ideas <em>${ideas.length}</em></button>` : ''}
     <div class="bcap ni-cap">All nutrients<span class="r"><em>${ok}</em> ok · <button class="nu-lk" id="nuUnk">${nd} no data</button></span></div>
     ${['vit', 'min', 'fat', 'carb', 'amino'].map(grp).join('')}
     <div class="bcap">Supplements<button id="nuAddSup">+ Add</button></div>
@@ -4620,7 +4683,7 @@ function suppSheet(sp) {
   sheet(`<div class="sh-head"><span class="sh-kick">${isNew ? 'New supplement' : 'Supplement'}</span><input class="sh-name" id="spName" placeholder="Name" value="${esc(d.name)}" autocomplete="off">${isNew ? '' : `<button class="sh-ic red" id="spDel" aria-label="Delete">${ICON.trash}</button>`}${XBTN}</div>
     <div class="cap">Taken every day, whatever the plan</div>
     <div class="card c3">${nVt('spPcs', 'Pieces a day', d.pcs, '', 'id="spPcs"')}</div>
-    <div class="cap">In one piece · from the label</div><div class="card c3" id="spT"></div>
+    <div class="cap">In one piece · from the label</div><button type="button" class="sp-scan" id="spScan">${SCAN_IC}<span>Scan the label</span></button><div class="card c3" id="spT"></div>
     <div class="nu-eff" id="spEff"></div>
     <button class="sbtn primary" id="spSave">${isNew ? 'Add supplement' : 'Save'}</button>`, s => {
     const host = s.querySelector('#spT');
@@ -4629,7 +4692,12 @@ function suppSheet(sp) {
         out.push(`<div class="bal-r"><b>${x.n.n}${ul ? `<small class="bal-in">pills ${nFmt(pills)}/${nFmt(ul)} ${x.n.u}</small>` : ''}</b><em class="${ul && pills > ul ? '' : 'p'}">${base ? `${Math.round(x.v / base * 100)}% → ${Math.round(tv / base * 100)}%` : nFmt(tv) + ' ' + x.n.u}</em></div>`); });
       s.querySelector('#spEff').innerHTML = out.length ? `<div class="bal-rows">${out.join('')}</div>` : ''; };
     host._after = () => host.querySelectorAll('[data-nk]').forEach(i => i.addEventListener('input', eff));
-    nTiles(host, d.n); eff();
+    const redraw = nTiles(host, d.n); eff();
+    s.querySelector('#spScan').addEventListener('click', () => { haptic(); nCam('supp', r => {
+      const got = Object.entries(r.m || {}).filter(([k, v]) => NUT.some(z => z.id === k) && v != null);
+      if (!got.length) return toast('Nothing read — try again closer, or type the values in');
+      got.forEach(([k, v]) => { d.n[k] = v; }); redraw(); eff(); haptic();
+      toast(`Read ${got.length} ${got.length === 1 ? 'value' : 'vitamins and minerals'} — check them against the label`); }); });
     s.querySelector('#spPcs').addEventListener('input', e => { d.pcs = Math.max(1, Math.min(20, parseInt(e.target.value) || 1)); eff(); });
     s.querySelector('#spSave').addEventListener('click', () => { d.name = s.querySelector('#spName').value.trim() || 'Supplement';
       Object.keys(d.n).forEach(k => { if (!d.n[k]) delete d.n[k]; });
