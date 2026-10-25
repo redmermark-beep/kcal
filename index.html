@@ -1686,6 +1686,27 @@ body.lk-new #addBtn{right:24px!important}
 /* icons */
 body.lk-new #mhead .tools>button:not(#addBtn) svg,body.lk-new.ma .tab svg{width:24px!important;height:24px!important}
 body.lk-new.ma .tab{color:#000!important}
+
+/* ---------- Meal · V2 capsule (25 Oct, canvas → V2): 96 wide so 9999ml fits, amount 17/600 on the left, ↕ on the right ("hold and drag");
+   Try-out mode turns the capsules blue (was orange); with Blue amounts on they go solid blue so the mode still stands out ---------- */
+body.lk-new #secMeal .slist .pill,body.lk-new.amt-r4 #secMeal .slist .pill{width:96px!important;min-width:96px!important}
+body.lk-new #secMeal .slist .qv,body.lk-new #secMeal .kids .qv,body.lk-new.amt-r4 #secMeal .slist .qv,body.lk-new.amt-r4 #secMeal .kids .qv{display:flex;align-items:center;justify-content:space-between;gap:4px;width:96px;padding:0 10px 0 12px;background:rgba(0,0,0,.06)}
+body.lk-new #secMeal .qn{display:inline-flex;align-items:baseline;white-space:nowrap;min-width:0;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+body.lk-new #secMeal .qn small{font-size:13px;font-weight:500;letter-spacing:0;color:rgba(0,0,0,.4)}
+body.lk-new #secMeal .ud{flex:none;width:10px;height:14px;color:rgba(0,0,0,.35)}
+body.lk-new #secMeal .zero .qv{opacity:.55}
+body.lk-new #secMeal .slist .editing>.rc .qv{background:rgba(0,0,0,.1)}
+body.lk-new #secMeal .slist .editing>.rc .ud{visibility:hidden}
+/* Try-out mode: blue */
+body.lk-new{--ghost:#1f56c9;--ghost-ink:#0f2f73;--ghost-fill:rgba(31,86,201,.14);--ghost-fill-0:rgba(31,86,201,.07);--ghost-ink-0:rgba(15,47,115,.45)}
+body.lk-new.ghost #secMeal .slist .pill{background:none!important}
+body.lk-new.ghost #secMeal .slist .qv{background:var(--ghost-fill);transition:background .3s}
+body.lk-new.ghost #secMeal .qn,body.lk-new.ghost #secMeal .ud{color:var(--ghost-ink)}
+body.lk-new.ghost #secMeal .qn small{color:rgba(15,47,115,.55)}
+body.lk-new.ghost #secMeal .zero .qv{background:var(--ghost-fill-0);opacity:1}
+body.lk-new.ghost.amt-blue #secMeal .slist .qv{background:#1f56c9}
+body.lk-new.ghost.amt-blue #secMeal .qn,body.lk-new.ghost.amt-blue #secMeal .ud,body.lk-new.ghost.amt-blue #secMeal .qn small{color:#fff}
+body.lk-new.ghost #mhead .tools>button#ghostBtn{color:#1f56c9!important}
 </style>
 
 <div class="app" id="app">
@@ -2179,7 +2200,8 @@ const revOf = (p = plan()) => (p.rev ||= {});
 const revGet = e => e && e.t !== 'g' && e.g === 0 && !ghostSnap ? revOf()[e.id] || null : null;
 function revPrune(p = plan()) { const r = revOf(p);
   Object.keys(r).forEach(id => { const f = find(id), g = p === plan() ? (f ? f.e.g : 0) : (p.g[id] || 0); if (!f || f.parent || g > 0) delete r[id]; }); return r; }
-function pillHTML(e) { return `<span class="qv">${pillIn(e)}</span>`; }
+const UD = '<svg class="ud" viewBox="0 0 10 14" fill="none" aria-hidden="true"><path d="M2 5l3-3 3 3M2 9l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function pillHTML(e) { return `<span class="qv"><span class="qn">${pillIn(e)}</span>${UD}</span>`; }   // V2 (25 Oct): ↕ says "hold and drag"
 function pillIn(e) {
   const rv = revGet(e);
   const U2 = e.t === 'g' ? 'g' : uLab(e), A = g => `${e.t === 'g' ? g : toU(e, g)}<small>${U2}</small>`;   // B3 (25 Oct): the amount is a plain number, the unit small and grey
