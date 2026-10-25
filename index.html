@@ -1709,6 +1709,53 @@ body.lk-new.ghost.amt-blue #secMeal .qn,body.lk-new.ghost.amt-blue #secMeal .ud,
 body.lk-new.ghost #mhead .tools>button#ghostBtn{color:#1f56c9!important}
 /* rows stay 56; the capsule grows to 44 (6 above and below), so the list reads denser without tighter rows */
 body.lk-new #secMeal .slist .qv,body.lk-new #secMeal .kids .qv,body.lk-new.amt-r4 #secMeal .slist .qv,body.lk-new.amt-r4 #secMeal .kids .qv{height:44px;line-height:44px;border-radius:13px}
+
+/* ---------- Nutrients · Meal rules (25 Oct, design system "Kcal" v2) ----------
+   containers on 12, text on 24, steps of 8; goal row like Meal; idea cards white r18 (blocks of different meaning may be cards);
+   the nutrient list sits straight on the ground, no card, no lines; bars and % speak the chips' colours: blue ok, black over, grey short */
+body.lk-new.ma.tab-nutrients .plan{padding-top:calc(var(--sat) + 3px)!important}
+body.lk-new.ma.tab-nutrients .plan .title-row{height:34px!important;gap:8px!important}
+body.lk-new.ma.tab-nutrients .plan .title-row>*{top:0!important}
+body.lk-new.gr.ma.tab-nutrients .plan .title-row{margin-left:8px!important;margin-right:-4px!important}
+body.lk-new #secNut{padding-left:2px!important;padding-right:2px!important}
+/* head: plan title + search, text on 24 */
+body.lk-new #secNut .nu-head{height:44px!important;margin-top:24px;padding:0 6px!important}
+body.lk-new #secNut .nu-head h2{font-size:20px!important;line-height:26px!important;font-weight:600!important;letter-spacing:-.3px!important}
+body.lk-new #secNut .nu-head .mtitle .pchev{margin-left:6px!important}
+body.lk-new #secNut .nu-head .tools{padding-left:12px;margin-right:-10px;gap:0}
+body.lk-new .nu-head .tools .ibtn{width:44px!important;height:44px!important;border-radius:22px!important;color:rgba(0,0,0,.85)!important}
+body.lk-new .nu-head .tools .ibtn svg{width:24px!important;height:24px!important}
+/* the headline */
+body.lk-new #secNut .ni-q{margin:16px 6px 0!important;font-size:26px!important;line-height:32px!important;font-weight:600!important;letter-spacing:-.6px!important}
+/* idea cards */
+body.lk-new #secNut .ni-cards{margin-top:16px!important;display:flex;flex-direction:column;gap:8px}
+body.lk-new #secNut .ni-cards .nu-cw{margin:0 -6px!important;border-radius:18px!important}
+body.lk-new #secNut .ni-card.nu-card{border-radius:18px!important;padding:12px!important;gap:12px!important;background:var(--card,#fff)!important;box-shadow:none!important}
+body.lk-new #secNut .ni-t{font-size:17px!important;line-height:22px!important;font-weight:600!important;letter-spacing:-.2px!important}
+body.lk-new #secNut .ni-n{margin-top:2px!important;font-size:13px!important;line-height:17px!important;color:rgba(0,0,0,.5)!important}
+body.lk-new #secNut .ni-a{margin-top:4px!important;font-size:15px!important;line-height:20px!important;color:#000!important}
+body.lk-new #secNut .ni-go{height:34px!important;padding:0 14px!important;border-radius:17px!important;background:rgba(0,0,0,.06)!important;font-size:15px!important;font-weight:600!important;color:#000!important}
+body.lk-new #secNut .ni-all{width:calc(100% + 12px)!important;margin:8px -6px 0!important;height:44px!important;border-radius:13px!important;background:rgba(0,0,0,.06)!important;font-size:15px!important;font-weight:600!important}
+body.lk-new #secNut .ni-all em{font-family:var(--sans)!important;font-size:15px!important;font-weight:400!important;color:rgba(0,0,0,.4)!important;font-variant-numeric:tabular-nums}
+/* captions */
+body.lk-new #secNut .ni-cap,body.lk-new #secNut .ni-gc{padding:0 6px!important;margin-left:0!important;margin-right:0!important;font-size:15px!important;line-height:20px!important;font-weight:510!important;color:rgba(0,0,0,.5)!important}
+body.lk-new #secNut .ni-cap{margin-top:32px!important}
+body.lk-new #secNut .ni-gc{margin-top:24px!important}
+body.lk-new #secNut .ni-cap em,body.lk-new #secNut .ni-gc em{font-style:normal;font-variant-numeric:tabular-nums}
+/* the list: no card */
+body.lk-new #secNut .ni-card-l{margin:8px -6px 0!important;padding:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+body.lk-new #secNut .ni-card-l .nr{height:48px!important;padding:0 12px!important;gap:12px!important;border:0!important;box-shadow:none!important}
+body.lk-new #secNut .ni-card-l .nr::before,body.lk-new #secNut .ni-card-l .nr::after{display:none!important}
+body.lk-new #secNut .nr .nm{font-size:17px!important;line-height:20px!important;font-weight:400!important;letter-spacing:-.2px!important;color:#000!important}
+body.lk-new #secNut .nr .bar{width:72px!important;height:4px!important;border-radius:2px!important;background:rgba(0,0,0,.08)!important}
+body.lk-new #secNut .nr .bar i{background:rgba(0,0,0,.35)!important;border-radius:2px!important}
+body.lk-new #secNut .nr .bar.nst-ok i{background:#1f56c9!important}
+body.lk-new #secNut .nr .bar.nst-over i{background:#1c1c1e!important}
+body.lk-new #secNut .nr .pv{width:48px!important;font-family:var(--sans)!important;font-size:15px!important;font-weight:400!important;font-variant-numeric:tabular-nums;color:rgba(0,0,0,.6)!important}
+body.lk-new #secNut .nr .pv.nst-ok{color:#1f56c9!important;font-weight:510!important}
+body.lk-new #secNut .nr .pv.nst-over{color:#000!important;font-weight:600!important}
+body.lk-new #secNut .nr .pv.nst-nd,body.lk-new #secNut .nr .pv.nst-none,body.lk-new #secNut .nr.ig .pv{color:rgba(0,0,0,.35)!important}
+body.lk-new #secNut .nr>svg{width:7px;height:12px;margin:0!important;opacity:.35}
 </style>
 
 <div class="app" id="app">
@@ -1802,7 +1849,7 @@ body.lk-new #secMeal .slist .qv,body.lk-new #secMeal .kids .qv,body.lk-new.amt-r
   <section class="tabsec" id="secNut" hidden>
     <div class="nu-line"></div>
     <div class="nu-head"><button class="mtitle" id="nutPlanBtn" aria-label="Choose what you eat"><h2 id="nutTitle">Пробы</h2><svg class="pchev" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="tools"><button class="ibtn" id="nutSearch" aria-label="Find a nutrient"><svg viewBox="0 0 28 28" fill="none"><path d="M12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/><path d="M19 19L24 24" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/></svg></button></div></div>
+      <div class="tools"><button class="ibtn" id="nutSearch" aria-label="Find a nutrient"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.4-4.4"/></svg></button></div></div>
     <div id="nutBody"></div>
   </section>
 
