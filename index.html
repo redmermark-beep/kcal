@@ -2598,6 +2598,7 @@ function renderSettings() {
     <div class="st-g">
       <button class="st-r st-a" data-act="export"><div><b>Export backup</b><span>Save all products, plans and measurements as a file</span></div></button>
       <label class="st-r st-a"><div><b>Import backup</b><span>Replace data on this device with a backup file</span></div><input type="file" accept="application/json,.json" id="stImport" hidden></label>
+      <button class="st-r st-a" data-act="feedback"><div><b>Send feedback</b><span>Or tap anywhere with three fingers</span></div></button>
       <button class="st-r st-a danger" data-act="reset"><div><b>Reset demo data</b><span>Replace everything with the demo set</span></div></button>
     </div>
     <p class="st-foot">Kcal · data is stored only on this device</p>`;
@@ -2616,6 +2617,7 @@ $('#secSettings').addEventListener('click', e => {
   const chb = e.target.closest('[data-chips]');
   if (chb) { haptic(); S.ui.chips = chb.dataset.chips; save(); syncTabs(); renderSettings(); return; }
   if (!act) return;
+  if (act.dataset.act === 'feedback') return window.kcalFeedback();
   if (act.dataset.act === 'export') {
     save(); const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' }), a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = `kcal-backup-${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); a.remove();
@@ -5015,6 +5017,31 @@ document.body.classList.add('f31');
     const d = (e.touches[0].clientY - y0) * .5; if (d <= 0 || scrollY > 0) { if (pulled) reset(); return; }
     pulled = Math.min(64, d); ps.style.height = pulled + 'px'; const go = pulled >= 48; if (go !== ps.classList.contains('go')) { ps.classList.toggle('go', go); if (go) haptic(); } }, { passive: true });
   $('#secMeal').addEventListener('touchend', () => { const go = ps.classList.contains('go'); y0 = null; reset(); if (go) openSearch(); }, { passive: true });
+})();
+/* ---- Feedback (31 Oct): tap with three fingers anywhere → a GitHub issue with the context filled in ---- */
+(() => {
+  const REPO = 'https://github.com/redmermark-beep/kcal/issues/new';
+  const ctx = () => {
+    const tab = S.ui.tab || 'meal', sh = document.querySelector('.sheet.show'), mn = document.querySelector('.menu, .popup');
+    const shTitle = sh ? ((sh.querySelector('.sh-name') || {}).value || (sh.querySelector('h1,h2,h3,.sh-title') || {}).textContent || '').trim() : '';
+    const lines = [
+      `- Экран: ${tab}`,
+      tab === 'meal' || tab === 'budget' || tab === 'nutrients' ? `- План питания: ${plan().name}${plan().tmp ? ' (Temporary mode)' : ''}` : '',
+      `- План целей: ${goal().name}`,
+      sh ? `- Открыта шторка: ${shTitle || 'да'}` : '', mn ? '- Открыто меню' : '',
+      document.getElementById('search') && !document.getElementById('search').hidden ? '- Открыт поиск' : '',
+      `- Прокрутка: ${Math.round(scrollY)} px · экран ${innerWidth}×${innerHeight}`,
+      `- Версия: ${document.lastModified} · ${navigator.standalone ? 'на экране «Домой»' : 'в браузере'}`
+    ].filter(Boolean).join('\n');
+    return { tab, body: `**Что не так / что хочу:**\n\n\n\n<!-- скриншот можно вставить сюда -->\n\n---\nКонтекст (заполнено само):\n${lines}\n` };
+  };
+  window.kcalFeedback = () => { const c = ctx(); haptic();
+    const u = `${REPO}?labels=${encodeURIComponent(['polish', c.tab].join(','))}&title=&body=${encodeURIComponent(c.body)}`;
+    toast('Opening feedback…'); setTimeout(() => window.open(u, '_blank'), 150); };
+  let t0 = 0, moved = false, max = 0, sx = 0, sy = 0;
+  addEventListener('touchstart', e => { if (e.touches.length === e.changedTouches.length) { t0 = performance.now(); moved = false; max = 1; sx = e.touches[0].clientX; sy = e.touches[0].clientY; } max = Math.max(max, e.touches.length); }, { passive: true, capture: true });
+  addEventListener('touchmove', e => { const t = e.touches[0]; if (t && Math.hypot(t.clientX - sx, t.clientY - sy) > 24) moved = true; }, { passive: true, capture: true });
+  addEventListener('touchend', e => { if (e.touches.length) return; const ok = max >= 3 && !moved && performance.now() - t0 < 600; max = 0; if (ok) window.kcalFeedback(); }, { passive: true, capture: true });
 })();
 syncGhost();
 
