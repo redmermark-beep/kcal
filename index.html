@@ -737,7 +737,7 @@ body.ma.tab-meal #list{margin-top:8px}
 .mpd i.o{background:var(--over,#000)}
 .mpd i.u{box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3)}
 .mpd i.k{background:var(--blue)}
-.mpa{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:6px;padding:4px;border-radius:18px;background:rgba(0,0,0,.04)}
+.mpa{display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;gap:4px;margin-top:6px;padding:4px;border-radius:18px;background:rgba(0,0,0,.04)}
 .mpa button{height:56px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:510;color:var(--ink);transition:background-color .15s}
 .mpa button:active{background:rgba(0,0,0,.06)}
 .mpa button svg{width:20px;height:20px}
@@ -1797,6 +1797,155 @@ body.lk-new #secNut .ni-cards{margin-top:0!important}
 .sp-scan{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;margin:0 0 8px;border-radius:13px;background:rgba(0,0,0,.06);font-size:15px;font-weight:600;color:#000}
 .sp-scan svg{width:20px;height:20px}
 .sp-scan:active{transform:scale(.97)}
+
+/* ---------- Meal · F31 (31 Oct, Figma "Jebal" → page Claude: plan-basic / plan-drag / plan-swipe / plan-ghost) ----------
+   the user's own layout: 16 px margins, chips 96 r20 with a gap of 4, header band between two hairlines,
+   rows 44 + 10, capsule 88×44 r12 with ↕, macros under the name (KCAL first), no kcal column, glass ghost/+ buttons */
+body.f31{--blue:#0057d0;--f31-tb:max(24px,calc(env(safe-area-inset-bottom,0px) - 10px))}
+/* goal row: title 14/510, white dots pill, Balance as a glass pill */
+body.f31.ma.tab-meal .plan{padding-top:calc(var(--sat) + 9px)!important}
+body.f31.ma.tab-meal .plan .title-row{height:36px!important;gap:8px!important;margin:0!important}
+body.f31.ma .title-row h1#goalName{font-size:14px!important;line-height:16px!important;font-weight:510!important;color:#000!important;letter-spacing:0!important}
+body.f31 #goalBtn rect,body.f31 #planBtn rect{fill:#fff;fill-opacity:.4}
+body.f31 #goalBtn,body.f31 #planBtn{width:40px;height:24px;flex:none}
+body.f31 #vfl{height:36px!important;padding:0 12px!important;border-radius:18px!important;gap:4px!important;background:rgba(255,255,255,.4)!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#0057d0!important;font:510 14px/16px var(--sans)!important;margin-left:auto!important}
+body.f31 #vfl svg{width:12px!important;height:12px!important}
+/* chips */
+body.f31 .hv53{margin-top:7px!important}
+body.f31 .hv53 .hcs{gap:4px!important}
+body.f31.gr.ma.tab-meal:not(.ch-hero) .hv53 .hc,body.f31 .hv53 .hc{height:calc(96px - 24px * var(--c,0))!important}
+body.f31 .hv53 .hc{position:relative!important;border-radius:20px!important;padding:12px!important;box-sizing:border-box!important;box-shadow:none!important}
+body.f31 .hv53 .hc.ok{background:#0057d0!important;color:#fff!important}
+body.f31 .hv53 .hc.over{background:#1c1c1e!important;color:#fff!important}
+body.f31 .hv53 .hc.under,body.f31.ch-soft .hv53 .hc.under{background:#cbcbcc!important;color:#000!important}
+body.f31 .hv53 .hc-top{height:12px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;font-size:12px!important;line-height:12px!important;font-weight:590!important}
+body.f31 .hv53 .hc-top em.d{height:14px!important;min-width:0!important;padding:0!important;border-radius:0!important;background:none!important;font:400 12px/14px var(--sans)!important;letter-spacing:0!important;opacity:.5;color:inherit!important;margin-top:-1px}
+body.f31 .hv53 .hc.ok .hc-top em.d,body.f31 .hv53 .hc-top em.d:has(svg){opacity:1}
+body.f31 .hv53 .hc em.d svg{width:10px!important;height:8px!important;margin-top:1px}
+body.f31 .hv53 .hc b.v{display:block;margin-top:10px!important;font-size:20px!important;line-height:22px!important;font-weight:590!important;letter-spacing:-.4px!important;font-variant-numeric:normal!important}
+body.f31 .hv53 .hc[data-m="k"] b.v{margin-top:4px!important;font-size:calc(30px - 8px * var(--c,0))!important;line-height:calc(30px - 8px * var(--c,0))!important;font-weight:510!important;letter-spacing:-.6px!important}
+body.f31 .hv53 .hc .of{margin-top:2px!important;font:400 12px/14px var(--sans)!important;opacity:calc(.5 * (1 - var(--c,0)));max-height:calc(14px * (1 - var(--c,0)))!important;overflow:hidden}
+body.f31 .hv53 .hc[data-m="k"] .of{margin-top:0!important}
+body.f31 .hv53 .hc .ht{position:absolute!important;left:12px!important;right:12px!important;bottom:12px!important;top:auto!important;margin:0!important;height:4px!important;border-radius:2px!important;background:rgba(255,255,255,.2)!important}
+body.f31 .hv53 .hc .ht .w{background:rgba(255,255,255,.3)!important;border-radius:2px!important}
+body.f31 .hv53 .hc.under .ht,body.f31.ch-soft .hv53 .hc.under .ht{background:rgba(0,0,0,.2)!important}
+body.f31 .hv53 .hc.under .ht .w{background:rgba(0,0,0,.3)!important}
+body.f31 .hv53 .hc .ht .dt{width:12px!important;height:12px!important;margin:-6px 0 0 -6px!important;top:50%!important;border-radius:6px!important;background:#fff!important;box-shadow:none!important}
+body.f31 .hv53 .hc.under .ht .dt{background:#000!important}
+/* header band: hairline · "Favourite meal ···" · hairline */
+body.f31 #divider{height:1px!important;background:rgba(0,0,0,.06)!important;margin-top:16px!important}
+body.f31.lk-new #mhead .list-head,body.f31.lk-new.v2.ma.tab-meal #mhead .list-head{height:52px!important;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)))!important;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))!important;border-bottom:1px solid rgba(0,0,0,.06);box-sizing:border-box}
+body.f31 #planName{font-size:18px!important;line-height:20px!important;font-weight:400!important;letter-spacing:-.36px!important}
+body.f31 #planTitle .pchev{display:none!important}
+body.f31.v2 #planBtn{display:block!important;margin-left:auto}
+body.f31 #mhead .tools>button#sortBtn,body.f31 #mhead .tools>button#searchBtn,body.f31 #mhead .tools>button#balBtn,body.f31 #lsum{display:none!important}
+body.f31 #mhead .tools{margin-left:0!important;width:0;overflow:visible}
+body.f31 #mhead .search{margin:12px 0 0!important}
+/* list */
+body.f31 #secMeal #list{margin-top:16px!important}
+body.f31 #secMeal .slist>li.row,body.f31 #secMeal .slist>li.group>.ghead,body.f31 #secMeal .kids>li.row{min-height:44px!important;margin-bottom:10px!important}
+body.f31 #secMeal .slist>li.group{margin-bottom:0!important}
+body.f31 #secMeal li.row>.rc,body.f31 #secMeal li.group>.ghead>.rc{min-height:44px!important;height:44px!important;gap:10px!important;padding:0!important;align-items:center!important}
+body.f31 #secMeal .kids{padding-left:24px!important}
+body.f31 #secMeal .pill{width:88px!important;min-width:88px!important;height:44px!important;padding:0!important;margin:0!important;flex:none!important}
+body.f31 #secMeal .slist .qv,body.f31 #secMeal .kids .qv{width:88px!important;height:44px!important;line-height:normal!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 10px!important;border-radius:12px!important;background:rgba(0,0,0,.06)!important}
+body.f31 #secMeal .qn{font-family:var(--mono)!important;font-size:14px!important;line-height:14px!important;font-weight:600!important;letter-spacing:0!important;color:#000!important;font-variant-numeric:tabular-nums}
+body.f31 #secMeal .qn small{font-size:14px!important;font-weight:600!important;color:rgba(0,0,0,.5)!important;margin:0!important}
+body.f31 #secMeal .ud{width:10px!important;height:14px!important;color:rgba(0,0,0,.3)!important;margin:0!important;flex:none}
+body.f31 #secMeal .info{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+body.f31 #secMeal .info .name{font-size:16px!important;line-height:20px!important;font-weight:510!important;letter-spacing:-.16px!important;color:#000!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.f31 #secMeal .info .name .chev{margin-left:4px!important;width:auto!important;height:auto!important;display:inline-flex;vertical-align:middle;opacity:1!important}
+body.f31 #secMeal .info .name .chev svg{width:12px!important;height:12px!important}
+body.f31 #secMeal .mac{display:flex!important;gap:4px!important;height:16px;margin:0!important;font:400 12px/14px var(--sans)!important;letter-spacing:0!important;color:#000!important;white-space:nowrap;font-feature-settings:"ss17" 1,"cv08" 1}
+body.f31 #secMeal .mac>span{display:inline-flex!important;gap:1px!important;margin:0!important;color:#000!important}
+body.f31 #secMeal .mac>span+span::before{content:"•";color:rgba(0,0,0,.5);margin-right:3px}
+body.f31 #secMeal .mac i{font-style:normal!important;color:rgba(0,0,0,.5)!important;margin:0!important;font-weight:400!important}
+body.f31 #secMeal .mac .per,body.f31 #secMeal .kr2{display:none!important}
+/* rows at 0 g */
+body.f31 #secMeal .zero .qv{background:rgba(0,0,0,.03)!important}
+body.f31 #secMeal .zero .qn,body.f31 #secMeal .zero .qn small{font-weight:510!important;color:rgba(0,0,0,.4)!important}
+body.f31 #secMeal .zero .info .name,body.f31 #secMeal .zero .mac>span,body.f31 #secMeal .zero .mac i,body.f31 #secMeal .zero .mac>span+span::before{color:rgba(0,0,0,.4)!important}
+body.f31 #secMeal .row.zero,body.f31 #secMeal .group.zero{opacity:1!important}
+/* captions: NOT INCLUDED / TO REVIEW */
+body.f31.lk-new.v2 #secMeal .zhead{margin:14px 0 8px!important;padding:0!important;height:14px;font:400 12px/14px var(--sans)!important;text-transform:uppercase;color:rgba(0,0,0,.5)!important;letter-spacing:0!important}
+body.f31 #secMeal .zhead .n,body.f31 #secMeal .zhead svg{display:none!important}
+/* swipe: the row slides 124, gets a grey backing; two 56×52 tiles, sliders and a red bin */
+body.f31 #secMeal li>.rc,body.f31 #secMeal .ghead>.rc{position:relative}
+body.f31 #secMeal li>.rc::after,body.f31 #secMeal .ghead>.rc::after{content:"";position:absolute;inset:-4px;border-radius:16px;background:rgba(0,0,0,.06);opacity:var(--rv,0);pointer-events:none;z-index:-1}
+body.f31 #secMeal .acts{top:-4px!important;bottom:-4px!important;height:auto!important;margin:0!important;gap:4px!important;opacity:var(--rv,0)!important;transform:none!important}
+body.f31 #secMeal .sa{width:56px!important;height:52px!important;border-radius:16px!important;background:rgba(0,0,0,.06)!important;color:#000!important}
+body.f31 #secMeal .sa.del{color:#d33425!important}
+body.f31 #secMeal .sa svg{width:22px!important;height:22px!important}
+body.f31 #secMeal .rev .acts .sa.rm{width:auto!important;padding:0 16px!important}
+/* drag: the lifted row is a ground-coloured tile with a hairline, no shadow; the target gets a grey backing */
+body.f31 #secMeal .slist>li.row::before,body.f31 #secMeal .kids>li.row::before{inset:-4px!important;border-radius:16px!important;background:#e9e9eb!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)!important}
+body.f31 #secMeal .slist>li.row.editing::before{background:rgba(0,0,0,.06)!important;box-shadow:none!important}
+body.f31 #secMeal .slist>li.group.lifted,body.f31 #secMeal .slist>li.group.drag-clone{background:#e9e9eb!important;border-radius:16px!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)!important;padding:4px!important;margin:-4px!important}
+body.f31 #secMeal .row.merge-target::before{inset:-4px!important;border-radius:16px!important;background:rgba(0,0,0,.06)!important;box-shadow:none!important}
+body.f31 #secMeal .group.merge-target{background:rgba(0,0,0,.06)!important;border-radius:16px!important}
+body.f31 #secMeal .merge-target>.rc>.pill,body.f31 #secMeal .merge-target>.ghead>.rc>.pill{background:none!important;color:inherit!important}
+body.f31 #secMeal .merge-target>.rc>.pill::after,body.f31 #secMeal .merge-target>.ghead>.rc>.pill::after,body.f31 #secMeal .merge-target>.rc .info::after,body.f31 #secMeal .merge-target>.ghead>.rc .info::after{display:none!important}
+body.f31 #secMeal .merge-target>.rc .mac,body.f31 #secMeal .merge-target>.ghead>.rc .mac{display:flex!important}
+body.f31 #secMeal .merge-target .qn{visibility:visible!important}
+/* glass buttons: ghost above +, 16 px from the edge and from the tab bar */
+body.f31 #addBtn,body.f31 #ghostBtn{position:fixed!important;z-index:31;right:max(16px,env(safe-area-inset-right,0px))!important;width:56px!important;height:56px!important;min-width:56px!important;border-radius:28px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;background:rgba(255,255,255,.7)!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 2px 12px rgba(0,0,0,.05)!important;color:#000!important;transition:opacity .25s,transform .35s var(--spring)}
+body.f31 #addBtn{bottom:calc(var(--f31-tb) + 80px)!important}
+body.f31 #ghostBtn{bottom:calc(var(--f31-tb) + 144px)!important;animation:none!important}
+body.f31 #addBtn svg,body.f31 #ghostBtn svg{width:24px!important;height:24px!important;margin:0!important;color:#000!important;stroke:none!important}
+body.f31 #addBtn path{stroke:#000!important}
+body.f31.ghost #ghostBtn svg{color:#dd6204!important}
+body.f31:not(.tab-meal) #ghostBtn,body.f31.kb-open #ghostBtn,body.f31:has(.precise.show) #ghostBtn{opacity:0;pointer-events:none;transform:scale(.6)}
+/* Temporary mode tag above the tab bar */
+#tmpTag{position:fixed;z-index:30;left:50%;bottom:calc(var(--f31-tb) + 72px);transform:translateX(-50%);height:40px;padding:0 16px;border-radius:20px;display:flex;align-items:center;white-space:nowrap;background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);font:400 14px/16px var(--sans);color:#000;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,.05);transition:opacity .25s,transform .35s var(--spring)}
+body:not(.tab-meal) #tmpTag,body.kb-open #tmpTag{opacity:0;transform:translateX(-50%) translateY(8px)}
+/* Temporary mode colours: orange amounts */
+body.f31.ghost #secMeal .slist .qv,body.f31.ghost #secMeal .kids .qv{background:rgba(214,93,0,.1)!important}
+body.f31.ghost #secMeal .qn{color:#d65d00!important}
+body.f31.ghost #secMeal .qn small,body.f31.ghost #secMeal .ud{color:rgba(214,93,0,.5)!important}
+body.f31.ghost #secMeal .zero .qv{background:rgba(214,93,0,.05)!important}
+body.f31.ghost #secMeal .zero .qn,body.f31.ghost #secMeal .zero .qn small{color:rgba(214,93,0,.4)!important}
+/* tab bar: glass, icons 24 at .3, active on a 56 circle */
+body.f31.ma .tabbar{width:272px!important;height:64px!important;padding:0 6px!important;gap:0!important;border-radius:32px!important;background:rgba(255,255,255,.8)!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 2px 12px rgba(0,0,0,.05)!important}
+body.f31.ma .tab{width:52px!important;flex:0 0 52px!important;height:64px!important;position:relative}
+body.f31.ma .tab svg{width:24px!important;height:24px!important;opacity:.3!important;position:relative;z-index:1}
+body.f31.ma .tab.on svg{opacity:1!important}
+body.f31.ma .tab::before{width:56px!important;height:56px!important;margin:-28px 0 0 -28px!important;border-radius:28px!important;background:rgba(0,0,0,.06)!important}
+/* pull to search */
+#pullS{height:0;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;color:rgba(0,0,0,.4)}
+#pullS svg{width:22px;height:22px;margin-bottom:8px;transition:transform .2s}
+#pullS.go svg{transform:scale(1.2);color:#000}
+/* F31 grid fixes: one 16 px margin for everything on Meal */
+html body.f31.tab-meal .plan .title-row{margin:0!important;padding:0!important}
+html body.f31.tab-meal #hv{margin:7px 0 0!important;padding:0!important}
+html body.f31 #secMeal{padding-left:0!important;padding-right:0!important}
+html body.f31 #secMeal #list,html body.f31 #secMeal #zlist,html body.f31 #secMeal #rlist{margin-left:0!important;margin-right:0!important}
+html body.f31 #secMeal #list{margin-top:16px!important}
+html body.f31 #planName{font-size:18px!important;line-height:20px!important;font-weight:400!important;letter-spacing:-.36px!important}
+html body.f31.lk-new #mhead .list-head{height:52px!important;margin:16px -16px 0!important;padding:0 16px!important;border-top:1px solid rgba(0,0,0,.06)!important;border-bottom:1px solid rgba(0,0,0,.06)!important;box-sizing:border-box!important;align-items:center!important}
+html body.f31 #mhead .tools>button#ghostBtn{width:56px!important;height:56px!important;min-width:56px!important;border-radius:28px!important;color:#000!important}
+html body.f31 #mhead .tools>button#ghostBtn svg{width:24px!important;height:24px!important}
+html body.f31.ghost #mhead .tools>button#ghostBtn svg{color:#dd6204!important}
+html body.f31.lk-new.v2 #secMeal .zhead{margin:14px 0 8px!important;padding:0!important}
+html body.f31.tab-meal #app .plan .title-row{margin:0!important;padding:0!important}
+html body.f31 #app #mhead{padding-top:16px!important}
+html body.f31 #app #mhead .list-head{margin-top:0!important}
+html body.f31 #app #mhead .tools{margin:0!important;padding:0!important}
+html body.f31 #app #planTitle{height:20px!important}
+html body.f31 #app #planTitle #planName{font-size:18px!important;line-height:20px!important;font-weight:400!important;letter-spacing:-.36px!important}
+html body.f31 #app #secMeal .pill{width:88px!important;min-width:88px!important;max-width:88px!important;padding:0!important;margin:0!important}
+html body.f31 #app #secMeal .kids>li{margin-left:0!important;padding-left:0!important}
+html body.f31 #app #secMeal .kids .rc{margin-left:0!important;padding-left:0!important}
+html body.f31 #app .hv53 .hcs{display:flex!important;gap:4px!important;width:100%}
+html body.f31 #app .hv53 .hc{flex:1 1 0!important;min-width:0!important;width:auto!important}
+html body.f31 #app .hv53 .hc[data-m="k"]{flex:0 0 calc((100% - 12px) * .4 + 1.2px)!important}
+html body.f31 #app .hv53 .hc{justify-content:flex-start!important}
+html body.f31 #app #secMeal .mac>span{display:inline-flex!important}
+html body.f31 #app #secMeal .info .mac>span::before{content:none!important}
+html body.f31 #app #secMeal .info .mac>span+span::before{content:"•"!important;white-space:normal!important;color:rgba(0,0,0,.5);margin-right:3px}
+html body.f31 #app #secMeal .info .mac i{color:rgba(0,0,0,.5)!important;margin:0!important}
+html body.f31 #app #secMeal .zero .info .mac i,html body.f31 #app #secMeal .zero .info .mac>span,html body.f31 #app #secMeal .zero .info .mac>span+span::before{color:rgba(0,0,0,.4)!important}
+html body.f31 #app #secMeal .info .mac{display:flex!important;gap:4px!important}
+html body.f31 #app #secMeal .info .mac>span{gap:1px!important;margin:0!important;padding:0!important}
 </style>
 
 <div class="app" id="app">
@@ -1977,7 +2126,7 @@ const haptic = (() => {
     } catch (e) {}
   }
 })();
-const ACTS = `<div class="acts"><button class="sa ed" data-sw="edit" aria-label="Edit">${ICON.pencil}</button><button class="sa del" data-sw="del" aria-label="Delete">${ICON.trash}</button></div>`;
+const ACTS = `<div class="acts"><button class="sa ed" data-sw="edit" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5v6M6 14.5v6M12 3.5v2.5M12 10v10.5M18 3.5v9M18 16.5v4"/><circle cx="6" cy="12" r="2.25"/><circle cx="12" cy="8" r="2.25"/><circle cx="18" cy="14.5" r="2.25"/></svg></button><button class="sa del" data-sw="del" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h16M9.5 6.5V4.25h5V6.5M6.25 6.5l.85 13.25h9.8l.85-13.25M10 10.5v5.75M14 10.5v5.75"/></svg></button></div>`;
 const XBTN = `<button class="x" data-close aria-label="Close">${ICON.x}</button>`;
 const SHI = {
   g: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14l-1.5 11h-11z"/><path d="M9 9a3 3 0 0 1 6 0"/></svg>',
@@ -2055,16 +2204,18 @@ function migrate(o) {
 function walk(arr, fn) { arr.forEach(e => { fn(e); if (e.t === 'g') walk(e.ch, fn); }); }
 let S; try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) { S = null; }
 S = migrate(S);
-let ghostSnap = null;
+/* Temporary mode (31 Oct): a meal plan can carry temporary grams (p.tmp) — kept per plan until switched off by hand */
+let ghostSnap = null; const gmap = (p = plan()) => p.tmp || p.g;
 const plan = () => S.plans.find(p => p.id === S.active) || S.plans[0];
 const goal = () => S.goals.find(g => g.id === S.goalActive) || S.goals[0];
 const maxOf = g => g.ch.reduce((s, c) => s + c.g, 0);
 function applyGrams(p) {
-  walk(S.items, e => { if (e.t !== 'g') e.g = p.g[e.id] ?? 0; });
-  walk(S.items, e => { if (e.t === 'g') { const mx = maxOf(e); e.g = p.g[e.id] != null ? Math.min(p.g[e.id], mx) : mx; } });
+  const m = gmap(p); walk(S.items, e => { if (e.t !== 'g') e.g = m[e.id] ?? 0; });
+  walk(S.items, e => { if (e.t === 'g') { const mx = maxOf(e); e.g = m[e.id] != null ? Math.min(m[e.id], mx) : mx; } });
+  ghostSnap = p.tmp ? 1 : null; if (typeof document !== 'undefined' && document.body) document.body.classList.toggle('ghost', !!p.tmp);
 }
-function syncGrams() { const m = plan().g; walk(S.items, e => m[e.id] = e.g); }
-const save = () => { if (ghostSnap) return; syncGrams(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+function syncGrams() { const m = gmap(); walk(S.items, e => m[e.id] = e.g); }
+const save = () => { syncGrams(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 applyGrams(plan());
 
 function mac(e) {
@@ -2268,12 +2419,13 @@ let wasAllOk = null;
    Fits → «Plan fits». Off → what is off, counted from the edge of the range, most off first; where it mostly comes from; blue Balance. */
 function vbar(box, g, t, rngOf) {   // Balance sits above the chips, at the right of «Bulk plan»; only when the plan doesn’t fit (the chips already say what is off)
   let b = document.getElementById('vfl');
-  if (!b) { b = document.createElement('button'); b.type = 'button'; b.id = 'vfl'; b.className = 'vb-bal'; b.innerHTML = SPARK18 + 'Balance'; document.querySelector('header.plan .title-row').append(b);
+  if (!b) { b = document.createElement('button'); b.type = 'button'; b.id = 'vfl'; b.className = 'vb-bal'; b.innerHTML = STAR12 + 'Balance'; document.querySelector('header.plan .title-row').append(b);
     b.addEventListener('click', () => { haptic(); balanceSheet(); }); }
   b.hidden = ['k', 'p', 'f', 'c'].every(k => { const [lo, hi] = rngOf(k); return t[k] >= lo && t[k] <= hi; });
 }
 
 /* ================= meal list ================= */
+const STAR12 = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0L7.219 3.091C7.524 3.864 8.136 4.476 8.909 4.781L12 6L8.909 7.219C8.136 7.524 7.524 8.136 7.219 8.909L6 12L4.781 8.909C4.476 8.136 3.864 7.524 3.091 7.219L0 6L3.091 4.781C3.864 4.476 4.476 3.864 4.781 3.091L6 0Z" fill="currentColor"/></svg>';
 const list = $('#list');
 let editing = null;   // {kind:'g'|'w', id, buf, dec}
 let query = '';
@@ -2303,7 +2455,7 @@ function pillIn(e) {
 function macRow(e) {
   if (e.t !== 'g' && e.g === 0 && e.n) { const rv = revGet(e);
     if (rv) { const w = rv.why || []; return `<span class="why">for ${esc(w.length > 3 ? w.slice(0, 3).join(' · ') + ` +${w.length - 3}` : w.join(' · '))}</span>`; }
-    return macHTML(mac({ ...e, g: 100 })) + `<span class="per">/100${U(e) === 'ml' ? 'ml' : 'g'}</span>`; }
+    return macHTML(mac(e)); }   // F31 (31 Oct): a row at 0 g shows its zeros
   return macHTML(mac(e));
 }
 const matches = e => !query || e.name.toLowerCase().includes(query) || (e.t === 'g' && e.ch.some(matches));
@@ -2353,10 +2505,10 @@ function renderList() {
   // the plan → To review (added from Nutrients, no grams yet) → Other products (0 g)
   const rv = ghostSnap ? {} : revPrune(), on = items.filter(e => e.g > 0), rev = items.filter(e => e.g === 0 && e.t !== 'g' && rv[e.id]), off = items.filter(e => e.g === 0 && !rev.includes(e));
   list.innerHTML = on.length ? html(on) : `<li class="empty"><b>Nothing in ${esc(plan().name)} yet</b>Set a portion for a product below or tap +.</li>`;
-  if (rev.length) { rHead.hidden = rlist.hidden = false; rHead.innerHTML = `<span>To review</span><span class="n">${rev.length}</span>`; rlist.innerHTML = rev.map((e, i) => rowHTML(e, on.length + i)).join(''); }
+  if (rev.length) { rHead.hidden = rlist.hidden = false; rHead.innerHTML = `<span>To review</span>`; rlist.innerHTML = rev.map((e, i) => rowHTML(e, on.length + i)).join(''); }
   if (off.length) {
     zHead.hidden = false; zHead.classList.add('open');
-    zHead.innerHTML = `<span>Other products</span><span class="n">${off.length}</span>`;
+    zHead.innerHTML = `<span>Not included</span>`;
     zlist.hidden = false; zlist.innerHTML = html(off, on.length + rev.length);
   }
 }
@@ -2379,7 +2531,7 @@ function playFlip(before, opts = {}, root = list) {
 }
 function renderMeal(flip = true, opts) {
   const root = $('#secMeal'), before = flip ? snapRects(root) : null;
-  renderList(); renderHeader(); renderPTabs();
+  syncGhost(); renderList(); renderHeader(); renderPTabs();
   $('#planName').textContent = plan().name;
   if (before) playFlip(before, opts, root);
 }
@@ -2493,7 +2645,7 @@ let G = null, lockScroll = false, swallow = false, swOpen = null;
 document.addEventListener('touchmove', e => { if (lockScroll) e.preventDefault(); }, { passive: false });
 document.addEventListener('contextmenu', e => { if (e.target.closest('.slist')) e.preventDefault(); });
 const HOLD = 380, HOLD_PILL = 230;
-const actsW = host => host.querySelector(':scope>.acts').offsetWidth + 10;
+const actsW = host => host.querySelector(':scope>.acts').offsetWidth + (host.closest('#secMeal') ? 8 : 10);
 function swSet(host, x, anim) {
   const rc = host.querySelector(':scope>.rc'), acts = host.querySelector(':scope>.acts');
   rc.style.transition = anim && !RM ? 'transform .45s var(--spring)' : 'none';
@@ -2981,11 +3133,13 @@ document.addEventListener('keydown', e => {
 });
 
 /* ================= ghost mode ================= */
-function ghostOff() {
-  if (!ghostSnap) return;
-  S.items = JSON.parse(ghostSnap); ghostSnap = null;
-  document.body.classList.remove('ghost'); $('#ghostBtn').setAttribute('aria-pressed', 'false');
+function ghostOff() {   // switch Temporary mode off for the active plan: temporary grams are dropped
+  const p = plan(); if (!p.tmp) return;
+  delete p.tmp; applyGrams(p); save(); syncGhost();
 }
+function syncGhost() { const on = !!plan().tmp; ghostSnap = on ? 1 : null; document.body.classList.toggle('ghost', on);
+  $('#ghostBtn').setAttribute('aria-pressed', String(on)); const f = $('#fabGhost'); if (f) f.setAttribute('aria-pressed', String(on));
+  const t = $('#tmpTag'); if (t) t.hidden = !on; }
 
 /* ================= balance the plan (S2, 23 Oct) =================
    Up to three portion changes that bring kcal, P, F and C into their ranges.
@@ -3157,8 +3311,9 @@ function balanceSheet() {
 $('#balBtn').addEventListener('click', () => { haptic(); balanceSheet(); });
 $('#ghostBtn').addEventListener('click', () => {
   document.body.classList.add('ghost-anim'); clearTimeout(window.__ga); window.__ga = setTimeout(() => document.body.classList.remove('ghost-anim'), 900);
-  if (!ghostSnap) { save(); ghostSnap = JSON.stringify(S.items); document.body.classList.add('ghost'); $('#ghostBtn').setAttribute('aria-pressed', 'true'); toast('Try-out mode · changes are temporary'); }
-  else { ghostOff(); renderMeal(true); toast('Back to your plan'); }
+  const p = plan();
+  if (!p.tmp) { save(); p.tmp = { ...p.g }; applyGrams(p); save(); syncGhost(); renderMeal(false); }
+  else { ghostOff(); renderMeal(true); }
 });
 
 /* ================= menus, sheets, segmented ================= */
@@ -3420,7 +3575,7 @@ function confirmSheet(title, text, cta, fn) {
 
 /* ---- meal plans ---- */
 function switchPlan(id) {
-  ghostOff(); save();
+  save();
   S.active = id; applyGrams(plan()); save();
   if (RM) return renderAll(false);
   (S.ui.tab === 'budget' ? $('#bcards') : list).animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(-12px)' }], { duration: 140, easing: EASE }).onfinish = () => {
@@ -3450,6 +3605,7 @@ const MI = {
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h10v10H9zM5 15V5h10"/></svg>',
   pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg>',
   trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  sort: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9M4 12h6M4 18h4M17 5v14M14 16l3 3 3-3"/></svg>',
   folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10H3z"/></svg>',
   check: '<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 };
@@ -3470,7 +3626,7 @@ function planMenu(anchor) {
     return `<button class="mpr${on ? ' on' : ''}" data-pid="${p.id}" role="menuitemradio" aria-checked="${on}">
       <span class="mpt"><b>${esc(p.name)}</b><span>${r0(t.k)} kcal</span></span>
       <span class="mpd" aria-label="${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span><span class="mck">${on ? MI.check : ''}</span></button>`; }).join('');
-  const acts = [['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['ren', 'Rename', MI.pen], ['del', 'Delete', MI.trash]]
+  const acts = [['sort', 'Sort', MI.sort], ['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['ren', 'Rename', MI.pen], ['del', 'Delete', MI.trash]]
     .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.plans.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
   popup(anchor || $('#planTitle'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
     const r = e.target.closest('[data-pid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
@@ -3478,6 +3634,7 @@ function planMenu(anchor) {
     setTimeout(() => {
       if (r) { if (r.dataset.pid !== S.active) switchPlan(r.dataset.pid); return; }
       const k = a.dataset.a;
+      if (k === 'sort') return sortMenu();
       if (k === 'new') nameSheet('New meal plan', 'New meal', 'Create', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); });
       if (k === 'dup') { save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); toast('Meal plan duplicated'); }
       if (k === 'ren') nameSheet('Rename meal plan', plan().name, 'Save', v => { plan().name = v; save(); renderMeal(false); });
@@ -4832,6 +4989,27 @@ const stickTop = () => S.ui.tab === 'meal' ? mhead.getBoundingClientRect().botto
 let stuckRaf = 0;
 addEventListener('scroll', () => { if (stuckRaf) return; stuckRaf = requestAnimationFrame(() => { stuckRaf = 0;
   if (S.ui.tab === 'meal') mhead.classList.toggle('stuck', scrollY > 2 && list.getBoundingClientRect().top < mhead.getBoundingClientRect().bottom + 4); }); }, { passive: true });
+
+/* ---- F31 (31 Oct): Figma icons, glass ghost / + buttons, Temporary mode tag, pull to search ---- */
+document.body.classList.add('f31');
+(() => { const T = {"Budget": "<path d=\"M16.875 12C17.4963 12 18 11.4963 18 10.875C18 10.2537 17.4963 9.75 16.875 9.75C16.2537 9.75 15.75 10.2537 15.75 10.875C15.75 11.4963 16.2537 12 16.875 12Z\" fill=\"currentColor\" stroke=\"none\"/><path d=\"M10.5 6.75H14.25\"/><path d=\"M20.25 3.75H13.5\"/><path d=\"M0.75 13.5C0.75 12.9033 0.987053 12.331 1.40901 11.909C1.83097 11.4871 2.40326 11.25 3 11.25\"/><path d=\"M21 9H20.6569C20.5786 8.75245 20.4879 8.50902 20.385 8.27063C19.8036 6.92753 18.842 5.78388 17.6186 4.98062C16.3952 4.17736 14.9635 3.74958 13.5 3.75H10.5C8.51088 3.75 6.60323 4.54018 5.1967 5.9467C3.79018 7.35322 3 9.26088 3 11.25C2.99791 13.1247 3.70064 14.9317 4.96875 16.3125L6.19688 19.7522C6.24893 19.898 6.34481 20.0241 6.47137 20.1132C6.59793 20.2023 6.74896 20.2501 6.90375 20.25H8.09625C8.25105 20.2501 8.40208 20.2023 8.52864 20.1132C8.6552 20.0241 8.75108 19.898 8.80313 19.7522L9.16032 18.75H15.5897L15.9469 19.7522C15.9989 19.898 16.0948 20.0241 16.2214 20.1132C16.3479 20.2023 16.499 20.2501 16.6538 20.25H17.8463C18.001 20.2501 18.1521 20.2023 18.2786 20.1132C18.4052 20.0241 18.5011 19.898 18.5531 19.7522L20.25 15H21C21.3978 15 21.7794 14.842 22.0607 14.5607C22.342 14.2794 22.5 13.8978 22.5 13.5V10.5C22.5 10.1022 22.342 9.72064 22.0607 9.43934C21.7794 9.15804 21.3978 9 21 9Z\"/>", "Nutrients": "<path d=\"M20.9999 3L17.2124 6.7875\"/><path d=\"M4.1072 20.9062C3.96548 20.981 3.80352 21.0085 3.64506 20.9846C3.48659 20.9606 3.33995 20.8866 3.22663 20.7733C3.11331 20.66 3.03926 20.5133 3.01535 20.3549C2.99144 20.1964 3.01892 20.0344 3.09376 19.8927C3.09376 19.8927 6.00001 10.4999 9.78751 6.7874C10.7721 5.80279 12.1076 5.24963 13.5 5.24963C14.8925 5.24963 16.2279 5.80279 17.2125 6.7874C18.1971 7.77202 18.7503 9.10744 18.7503 10.4999C18.7503 11.8924 18.1971 13.2278 17.2125 14.2124C13.5 17.9999 4.1072 20.9062 4.1072 20.9062Z\"/><path d=\"M21.75 6.75H17.1741\"/><path d=\"M17.25 6.82594V2.25\"/><path d=\"M10.5 14.25L13.2844 17.0344\"/><path d=\"M9.7876 6.78748L13.5001 10.5\"/>", "Meal": "<path d=\"M7.5 3.75V8.25\"/><path d=\"M7.5 12V21\"/><path d=\"M19.5 15.75H14.25C14.25 15.75 14.25 6 19.5 3.75V21\"/><path d=\"M4.5 3.75L3.75 8.25C3.75 9.24456 4.14509 10.1984 4.84835 10.9017C5.55161 11.6049 6.50544 12 7.5 12C8.49456 12 9.44839 11.6049 10.1517 10.9017C10.8549 10.1984 11.25 9.24456 11.25 8.25L10.5 3.75\"/>", "Measure": "<path d=\"M15.5306 2.46988L2.46991 15.5306C2.17701 15.8235 2.17701 16.2983 2.46991 16.5912L7.40927 21.5306C7.70216 21.8235 8.17703 21.8235 8.46993 21.5306L21.5306 8.4699C21.8235 8.17701 21.8235 7.70213 21.5306 7.40924L16.5913 2.46988C16.2984 2.17699 15.8235 2.17699 15.5306 2.46988Z\"/><path d=\"M12 6L15 9\"/><path d=\"M9 9L12 12\"/><path d=\"M6 12L9 15\"/>", "Settings": "<path d=\"M12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75Z\"/><path d=\"M3.88376 16.6959C3.46936 15.9821 3.15188 15.2163 2.9397 14.4187L4.51282 12.4499C4.49501 12.149 4.49501 11.8472 4.51282 11.5462L2.94063 9.57744C3.15245 8.7797 3.46929 8.01363 3.88282 7.29932L6.38688 7.01807C6.58685 6.79278 6.80004 6.57959 7.02532 6.37963L7.30657 3.8765C8.01986 3.46494 8.78468 3.14999 9.58095 2.93994L11.5497 4.51307C11.8507 4.49525 12.1525 4.49525 12.4534 4.51307L14.4222 2.94088C15.2199 3.1527 15.986 3.46953 16.7003 3.88307L16.9816 6.38713C17.2069 6.58709 17.42 6.80028 17.62 7.02557L20.1231 7.30682C20.5375 8.0206 20.855 8.78639 21.0672 9.584L19.4941 11.5528C19.5119 11.8537 19.5119 12.1555 19.4941 12.4565L21.0663 14.4253C20.8559 15.2228 20.5407 15.9888 20.1288 16.7034L17.6247 16.9846C17.4247 17.2099 17.2115 17.4231 16.9863 17.6231L16.705 20.1262C15.9912 20.5406 15.2254 20.8581 14.4278 21.0703L12.4591 19.4971C12.1581 19.5149 11.8563 19.5149 11.5553 19.4971L9.58657 21.0693C8.78907 20.859 8.023 20.5437 7.30845 20.1318L7.0272 17.6278C6.80191 17.4278 6.58872 17.2146 6.38876 16.9893L3.88376 16.6959Z\"/>"};
+  document.querySelectorAll('.tabbar .tab').forEach(b => { const d = T[b.dataset.tab]; if (d) b.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`; });
+  $('#ghostBtn').innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.25 11.5C9.94 11.5 10.5 10.94 10.5 10.25C10.5 9.56 9.94 9 9.25 9C8.56 9 8 9.56 8 10.25C8 10.94 8.56 11.5 9.25 11.5Z" fill="currentColor"/><path d="M14.75 11.5C15.44 11.5 16 10.94 16 10.25C16 9.56 15.44 9 14.75 9C14.06 9 13.5 9.56 13.5 10.25C13.5 10.94 14.06 11.5 14.75 11.5Z" fill="currentColor"/><path d="M21 21L18 18.52L15 21L12 18.52L9 21L6 18.52L3 21V11.09C3 8.68 3.95 6.37 5.64 4.66C7.32 2.96 9.61 2 12 2C14.39 2 16.68 2.96 18.36 4.66C20.05 6.37 21 8.68 21 11.09V21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  $('#addBtn').innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3V21M21 12H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  const tag = document.createElement('div'); tag.id = 'tmpTag'; tag.textContent = 'Temporary mode'; tag.hidden = true; document.body.append(tag);
+  // pull the list down from the top → search appears on top
+  const ps = document.createElement('div'); ps.id = 'pullS'; ps.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg>';
+  $('#secMeal').insertBefore(ps, $('#list'));
+  let y0 = null, pulled = 0;
+  const openSearch = () => { const s = $('#search'); if (s.hidden) { const b = snapRects(); s.hidden = false; playFlip(b); } $('#q').focus(); };
+  const reset = () => { if (!pulled) return; pulled = 0; ps.animate([{ height: ps.style.height }, { height: '0px' }], { duration: 260, easing: EASE }); ps.style.height = '0px'; ps.classList.remove('go'); };
+  $('#secMeal').addEventListener('touchstart', e => { y0 = null; if (scrollY > 0 || e.touches.length > 1 || e.target.closest('.pill, .acts, input, .search') || !$('#search').hidden) return; y0 = e.touches[0].clientY; }, { passive: true });
+  $('#secMeal').addEventListener('touchmove', e => { if (y0 == null || (G && (G.sw || G.fired))) { if (pulled) reset(); return; }
+    const d = (e.touches[0].clientY - y0) * .5; if (d <= 0 || scrollY > 0) { if (pulled) reset(); return; }
+    pulled = Math.min(64, d); ps.style.height = pulled + 'px'; const go = pulled >= 48; if (go !== ps.classList.contains('go')) { ps.classList.toggle('go', go); if (go) haptic(); } }, { passive: true });
+  $('#secMeal').addEventListener('touchend', () => { const go = ps.classList.contains('go'); y0 = null; reset(); if (go) openSearch(); }, { passive: true });
+})();
+syncGhost();
 
 /* ================= boot ================= */
 syncTabs(); renderAll(false); $('#planName').textContent = plan().name;
