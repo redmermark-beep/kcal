@@ -1946,6 +1946,11 @@ html body.f31 #app #secMeal .info .mac i{color:rgba(0,0,0,.5)!important;margin:0
 html body.f31 #app #secMeal .zero .info .mac i,html body.f31 #app #secMeal .zero .info .mac>span,html body.f31 #app #secMeal .zero .info .mac>span+span::before{color:rgba(0,0,0,.4)!important}
 html body.f31 #app #secMeal .info .mac{display:flex!important;gap:4px!important}
 html body.f31 #app #secMeal .info .mac>span{gap:1px!important;margin:0!important;padding:0!important}
+/* F31 review fixes (31 Oct, Figma annotations): one hairline when stuck, black macro numbers, chip numbers stay on one line when collapsed */
+html body.f31 #app #mhead.stuck,html body.f31 #app #mhead{box-shadow:none!important}
+html body.f31 #app #secMeal li:not(.zero)>.rc .info .mac>span,html body.f31 #app #secMeal li.group:not(.zero)>.ghead>.rc .info .mac>span{color:#000!important}
+html body.f31 #app .hv53 .hc b.v{margin-top:calc(10px - 6px * var(--c,0))!important}
+html body.f31 #app .hv53 .hc[data-m="k"] b.v{margin-top:4px!important}
 </style>
 
 <div class="app" id="app">
