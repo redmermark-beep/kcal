@@ -2020,13 +2020,79 @@ html body.f31 #app #secMeal .sa{width:calc(14px + 42px * var(--rv,0))!important;
 html body.f31 #app #secMeal .sa svg{width:20px!important;height:20px!important;flex:none;opacity:clamp(0,calc(var(--rv,0) * 2 - .6),1);transform:scale(calc(.6 + .4 * var(--rv,0)))}
 html body.f31 #app #secMeal .sa.ed svg{width:18px!important;height:18px!important}
 html body.f31 #app #secMeal .rev .acts .sa.rm{width:auto!important}
+/* ---------- THIS-2 (2 Nov, Figma 481:19241): calm header — only problems carry colour (red over, blue short, grey in range);
+   ··· without fill; Balance as blue text; ghost and + in the «Favourite meal ···» row; no lines; macros «450 kcal 30 protein…» ---------- */
+html body.f31.pal-fresh,html.pal-fresh{background:#f6f6fa!important}
+/* title row: «Bulk plan ···» left, Balance right — 20 high, 16 above the chips */
+html body.f31.pal-fresh #app header.plan .title-row{height:20px!important;min-height:20px!important;align-items:center!important;gap:8px!important}
+html body.f31.pal-fresh #app .title-row h1#goalName{font:510 15px/20px var(--sans)!important;letter-spacing:-.15px!important;color:#111115!important}
+html body.f31.pal-fresh #app #goalBtn,html body.f31.pal-fresh #app #planBtn{width:17px!important;min-width:17px!important;height:20px!important;padding:0!important;margin:0!important;background:none!important;color:#111115!important;position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important}
+html body.f31.pal-fresh #app #goalBtn::after,html body.f31.pal-fresh #app #planBtn::after{content:"";position:absolute;inset:-12px -12px}
+html body.f31.pal-fresh #app #goalBtn svg,html body.f31.pal-fresh #app #planBtn svg{width:17px!important;height:4px!important;display:block!important}
+html body.f31.pal-fresh #app #vfl{height:20px!important;padding:0!important;margin-left:auto!important;background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;gap:4px!important;font:510 15px/16px var(--sans)!important;letter-spacing:0!important;color:#2669ed!important;position:relative!important}
+html body.f31.pal-fresh #app #vfl::after{content:"";position:absolute;inset:-12px -8px}
+html body.f31.pal-fresh #app #vfl svg{width:12px!important;height:12px!important;color:#2669ed!important}
+/* chips: grey in range, red tint over, blue tint short */
+html body.f31.pal-fresh #app .hv53 .hc.ok{background:rgba(118,118,128,.12)!important;color:#111115!important}
+html body.f31.pal-fresh #app .hv53 .hc.over{background:rgba(208,44,42,.12)!important;color:#d02c2a!important}
+html body.f31.pal-fresh #app .hv53 .hc.under{background:rgba(38,105,237,.12)!important;color:#2669ed!important}
+html body.f31.pal-fresh #app .hv53 .hc .hc-top span{color:inherit!important;opacity:1!important}
+html body.f31.pal-fresh #app .hv53 .hc .hc-top em.d{opacity:1!important;color:inherit!important;font:400 12px/14px var(--sans)!important}
+html body.f31.pal-fresh #app .hv53 .hc.ok .hc-top em.d{color:#111115!important}
+html body.f31.pal-fresh #app .hv53 .hc em.d svg{width:10px!important;height:8px!important;margin:0!important}
+html body.f31.pal-fresh #app .hv53 .hc b.v{color:inherit!important}
+html body.f31.pal-fresh #app .hv53 .hc .of{opacity:calc(1 - var(--c,0))!important;color:rgba(17,17,21,.5)!important}
+html body.f31.pal-fresh #app .hv53 .hc.over .of{color:rgba(208,44,42,.5)!important}
+html body.f31.pal-fresh #app .hv53 .hc.under .of{color:rgba(38,105,237,.5)!important}
+html body.f31.pal-fresh #app .hv53 .hc.ok .ht{background:rgba(17,17,21,.12)!important}
+html body.f31.pal-fresh #app .hv53 .hc.ok .ht .w{background:rgba(17,17,21,.2)!important}
+html body.f31.pal-fresh #app .hv53 .hc.ok .ht .dt{background:#111115!important}
+html body.f31.pal-fresh #app .hv53 .hc.over .ht{background:rgba(208,44,42,.16)!important}
+html body.f31.pal-fresh #app .hv53 .hc.over .ht .w{background:rgba(208,44,42,.3)!important}
+html body.f31.pal-fresh #app .hv53 .hc.over .ht .dt{background:#d02c2a!important}
+html body.f31.pal-fresh #app .hv53 .hc.under .ht{background:rgba(38,105,237,.16)!important}
+html body.f31.pal-fresh #app .hv53 .hc.under .ht .w{background:rgba(38,105,237,.3)!important}
+html body.f31.pal-fresh #app .hv53 .hc.under .ht .dt{background:#2669ed!important}
+/* list head: «Favourite meal ···» … ghost  + ; 24 under the chips, 16 above the list, no lines */
+html body.f31.pal-fresh #app #secMeal #mhead .list-head{height:20px!important;margin:0!important;padding:0!important;border:0!important;gap:8px!important;justify-content:flex-start!important;align-items:center!important;background:none!important}
+html body.f31.pal-fresh #app #secMeal #mhead .list-head .mtitle{flex:0 1 auto!important;min-width:0!important;width:auto!important}
+html body.f31.pal-fresh #app #secMeal #mhead #planName{font:510 15px/20px var(--sans)!important;letter-spacing:-.15px!important;color:#111115!important}
+html body.f31.pal-fresh #app #secMeal #mhead .pchev{display:none!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools{margin-left:auto!important;display:flex!important;gap:14px!important;align-items:center!important;height:20px!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button#ghostBtn#ghostBtn,html body.f31.pal-fresh #app #secMeal #mhead .tools>button#addBtn#addBtn{position:relative!important;inset:auto!important;bottom:auto!important;right:auto!important;width:20px!important;height:20px!important;min-width:20px!important;padding:0!important;margin:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;color:#111115!important;display:flex!important;opacity:1;transform:none;animation:none!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button#ghostBtn#ghostBtn::after,html body.f31.pal-fresh #app #secMeal #mhead .tools>button#addBtn#addBtn::after{content:"";position:absolute;inset:-12px -7px}
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button svg{width:20px!important;height:20px!important;color:currentColor!important;stroke:none!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button#addBtn path{stroke:currentColor!important}
+html body.f31.pal-fresh.ghost #app #secMeal #mhead .tools>button#ghostBtn#ghostBtn{color:#c25500!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button:not(#ghostBtn):not(#addBtn){display:none!important}
+html body.f31.pal-fresh #app #secMeal #mhead,html body.f31.pal-fresh #app #secMeal #mhead.stuck{border:0!important;box-shadow:none!important}
+html body.f31.pal-fresh #app #divider{display:none!important}
+/* rows: capsule .07, name 15/510, macros 11 — number .8 ink, word .6 grey, pairs 8 apart */
+html body.f31.pal-fresh #app #secMeal .slist .qv,html body.f31.pal-fresh #app #secMeal .kids .qv,html body.f31.pal-fresh #app #secMeal .zero .qv{background:rgba(118,118,128,.07)!important}
+html body.f31.pal-fresh #app #secMeal .info .name,html body.f31.pal-fresh #app #secMeal .ghead .name,html body.f31.pal-fresh #app #secMeal .gname,html body.f31.pal-fresh #app #secMeal .zero .info .name{font-size:15px!important;line-height:20px!important;font-weight:510!important;letter-spacing:-.15px!important}
+html body.f31.pal-fresh #app #secMeal .info .mac{gap:8px!important;height:16px!important;margin-top:2px!important;font:400 11px/14px var(--sans)!important;font-variant-numeric:normal!important}
+html body.f31.pal-fresh #app #secMeal .info .mac>span{gap:1px!important;font:inherit!important;color:rgba(17,17,21,.8)!important}
+html body.f31.pal-fresh #app #secMeal .info .mac>span+span::before{content:none!important}
+html body.f31.pal-fresh #app #secMeal .info .mac i{font:inherit!important;font-style:normal!important;color:rgba(60,60,67,.6)!important;margin:0!important}
+html body.f31.pal-fresh #app #secMeal .zero .info .name{color:rgba(60,60,67,.45)!important}
+html body.f31.pal-fresh #app #secMeal .zero .info .mac>span,html body.f31.pal-fresh #app #secMeal .zero .info .mac i{color:rgba(60,60,67,.6)!important}
+html body.f31.pal-fresh #app #secMeal .zero .qn,html body.f31.pal-fresh #app #secMeal .zero .qn small{color:rgba(60,60,67,.45)!important;font-weight:500!important}
+/* section caption NOT INCLUDED: 24 after the plan, 16 before its rows */
+html body.f31.pal-fresh.lk-new.v2 #app #secMeal .zhead{font:400 12px/14px var(--sans)!important;color:rgba(60,60,67,.6)!important}
+html body.f31.pal-fresh #app header.plan .title-row{margin-top:7px!important}
+html body.f31.pal-fresh #app header.plan #hv{margin-top:16px!important}
+html body.f31.pal-fresh #app #secMeal #mhead{padding-top:24px!important;padding-bottom:16px!important}
+html body.f31.pal-fresh #app #secMeal #list{margin-top:0!important}
+html body.f31.pal-fresh #app #secMeal #mhead .list-head{margin-bottom:0!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools{width:auto!important;flex:none!important}
+html body.f31.pal-fresh #app .hv53 .hc:not([data-m="k"]) b.v{font-size:20px!important;line-height:22px!important;letter-spacing:-.4px!important}
 </style>
 
 <div class="app" id="app">
   <header class="plan">
     <div class="title-row">
       <h1 id="goalName">Bulk plan</h1>
-      <button class="dots" id="goalBtn" aria-label="Goal plans"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
+      <button class="dots" id="goalBtn" aria-label="Goal plans"><svg width="17" height="4" viewBox="0 0 17 4" fill="none" aria-hidden="true"><circle cx="1.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="2.5" r="1.5" fill="currentColor"/></svg></button>
     </div>
     <div class="kcal-row" id="bigRow">
       <div class="ring" id="ring" aria-hidden="true">
@@ -2061,14 +2127,14 @@ html body.f31 #app #secMeal .rev .acts .sa.rm{width:auto!important}
     <div class="ptabs" id="ptabs"></div>
     <div class="list-head">
       <button class="mtitle" id="planTitle" aria-label="Meal plans"><h2 id="planName">Favorite meal</h2><svg class="pchev" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <button class="dots" id="planBtn" aria-label="Meal plans"><svg width="40" height="24" viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="12" fill="black" fill-opacity="0.06"/><circle cx="12" cy="12" r="2" fill="black"/><circle cx="20" cy="12" r="2" fill="black"/><circle cx="28" cy="12" r="2" fill="black"/></svg></button>
+      <button class="dots" id="planBtn" aria-label="Meal plans"><svg width="17" height="4" viewBox="0 0 17 4" fill="none" aria-hidden="true"><circle cx="1.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="2.5" r="1.5" fill="currentColor"/></svg></button>
       <span class="lsum" id="lsum"></span>
       <div class="tools">
       <button class="ibtn" id="balBtn" aria-label="Balance the plan" hidden><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.5l2.1 5.4 5.4 2.1-5.4 2.1L14 19.5l-2.1-5.4L6.5 12l5.4-2.1z"/><path d="M21.5 17.5l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></svg></button>
-      <button class="ibtn" id="ghostBtn" aria-label="Try-out mode" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20.5V11a6 6 0 0 1 12 0v9.5l-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6z"/><circle cx="10" cy="11.5" r=".9" fill="currentColor" stroke="none"/><circle cx="14" cy="11.5" r=".9" fill="currentColor" stroke="none"/></svg></button>
+      <button class="ibtn" id="ghostBtn" aria-label="Try-out mode" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.70817 9.58333C8.28347 9.58333 8.74984 9.11696 8.74984 8.54167C8.74984 7.96637 8.28347 7.5 7.70817 7.5C7.13287 7.5 6.6665 7.96637 6.6665 8.54167C6.6665 9.11696 7.13287 9.58333 7.70817 9.58333Z" fill="currentColor"/><path d="M12.2917 9.58333C12.867 9.58333 13.3333 9.11696 13.3333 8.54167C13.3333 7.96637 12.867 7.5 12.2917 7.5C11.7164 7.5 11.25 7.96637 11.25 8.54167C11.25 9.11696 11.7164 9.58333 12.2917 9.58333Z" fill="currentColor"/><path d="M17.5 17.5L15.0003 15.4348L12.4997 17.5L10 15.4348L7.50028 17.5L4.99972 15.4348L2.5 17.5V9.23912C2.5 7.23078 3.29018 5.30469 4.6967 3.88458C6.10322 2.46447 8.01088 1.66666 10 1.66666C11.9891 1.66666 13.8968 2.46447 15.3033 3.88458C16.7098 5.30469 17.5 7.23078 17.5 9.23912V17.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="ibtn" id="sortBtn" aria-label="Sort"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M4 12h6.5M4 17h4"/><path d="M17 5.5v13"/><path d="M14 15.5l3 3 3-3"/></svg></button>
       <button class="ibtn" id="searchBtn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.4-4.4"/></svg></button>
-      <button class="ibtn" id="addBtn" aria-label="Add product"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button class="ibtn" id="addBtn" aria-label="Add product"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10 6.99988V12.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 9.99994H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
     </div>
     </div>
     <div class="search" id="search" hidden>
@@ -2454,6 +2520,7 @@ function renderMHero() {
 }
 
 /* ---- header styles: total + goal, signed deviation, status colour (blue in range, outline short, black over) ---- */
+const CHK_T2 = '<svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true"><path d="M1 4.27274L3.66667 7.00002L9 1.00002" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const CHK10 = '<svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7"/></svg>';
 const HV_TRACK = '<div class="ht"><i class="w"></i><i class="dt"></i></div>';
 const HV_LAB = { k: 'kcal', p: 'Protein', f: 'Fat', c: 'Carbs' }, CHIP_LAB = { k: 'KCAL', p: 'P', f: 'F', c: 'C' };
@@ -2479,7 +2546,7 @@ function renderHV(g, t) {
     el.classList.remove('ok', 'under', 'over'); el.classList.add(state);
     el.querySelector(':scope .v').textContent = r0(v); el.querySelector(':scope .g').textContent = r0(goalV);
     const sg = dev > 0 ? '+' : dev < 0 ? '−' : '±';
-    if (state === 'ok' && el.classList.contains('hc')) el.querySelector(':scope .d').innerHTML = CHK10; else el.querySelector(':scope .d').textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev);
+    if (state === 'ok' && el.classList.contains('hc')) el.querySelector(':scope .d').innerHTML = CHK_T2; else el.querySelector(':scope .d').textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev);
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
@@ -2509,7 +2576,7 @@ const isPc = e => e.t !== 'g' && U(e) === 'pc' && e.uw > 0;
 const toU = (e, g) => isPc(e) ? Math.round(g / e.uw * 10) / 10 : g;
 const fmtAmt = (e, g) => e.t === 'g' ? `${g}g` : `${toU(e, g)}${uLab(e)}`;
 const money = v => Math.round(v).toLocaleString('ru-RU');
-const macHTML = m => `<span><i>KCAL</i>${r0(m.k)}</span><span><i>P</i>${r0(m.p)}</span><span><i>F</i>${r0(m.f)}</span><span><i>C</i>${r0(m.c)}</span>`;
+const macHTML = m => `<span>${r0(m.k)}<i>kcal</i></span><span>${r0(m.p)}<i>protein</i></span><span>${r0(m.f)}<i>fat</i></span><span>${r0(m.c)}<i>carbs</i></span>`;   // THIS-2 (2 Nov): number first, word after
 function fieldHTML(buf, ph, unit) { return buf ? `${buf}<i class="caret"></i>${unit}` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
 /* To review (24 Oct): products added from Nutrients wait under the plan with a suggested portion until they get grams */
 const revOf = (p = plan()) => (p.rev ||= {});
@@ -3778,7 +3845,7 @@ function setLV(k) {
 function placeTools() {
   const on = !!S.ui.v2 && ['11', '12', '17'].includes(S.ui.lv), dst = on ? $('#ltool') : $('#mhead .tools');
   ['ghostBtn', 'sortBtn', 'searchBtn'].forEach(id => { const b = $('#' + id); if (b.parentElement !== dst) dst.appendChild(b); });
-  const ab = $('#addBtn'); if (ab.parentElement !== document.body) document.body.appendChild(ab);   // Q (25 Oct): + floats above the tab bar, outside the sticky list head
+  const ab = $('#addBtn'), mt = $('#mhead .tools'); if (ab.parentElement !== mt || mt.lastElementChild !== ab) mt.appendChild(ab);   // THIS-2 (2 Nov): ghost and + sit in the «Favourite meal ···» row
 }
 function setMA(on) { S.ui.ma = on; save(); syncTabs(); collapse(true); setHH(); toast(on ? 'Main screen: A · collapsing header' : 'Main screen: previous'); }
 // the chosen design is fixed now: A main screen, four chips, chips + ruler, toolbar capsule list
@@ -5078,8 +5145,6 @@ document.body.classList.add('f31');
 { const m = /[?&]sat=(\d+)/.exec(location.search); if (m) { const st = document.createElement('style'); st.textContent = `body.lk-new{--sat:${m[1]}px!important}`; document.head.append(st); } }
 (() => { const T = {"Budget": "<path d=\"M16.875 12C17.4963 12 18 11.4963 18 10.875C18 10.2537 17.4963 9.75 16.875 9.75C16.2537 9.75 15.75 10.2537 15.75 10.875C15.75 11.4963 16.2537 12 16.875 12Z\" fill=\"currentColor\" stroke=\"none\"/><path d=\"M10.5 6.75H14.25\"/><path d=\"M20.25 3.75H13.5\"/><path d=\"M0.75 13.5C0.75 12.9033 0.987053 12.331 1.40901 11.909C1.83097 11.4871 2.40326 11.25 3 11.25\"/><path d=\"M21 9H20.6569C20.5786 8.75245 20.4879 8.50902 20.385 8.27063C19.8036 6.92753 18.842 5.78388 17.6186 4.98062C16.3952 4.17736 14.9635 3.74958 13.5 3.75H10.5C8.51088 3.75 6.60323 4.54018 5.1967 5.9467C3.79018 7.35322 3 9.26088 3 11.25C2.99791 13.1247 3.70064 14.9317 4.96875 16.3125L6.19688 19.7522C6.24893 19.898 6.34481 20.0241 6.47137 20.1132C6.59793 20.2023 6.74896 20.2501 6.90375 20.25H8.09625C8.25105 20.2501 8.40208 20.2023 8.52864 20.1132C8.6552 20.0241 8.75108 19.898 8.80313 19.7522L9.16032 18.75H15.5897L15.9469 19.7522C15.9989 19.898 16.0948 20.0241 16.2214 20.1132C16.3479 20.2023 16.499 20.2501 16.6538 20.25H17.8463C18.001 20.2501 18.1521 20.2023 18.2786 20.1132C18.4052 20.0241 18.5011 19.898 18.5531 19.7522L20.25 15H21C21.3978 15 21.7794 14.842 22.0607 14.5607C22.342 14.2794 22.5 13.8978 22.5 13.5V10.5C22.5 10.1022 22.342 9.72064 22.0607 9.43934C21.7794 9.15804 21.3978 9 21 9Z\"/>", "Nutrients": "<path d=\"M20.9999 3L17.2124 6.7875\"/><path d=\"M4.1072 20.9062C3.96548 20.981 3.80352 21.0085 3.64506 20.9846C3.48659 20.9606 3.33995 20.8866 3.22663 20.7733C3.11331 20.66 3.03926 20.5133 3.01535 20.3549C2.99144 20.1964 3.01892 20.0344 3.09376 19.8927C3.09376 19.8927 6.00001 10.4999 9.78751 6.7874C10.7721 5.80279 12.1076 5.24963 13.5 5.24963C14.8925 5.24963 16.2279 5.80279 17.2125 6.7874C18.1971 7.77202 18.7503 9.10744 18.7503 10.4999C18.7503 11.8924 18.1971 13.2278 17.2125 14.2124C13.5 17.9999 4.1072 20.9062 4.1072 20.9062Z\"/><path d=\"M21.75 6.75H17.1741\"/><path d=\"M17.25 6.82594V2.25\"/><path d=\"M10.5 14.25L13.2844 17.0344\"/><path d=\"M9.7876 6.78748L13.5001 10.5\"/>", "Meal": "<path d=\"M7.5 3.75V8.25\"/><path d=\"M7.5 12V21\"/><path d=\"M19.5 15.75H14.25C14.25 15.75 14.25 6 19.5 3.75V21\"/><path d=\"M4.5 3.75L3.75 8.25C3.75 9.24456 4.14509 10.1984 4.84835 10.9017C5.55161 11.6049 6.50544 12 7.5 12C8.49456 12 9.44839 11.6049 10.1517 10.9017C10.8549 10.1984 11.25 9.24456 11.25 8.25L10.5 3.75\"/>", "Measure": "<path d=\"M15.5306 2.46988L2.46991 15.5306C2.17701 15.8235 2.17701 16.2983 2.46991 16.5912L7.40927 21.5306C7.70216 21.8235 8.17703 21.8235 8.46993 21.5306L21.5306 8.4699C21.8235 8.17701 21.8235 7.70213 21.5306 7.40924L16.5913 2.46988C16.2984 2.17699 15.8235 2.17699 15.5306 2.46988Z\"/><path d=\"M12 6L15 9\"/><path d=\"M9 9L12 12\"/><path d=\"M6 12L9 15\"/>", "Settings": "<path d=\"M12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75Z\"/><path d=\"M3.88376 16.6959C3.46936 15.9821 3.15188 15.2163 2.9397 14.4187L4.51282 12.4499C4.49501 12.149 4.49501 11.8472 4.51282 11.5462L2.94063 9.57744C3.15245 8.7797 3.46929 8.01363 3.88282 7.29932L6.38688 7.01807C6.58685 6.79278 6.80004 6.57959 7.02532 6.37963L7.30657 3.8765C8.01986 3.46494 8.78468 3.14999 9.58095 2.93994L11.5497 4.51307C11.8507 4.49525 12.1525 4.49525 12.4534 4.51307L14.4222 2.94088C15.2199 3.1527 15.986 3.46953 16.7003 3.88307L16.9816 6.38713C17.2069 6.58709 17.42 6.80028 17.62 7.02557L20.1231 7.30682C20.5375 8.0206 20.855 8.78639 21.0672 9.584L19.4941 11.5528C19.5119 11.8537 19.5119 12.1555 19.4941 12.4565L21.0663 14.4253C20.8559 15.2228 20.5407 15.9888 20.1288 16.7034L17.6247 16.9846C17.4247 17.2099 17.2115 17.4231 16.9863 17.6231L16.705 20.1262C15.9912 20.5406 15.2254 20.8581 14.4278 21.0703L12.4591 19.4971C12.1581 19.5149 11.8563 19.5149 11.5553 19.4971L9.58657 21.0693C8.78907 20.859 8.023 20.5437 7.30845 20.1318L7.0272 17.6278C6.80191 17.4278 6.58872 17.2146 6.38876 16.9893L3.88376 16.6959Z\"/>"};
   document.querySelectorAll('.tabbar .tab').forEach(b => { const d = T[b.dataset.tab]; if (d) b.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`; });
-  $('#ghostBtn').innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.25 11.5C9.94 11.5 10.5 10.94 10.5 10.25C10.5 9.56 9.94 9 9.25 9C8.56 9 8 9.56 8 10.25C8 10.94 8.56 11.5 9.25 11.5Z" fill="currentColor"/><path d="M14.75 11.5C15.44 11.5 16 10.94 16 10.25C16 9.56 15.44 9 14.75 9C14.06 9 13.5 9.56 13.5 10.25C13.5 10.94 14.06 11.5 14.75 11.5Z" fill="currentColor"/><path d="M21 21L18 18.52L15 21L12 18.52L9 21L6 18.52L3 21V11.09C3 8.68 3.95 6.37 5.64 4.66C7.32 2.96 9.61 2 12 2C14.39 2 16.68 2.96 18.36 4.66C20.05 6.37 21 8.68 21 11.09V21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  $('#addBtn').innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3V21M21 12H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
   const tag = document.createElement('div'); tag.id = 'tmpTag'; tag.textContent = 'Temporary mode'; tag.hidden = true; document.body.append(tag);
   // pull the list down from the top → search appears on top
   const ps = document.createElement('div'); ps.id = 'pullS'; ps.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg>';
