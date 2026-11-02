@@ -5177,7 +5177,9 @@ document.body.classList.add('f31');
   };
   window.kcalFeedback = () => { const c = ctx(); haptic();
     const u = `${REPO}?labels=${encodeURIComponent(['polish', c.tab].join(','))}&title=&body=${encodeURIComponent(c.body)}`;
-    toast('Opening feedback…'); setTimeout(() => window.open(u, '_blank'), 150); };
+    // open right inside the gesture (a timer loses the user activation and Safari blocks it); if blocked anyway — a toast with Open
+    let w = null; try { w = window.open(u, '_blank'); } catch (e) {}
+    if (!w) toast('Feedback', { label: 'Open', fn: () => { if (!window.open(u, '_blank')) location.href = u; } }); };
   // three fingers (2 Nov): as soon as a 2nd finger lands — stop the gesture underneath (row press, hold timers, pinch),
   // swallow the clicks it would fire, and count the tap when all fingers are up
   let t0 = 0, moved = false, max = 0, sx = 0, sy = 0, multi = false, mute = 0;
@@ -5188,8 +5190,11 @@ document.body.classList.add('f31');
     if (e.touches.length >= 2) { multi = true; mute = performance.now() + 700; e.preventDefault(); cancelUnder(); }
   }, { passive: false, capture: true });
   document.addEventListener('touchmove', e => { if (multi) { e.preventDefault(); const t = e.touches[0]; if (t && Math.hypot(t.clientX - sx, t.clientY - sy) > 30) moved = true; } }, { passive: false, capture: true });
-  document.addEventListener('touchend', e => { if (multi) e.preventDefault(); if (e.touches.length) return;
-    const ok = multi && max >= 3 && !moved && performance.now() - t0 < 800; if (multi) mute = performance.now() + 450; multi = false; max = 0; if (ok) window.kcalFeedback(); }, { passive: false, capture: true });
+  // iOS takes three fingers for its own edit gesture and often sends touchcancel instead of touchend — count both
+  const fin = e => { if (multi && e.cancelable) e.preventDefault(); if (e.touches.length) return;
+    const ok = multi && max >= 3 && !moved && performance.now() - t0 < 900; if (multi) mute = performance.now() + 450; multi = false; max = 0; if (ok) window.kcalFeedback(); };
+  document.addEventListener('touchend', fin, { passive: false, capture: true });
+  document.addEventListener('touchcancel', fin, { passive: false, capture: true });
   ['click', 'mousedown', 'mouseup', 'contextmenu'].forEach(t => document.addEventListener(t, e => { if (performance.now() < mute) { e.preventDefault(); e.stopPropagation(); } }, true));
   ['gesturestart', 'gesturechange'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
 })();
