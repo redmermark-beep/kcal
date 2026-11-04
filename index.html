@@ -2102,7 +2102,10 @@ html body.f31.pal-fresh #app .hv53 .hc b.v,html body.f31.pal-fresh #app .hv53 .h
 /* digits roll: a changed digit slides in from above when the number grows, from below when it shrinks */
 x-dg{display:inline-block;position:relative;vertical-align:baseline}
 x-dg>x-dn{display:block;padding:.35em;margin:-.35em}
-x-dg>x-do{position:absolute;left:0;top:0;padding:.35em;margin:-.35em}   /* padding: the blur has room — Safari clips filters at the box edge */
+x-dg>x-do{position:absolute;left:0;top:0;padding:.35em;margin:-.35em}
+x-dg.ios{padding:.25em .35em;margin:-.25em -.35em;-webkit-mask-image:linear-gradient(transparent,#000 .25em,#000 calc(100% - .25em),transparent);mask-image:linear-gradient(transparent,#000 .25em,#000 calc(100% - .25em),transparent)}
+x-dg.ios>x-dn,x-dg.ios>x-do{padding:0;margin:0}
+x-dg.ios>x-do{left:.35em;top:.25em}   /* padding: the blur has room — Safari clips filters at the box edge */
 /* tab bar: filled icons, inactive .4 */
 html body.f31.ma .tab svg{opacity:.4!important;stroke:none!important}
 html body.f31.ma .tab.on svg{opacity:1!important}
@@ -2625,17 +2628,48 @@ let wasAllOk = null;
 const EASES = { standard: 'cubic-bezier(.4,0,.2,1)', out: 'cubic-bezier(.2,.8,.2,1)', soft: 'cubic-bezier(.3,1.3,.5,1)', linear: 'linear' };
 const EZ = { standard: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, out: x => 1 - Math.pow(1 - x, 3),
              soft: x => { const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }, linear: x => x };
-const MOTION_DEF = { roll: { dur: 400, travel: 30, blurEm: .1, blurMax: 6, squish: .12, stagger: 32, ease: 'standard', rapid: 1 },   // issue #8 (5 Nov) + iOS-like blur
+const MOTION_DEF = { roll: { style: 'ios', dur: 750, fade: 350, damping: .75, travel: 100, blurEm: .12, blurMax: 4, squish: .3, stagger: 20, ease: 'standard', rapid: 1 },   // 5 Nov: the reference — iOS numericText / NumberFlow iOS preset
                      ruler: { dur: 200, fade: 450, ease: 'standard' } };
 const MOTION = JSON.parse(JSON.stringify(MOTION_DEF));
-try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 2) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
-const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 2 })); } catch (e) {} };
+try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 3) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
+const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 3 })); } catch (e) {} };
+/* 5 Nov: the reference roll — how iOS numericText / NumberFlow's iOS preset move a digit:
+   a whole-line slide on a slightly bouncy spring (750 ms), a separate 350 ms ease-out fade for the leaving and arriving glyph,
+   blur and horizontal squish that follow the digit's speed (sharp at rest, peak ~4 px / 30% mid-flight),
+   soft gradient masks at the top and bottom edge instead of a hard frame, higher digits lead. */
+function springCurve(z, n = 40) {   // samples of a damped spring 0→1 over t∈[0,1]; settles at t≈1
+  const w = 4.6 / z, wd = w * Math.sqrt(Math.max(1e-4, 1 - z * z)), pts = [];
+  for (let i = 0; i <= n; i++) { const t = i / n; pts.push(i === n ? 1 : 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + z * w / wd * Math.sin(wd * t))); }
+  return pts;
+}
+function rollIOS(el, o, s, M_) {
+  const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, dy = num(s) > num(o) ? 1 : -1;
+  const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' '), f = document.createDocumentFragment(), anims = [];
+  const fs = parseFloat(getComputedStyle(el).fontSize) || 16, sig = Math.min(M_.blurMax, fs * M_.blurEm), P = springCurve(M_.damping);
+  const V = P.map((p, i) => i ? Math.abs(p - P[i - 1]) : 0), vmax = Math.max(...V) || 1;
+  const kf = (from, to) => P.map((p, i) => { const vn = V[i] / vmax; return { offset: i / (P.length - 1), transform: `translateY(${(from + (to - from) * p).toFixed(2)}%) scaleX(${(1 - M_.squish * vn).toFixed(3)})`, filter: `blur(${(sig * vn).toFixed(2)}px)` }; });
+  let lead = 0;
+  for (let i = 0; i < L; i++) {
+    if (po[i] === pn[i]) { if (pn[i] !== ' ') f.append(pn[i]); continue; }
+    const d = document.createElement('x-dg'), n = document.createElement('x-dn'), x = document.createElement('x-do');
+    d.className = 'ios'; n.textContent = pn[i] === ' ' ? '' : pn[i]; x.textContent = po[i] === ' ' ? '' : po[i]; d.append(n, x); f.append(d);
+    if (pn[i] === ' ') { n.textContent = po[i]; n.style.visibility = 'hidden'; }
+    const delay = lead++ * M_.stagger, T = M_.travel;
+    anims.push([n, kf(-T * dy, 0), { duration: M_.dur, delay, easing: 'linear', fill: 'backwards' }], [x, kf(0, T * dy), { duration: M_.dur, delay, easing: 'linear', fill: 'forwards' }],
+               [n, [{ opacity: 0 }, { opacity: 1 }], { duration: M_.fade, delay, easing: 'ease-out', fill: 'backwards', composite: 'replace' }],
+               [x, [{ opacity: 1 }, { opacity: 0 }], { duration: M_.fade, delay, easing: 'ease-out', fill: 'forwards' }]);
+  }
+  el.textContent = ''; el.append(f);
+  anims.forEach(([n, k, opt]) => n.animate(k, opt));
+  return M_.dur + lead * M_.stagger;
+}
 function rollNum(el, s, o2 = {}) {
   s = String(s); const o = el.dataset.n; if (o === s) return; el.dataset.n = s;
   if (o == null || RM || document.hidden || !el.isConnected) { el.textContent = s; return; }
   const now = performance.now(), rapid = el._busy > now;   // a new value while the last one still rolls: shorter, no stagger — digits never pile up
   const M_ = { ...MOTION.roll, ...o2 }; if (rapid) { M_.dur = Math.round(M_.dur * M_.rapid); M_.stagger = 0; }
   el.getAnimations({ subtree: true }).forEach(a => a.cancel()); el._busy = now + M_.dur;
+  if (M_.style === 'ios') { const t = rollIOS(el, o, s, M_); clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, t + 60); return; }
   const fs = parseFloat(getComputedStyle(el).fontSize) || 16, bl = Math.min(M_.blurMax, Math.max(1.5, fs * M_.blurEm)).toFixed(1);
   const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, up = num(s) > num(o);
   const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' '), dy = up ? 1 : -1, f = document.createDocumentFragment(), anims = [];
@@ -2815,13 +2849,14 @@ const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21'
 /* Motion lab (5 Nov): tune animations on the phone — values live on this device (localStorage «rovno-motion»),
    «Send to Claude» files them as a GitHub issue so they can become the defaults */
 const ML_ROWS = [
-  ['roll', 'Numbers roll', [['dur', 'Duration', 100, 1200, 10, 'ms'], ['travel', 'Travel', 0, 100, 1, '%'], ['blurEm', 'Blur · share of size', 0, .5, .01, ''], ['blurMax', 'Blur · max', 0, 40, 1, 'px'], ['squish', 'Squish while moving', 0, .5, .01, ''], ['stagger', 'Delay between digits', 0, 80, 1, 'ms'], ['rapid', 'Fast scrolling · duration ×', .1, 1, .05, '']]],
+  ['roll', 'Numbers roll', [['dur', 'Duration', 100, 1500, 10, 'ms'], ['fade', 'Fade (iOS style)', 0, 1000, 10, 'ms'], ['damping', 'Spring damping (iOS style)', .3, 1, .01, ''], ['travel', 'Travel', 0, 150, 1, '%'], ['blurEm', 'Blur · share of size', 0, .5, .01, ''], ['blurMax', 'Blur · max', 0, 40, 1, 'px'], ['squish', 'Squish while moving', 0, .5, .01, ''], ['stagger', 'Delay between digits', 0, 80, 1, 'ms'], ['rapid', 'Fast scrolling · duration ×', .1, 1, .05, '']]],
   ['ruler', 'Ruler opens', [['dur', 'Ticks open', 0, 800, 10, 'ms'], ['fade', 'Number and marker fade', 0, 600, 10, 'ms']]]];
 const ML_EASE = [['standard', 'Smooth'], ['out', 'Out'], ['soft', 'Spring'], ['linear', 'Linear']];
 const mlFmt = (v, u) => (Math.abs(v) < 1 && v !== 0 ? (+v).toFixed(2) : Math.round(v * 100) / 100) + (u ? ' ' + u : '');
 function mlabHTML() {
-  return `<div class="ml-demo"><b class="ml-big">3045</b><b class="ml-small">3045</b>
+  return `<div class="ml-demo"><b class="ml-big" data-n="3045">3045</b><b class="ml-small" data-n="3045">3045</b>
       <div class="ml-btns"><button data-ml="-">−</button><button data-ml="+">+</button><button data-ml="big">Random</button><button data-ml="ruler">Ruler</button></div></div>` +
+    `<div class="ml-r ml-e"><span>Style</span><div class="st-seg">${[['ios', 'iOS'], ['dissolve', 'Dissolve']].map(([k, l]) => `<button data-mst="${k}" class="${(MOTION.roll.style || 'dissolve') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` +
     ML_ROWS.map(([g, title, rows]) => `<div class="ml-t">${title}</div>` + rows.map(([k, l, mn, mx, st, u]) =>
       `<label class="ml-r"><span>${l}</span><em data-mv="${g}.${k}">${mlFmt(MOTION[g][k], u)}</em><input type="range" min="${mn}" max="${mx}" step="${st}" value="${MOTION[g][k]}" data-mk="${g}.${k}" data-u="${u}"></label>`).join('') +
       `<div class="ml-r ml-e"><span>Curve</span><div class="st-seg">${ML_EASE.map(([k, l]) => `<button data-me="${g}.${k}" class="${MOTION[g].ease === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`).join('') +
@@ -2833,6 +2868,7 @@ function mlabHTML() {
     const [g, k] = r.dataset.mk.split('.'); MOTION[g][k] = +r.value; saveMotion(); const em = document.querySelector(`#mlab [data-mv="${g}.${k}"]`); if (em) em.textContent = mlFmt(+r.value, r.dataset.u); });
   document.addEventListener('change', e => { if (e.target.closest('#mlab input[data-mk^="roll"]')) roll(demo + 1 + Math.floor(Math.random() * 40)); });
   document.addEventListener('click', e => {
+    const mst = e.target.closest('#mlab [data-mst]'); if (mst) { MOTION.roll.style = mst.dataset.mst; saveMotion(); haptic(); $('#mlab').innerHTML = mlabHTML(); setTimeout(() => roll(demo + 7), 50); return; }
     const me = e.target.closest('#mlab [data-me]'); if (me) { const [g, k] = me.dataset.me.split('.'); MOTION[g].ease = k; saveMotion(); haptic(); $('#mlab').innerHTML = mlabHTML(); if (g === 'roll') setTimeout(() => roll(demo + 7), 50); return; }
     const b = e.target.closest('#mlab [data-ml]'); if (!b) return; const a = b.dataset.ml; haptic();
     if (a === '+') return roll(demo + 1); if (a === '-') return roll(demo - 1);
