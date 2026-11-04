@@ -2122,6 +2122,14 @@ html body.f31.pal-fresh #app #secMeal .group.merge-target{background:#ededf1!imp
 html body.f31.pal-fresh #app #secMeal .lifted .qv,html body.f31.pal-fresh #app #secMeal .drag-clone .qv,html body.f31.pal-fresh #app #secMeal .merge-target .qv{background:rgba(118,118,128,.12)!important}
 /* open group: chevron points up */
 html body.f31 #app #secMeal .group.open>.ghead .name .chev svg{transform:rotate(180deg)}
+/* recheck vs plan-basic (4 Nov): grams capsule .12 (0 g stays .07), macro numbers .8 ink, deviation line 12 */
+html body.f31.pal-fresh #app #secMeal .slist .qv,html body.f31.pal-fresh #app #secMeal .kids .qv{background:rgba(118,118,128,.12)!important}
+html body.f31.pal-fresh #app #secMeal .zero .qv{background:rgba(118,118,128,.07)!important}
+html body.f31.pal-fresh #app #secMeal li:not(.zero)>.rc .info .mac>span,html body.f31.pal-fresh #app #secMeal li.group:not(.zero)>.ghead>.rc .info .mac>span{color:rgba(17,17,21,.8)!important}
+html body.f31.pal-fresh #app .hv53 .hc .hc-top em.d{line-height:12px!important;align-self:flex-start!important;margin-top:.5px!important}
+/* scrolled: a faint hairline under the pinned header (chips + «Favourite meal ···») */
+html body.f31.pal-fresh #app #secMeal #mhead::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.5px;background:rgba(60,60,67,.18);opacity:0;transition:opacity .2s;pointer-events:none}
+html body.f31.pal-fresh #app #secMeal #mhead.stuck::after{opacity:1}
 /* swipe (issue #4): tiles only ever fill the space the row has left — they never slide under it */
 html body.f31 #app #secMeal .sa{width:max(0px,calc(60px * var(--rv,0) - 4px))!important;border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}
 </style>
