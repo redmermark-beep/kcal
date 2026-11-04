@@ -2086,6 +2086,44 @@ html body.f31.pal-fresh #app #secMeal #list{margin-top:0!important}
 html body.f31.pal-fresh #app #secMeal #mhead .list-head{margin-bottom:0!important}
 html body.f31.pal-fresh #app #secMeal #mhead .tools{width:auto!important;flex:none!important}
 html body.f31.pal-fresh #app .hv53 .hc:not([data-m="k"]) b.v{font-size:20px!important;line-height:22px!important;letter-spacing:-.4px!important}
+/* ---------- BASIC (4 Nov, Figma 497:23798 plan-basic + plan-drag / swipe / ghost / plusClick / selectedField / group):
+   text keyline 26 — headers sit on the text inside chips and capsules (16 + 10); chip padding 10; deviation 590;
+   macros «450K 30P 10F 40C»; filled tab icons at .4; ghost / + get a 40 circle (on / pressed); no Temporary tag ---------- */
+html body.f31.pal-fresh #app header.plan .title-row{padding:0 10px!important}
+html body.f31.pal-fresh #app #secMeal #mhead .list-head{padding:0 10px!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools{gap:20px!important}
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button#ghostBtn#ghostBtn::after,html body.f31.pal-fresh #app #secMeal #mhead .tools>button#addBtn#addBtn::after{inset:-12px -10px!important}
+html body.f31.pal-fresh.lk-new.v2 #app #secMeal .zhead{padding:0 10px!important;margin-bottom:16px!important}
+html body.f31.pal-fresh #app .hv53 .hc{padding:12px 10px!important}
+html body.f31.pal-fresh #app .hv53 .hc .ht{left:10px!important;right:10px!important}
+html body.f31.pal-fresh #app .hv53 .hc .hc-top em.d{font:590 12px/14px var(--sans)!important}
+/* digits roll: a changed digit slides in from above when the number grows, from below when it shrinks */
+#app .hv53 b.v .dg{display:inline-block;position:relative;overflow:hidden;vertical-align:bottom}
+#app .hv53 b.v .dg>i{display:block;font-style:normal}
+#app .hv53 b.v .dg>i.o{position:absolute;left:0;top:0}
+/* tab bar: filled icons, inactive .4 */
+html body.f31.ma .tab svg{opacity:.4!important;stroke:none!important}
+html body.f31.ma .tab.on svg{opacity:1!important}
+/* ghost on: orange 40 circle behind it; + pressed: grey 40 circle */
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button#ghostBtn::before,html body.f31.pal-fresh #app #secMeal #mhead .tools>button#addBtn::before{content:"";position:absolute;left:-10px;top:-10px;width:40px;height:40px;border-radius:20px;background:transparent;transition:background-color .2s;pointer-events:none}
+html body.f31.pal-fresh.ghost #app #secMeal #mhead .tools>button#ghostBtn::before{background:rgba(194,85,0,.1)}
+html body.f31.pal-fresh #app #secMeal #mhead .tools>button#addBtn:active::before,html body.f31.pal-fresh #app #secMeal #mhead .tools>button#ghostBtn:active::before{background:rgba(118,118,128,.12);transition:none}
+html body.f31.pal-fresh.ghost #app #secMeal #mhead .tools>button#ghostBtn:active::before{background:rgba(194,85,0,.18)}
+html body #tmpTag{display:none!important}
+/* typing grams: no row highlight — the capsule gets a 1 px rim (.12), the caret blinks after the number */
+html body.f31.pal-fresh #app #secMeal .slist>li.row.editing::before,html body.f31.pal-fresh #app #secMeal .kids>li.row.editing::before{opacity:0!important}
+html body.f31.pal-fresh #app #secMeal .editing>.rc .qv{background:rgba(118,118,128,.12)!important;box-shadow:0 0 0 1px rgba(60,60,67,.12)!important}
+html body.f31.pal-fresh #app #secMeal .editing>.rc .ud{visibility:visible!important}
+/* drag: the lifted row is a white tile with a soft shadow; the merge target gets a solid #ededf1 backing */
+html body.f31.pal-fresh #app #secMeal .slist>li.row::before,html body.f31.pal-fresh #app #secMeal .kids>li.row::before{background:#fff!important;box-shadow:0 2px 4px rgba(0,0,0,.1)!important}
+html body.f31.pal-fresh #app #secMeal .slist>li.group.lifted,html body.f31.pal-fresh #app #secMeal .slist>li.group.drag-clone{background:#fff!important;box-shadow:0 2px 4px rgba(0,0,0,.1)!important}
+html body.f31.pal-fresh #app #secMeal li.row.merge-target::before{background:#ededf1!important;box-shadow:none!important}
+html body.f31.pal-fresh #app #secMeal .group.merge-target{background:#ededf1!important}
+html body.f31.pal-fresh #app #secMeal .lifted .qv,html body.f31.pal-fresh #app #secMeal .drag-clone .qv,html body.f31.pal-fresh #app #secMeal .merge-target .qv{background:rgba(118,118,128,.12)!important}
+/* open group: chevron points up */
+html body.f31 #app #secMeal .group.open>.ghead .name .chev svg{transform:rotate(180deg)}
+/* swipe (issue #4): tiles only ever fill the space the row has left — they never slide under it */
+html body.f31 #app #secMeal .sa{width:max(0px,calc(60px * var(--rv,0) - 4px))!important;border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}
 </style>
 
 <div class="app" id="app">
@@ -2544,7 +2582,7 @@ function renderHV(g, t) {
     const k = el.dataset.m, v = t[k], [lo, hi] = rngOf(k), goalV = g[k], half = Math.max(.5, (hi - lo) / 2), dev = r0(v - goalV);
     const state = v < lo ? 'under' : v > hi ? 'over' : 'ok'; if (state !== 'ok') allOk = false;
     el.classList.remove('ok', 'under', 'over'); el.classList.add(state);
-    el.querySelector(':scope .v').textContent = r0(v); el.querySelector(':scope .g').textContent = r0(goalV);
+    { const ve = el.querySelector(':scope .v'); if (ve.tagName === 'B' && el.classList.contains('hc')) rollNum(ve, String(r0(v))); else ve.textContent = r0(v); } el.querySelector(':scope .g').textContent = r0(goalV);
     const sg = dev > 0 ? '+' : dev < 0 ? '−' : '±';
     if (state === 'ok' && el.classList.contains('hc')) el.querySelector(':scope .d').innerHTML = CHK_T2; else el.querySelector(':scope .d').textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev);
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
@@ -2556,6 +2594,25 @@ function renderHV(g, t) {
   wasAllOk = allOk;
 }
 let wasAllOk = null;
+/* BASIC (4 Nov, issue #6): chip numbers roll digit by digit — grows: the old digit drops down, the new one comes from above; shrinks: the other way */
+function rollNum(el, s) {
+  const o = el.dataset.n; if (o === s) return; el.dataset.n = s;
+  if (o == null || RM || document.hidden || !el.offsetParent) { el.textContent = s; return; }
+  const up = parseFloat(s) > parseFloat(o), L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' ');
+  const f = document.createDocumentFragment(), anims = [];
+  for (let i = 0; i < L; i++) {
+    if (po[i] === pn[i]) { if (pn[i] !== ' ') f.append(pn[i]); continue; }
+    const d = document.createElement('span'); d.className = 'dg';
+    const n = document.createElement('i'); n.textContent = pn[i] === ' ' ? '' : pn[i];
+    const x = document.createElement('i'); x.className = 'o'; x.textContent = po[i] === ' ' ? '' : po[i];
+    d.append(n, x); f.append(d);
+    const dl = (L - 1 - i) * 18, opt = { duration: 420, delay: dl, easing: 'cubic-bezier(.3,1.35,.5,1)', fill: 'backwards' };
+    anims.push([n, [{ transform: `translateY(${up ? -100 : 100}%)` }, { transform: 'none' }], opt], [x, [{ transform: 'none' }, { transform: `translateY(${up ? 100 : -100}%)` }], { ...opt, fill: 'forwards' }]);
+  }
+  el.textContent = ''; el.append(f);
+  anims.forEach(([n, k, opt]) => n.animate(k, opt));
+  clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, 420 + L * 18 + 40);
+}
 /* verdict bar under the chips: always there, same height (nothing jumps while you turn the ruler).
    Fits → «Plan fits». Off → what is off, counted from the edge of the range, most off first; where it mostly comes from; blue Balance. */
 function vbar(box, g, t, rngOf) {   // Balance sits above the chips, at the right of «Bulk plan»; only when the plan doesn’t fit (the chips already say what is off)
@@ -2576,7 +2633,7 @@ const isPc = e => e.t !== 'g' && U(e) === 'pc' && e.uw > 0;
 const toU = (e, g) => isPc(e) ? Math.round(g / e.uw * 10) / 10 : g;
 const fmtAmt = (e, g) => e.t === 'g' ? `${g}g` : `${toU(e, g)}${uLab(e)}`;
 const money = v => Math.round(v).toLocaleString('ru-RU');
-const macHTML = m => `<span>${r0(m.k)}<i>kcal</i></span><span>${r0(m.p)}<i>protein</i></span><span>${r0(m.f)}<i>fat</i></span><span>${r0(m.c)}<i>carbs</i></span>`;   // THIS-2 (2 Nov): number first, word after
+const macHTML = m => `<span>${r0(m.k)}<i>K</i></span><span>${r0(m.p)}<i>P</i></span><span>${r0(m.f)}<i>F</i></span><span>${r0(m.c)}<i>C</i></span>`;   // BASIC (4 Nov): number, then the chip's letter — «450K 30P 10F 40C»
 function fieldHTML(buf, ph, unit) { return buf ? `${buf}<i class="caret"></i>${unit}` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
 /* To review (24 Oct): products added from Nutrients wait under the plan with a suggested portion until they get grams */
 const revOf = (p = plan()) => (p.rev ||= {});
@@ -5157,6 +5214,10 @@ document.body.classList.add('f31');
     const d = (e.touches[0].clientY - y0) * .5; if (d <= 0 || scrollY > 0) { if (pulled) reset(); return; }
     pulled = Math.min(64, d); ps.style.height = pulled + 'px'; const go = pulled >= 48; if (go !== ps.classList.contains('go')) { ps.classList.toggle('go', go); if (go) haptic(); } }, { passive: true });
   $('#secMeal').addEventListener('touchend', () => { const go = ps.classList.contains('go'); y0 = null; reset(); if (go) openSearch(); }, { passive: true });
+})();
+/* ---- BASIC (4 Nov, Figma 510:25479): filled tab icons (Phosphor fill), one 24 px set ---- */
+(() => { const T = {"Budget": "M21.6735 8.21023C21.6356 8.11539 21.5958 8.02055 21.555 7.92571C20.9431 6.51454 19.9528 5.30011 18.6937 4.41668H20.7252C21.3092 4.41665 21.6742 3.78438 21.3822 3.27859C21.2467 3.04386 20.9962 2.89926 20.7252 2.89926H10.8619C6.51229 2.90479 2.89412 6.24578 2.54268 10.5812C1.19437 10.9164 0.24585 12.1243 0.23999 13.5136C0.23999 14.0977 0.87225 14.4627 1.37806 14.1707C1.6128 14.0351 1.75741 13.7847 1.75741 13.5136C1.75777 12.9497 2.07078 12.4325 2.57017 12.1707C2.75902 13.8729 3.46882 15.4753 4.60257 16.759L5.79375 20.0935C6.00953 20.6979 6.58218 21.1012 7.22392 21.1007H8.43026C9.07165 21.1008 9.64381 20.6976 9.85948 20.0935L10.0416 19.5833H15.4758L15.6579 20.0935C15.8736 20.6976 16.4457 21.1008 17.0871 21.1007H18.2935C18.9349 21.1008 19.507 20.6976 19.7227 20.0935L21.26 15.7897H21.4839C22.7409 15.7897 23.76 14.7706 23.76 13.5136V10.4788C23.7602 9.29511 22.8531 8.30886 21.6735 8.21023ZM14.6555 6.68522H10.8619C10.2779 6.68522 9.91283 6.05296 10.2049 5.54716C10.3404 5.31241 10.5909 5.16781 10.8619 5.16781H14.6555C15.2395 5.16781 15.6046 5.80007 15.3125 6.30587C15.177 6.54062 14.9265 6.68522 14.6555 6.68522ZM17.311 11.9962C16.4349 11.9962 15.8873 11.0478 16.3254 10.2891C16.7634 9.53039 17.8585 9.53039 18.2966 10.2891C18.3964 10.4621 18.449 10.6584 18.449 10.8581C18.449 11.4867 17.9395 11.9962 17.311 11.9962Z", "Nutrients": "M20.8515 3.32056C20.8275 2.90869 20.4988 2.58008 20.087 2.55603C12.3472 2.10159 6.14766 4.43176 3.50436 8.80337C2.58811 10.2988 2.13661 12.0326 2.20711 13.785C2.25312 14.9056 2.48112 16.0112 2.88216 17.0586C2.98475 17.3392 3.34478 17.4171 3.55418 17.204L12.1957 8.43026C12.6387 7.98729 13.3951 8.18996 13.5572 8.79506C13.6324 9.07588 13.5522 9.37552 13.3466 9.5811L3.90289 19.1671L2.46025 20.6098C2.14915 20.9126 2.12261 21.4036 2.39925 21.7382C2.70806 22.0958 3.25556 22.1159 3.58976 21.782L5.29671 20.075C6.73426 20.7704 8.18503 21.1496 9.62359 21.2004C9.73678 21.2045 9.84963 21.2065 9.96214 21.2065C11.6004 21.2107 13.2075 20.7595 14.6042 19.9032C18.9758 17.2599 21.307 11.0614 20.8515 3.32056Z", "Meal": "M20.9648 2.33472V21.1995C20.9642 21.8308 20.2803 22.2248 19.7338 21.9085C19.4807 21.7621 19.3247 21.4919 19.3244 21.1995V16.2782H14.4032C13.9502 16.2782 13.583 15.911 13.583 15.458C13.6211 13.4933 13.8692 11.5383 14.3232 9.62634C15.3259 5.47509 17.2267 2.69253 19.8217 1.58116C20.3627 1.34939 20.9646 1.74611 20.9648 2.33472ZM11.1111 2.20041C11.018 1.57592 10.2837 1.28643 9.78947 1.67933C9.55221 1.86792 9.43829 2.17199 9.49323 2.47006L10.2909 7.25596H7.84154V2.33472C7.84091 1.70333 7.15701 1.30938 6.61052 1.62563C6.3574 1.7721 6.20142 2.04228 6.20112 2.33472V7.25596H3.75179L4.54944 2.47006C4.66388 1.84912 4.06323 1.33714 3.46826 1.5485C3.18266 1.64996 2.97629 1.90064 2.93158 2.20041L2.11138 7.12165C2.10402 7.16604 2.10024 7.21095 2.1001 7.25596C2.10348 9.65595 3.83519 11.7046 6.20112 12.1075V21.1995C6.20175 21.8308 6.88566 22.2248 7.43214 21.9085C7.68526 21.7621 7.84124 21.4919 7.84154 21.1995V12.1075C10.2075 11.7046 11.9392 9.65595 11.9426 7.25596C11.9424 7.21095 11.9387 7.16604 11.9313 7.12165L11.1111 2.20041Z", "Measure": "M21.8714 9.18562L8.48641 22.5696C7.88608 23.1701 6.9126 23.1701 6.31227 22.5696L1.25015 17.5085C0.649688 16.9081 0.649688 15.9347 1.25015 15.3343L4.05262 12.5319C4.20274 12.3816 4.44629 12.3816 4.5964 12.5319L7.94264 15.8781C8.25845 16.1937 8.77584 16.1747 9.06766 15.8368C9.32943 15.521 9.30433 15.057 9.01001 14.7713L5.68299 11.4443C5.53335 11.2943 5.53335 11.0515 5.68299 10.9015L7.12409 9.46039C7.2742 9.31011 7.51776 9.31011 7.66787 9.46039L11.0141 12.8066C11.3299 13.1223 11.8473 13.1033 12.1391 12.7653C12.4009 12.4495 12.3758 11.9855 12.0815 11.6999L8.7583 8.36996C8.60866 8.21995 8.60866 7.97713 8.7583 7.82714L10.1994 6.38603C10.3494 6.2364 10.5922 6.2364 10.7422 6.38603L14.0885 9.73228C14.4044 10.0486 14.9226 10.0296 15.2144 9.69096C15.476 9.37494 15.4504 8.91094 15.1558 8.62551L11.8327 5.2956C11.683 5.1456 11.683 4.90279 11.8327 4.75278L14.6351 1.95032C15.2354 1.34985 16.2089 1.34985 16.8093 1.95032L21.8714 7.01147C22.4718 7.61181 22.4718 8.58529 21.8714 9.18562Z", "Settings": "M22.7658 10.4369C22.7228 10.2195 22.5874 10.0316 22.3948 9.92196L19.5502 8.30083L19.5388 5.09482C19.5381 4.87135 19.4395 4.65943 19.2689 4.51502C18.2371 3.64219 17.0488 2.9733 15.7673 2.54393C15.5632 2.47485 15.3395 2.49529 15.1513 2.60019L12.2819 4.20415L9.40963 2.59733C9.22133 2.49183 8.99715 2.47105 8.79265 2.54011C7.51193 2.97224 6.32495 3.64372 5.29483 4.51884C5.12456 4.66304 5.02594 4.87455 5.02496 5.09768L5.01065 8.30655L2.16606 9.92768C1.97349 10.0373 1.8381 10.2253 1.79511 10.4426C1.53477 11.7509 1.53477 13.0976 1.79511 14.4058C1.8381 14.6232 1.97349 14.8111 2.16606 14.9207L5.01065 16.5419L5.0221 19.7488C5.0228 19.9723 5.12144 20.1842 5.29197 20.3286C6.32383 21.2015 7.51211 21.8703 8.7936 22.2997C8.99767 22.3688 9.22145 22.3484 9.40963 22.2435L12.2819 20.6347L15.1541 22.2416C15.2678 22.3049 15.3959 22.3377 15.526 22.3369C15.6094 22.3369 15.6921 22.3234 15.7711 22.2969C17.0515 21.8649 18.2384 21.1941 19.2689 20.32C19.4392 20.1759 19.5378 19.9643 19.5388 19.7412L19.5531 16.5323L22.3977 14.9112C22.5903 14.8016 22.7257 14.6136 22.7687 14.3963C23.0275 13.0891 23.0266 11.7437 22.7658 10.4369ZM12.2819 16.2339C9.34554 16.234 7.51036 13.0554 8.97842 10.5124C10.4465 7.96937 14.1169 7.96921 15.5852 10.5121C15.92 11.092 16.0963 11.7498 16.0963 12.4194C16.0963 14.5261 14.3885 16.2339 12.2819 16.2339Z"};
+  document.querySelectorAll('.tabbar .tab').forEach(b => { const d = T[b.dataset.tab]; if (d) b.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="${d}"/></svg>`; });
 })();
 /* ---- Feedback (31 Oct): tap with three fingers anywhere → a GitHub issue with the context filled in ---- */
 (() => {
