@@ -516,8 +516,8 @@ body.tab-meal.hv-on #bigRow,body.tab-meal.hv-on #bars{display:none}
 .px{position:absolute;inset:0;box-sizing:border-box;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;max-width:430px;margin:0 auto}
 .px-body{position:relative;flex:1;min-height:0}
 .px-ruler{position:absolute;left:0;top:0;bottom:0;width:72px;overflow:hidden}
-.px-ruler i{position:absolute;left:0;top:0;height:1.5px;margin-top:-.75px;border-radius:1px;background:#000;will-change:transform}
-.px-mark{position:absolute;left:0;top:50%;width:66px;height:3px;margin-top:-1.5px;border-radius:2px;background:#000}
+.px-ruler i{transform-origin:0 50%;position:absolute;left:0;top:0;height:1.5px;margin-top:-.75px;border-radius:1px;background:#000;will-change:transform}
+.px-mark{transform-origin:0 50%;position:absolute;left:0;top:50%;width:66px;height:3px;margin-top:-1.5px;border-radius:2px;background:#000}
 .px-info{position:absolute;left:96px;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
 .px-info.bump{animation:none}
 .px-name{font-size:17px;line-height:22px;font-weight:510;letter-spacing:-.3px;color:var(--ink-50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -2098,9 +2098,9 @@ html body.f31.pal-fresh #app .hv53 .hc{padding:12px 10px!important}
 html body.f31.pal-fresh #app .hv53 .hc .ht{left:10px!important;right:10px!important}
 html body.f31.pal-fresh #app .hv53 .hc .hc-top em.d{font:590 12px/14px var(--sans)!important}
 /* digits roll: a changed digit slides in from above when the number grows, from below when it shrinks */
-#app .hv53 b.v .dg{display:inline-block;position:relative;overflow:hidden;vertical-align:bottom}
-#app .hv53 b.v .dg>i{display:block;font-style:normal}
-#app .hv53 b.v .dg>i.o{position:absolute;left:0;top:0}
+x-dg{display:inline-block;position:relative;vertical-align:bottom}
+x-dg>x-dn{display:block;will-change:transform,filter,opacity}
+x-dg>x-do{position:absolute;left:0;top:0;will-change:transform,filter,opacity}
 /* tab bar: filled icons, inactive .4 */
 html body.f31.ma .tab svg{opacity:.4!important;stroke:none!important}
 html body.f31.ma .tab.on svg{opacity:1!important}
@@ -2592,7 +2592,7 @@ function renderHV(g, t) {
     el.classList.remove('ok', 'under', 'over'); el.classList.add(state);
     { const ve = el.querySelector(':scope .v'); if (ve.tagName === 'B' && el.classList.contains('hc')) rollNum(ve, String(r0(v))); else ve.textContent = r0(v); } el.querySelector(':scope .g').textContent = r0(goalV);
     const sg = dev > 0 ? '+' : dev < 0 ? '−' : '±';
-    if (state === 'ok' && el.classList.contains('hc')) el.querySelector(':scope .d').innerHTML = CHK_T2; else el.querySelector(':scope .d').textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev);
+    { const de = el.querySelector(':scope .d'); if (state === 'ok' && el.classList.contains('hc')) { if (de.dataset.n !== 'ok') { de.innerHTML = CHK_T2; de.dataset.n = 'ok'; } } else if (el.classList.contains('hc')) { if (de.dataset.n === 'ok') { delete de.dataset.n; de.textContent = ''; } rollNum(de, sg + Math.abs(dev)); } else de.textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev); }
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
@@ -2602,24 +2602,27 @@ function renderHV(g, t) {
   wasAllOk = allOk;
 }
 let wasAllOk = null;
-/* BASIC (4 Nov, issue #6): chip numbers roll digit by digit — grows: the old digit drops down, the new one comes from above; shrinks: the other way */
-function rollNum(el, s) {
-  const o = el.dataset.n; if (o === s) return; el.dataset.n = s;
-  if (o == null || RM || document.hidden || !el.offsetParent) { el.textContent = s; return; }
-  const up = parseFloat(s) > parseFloat(o), L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' ');
-  const f = document.createDocumentFragment(), anims = [];
+/* BASIC (4 Nov, issue #6; 5 Nov — blur, no clipping): numbers roll digit by digit — grows: the old digit drifts down into a blur
+   while the new one comes out of a blur from above; shrinks: the other way. Only changed digits move. Used on the chips and on the ruler. */
+function rollNum(el, s, o2 = {}) {
+  s = String(s); const o = el.dataset.n; if (o === s) return; el.dataset.n = s;
+  if (o == null || RM || document.hidden || !el.isConnected) { el.textContent = s; return; }
+  const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, up = num(s) > num(o);
+  const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' ');
+  const dur = o2.dur || 340, st = o2.stagger == null ? 16 : o2.stagger, dy = up ? 1 : -1, f = document.createDocumentFragment(), anims = [];
   for (let i = 0; i < L; i++) {
     if (po[i] === pn[i]) { if (pn[i] !== ' ') f.append(pn[i]); continue; }
-    const d = document.createElement('span'); d.className = 'dg';
-    const n = document.createElement('i'); n.textContent = pn[i] === ' ' ? '' : pn[i];
-    const x = document.createElement('i'); x.className = 'o'; x.textContent = po[i] === ' ' ? '' : po[i];
+    const d = document.createElement('x-dg');
+    const n = document.createElement('x-dn'); n.textContent = pn[i] === ' ' ? '' : pn[i];
+    const x = document.createElement('x-do'); x.textContent = po[i] === ' ' ? '' : po[i];
     d.append(n, x); f.append(d);
-    const dl = (L - 1 - i) * 18, opt = { duration: 420, delay: dl, easing: 'cubic-bezier(.3,1.35,.5,1)', fill: 'backwards' };
-    anims.push([n, [{ transform: `translateY(${up ? -100 : 100}%)` }, { transform: 'none' }], opt], [x, [{ transform: 'none' }, { transform: `translateY(${up ? 100 : -100}%)` }], { ...opt, fill: 'forwards' }]);
+    const delay = (L - 1 - i) * st;
+    anims.push([n, [{ transform: `translateY(${-45 * dy}%) scale(.92)`, filter: 'blur(5px)', opacity: 0 }, { transform: 'none', filter: 'blur(0)', opacity: 1 }], { duration: dur, delay, easing: 'cubic-bezier(.25,1.25,.45,1)', fill: 'backwards' }],
+               [x, [{ transform: 'none', filter: 'blur(0)', opacity: 1 }, { transform: `translateY(${45 * dy}%) scale(.92)`, filter: 'blur(5px)', opacity: 0 }], { duration: dur * .8, delay, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards' }]);
   }
   el.textContent = ''; el.append(f);
   anims.forEach(([n, k, opt]) => n.animate(k, opt));
-  clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, 420 + L * 18 + 40);
+  clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, dur + L * st + 60);
 }
 /* verdict bar under the chips: always there, same height (nothing jumps while you turn the ruler).
    Fits → «Plan fits». Off → what is off, counted from the edge of the range, most off first; where it mostly comes from; blue Balance. */
@@ -3199,18 +3202,26 @@ function openPrecise2(r, y, holding, pv) {
     ov.style.top = Math.round(b + 10) + 'px'; ov.classList.add('px-below'); }
   document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('show'));
   const card = ov.querySelector('.px-info'), rul = ov.querySelector('.px-ruler');
-  if (!RM) card.animate([{ opacity: 0, transform: (pv === '16' ? '' : 'translateY(-50%) ') + 'scale(.96)' }, { opacity: 1, transform: pv === '16' ? 'none' : 'translateY(-50%)' }], { duration: 420, easing: SPRING });
   const unit = isPc(e) ? e.uw : (S.ui.step || 5), lim = e.t === 'g' ? maxOf(e) : 99999;
   let ticks = [], H = 0, M = 0;
   if (rul) { H = rul.clientHeight; M = Math.ceil(H / 2 / STEP) + 2; for (let i = -M; i <= M; i++) { const t = document.createElement('i'); rul.appendChild(t); ticks.push(t); } }
+  // 5 Nov: entrance — the ticks unfurl from the centre outwards, the marker draws in, the number comes out of a blur, name and macros follow
+  if (!RM) {
+    card.animate([{ opacity: 0, translate: '0 18px', filter: 'blur(8px)' }, { opacity: 1, translate: '0 0', filter: 'blur(0)' }], { duration: 520, easing: SPRING });
+    [['.px-name', 40], ['.px-mline', 110], ['.px-mac4', 110], ['.pmax', 160]].forEach(([q, dl]) => { const x = card.querySelector(q); if (x) x.animate([{ opacity: 0, translate: '0 8px' }, { opacity: 1, translate: '0 0' }], { duration: 380, delay: dl, easing: EASE, fill: 'backwards' }); });
+    ticks.forEach((t, i) => t.animate([{ scale: '0 1' }, { scale: '1 1' }], { duration: 460, delay: 30 + Math.abs(i - M) * 14, easing: SPRING, fill: 'backwards' }));
+    const mk = ov.querySelector('.px-mark'); if (mk) mk.animate([{ scale: '0 1' }, { scale: '1 1' }], { duration: 420, easing: SPRING });
+  }
   let phase = 0, acc = 0, lastY = y, lastT = performance.now(), vel = 0, raf = 0, moved = false;
   const fmtN = g => String(toU(e, g));
   const paint = () => {
     const m = mac(e), off = phase / 15 * STEP;
     if (pv !== '16') {
-      ov.querySelector('.pxv').textContent = fmtN(e.g); ov.querySelector('.pxu').textContent = e.t === 'g' ? 'g' : uLab(e);
-      if (pv === '12') [m.k, m.p, m.f, m.c].forEach((v, i) => ov.querySelector('.m' + i).textContent = r0(v));
-      else ov.querySelector('.px-mline').innerHTML = `<i>K</i>${r0(m.k)}<i>P</i>${r0(m.p)}<i>F</i>${r0(m.f)}<i>C</i>${r0(m.c)}` + (isPc(e) ? `<i>·</i>${e.g}g` : '');
+      rollNum(ov.querySelector('.pxv'), fmtN(e.g), { dur: 300, stagger: 14 }); ov.querySelector('.pxu').textContent = e.t === 'g' ? 'g' : uLab(e);
+      if (pv === '12') [m.k, m.p, m.f, m.c].forEach((v, i) => rollNum(ov.querySelector('.m' + i), r0(v), { dur: 300, stagger: 14 }));
+      else { const ml = ov.querySelector('.px-mline');   // 5 Nov: the K P F C line rolls too — built once, then only the numbers change
+        if (!ml.firstChild) ml.innerHTML = '<i>K</i><span class="rk"></span><i>P</i><span class="rp"></span><i>F</i><span class="rf"></span><i>C</i><span class="rc2"></span>' + (isPc(e) ? '<i>·</i><span class="rg"></span>' : '');
+        [['rk', r0(m.k)], ['rp', r0(m.p)], ['rf', r0(m.f)], ['rc2', r0(m.c)], ['rg', e.g + 'g']].forEach(([c, v]) => { const x = ml.querySelector('.' + c); if (x) rollNum(x, v, { dur: 300, stagger: 14 }); }); }
     } else {
       const rows = []; for (let k = -4; k <= 4; k++) { const g = e.g + k * unit; if (g < 0 || g > lim) continue; const mm = macAt(e, g), d = Math.abs(k * STEP + off);
         rows.push(`<div class="px-dr${k === 0 ? ' on' : ''}" style="transform:translateY(${(k * STEP + off).toFixed(1)}px);opacity:${Math.max(.12, 1 - d / 190).toFixed(2)}"><b>${fmtN(g)}${k === 0 ? `<small>${e.t === 'g' ? 'g' : uLab(e)}</small>` : ''}</b><span>${r0(mm.k)}</span><span>${r0(mm.p)}</span><span>${r0(mm.f)}</span><span>${r0(mm.c)}</span></div>`); }
@@ -3256,7 +3267,7 @@ function openPrecise2(r, y, holding, pv) {
       const tick = () => { v *= .94; step(v * 16 * PX, Math.abs(v)); if (Math.abs(v) > .05) raf = requestAnimationFrame(tick); else { save(); snapBack(); } };
       raf = requestAnimationFrame(tick);
     },
-    close() { cancelAnimationFrame(raf); save(); ov.classList.remove('show'); ov.style.pointerEvents = 'none';
+    close() { cancelAnimationFrame(raf); save(); if (!RM) { card.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, translate: '0 -8px', filter: 'blur(6px)' }], { duration: 220, easing: EASE, fill: 'forwards' }); const mk = ov.querySelector('.px-mark'); if (mk) mk.animate([{ scale: '1 1' }, { scale: '0 1' }], { duration: 200, easing: EASE, fill: 'forwards' }); } ov.classList.remove('show'); ov.style.pointerEvents = 'none';
       setTimeout(() => ov.remove(), 260); precise = null; renderMeal(true); }
   };
   ov.addEventListener('pointerdown', ev => {
