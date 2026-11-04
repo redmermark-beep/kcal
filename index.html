@@ -2097,8 +2097,10 @@ html body.f31.pal-fresh.lk-new.v2 #app #secMeal .zhead{padding:0 10px!important;
 html body.f31.pal-fresh #app .hv53 .hc{padding:12px 10px!important}
 html body.f31.pal-fresh #app .hv53 .hc .ht{left:10px!important;right:10px!important}
 html body.f31.pal-fresh #app .hv53 .hc .hc-top em.d{font:590 12px/14px var(--sans)!important}
+/* 5 Nov: chip numbers on fixed-width digits (SF Pro tabular figures) — numbers don't wobble while they change */
+html body.f31.pal-fresh #app .hv53 .hc b.v,html body.f31.pal-fresh #app .hv53 .hc .of,html body.f31.pal-fresh #app .hv53 .hc em.d{font-variant-numeric:tabular-nums!important;font-feature-settings:'tnum' 1!important}
 /* digits roll: a changed digit slides in from above when the number grows, from below when it shrinks */
-x-dg{display:inline-block;position:relative;vertical-align:bottom}
+x-dg{display:inline-block;position:relative;vertical-align:baseline}
 x-dg>x-dn{display:block;will-change:transform,filter,opacity}
 x-dg>x-do{position:absolute;left:0;top:0;will-change:transform,filter,opacity}
 /* tab bar: filled icons, inactive .4 */
@@ -2130,6 +2132,21 @@ html body.f31.pal-fresh #app .hv53 .hc .hc-top em.d{line-height:12px!important;a
 /* scrolled: a faint hairline under the pinned header (chips + «Favourite meal ···») */
 html body.f31.pal-fresh #app #secMeal #mhead::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.5px;background:rgba(60,60,67,.18);opacity:0;transition:opacity .2s;pointer-events:none}
 html body.f31.pal-fresh #app #secMeal #mhead.stuck::after{opacity:1}
+/* Motion lab (Settings) */
+#mlab{padding-bottom:8px}
+#mlab .ml-demo{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0 10px;box-shadow:inset 0 -1px 0 var(--line)}
+#mlab .ml-big{font:600 72px/70px var(--mono);letter-spacing:-4.5px;font-variant-numeric:tabular-nums}
+#mlab .ml-small{font:510 30px/30px var(--sans);letter-spacing:-.6px;font-variant-numeric:tabular-nums}
+#mlab .ml-btns{display:flex;gap:6px;margin-top:6px}
+#mlab .ml-btns button,#mlab .ml-act button{height:36px;padding:0 14px;border-radius:18px;background:rgba(118,118,128,.12);font:510 15px/20px var(--sans);color:#111115}
+#mlab .ml-t{margin:18px 0 4px;font:590 13px/16px var(--sans);color:rgba(60,60,67,.6)}
+#mlab .ml-r{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 12px;padding:8px 0;box-shadow:inset 0 -1px 0 var(--line)}
+#mlab .ml-r span{font:400 15px/20px var(--sans)}
+#mlab .ml-r em{font:500 14px/20px var(--mono);font-style:normal;color:rgba(60,60,67,.6)}
+#mlab .ml-r input{grid-column:1/-1;width:100%;accent-color:#111115}
+#mlab .ml-e{grid-template-columns:auto 1fr}
+#mlab .ml-e .st-seg{justify-self:end}
+#mlab .ml-act{display:flex;gap:8px;margin-top:16px}
 /* swipe (issue #4): tiles only ever fill the space the row has left — they never slide under it */
 html body.f31 #app #secMeal .sa{width:max(0px,calc(60px * var(--rv,0) - 4px))!important;border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}
 </style>
@@ -2605,19 +2622,29 @@ let wasAllOk = null;
 /* BASIC (4 Nov, issue #6; 5 Nov v2): numbers roll digit by digit as a dissolve — the old digit drifts a little and melts away
    (blur 0 → ~0.17 em, max 16 px, opacity → 0) while the new one condenses out of the same blur from the other side.
    Out and in share one duration and one curve. Grows: new from above, old goes down; shrinks: the other way. */
-const MOTION = { roll: { dur: 380, travel: 28, blurEm: .17, blurMax: 16, stagger: 12, ease: 'cubic-bezier(.4,0,.2,1)' },
-                 ruler: { dur: 200, ease: 'cubic-bezier(.2,.8,.2,1)', fade: 160 } };
+const EASES = { standard: 'cubic-bezier(.4,0,.2,1)', out: 'cubic-bezier(.2,.8,.2,1)', soft: 'cubic-bezier(.3,1.3,.5,1)', linear: 'linear' };
+const EZ = { standard: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, out: x => 1 - Math.pow(1 - x, 3),
+             soft: x => { const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }, linear: x => x };
+const MOTION_DEF = { roll: { dur: 380, travel: 28, blurEm: .17, blurMax: 16, stagger: 12, ease: 'standard', rapid: .55 },
+                     ruler: { dur: 200, fade: 160, ease: 'out' } };
+const MOTION = JSON.parse(JSON.stringify(MOTION_DEF));
+try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
+const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify(MOTION)); } catch (e) {} };
 function rollNum(el, s, o2 = {}) {
   s = String(s); const o = el.dataset.n; if (o === s) return; el.dataset.n = s;
   if (o == null || RM || document.hidden || !el.isConnected) { el.textContent = s; return; }
-  const M_ = { ...MOTION.roll, ...o2 }, fs = parseFloat(getComputedStyle(el).fontSize) || 16, bl = Math.min(M_.blurMax, Math.max(1.5, fs * M_.blurEm)).toFixed(1);
+  const now = performance.now(), rapid = el._busy > now;   // a new value while the last one still rolls: shorter, no stagger — digits never pile up
+  const M_ = { ...MOTION.roll, ...o2 }; if (rapid) { M_.dur = Math.round(M_.dur * M_.rapid); M_.stagger = 0; }
+  el.getAnimations({ subtree: true }).forEach(a => a.cancel()); el._busy = now + M_.dur;
+  const fs = parseFloat(getComputedStyle(el).fontSize) || 16, bl = Math.min(M_.blurMax, Math.max(1.5, fs * M_.blurEm)).toFixed(1);
   const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, up = num(s) > num(o);
   const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' '), dy = up ? 1 : -1, f = document.createDocumentFragment(), anims = [];
   for (let i = 0; i < L; i++) {
     if (po[i] === pn[i]) { if (pn[i] !== ' ') f.append(pn[i]); continue; }
     const d = document.createElement('x-dg'), n = document.createElement('x-dn'), x = document.createElement('x-do');
     n.textContent = pn[i] === ' ' ? '' : pn[i]; x.textContent = po[i] === ' ' ? '' : po[i]; d.append(n, x); f.append(d);
-    const opt = { duration: M_.dur, delay: (L - 1 - i) * M_.stagger, easing: M_.ease };
+    if (pn[i] === ' ') { n.textContent = po[i]; n.style.visibility = 'hidden'; }   // a vanishing digit keeps its width while it melts
+    const opt = { duration: M_.dur, delay: (L - 1 - i) * M_.stagger, easing: EASES[M_.ease] || M_.ease };
     anims.push([n, [{ transform: `translateY(${-M_.travel * dy}%)`, filter: `blur(${bl}px)`, opacity: 0 }, { transform: 'none', filter: 'blur(0px)', opacity: 1 }], { ...opt, fill: 'backwards' }],
                [x, [{ transform: 'none', filter: 'blur(0px)', opacity: 1 }, { transform: `translateY(${M_.travel * dy}%)`, filter: `blur(${bl}px)`, opacity: 0 }], { ...opt, fill: 'forwards' }]);
   }
@@ -2780,6 +2807,39 @@ const AMT_STYLES = [['r5', 'Left', 'Amount on the left, kcal on the right'], ['r
 const amtOf = () => ['r5', 'r4'].includes(S.ui.amt) ? S.ui.amt : 'r5';
 const SHEET_STYLES = [['b', 'Tiles', 'Product sheet: four tiles, unit on top'], ['g', 'Chips', 'Product sheet: chips like the header, kcal per macro']];
 const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21', 'Card', 'Plan and chips on a white card']];
+/* Motion lab (5 Nov): tune animations on the phone — values live on this device (localStorage «rovno-motion»),
+   «Send to Claude» files them as a GitHub issue so they can become the defaults */
+const ML_ROWS = [
+  ['roll', 'Numbers roll', [['dur', 'Duration', 100, 1200, 10, 'ms'], ['travel', 'Travel', 0, 100, 1, '%'], ['blurEm', 'Blur · share of size', 0, .5, .01, ''], ['blurMax', 'Blur · max', 0, 40, 1, 'px'], ['stagger', 'Delay between digits', 0, 80, 1, 'ms'], ['rapid', 'Fast scrolling · duration ×', .1, 1, .05, '']]],
+  ['ruler', 'Ruler opens', [['dur', 'Ticks open', 0, 800, 10, 'ms'], ['fade', 'Number and marker fade', 0, 600, 10, 'ms']]]];
+const ML_EASE = [['standard', 'Smooth'], ['out', 'Out'], ['soft', 'Spring'], ['linear', 'Linear']];
+const mlFmt = (v, u) => (Math.abs(v) < 1 && v !== 0 ? (+v).toFixed(2) : Math.round(v * 100) / 100) + (u ? ' ' + u : '');
+function mlabHTML() {
+  return `<div class="ml-demo"><b class="ml-big">3045</b><b class="ml-small">3045</b>
+      <div class="ml-btns"><button data-ml="-">−</button><button data-ml="+">+</button><button data-ml="big">Random</button><button data-ml="ruler">Ruler</button></div></div>` +
+    ML_ROWS.map(([g, title, rows]) => `<div class="ml-t">${title}</div>` + rows.map(([k, l, mn, mx, st, u]) =>
+      `<label class="ml-r"><span>${l}</span><em data-mv="${g}.${k}">${mlFmt(MOTION[g][k], u)}</em><input type="range" min="${mn}" max="${mx}" step="${st}" value="${MOTION[g][k]}" data-mk="${g}.${k}" data-u="${u}"></label>`).join('') +
+      `<div class="ml-r ml-e"><span>Curve</span><div class="st-seg">${ML_EASE.map(([k, l]) => `<button data-me="${g}.${k}" class="${MOTION[g].ease === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`).join('') +
+    `<div class="ml-act"><button data-ml="send">Send to Claude</button><button data-ml="reset">Reset</button></div>`;
+}
+(() => { let demo = 3045;
+  const roll = v => { demo = Math.max(0, v); document.querySelectorAll('#mlab .ml-big, #mlab .ml-small').forEach(el => rollNum(el, demo)); };
+  document.addEventListener('input', e => { const r = e.target.closest('#mlab input[data-mk]'); if (!r) return;
+    const [g, k] = r.dataset.mk.split('.'); MOTION[g][k] = +r.value; saveMotion(); const em = document.querySelector(`#mlab [data-mv="${g}.${k}"]`); if (em) em.textContent = mlFmt(+r.value, r.dataset.u); });
+  document.addEventListener('change', e => { if (e.target.closest('#mlab input[data-mk^="roll"]')) roll(demo + 1 + Math.floor(Math.random() * 40)); });
+  document.addEventListener('click', e => {
+    const me = e.target.closest('#mlab [data-me]'); if (me) { const [g, k] = me.dataset.me.split('.'); MOTION[g].ease = k; saveMotion(); haptic(); $('#mlab').innerHTML = mlabHTML(); if (g === 'roll') setTimeout(() => roll(demo + 7), 50); return; }
+    const b = e.target.closest('#mlab [data-ml]'); if (!b) return; const a = b.dataset.ml; haptic();
+    if (a === '+') return roll(demo + 1); if (a === '-') return roll(demo - 1);
+    if (a === 'big') return roll(Math.floor(Math.random() * 4000));
+    if (a === 'reset') { ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], MOTION_DEF[k])); saveMotion(); $('#mlab').innerHTML = mlabHTML(); return toast('Motion reset'); }
+    if (a === 'send') { const body = 'Значения из Motion lab — сделать по умолчанию:\n\n```json\n' + JSON.stringify(MOTION, null, 1) + '\n```\n';
+      const u = `https://github.com/redmermark-beep/kcal/issues/new?labels=${encodeURIComponent('polish,motion')}&title=${encodeURIComponent('Motion lab: значения')}&body=${encodeURIComponent(body)}`;
+      let w = null; try { w = window.open(u, '_blank'); } catch (er) {} if (!w) toast('Motion values', { label: 'Open', fn: () => { if (!window.open(u, '_blank')) location.href = u; } }); return; }
+    if (a === 'ruler') { switchTab('meal'); setTimeout(() => { const row = [...document.querySelectorAll('#secMeal .slist>li.row:not(.zero)')].find(x => x.offsetParent);
+      if (row) { const pr = row.querySelector('.pill').getBoundingClientRect(); openPrecise(row.dataset.id, row, pr.top + pr.height / 2, false); } }, 450); }
+  });
+})();
 function renderSettings() {
   const u = S.ui, box = $('#setBody'), cv = c => u.theme === 'black' ? preInv(c) : c;
   box.innerHTML = `
@@ -2799,6 +2859,8 @@ function renderSettings() {
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
         <div class="st-seg">${[1, 5, 10].map(v => `<button data-step="${v}" class="${(u.step || 5) === v ? 'on' : ''}">${v} g</button>`).join('')}</div></div>
     </div>
+    <div class="st-h">Motion lab</div>
+    <div class="st-g ml" id="mlab">${mlabHTML()}</div>
     <div class="st-h">Data</div>
     <div class="st-g">
       <button class="st-r st-a" data-act="export"><div><b>Export backup</b><span>Save all products, plans and measurements as a file</span></div></button>
@@ -3206,12 +3268,15 @@ function openPrecise2(r, y, holding, pv) {
   const unit = isPc(e) ? e.uw : (S.ui.step || 5), lim = e.t === 'g' ? maxOf(e) : 99999;
   let ticks = [], H = 0, M = 0;
   if (rul) { H = rul.clientHeight; M = Math.ceil(H / 2 / STEP) + 2; for (let i = -M; i <= M; i++) { const t = document.createElement('i'); rul.appendChild(t); ticks.push(t); } }
-  // 5 Nov v2: entrance — quick and quiet: the ticks open out from the centre line, everything else just fades in
-  if (!RM) { const R = MOTION.ruler;
-    ticks.forEach((t, i) => t.animate([{ translate: `0 ${-(i - M) * STEP}px`, opacity: 0 }], { duration: R.dur, easing: R.ease }));
-    const mk = ov.querySelector('.px-mark'); if (mk) mk.animate([{ opacity: 0 }], { duration: R.fade, easing: 'linear' });
-    card.animate([{ opacity: 0 }], { duration: R.fade, easing: 'linear' });
-  }
+  // 5 Nov v3: entrance — the ticks open out from the centre line (driven by paint, no per-tick animations: Safari flickered),
+  // the marker and the number just fade in. Timing and curve come from MOTION.ruler (Settings → Motion lab).
+  let openK = 1;
+  const startOpen = () => { if (RM) return; const R = MOTION.ruler, t0 = performance.now(), ez = EZ[R.ease] || EZ.out, mk = ov.querySelector('.px-mark');
+    openK = 0; card.style.opacity = 0; if (mk) mk.style.opacity = 0;
+    const f = now => { const t = now - t0, fo = R.fade > 0 ? Math.min(1, t / R.fade) : 1; openK = R.dur > 0 ? ez(Math.min(1, t / R.dur)) : 1;
+      card.style.opacity = fo; if (mk) mk.style.opacity = fo; paint();
+      if (t < Math.max(R.dur, R.fade)) requestAnimationFrame(f); else { openK = 1; card.style.opacity = ''; if (mk) mk.style.opacity = ''; paint(); } };
+    requestAnimationFrame(f); };
   let phase = 0, acc = 0, lastY = y, lastT = performance.now(), vel = 0, raf = 0, moved = false;
   const fmtN = g => String(toU(e, g));
   const paint = () => {
@@ -3229,8 +3294,8 @@ function openPrecise2(r, y, holding, pv) {
     }
     const pm = ov.querySelector('.pmax'); if (pm) pm.textContent = `max ${maxOf(e)}g`;
     if (rul) { const n0 = Math.round(e.g / unit), c = H / 2;
-      ticks.forEach((t, i) => { const k = i - M, yy = c + k * STEP + off, big = ((n0 + k) % 5 + 5) % 5 === 0, d = Math.min(1, Math.abs(yy - c) / c);
-        t.style.transform = `translateY(${yy.toFixed(1)}px)`; t.style.width = (big ? 40 : 22) + 'px'; t.style.opacity = ((big ? .55 : .28) * (1 - d * .85)).toFixed(3); }); }
+      ticks.forEach((t, i) => { const k = i - M, yy = c + (k * STEP + off) * openK, big = ((n0 + k) % 5 + 5) % 5 === 0, d = Math.min(1, Math.abs(yy - c) / c);
+        t.style.transform = `translateY(${yy.toFixed(1)}px)`; t.style.width = (big ? 40 : 22) + 'px'; t.style.opacity = ((big ? .55 : .28) * (1 - d * .85) * Math.min(1, openK * 1.4)).toFixed(3); }); }
     if (pv === '15') {
       const ds = dayState();
       if (pv === '15') ov.querySelector('.px-chips').innerHTML = ds.map(x => `<span class="hs ${x.st}"><small>${x.k === 'k' ? 'kcal' : x.l[0]}</small><em>${x.d}</em></span>`).join('');
@@ -3283,7 +3348,7 @@ function openPrecise2(r, y, holding, pv) {
     if (!moved && Math.abs(ev.clientY - precise.startY) < 6) { precise.holding = false; return precise.close(); }
     precise.release();
   });
-  paint();
+  paint(); startOpen();
 }
 
 /* ================= keypad ================= */
