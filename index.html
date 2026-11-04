@@ -2602,27 +2602,28 @@ function renderHV(g, t) {
   wasAllOk = allOk;
 }
 let wasAllOk = null;
-/* BASIC (4 Nov, issue #6; 5 Nov — blur, no clipping): numbers roll digit by digit — grows: the old digit drifts down into a blur
-   while the new one comes out of a blur from above; shrinks: the other way. Only changed digits move. Used on the chips and on the ruler. */
+/* BASIC (4 Nov, issue #6; 5 Nov v2): numbers roll digit by digit as a dissolve — the old digit drifts a little and melts away
+   (blur 0 → ~0.17 em, max 16 px, opacity → 0) while the new one condenses out of the same blur from the other side.
+   Out and in share one duration and one curve. Grows: new from above, old goes down; shrinks: the other way. */
+const MOTION = { roll: { dur: 380, travel: 28, blurEm: .17, blurMax: 16, stagger: 12, ease: 'cubic-bezier(.4,0,.2,1)' },
+                 ruler: { dur: 200, ease: 'cubic-bezier(.2,.8,.2,1)', fade: 160 } };
 function rollNum(el, s, o2 = {}) {
   s = String(s); const o = el.dataset.n; if (o === s) return; el.dataset.n = s;
   if (o == null || RM || document.hidden || !el.isConnected) { el.textContent = s; return; }
+  const M_ = { ...MOTION.roll, ...o2 }, fs = parseFloat(getComputedStyle(el).fontSize) || 16, bl = Math.min(M_.blurMax, Math.max(1.5, fs * M_.blurEm)).toFixed(1);
   const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, up = num(s) > num(o);
-  const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' ');
-  const dur = o2.dur || 340, st = o2.stagger == null ? 16 : o2.stagger, dy = up ? 1 : -1, f = document.createDocumentFragment(), anims = [];
+  const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' '), dy = up ? 1 : -1, f = document.createDocumentFragment(), anims = [];
   for (let i = 0; i < L; i++) {
     if (po[i] === pn[i]) { if (pn[i] !== ' ') f.append(pn[i]); continue; }
-    const d = document.createElement('x-dg');
-    const n = document.createElement('x-dn'); n.textContent = pn[i] === ' ' ? '' : pn[i];
-    const x = document.createElement('x-do'); x.textContent = po[i] === ' ' ? '' : po[i];
-    d.append(n, x); f.append(d);
-    const delay = (L - 1 - i) * st;
-    anims.push([n, [{ transform: `translateY(${-45 * dy}%) scale(.92)`, filter: 'blur(5px)', opacity: 0 }, { transform: 'none', filter: 'blur(0)', opacity: 1 }], { duration: dur, delay, easing: 'cubic-bezier(.25,1.25,.45,1)', fill: 'backwards' }],
-               [x, [{ transform: 'none', filter: 'blur(0)', opacity: 1 }, { transform: `translateY(${45 * dy}%) scale(.92)`, filter: 'blur(5px)', opacity: 0 }], { duration: dur * .8, delay, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards' }]);
+    const d = document.createElement('x-dg'), n = document.createElement('x-dn'), x = document.createElement('x-do');
+    n.textContent = pn[i] === ' ' ? '' : pn[i]; x.textContent = po[i] === ' ' ? '' : po[i]; d.append(n, x); f.append(d);
+    const opt = { duration: M_.dur, delay: (L - 1 - i) * M_.stagger, easing: M_.ease };
+    anims.push([n, [{ transform: `translateY(${-M_.travel * dy}%)`, filter: `blur(${bl}px)`, opacity: 0 }, { transform: 'none', filter: 'blur(0px)', opacity: 1 }], { ...opt, fill: 'backwards' }],
+               [x, [{ transform: 'none', filter: 'blur(0px)', opacity: 1 }, { transform: `translateY(${M_.travel * dy}%)`, filter: `blur(${bl}px)`, opacity: 0 }], { ...opt, fill: 'forwards' }]);
   }
   el.textContent = ''; el.append(f);
   anims.forEach(([n, k, opt]) => n.animate(k, opt));
-  clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, dur + L * st + 60);
+  clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, M_.dur + L * M_.stagger + 60);
 }
 /* verdict bar under the chips: always there, same height (nothing jumps while you turn the ruler).
    Fits → «Plan fits». Off → what is off, counted from the edge of the range, most off first; where it mostly comes from; blue Balance. */
@@ -3205,23 +3206,22 @@ function openPrecise2(r, y, holding, pv) {
   const unit = isPc(e) ? e.uw : (S.ui.step || 5), lim = e.t === 'g' ? maxOf(e) : 99999;
   let ticks = [], H = 0, M = 0;
   if (rul) { H = rul.clientHeight; M = Math.ceil(H / 2 / STEP) + 2; for (let i = -M; i <= M; i++) { const t = document.createElement('i'); rul.appendChild(t); ticks.push(t); } }
-  // 5 Nov: entrance — the ticks unfurl from the centre outwards, the marker draws in, the number comes out of a blur, name and macros follow
-  if (!RM) {
-    card.animate([{ opacity: 0, translate: '0 18px', filter: 'blur(8px)' }, { opacity: 1, translate: '0 0', filter: 'blur(0)' }], { duration: 520, easing: SPRING });
-    [['.px-name', 40], ['.px-mline', 110], ['.px-mac4', 110], ['.pmax', 160]].forEach(([q, dl]) => { const x = card.querySelector(q); if (x) x.animate([{ opacity: 0, translate: '0 8px' }, { opacity: 1, translate: '0 0' }], { duration: 380, delay: dl, easing: EASE, fill: 'backwards' }); });
-    ticks.forEach((t, i) => t.animate([{ scale: '0 1' }, { scale: '1 1' }], { duration: 460, delay: 30 + Math.abs(i - M) * 14, easing: SPRING, fill: 'backwards' }));
-    const mk = ov.querySelector('.px-mark'); if (mk) mk.animate([{ scale: '0 1' }, { scale: '1 1' }], { duration: 420, easing: SPRING });
+  // 5 Nov v2: entrance — quick and quiet: the ticks open out from the centre line, everything else just fades in
+  if (!RM) { const R = MOTION.ruler;
+    ticks.forEach((t, i) => t.animate([{ translate: `0 ${-(i - M) * STEP}px`, opacity: 0 }], { duration: R.dur, easing: R.ease }));
+    const mk = ov.querySelector('.px-mark'); if (mk) mk.animate([{ opacity: 0 }], { duration: R.fade, easing: 'linear' });
+    card.animate([{ opacity: 0 }], { duration: R.fade, easing: 'linear' });
   }
   let phase = 0, acc = 0, lastY = y, lastT = performance.now(), vel = 0, raf = 0, moved = false;
   const fmtN = g => String(toU(e, g));
   const paint = () => {
     const m = mac(e), off = phase / 15 * STEP;
     if (pv !== '16') {
-      rollNum(ov.querySelector('.pxv'), fmtN(e.g), { dur: 300, stagger: 14 }); ov.querySelector('.pxu').textContent = e.t === 'g' ? 'g' : uLab(e);
-      if (pv === '12') [m.k, m.p, m.f, m.c].forEach((v, i) => rollNum(ov.querySelector('.m' + i), r0(v), { dur: 300, stagger: 14 }));
+      rollNum(ov.querySelector('.pxv'), fmtN(e.g), {}); ov.querySelector('.pxu').textContent = e.t === 'g' ? 'g' : uLab(e);
+      if (pv === '12') [m.k, m.p, m.f, m.c].forEach((v, i) => rollNum(ov.querySelector('.m' + i), r0(v), {}));
       else { const ml = ov.querySelector('.px-mline');   // 5 Nov: the K P F C line rolls too — built once, then only the numbers change
         if (!ml.firstChild) ml.innerHTML = '<i>K</i><span class="rk"></span><i>P</i><span class="rp"></span><i>F</i><span class="rf"></span><i>C</i><span class="rc2"></span>' + (isPc(e) ? '<i>·</i><span class="rg"></span>' : '');
-        [['rk', r0(m.k)], ['rp', r0(m.p)], ['rf', r0(m.f)], ['rc2', r0(m.c)], ['rg', e.g + 'g']].forEach(([c, v]) => { const x = ml.querySelector('.' + c); if (x) rollNum(x, v, { dur: 300, stagger: 14 }); }); }
+        [['rk', r0(m.k)], ['rp', r0(m.p)], ['rf', r0(m.f)], ['rc2', r0(m.c)], ['rg', e.g + 'g']].forEach(([c, v]) => { const x = ml.querySelector('.' + c); if (x) rollNum(x, v, {}); }); }
     } else {
       const rows = []; for (let k = -4; k <= 4; k++) { const g = e.g + k * unit; if (g < 0 || g > lim) continue; const mm = macAt(e, g), d = Math.abs(k * STEP + off);
         rows.push(`<div class="px-dr${k === 0 ? ' on' : ''}" style="transform:translateY(${(k * STEP + off).toFixed(1)}px);opacity:${Math.max(.12, 1 - d / 190).toFixed(2)}"><b>${fmtN(g)}${k === 0 ? `<small>${e.t === 'g' ? 'g' : uLab(e)}</small>` : ''}</b><span>${r0(mm.k)}</span><span>${r0(mm.p)}</span><span>${r0(mm.f)}</span><span>${r0(mm.c)}</span></div>`); }
@@ -3267,7 +3267,7 @@ function openPrecise2(r, y, holding, pv) {
       const tick = () => { v *= .94; step(v * 16 * PX, Math.abs(v)); if (Math.abs(v) > .05) raf = requestAnimationFrame(tick); else { save(); snapBack(); } };
       raf = requestAnimationFrame(tick);
     },
-    close() { cancelAnimationFrame(raf); save(); if (!RM) { card.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, translate: '0 -8px', filter: 'blur(6px)' }], { duration: 220, easing: EASE, fill: 'forwards' }); const mk = ov.querySelector('.px-mark'); if (mk) mk.animate([{ scale: '1 1' }, { scale: '0 1' }], { duration: 200, easing: EASE, fill: 'forwards' }); } ov.classList.remove('show'); ov.style.pointerEvents = 'none';
+    close() { cancelAnimationFrame(raf); save(); ov.classList.remove('show'); ov.style.pointerEvents = 'none';
       setTimeout(() => ov.remove(), 260); precise = null; renderMeal(true); }
   };
   ov.addEventListener('pointerdown', ev => {
