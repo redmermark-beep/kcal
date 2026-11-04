@@ -1,4 +1,4 @@
-# Kcal
+# Rovno
 
 Calorie & macro planner — web prototype.
 
