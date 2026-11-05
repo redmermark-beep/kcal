@@ -2125,13 +2125,14 @@ html body.f31.pal-fresh #app #secMeal .slist>li.row.editing::before,html body.f3
 html body.f31.pal-fresh #app #secMeal .editing>.rc .qv{background:rgba(118,118,128,.12)!important;box-shadow:0 0 0 1px rgba(60,60,67,.12)!important}
 html body.f31.pal-fresh #app #secMeal .editing>.rc .ud{visibility:visible!important}
 /* drag: the lifted row is a white tile with a soft shadow; the merge target gets a solid #ededf1 backing */
-html body.f31.pal-fresh #app #secMeal .slist>li.row::before,html body.f31.pal-fresh #app #secMeal .kids>li.row::before{background:#fff!important;box-shadow:0 2px 4px rgba(0,0,0,.1)!important}
-html body.f31.pal-fresh #app #secMeal .slist>li.group.lifted,html body.f31.pal-fresh #app #secMeal .slist>li.group.drag-clone{background:#fff!important;box-shadow:0 2px 4px rgba(0,0,0,.1)!important}
+html body.f31.pal-fresh #app #secMeal .slist>li.row::before,html body.f31.pal-fresh #app #secMeal .kids>li.row::before{background:#fff!important;box-shadow:none!important}
+html body.f31.pal-fresh #app #secMeal .slist>li.group.lifted,html body.f31.pal-fresh #app #secMeal .slist>li.group.drag-clone{background:#fff!important;box-shadow:none!important}
 html body.f31.pal-fresh #app #secMeal li.row.merge-target::before{background:#ededf1!important;box-shadow:none!important}
 html body.f31.pal-fresh #app #secMeal .group.merge-target{background:#ededf1!important}
 html body.f31.pal-fresh #app #secMeal .lifted .qv,html body.f31.pal-fresh #app #secMeal .drag-clone .qv,html body.f31.pal-fresh #app #secMeal .merge-target .qv{background:rgba(118,118,128,.12)!important}
 /* open group: chevron points up */
 html body.f31 #app #secMeal .group.open>.ghead .name .chev svg{transform:rotate(180deg)}
+html body.f31 #app #secMeal .group:not(.open)>.ghead .name .chev svg{transform:none}   /* closed ⌄, open ⌃ — as in the mockups (was turned to ›) */
 /* recheck vs plan-basic (4 Nov): grams capsule .12 (0 g stays .07), macro numbers .8 ink, deviation line 12 */
 html body.f31.pal-fresh #app #secMeal .slist .qv,html body.f31.pal-fresh #app #secMeal .kids .qv{background:rgba(118,118,128,.12)!important}
 html body.f31.pal-fresh #app #secMeal .zero .qv{background:rgba(118,118,128,.07)!important}
@@ -2175,10 +2176,21 @@ html body.f31.pal-fresh .px18 .px-num .pxu{font:700 32px/32px var(--mono);letter
 html body.f31.pal-fresh .px18 .px-mline{margin-top:8px;display:flex;gap:8px;font:590 11px/14px var(--sans)}
 html body.f31.pal-fresh .px18 .px-mline em{font-style:normal;display:inline-flex;color:#111115}
 html body.f31.pal-fresh .px18 .px-mline i{margin:0;color:rgba(60,60,67,.6);font-style:normal}
+html body.f31.pal-fresh #app #secMeal li.row::before,html body.f31.pal-fresh #app #secMeal li.group,html body.f31.pal-fresh #app #secMeal .slist>li.row.lifted::before,html body.f31.pal-fresh #app #secMeal .slist>li.group.lifted{box-shadow:none!important}
 /* issue #12 (5 Nov): no shadows anywhere while dragging — the lifted row, its clone and the merge target are flat */
 html body.f31 .drag-clone,html body.f31 .drag-clone::before,html body.f31 .drag-clone>.rc,html body.f31 #app #secMeal li.lifted,html body.f31 #app #secMeal li.lifted::before,html body.f31 #app #secMeal li.row::before,html body.f31 #app #secMeal li.merge-target,html body.f31 #app #secMeal li.merge-target::before{box-shadow:none!important;filter:none!important}
+/* issue #7 (5 Nov): swiping past the two tiles stretches them with the finger (each takes half of the extra);
+   past 60 % of the row the bin swallows the whole width and the edit tile folds away — let go and the row is deleted (Undo) */
+html body.f31 #app #secMeal .sa{width:calc(max(0px,calc(60px * var(--rv,0) - 4px)) + var(--ext,0px) / 2)!important}
+html body.f31 #app #secMeal .sw-tog>.acts .sa{transition:width .2s cubic-bezier(.23,1,.32,1),opacity .2s}
+html body.f31 #app #secMeal .sw-full>.acts .sa.ed{width:0!important;opacity:0}
+html body.f31 #app #secMeal .sw-full>.acts{gap:0!important}
+html body.f31 #app #secMeal .sw-full>.acts .sa.del{width:calc(var(--rev,124px) - 8px)!important}
+/* issue #9 (5 Nov): the caret takes no room, so tapping the grams doesn't nudge the number */
+html body.f31 #app #secMeal .qn .caret{width:0!important;height:0!important;margin:0!important;position:relative;vertical-align:baseline!important;background:none!important}
+html body.f31 #app #secMeal .qn .caret::after{content:"";position:absolute;left:-.75px;bottom:-3px;width:1.5px;height:16px;border-radius:1px;background:#111115}
 /* swipe (issue #4): tiles only ever fill the space the row has left — they never slide under it */
-html body.f31 #app #secMeal .sa{width:max(0px,calc(60px * var(--rv,0) - 4px))!important;border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}
+html body.f31 #app #secMeal .sa{border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}   /* width: see issue #7 above */
 </style>
 
 <div class="app" id="app">
@@ -2660,10 +2672,10 @@ const EASES = { standard: 'cubic-bezier(.4,0,.2,1)', out: 'cubic-bezier(.23,1,.3
 const EZ = { standard: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, out: x => 1 - Math.pow(1 - x, 3),
              soft: x => { const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }, linear: x => x };
 const MOTION_DEF = { roll: { dur: 420, travel: 30, travelMax: 10, blurEm: .3, blurMax: 16, damping: .6, stagger: 24 },   // issue #11 (5 Nov); travel capped in px
-                     ruler: { dur: 200, fade: 450, ease: 'standard' } };
+                     ruler: { dur: 220, fade: 150, ease: 'out' } };   // 5 Nov #17: tick slide 220 ms, wave spread 150 ms
 const MOTION = JSON.parse(JSON.stringify(MOTION_DEF));
-try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 9) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
-const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 9 })); } catch (e) {} };
+try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 10) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
+const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 10 })); } catch (e) {} };
 function springCurve(z, n = 40) {   // samples of a damped spring 0→1 over t∈[0,1]; settles at t≈1
   const w = 4.6 / z, wd = w * Math.sqrt(Math.max(1e-4, 1 - z * z)), pts = [];
   for (let i = 0; i <= n; i++) { const t = i / n; pts.push(i === n ? 1 : 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + z * w / wd * Math.sin(wd * t))); }
@@ -2735,7 +2747,7 @@ const isPc = e => e.t !== 'g' && U(e) === 'pc' && e.uw > 0;
 const toU = (e, g) => isPc(e) ? Math.round(g / e.uw * 10) / 10 : g;
 const fmtAmt = (e, g) => e.t === 'g' ? `${g}g` : `${toU(e, g)}${uLab(e)}`;
 const money = v => Math.round(v).toLocaleString('ru-RU');
-const macHTML = m => `<span>${r0(m.k)}<i>K</i></span><span>${r0(m.p)}<i>P</i></span><span>${r0(m.f)}<i>F</i></span><span>${r0(m.c)}<i>C</i></span>`;   // BASIC (4 Nov): number, then the chip's letter — «450K 30P 10F 40C»
+const macHTML = m => `<span>${r0(m.k)}<i>KCAL</i></span><span>${r0(m.p)}<i>P</i></span><span>${r0(m.f)}<i>F</i></span><span>${r0(m.c)}<i>C</i></span>`;   // issue #16 (5 Nov): KCAL, not K. BASIC (4 Nov): number, then the chip's letter — «450K 30P 10F 40C»
 function fieldHTML(buf, ph, unit) { return buf ? `${buf}<i class="caret"></i>${unit}` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
 /* To review (24 Oct): products added from Nutrients wait under the plan with a suggested portion until they get grams */
 const revOf = (p = plan()) => (p.rev ||= {});
@@ -2874,7 +2886,7 @@ const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21'
    «Send to Claude» files them as a GitHub issue so they can become the defaults */
 const ML_ROWS = [
   ['roll', 'Numbers', [['dur', 'Duration', 150, 1200, 10, 'ms'], ['travel', 'Travel · share of size', 0, 100, 1, '%'], ['travelMax', 'Travel · max', 0, 60, 1, 'px'], ['blurEm', 'Blur · share of size', 0, .4, .01, ''], ['blurMax', 'Blur · max', 0, 30, 1, 'px'], ['damping', 'Spring (1 = none)', .4, 1, .01, ''], ['stagger', 'Delay between digits', 0, 80, 1, 'ms']]],
-  ['ruler', 'Ruler opens', [['dur', 'Ticks open', 0, 800, 10, 'ms'], ['fade', 'Number and marker fade', 0, 600, 10, 'ms']]]];
+  ['ruler', 'Ruler opens', [['dur', 'Each tick slides in', 0, 800, 10, 'ms'], ['fade', 'Wave from the centre', 0, 600, 10, 'ms']]]];
 const ML_EASE = [['standard', 'Smooth'], ['out', 'Out'], ['soft', 'Spring'], ['linear', 'Linear']];
 const mlFmt = (v, u) => (Math.abs(v) < 1 && v !== 0 ? (+v).toFixed(2) : Math.round(v * 100) / 100) + (u ? ' ' + u : '');
 function mlabHTML() {
@@ -2882,7 +2894,7 @@ function mlabHTML() {
       <div class="ml-btns"><button data-ml="-">−</button><button data-ml="+">+</button><button data-ml="big">Random</button><button data-ml="ruler">Ruler</button></div></div>` +
     ML_ROWS.map(([g, title, rows]) => `<div class="ml-t">${title}</div>` + (g === 'wheel' ? '' : '') + rows.map(([k, l, mn, mx, st, u]) =>
       `<label class="ml-r"><span>${l}</span><em data-mv="${g}.${k}">${mlFmt(MOTION[g][k], u)}</em><input type="range" min="${mn}" max="${mx}" step="${st}" value="${MOTION[g][k]}" data-mk="${g}.${k}" data-u="${u}"></label>`).join('') +
-      (g !== 'ruler' ? '' : `<div class="ml-r ml-e"><span>Curve</span><div class="st-seg">${ML_EASE.map(([k, l]) => `<button data-me="${g}.${k}" class="${MOTION[g].ease === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`)).join('') +
+      (true ? '' : `<div class="ml-r ml-e"><span>Curve</span><div class="st-seg">${ML_EASE.map(([k, l]) => `<button data-me="${g}.${k}" class="${MOTION[g].ease === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`)).join('') +
     `<div class="ml-act"><button data-ml="send">Send to Claude</button><button data-ml="reset">Reset</button></div>`;
 }
 (() => { let demo = 3045;
@@ -3014,8 +3026,14 @@ document.addEventListener('pointerdown', e => {
 window.addEventListener('pointermove', e => {
   if (G && !G.fired) {
     const dx = e.clientX - G.x, dy = e.clientY - G.y;
-    if (G.sw) { let x = dx; if (x < -G.w) x = -G.w + (x + G.w) * .3; if (x > 0) x *= .2; G.cx = x; swSet(G.host, x, false);
-      const past = x < -G.w * .45; if (past !== !!G.past) { G.past = past; if (past) haptic(); } return; }
+    if (G.sw) { const meal = !!G.host.closest('#secMeal') && !G.host.classList.contains('rev'), rw = G.host.getBoundingClientRect().width;
+      let x = dx; if (x > 0) x *= .2;
+      if (meal) x = Math.max(x, -rw + 8); else if (x < -G.w) x = -G.w + (x + G.w) * .3;   // 5 Nov #7: on Meal the tiles keep stretching with the finger
+      G.cx = x; swSet(G.host, x, false);
+      if (meal) { const ext = Math.max(0, -x - G.w), full = -x > rw * .6;   // past 60 % of the row: the bin takes the whole width
+        G.host.style.setProperty('--ext', ext.toFixed(1) + 'px'); G.host.style.setProperty('--rev', (-x).toFixed(1) + 'px');
+        if (full !== !!G.full) { G.full = full; const h = G.host; h.classList.add('sw-tog'); h.classList.toggle('sw-full', full); clearTimeout(h._tg); h._tg = setTimeout(() => h.classList.remove('sw-tog'), 220); haptic(); } }
+      const past = x < -G.w * .45; if (past !== !!G.past) { G.past = past; if (past && !G.full) haptic(); } return; }
     if (G.host && G.host.querySelector(':scope>.acts') && dx < -10 && Math.abs(dx) > Math.abs(dy) * 1.3) {
       clearTimeout(G.timer); clearTimeout(G.pt); G.el.classList.remove('pressing');
       G.sw = true; lockScroll = true; G.w = actsW(G.host); G.cx = 0; return;
@@ -3032,6 +3050,9 @@ function cancelPress() { if (!G) return; clearTimeout(G.timer); clearTimeout(G.p
 function endPointer(e, cancelled) {
   if (G && G.sw) {
     const g = G; G = null; lockScroll = false;
+    const clr = () => { g.host.classList.remove('sw-full'); g.host.style.removeProperty('--ext'); g.host.style.removeProperty('--rev'); };
+    if (!cancelled && g.full) { const del = g.host.querySelector(':scope>.acts [data-sw="del"]'); if (del) { del.click(); setTimeout(clr, 500); return; } }   // full swipe = delete, with Undo
+    clr();
     if (!cancelled && g.cx < -g.w * .45) { swOpen = g.host; g.host.classList.add('sw-open'); swSet(g.host, -actsW(g.host), true); }
     else swSet(g.host, 0, true);
     return;
@@ -3098,16 +3119,24 @@ function removeWithUndo(kind, id, host) {
   rc.animate([{ transform: rc.style.transform || 'none', opacity: 1 }, { transform: 'translateX(-110%)', opacity: 0 }], { duration: 220, easing: EASE, fill: 'forwards' }).onfinish = go;
 }
 function toggleGroup(gr) {
+  // 5 Nov (issue #18): open / close in place — the group's own height animates (rows below simply follow, no FLIP fly-in),
+  // the ingredients fade in / out, the chevron turns between ⌄ (closed) and ⌃ (open)
   const el = list.querySelector(`[data-id="${gr.id}"]`);
+  const pad = el ? (parseFloat(getComputedStyle(el).paddingTop) || 0) + (parseFloat(getComputedStyle(el).paddingBottom) || 0) : 0;
   if (gr.open && el && !RM) {
-    const h0 = el.getBoundingClientRect().height, h1 = el.querySelector('.ghead').getBoundingClientRect().height + 8;
+    const h0 = el.getBoundingClientRect().height, h1 = el.querySelector('.ghead').getBoundingClientRect().height + pad;
     el.classList.remove('open'); el.style.overflow = 'hidden';
-    el.querySelector('.kids').animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-4px)' }], { duration: 180, easing: EASE, fill: 'forwards' });
-    el.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 380, easing: SPRING }).onfinish = () => { gr.open = false; save(); renderList(); renderHeader(); };
+    const k = el.querySelector('.kids'); if (k) k.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-4px)' }], { duration: 160, easing: EASE, fill: 'forwards' });
+    el.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 320, easing: EASE }).onfinish = () => { gr.open = false; save(); renderList(); renderHeader(); };
     return;
   }
-  gr.open = !gr.open; save();
-  const before = snapRects(); renderList(); renderHeader(); playFlip(before, { stagger: true });
+  const h0 = el && !RM ? el.getBoundingClientRect().height : 0;
+  gr.open = !gr.open; save(); renderList(); renderHeader();
+  const nel = list.querySelector(`[data-id="${gr.id}"]`); if (!nel || RM || !gr.open) return;
+  const h1 = nel.getBoundingClientRect().height; nel.style.overflow = 'hidden';
+  nel.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 320, easing: EASE }).onfinish = () => { nel.style.overflow = ''; };
+  const k = nel.querySelector('.kids'); if (k) k.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 260, delay: 60, easing: EASE, fill: 'backwards' });
+  const sv = nel.querySelector('.ghead .chev svg'); if (sv) sv.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(180deg)' }], { duration: 300, easing: EASE });
 }
 
 /* ================= drag & merge ================= */
@@ -3334,14 +3363,18 @@ function openPrecise2(r, y, holding, pv) {
   if (rul) { H = rul.clientHeight; M = Math.ceil(H / 2 / STEP) + 2; for (let i = -M; i <= M; i++) { const t = document.createElement('i'); rul.appendChild(t); ticks.push(t); } }
   // 5 Nov v3: entrance — the ticks open out from the centre line (driven by paint, no per-tick animations: Safari flickered),
   // the marker and the number just fade in. Timing and curve come from MOTION.ruler (Settings → Motion lab).
-  let openK = 1, fadeK = 1;
-  ov.style.transition = RM ? '' : `opacity ${MOTION.ruler.fade}ms cubic-bezier(.4,0,.2,1)`;
-  const startOpen = () => { if (RM) return; const R = MOTION.ruler, t0 = performance.now(), ez = EZ[R.ease] || EZ.out, mk = ov.querySelector('.px-mark');
-    openK = 0; fadeK = 0; card.style.opacity = 0; if (mk) mk.style.opacity = 0;
-    const f = now => { const t = now - t0, fo = R.fade > 0 ? EZ.standard(Math.min(1, t / R.fade)) : 1; fadeK = fo; openK = R.dur > 0 ? ez(Math.min(1, t / R.dur)) : 1;
-      card.style.opacity = fo; if (mk) mk.style.opacity = fo; paint();
-      if (t < Math.max(R.dur, R.fade)) requestAnimationFrame(f); else { openK = 1; card.style.opacity = ''; if (mk) mk.style.opacity = ''; paint(); } };
-    requestAnimationFrame(f); };
+  let openK = 1, fadeK = 1, openT0 = -1e9;
+  ov.style.transition = RM ? '' : `opacity ${Math.min(200, MOTION.ruler.dur)}ms cubic-bezier(.23,1,.32,1)`;
+  // 5 Nov (issue #17): entrance ≈ 300 ms — ticks slide in from the left by 10 px as a wave from the centre outwards
+  // (wave spread = MOTION.ruler.fade, each tick = MOTION.ruler.dur), the centre tick grows to the marker as it lands;
+  // the number comes out of a light blur at .96 scale, the name and the macros follow 4 px lower, slightly later.
+  const startOpen = () => { if (RM) return; const R = MOTION.ruler; openT0 = performance.now();
+    const f = now => { paint(); if (now - openT0 < R.dur + R.fade + 20) requestAnimationFrame(f); else { openT0 = -1e9; paint(); } };
+    requestAnimationFrame(f);
+    const ez = EASES.out, num = card.querySelector('.px-num'), nm = card.querySelector('.px-name'), ml = card.querySelector('.px-mline');
+    if (num) num.animate([{ opacity: 0, transform: 'scale(.96)', filter: 'blur(6px)' }, { opacity: 1, transform: 'none', filter: 'blur(0px)' }], { duration: 280, easing: ez, fill: 'backwards' });
+    [[nm, 40], [ml, 90]].forEach(([x, dl]) => { if (x) x.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 240, delay: dl, easing: ez, fill: 'backwards' }); });
+  };
   let phase = 0, acc = 0, lastY = y, lastT = performance.now(), vel = 0, raf = 0, moved = false;
   const fmtN = g => String(toU(e, g));
   const paint = () => {
@@ -3350,7 +3383,7 @@ function openPrecise2(r, y, holding, pv) {
       rollNum(ov.querySelector('.pxv'), fmtN(e.g), {}); ov.querySelector('.pxu').textContent = e.t === 'g' ? 'g' : uLab(e);
       if (pv === '12') [m.k, m.p, m.f, m.c].forEach((v, i) => rollNum(ov.querySelector('.m' + i), r0(v), {}));
       else { const ml = ov.querySelector('.px-mline');   // 5 Nov: the K P F C line rolls too — built once, then only the numbers change
-        if (!ml.firstChild) ml.innerHTML = '<em><span class="rk"></span><i>K</i></em><em><span class="rp"></span><i>P</i></em><em><span class="rf"></span><i>F</i></em><em><span class="rc2"></span><i>C</i></em>' + (isPc(e) ? '<em><span class="rg"></span></em>' : '');   // 5 Nov: «450K 30P 10F 40C», as under the products
+        if (!ml.firstChild) ml.innerHTML = '<em><span class="rk"></span><i>KCAL</i></em><em><span class="rp"></span><i>P</i></em><em><span class="rf"></span><i>F</i></em><em><span class="rc2"></span><i>C</i></em>' + (isPc(e) ? '<em><span class="rg"></span></em>' : '');   // 5 Nov: «450K 30P 10F 40C», as under the products
         [['rk', r0(m.k)], ['rp', r0(m.p)], ['rf', r0(m.f)], ['rc2', r0(m.c)], ['rg', e.g + 'g']].forEach(([c, v]) => { const x = ml.querySelector('.' + c); if (x) rollNum(x, v, {}); }); }
     } else {
       const rows = []; for (let k = -4; k <= 4; k++) { const g = e.g + k * unit; if (g < 0 || g > lim) continue; const mm = macAt(e, g), d = Math.abs(k * STEP + off);
@@ -3361,10 +3394,14 @@ function openPrecise2(r, y, holding, pv) {
     if (rul) { const n0 = Math.round(e.g / unit), c = H / 2;
       // 5 Nov (Figma 540:33500, issue #14): no fixed marker — the tick at the centre IS the marker. As a tick nears the centre it
       // grows from 26 (every 5th: 42) to 66 px and from .1 (.2) to full ink; ticks fade out towards the top and bottom edges.
-      ticks.forEach((t, i) => { const k = i - M, yy = c + (k * STEP + off) * openK, big = ((n0 + k) % 5 + 5) % 5 === 0, dd = Math.abs(yy - c);
+      // issue #15: a soft detent — near a tick the offset is pulled towards it, so the ruler «clicks» into the divisions
+      const dt = off / (STEP / 2), offD = pv === '18' ? Math.sign(dt) * Math.pow(Math.min(1, Math.abs(dt)), 1.7) * STEP / 2 : off;
+      const R = MOTION.ruler, now = performance.now(), opening = now - openT0 < R.dur + R.fade + 20, Mx = Math.max(1, M);
+      ticks.forEach((t, i) => { const k = i - M, yy = c + (k * STEP + offD) * openK, big = ((n0 + k) % 5 + 5) % 5 === 0, dd = Math.abs(yy - c);
         const pr = Math.max(0, 1 - dd / STEP), q = pr * pr * (3 - 2 * pr), w0 = big ? 42 : 26, a0 = big ? .2 : .1, edge = Math.max(0, 1 - dd / c);
-        t.style.transform = `translateY(${yy.toFixed(1)}px)`; t.style.width = (w0 + (66 - w0) * q).toFixed(1) + 'px';
-        t.style.opacity = ((a0 + (1 - a0) * q) * (q > 0 ? 1 : edge) * fadeK).toFixed(3); }); }
+        const lp = opening ? EZ.out(Math.max(0, Math.min(1, (now - openT0 - Math.abs(k) / Mx * R.fade) / Math.max(1, R.dur)))) : 1;
+        t.style.transform = `translate(${(-10 * (1 - lp)).toFixed(2)}px, ${yy.toFixed(1)}px)`; t.style.width = (w0 + (66 - w0) * q * lp).toFixed(1) + 'px';
+        t.style.opacity = ((a0 + (1 - a0) * q * lp) * (q > 0 ? 1 : edge) * fadeK * lp).toFixed(3); }); }
     if (pv === '15') {
       const ds = dayState();
       if (pv === '15') ov.querySelector('.px-chips').innerHTML = ds.map(x => `<span class="hs ${x.st}"><small>${x.k === 'k' ? 'kcal' : x.l[0]}</small><em>${x.d}</em></span>`).join('');
@@ -3418,6 +3455,7 @@ function openPrecise2(r, y, holding, pv) {
     cancelAnimationFrame(raf); moved = false; lastY = ev.clientY; lastT = ev.timeStamp; vel = 0;
     precise.holding = true; precise.startY = ev.clientY; lockScroll = true; ov.setPointerCapture(ev.pointerId);
   });
+  ov.addEventListener('pointercancel', ev => { if (precise && precise.holding) { lockScroll = false; precise.release(); } });   // issue #15: never stay between ticks
   ov.addEventListener('pointermove', ev => { if (precise && precise.holding && ov.hasPointerCapture(ev.pointerId)) precise.move(ev.clientY, ev.timeStamp); });
   ov.addEventListener('pointerup', ev => {
     if (!precise || precise.startY === undefined) return;
