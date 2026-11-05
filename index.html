@@ -2155,6 +2155,11 @@ html body.f31.pal-fresh #app #secMeal #mhead.stuck::after{opacity:1}
 #mlab .ml-e{grid-template-columns:auto 1fr}
 #mlab .ml-e .st-seg{justify-self:end}
 #mlab .ml-act{display:flex;gap:8px;margin-top:16px}
+/* 5 Nov: numbers on Meal in SF Mono, like the ruler — the «1» gets its foot and every digit has the same width
+   (chip numbers, «of …», deviations, macro numbers; the macro letters stay SF Pro) */
+html body.f31.pal-fresh #app .hv53 .hc b.v,html body.f31.pal-fresh #app .hv53 .hc .of{font-family:var(--mono)!important;letter-spacing:-.04em!important}
+html body.f31.pal-fresh #app #secMeal .info .mac>span{font-family:var(--mono)!important;letter-spacing:-.02em!important}
+html body.f31.pal-fresh #app #secMeal .info .mac>span>i{font-family:var(--sans)!important;letter-spacing:0!important}
 /* swipe (issue #4): tiles only ever fill the space the row has left — they never slide under it */
 html body.f31 #app #secMeal .sa{width:max(0px,calc(60px * var(--rv,0) - 4px))!important;border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}
 </style>
