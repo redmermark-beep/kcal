@@ -2625,14 +2625,14 @@ let wasAllOk = null;
 /* BASIC (4 Nov, issue #6; 5 Nov v2): numbers roll digit by digit as a dissolve — the old digit drifts a little and melts away
    (blur 0 → ~0.17 em, max 16 px, opacity → 0) while the new one condenses out of the same blur from the other side.
    Out and in share one duration and one curve. Grows: new from above, old goes down; shrinks: the other way. */
-const EASES = { standard: 'cubic-bezier(.4,0,.2,1)', out: 'cubic-bezier(.2,.8,.2,1)', soft: 'cubic-bezier(.3,1.3,.5,1)', linear: 'linear' };
+const EASES = { standard: 'cubic-bezier(.4,0,.2,1)', out: 'cubic-bezier(.23,1,.32,1)', soft: 'cubic-bezier(.3,1.3,.5,1)', linear: 'linear' };
 const EZ = { standard: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, out: x => 1 - Math.pow(1 - x, 3),
              soft: x => { const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }, linear: x => x };
-const MOTION_DEF = { roll: { style: 'ios', dur: 750, fade: 350, damping: .75, travel: 100, blurEm: .12, blurMax: 4, squish: .3, stagger: 20, ease: 'standard', rapid: 1 },   // 5 Nov: the reference — iOS numericText / NumberFlow iOS preset
+const MOTION_DEF = { roll: { style: 'blur', dur: 450, fade: 450, damping: .68, travel: 50, blurEm: .1, blurMax: 10, squish: 0, stagger: 20, ease: 'out', rapid: 1 },   // 5 Nov: «blur spring» — spring slide + eased blur/fade, as animated-blur-number (iOS numericText with blur)
                      ruler: { dur: 200, fade: 450, ease: 'standard' } };
 const MOTION = JSON.parse(JSON.stringify(MOTION_DEF));
-try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 3) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
-const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 3 })); } catch (e) {} };
+try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 4) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
+const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 4 })); } catch (e) {} };
 /* 5 Nov: the reference roll — how iOS numericText / NumberFlow's iOS preset move a digit:
    a whole-line slide on a slightly bouncy spring (750 ms), a separate 350 ms ease-out fade for the leaving and arriving glyph,
    blur and horizontal squish that follow the digit's speed (sharp at rest, peak ~4 px / 30% mid-flight),
@@ -2641,6 +2641,31 @@ function springCurve(z, n = 40) {   // samples of a damped spring 0→1 over t�
   const w = 4.6 / z, wd = w * Math.sqrt(Math.max(1e-4, 1 - z * z)), pts = [];
   for (let i = 0; i <= n; i++) { const t = i / n; pts.push(i === n ? 1 : 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + z * w / wd * Math.sin(wd * t))); }
   return pts;
+}
+/* 5 Nov: «blur spring» (default) — the way animated-blur-number does iOS numericText with a blur on top:
+   the slide rides a damped spring (ζ ≈ 0.68, a ~5% overshoot) baked into a CSS linear() curve; opacity and blur ride a plain
+   strong ease-out on a separate animation, so the overshoot never pushes them past 0 / 1. Both digits share one duration. */
+const LIN_OK = (() => { try { return CSS.supports('animation-timing-function', 'linear(0, 1)'); } catch (e) { return false; } })();
+const springEase = z => LIN_OK ? `linear(${springCurve(z, 48).map(v => +v.toFixed(4)).join(', ')})` : 'cubic-bezier(.3,1.25,.5,1)';
+function rollBlur(el, o, s, M_) {
+  const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, dy = num(s) > num(o) ? 1 : -1;
+  const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' '), f = document.createDocumentFragment(), anims = [];
+  const fs = parseFloat(getComputedStyle(el).fontSize) || 16, bl = Math.min(M_.blurMax, fs * M_.blurEm).toFixed(1), sp = springEase(M_.damping), fe = EASES[M_.ease] || M_.ease;
+  let lead = 0;
+  for (let i = 0; i < L; i++) {
+    if (po[i] === pn[i]) { if (pn[i] !== ' ') f.append(pn[i]); continue; }
+    const d = document.createElement('x-dg'), n = document.createElement('x-dn'), x = document.createElement('x-do');
+    n.textContent = pn[i] === ' ' ? '' : pn[i]; x.textContent = po[i] === ' ' ? '' : po[i]; d.append(n, x); f.append(d);
+    if (pn[i] === ' ') { n.textContent = po[i]; n.style.visibility = 'hidden'; }
+    const delay = lead++ * M_.stagger, T = M_.travel;
+    anims.push([n, [{ transform: `translateY(${-T * dy}%)` }, { transform: 'none' }], { duration: M_.dur, delay, easing: sp, fill: 'backwards' }],
+               [x, [{ transform: 'none' }, { transform: `translateY(${T * dy}%)` }], { duration: M_.dur, delay, easing: sp, fill: 'forwards' }],
+               [n, [{ opacity: 0, filter: `blur(${bl}px)` }, { opacity: 1, filter: 'blur(0px)' }], { duration: M_.fade, delay, easing: fe, fill: 'backwards' }],
+               [x, [{ opacity: 1, filter: 'blur(0px)' }, { opacity: 0, filter: `blur(${bl}px)` }], { duration: M_.fade, delay, easing: fe, fill: 'forwards' }]);
+  }
+  el.textContent = ''; el.append(f);
+  anims.forEach(([n, k, opt]) => n.animate(k, opt));
+  return Math.max(M_.dur, M_.fade) + lead * M_.stagger;
 }
 function rollIOS(el, o, s, M_) {
   const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, dy = num(s) > num(o) ? 1 : -1;
@@ -2669,7 +2694,7 @@ function rollNum(el, s, o2 = {}) {
   const now = performance.now(), rapid = el._busy > now;   // a new value while the last one still rolls: shorter, no stagger — digits never pile up
   const M_ = { ...MOTION.roll, ...o2 }; if (rapid) { M_.dur = Math.round(M_.dur * M_.rapid); M_.stagger = 0; }
   el.getAnimations({ subtree: true }).forEach(a => a.cancel()); el._busy = now + M_.dur;
-  if (M_.style === 'ios') { const t = rollIOS(el, o, s, M_); clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, t + 60); return; }
+  if (M_.style === 'ios' || M_.style === 'blur') { const t = (M_.style === 'ios' ? rollIOS : rollBlur)(el, o, s, M_); clearTimeout(el._rt); el._rt = setTimeout(() => { if (el.dataset.n === s) el.textContent = s; }, t + 60); return; }
   const fs = parseFloat(getComputedStyle(el).fontSize) || 16, bl = Math.min(M_.blurMax, Math.max(1.5, fs * M_.blurEm)).toFixed(1);
   const num = x => parseFloat(String(x).replace(/[^\d.\-]/g, '')) || 0, up = num(s) > num(o);
   const L = Math.max(o.length, s.length), po = o.padStart(L, ' '), pn = s.padStart(L, ' '), dy = up ? 1 : -1, f = document.createDocumentFragment(), anims = [];
@@ -2849,14 +2874,14 @@ const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21'
 /* Motion lab (5 Nov): tune animations on the phone — values live on this device (localStorage «rovno-motion»),
    «Send to Claude» files them as a GitHub issue so they can become the defaults */
 const ML_ROWS = [
-  ['roll', 'Numbers roll', [['dur', 'Duration', 100, 1500, 10, 'ms'], ['fade', 'Fade (iOS style)', 0, 1000, 10, 'ms'], ['damping', 'Spring damping (iOS style)', .3, 1, .01, ''], ['travel', 'Travel', 0, 150, 1, '%'], ['blurEm', 'Blur · share of size', 0, .5, .01, ''], ['blurMax', 'Blur · max', 0, 40, 1, 'px'], ['squish', 'Squish while moving', 0, .5, .01, ''], ['stagger', 'Delay between digits', 0, 80, 1, 'ms'], ['rapid', 'Fast scrolling · duration ×', .1, 1, .05, '']]],
+  ['roll', 'Numbers roll', [['dur', 'Duration', 100, 1500, 10, 'ms'], ['fade', 'Fade + blur (Blur spring, iOS)', 0, 1000, 10, 'ms'], ['damping', 'Spring damping (Blur spring, iOS)', .3, 1, .01, ''], ['travel', 'Travel', 0, 150, 1, '%'], ['blurEm', 'Blur · share of size', 0, .5, .01, ''], ['blurMax', 'Blur · max', 0, 40, 1, 'px'], ['squish', 'Squish while moving', 0, .5, .01, ''], ['stagger', 'Delay between digits', 0, 80, 1, 'ms'], ['rapid', 'Fast scrolling · duration ×', .1, 1, .05, '']]],
   ['ruler', 'Ruler opens', [['dur', 'Ticks open', 0, 800, 10, 'ms'], ['fade', 'Number and marker fade', 0, 600, 10, 'ms']]]];
 const ML_EASE = [['standard', 'Smooth'], ['out', 'Out'], ['soft', 'Spring'], ['linear', 'Linear']];
 const mlFmt = (v, u) => (Math.abs(v) < 1 && v !== 0 ? (+v).toFixed(2) : Math.round(v * 100) / 100) + (u ? ' ' + u : '');
 function mlabHTML() {
   return `<div class="ml-demo"><b class="ml-big" data-n="3045">3045</b><b class="ml-small" data-n="3045">3045</b>
       <div class="ml-btns"><button data-ml="-">−</button><button data-ml="+">+</button><button data-ml="big">Random</button><button data-ml="ruler">Ruler</button></div></div>` +
-    `<div class="ml-r ml-e"><span>Style</span><div class="st-seg">${[['ios', 'iOS'], ['dissolve', 'Dissolve']].map(([k, l]) => `<button data-mst="${k}" class="${(MOTION.roll.style || 'dissolve') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` +
+    `<div class="ml-r ml-e"><span>Style</span><div class="st-seg">${[['blur', 'Blur spring'], ['ios', 'iOS'], ['dissolve', 'Dissolve']].map(([k, l]) => `<button data-mst="${k}" class="${(MOTION.roll.style || 'dissolve') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` +
     ML_ROWS.map(([g, title, rows]) => `<div class="ml-t">${title}</div>` + rows.map(([k, l, mn, mx, st, u]) =>
       `<label class="ml-r"><span>${l}</span><em data-mv="${g}.${k}">${mlFmt(MOTION[g][k], u)}</em><input type="range" min="${mn}" max="${mx}" step="${st}" value="${MOTION[g][k]}" data-mk="${g}.${k}" data-u="${u}"></label>`).join('') +
       `<div class="ml-r ml-e"><span>Curve</span><div class="st-seg">${ML_EASE.map(([k, l]) => `<button data-me="${g}.${k}" class="${MOTION[g].ease === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`).join('') +
