@@ -2101,6 +2101,9 @@ html body.f31.pal-fresh #app .hv53 .hc .hc-top em.d{font:590 12px/14px var(--san
 html body.f31.pal-fresh #app .hv53 .hc b.v,html body.f31.pal-fresh #app .hv53 .hc .of,html body.f31.pal-fresh #app .hv53 .hc em.d{font-variant-numeric:tabular-nums!important;font-feature-settings:'tnum' 1!important}
 /* digits roll: a changed digit slides in from above when the number grows, from below when it shrinks */
 x-dg{display:inline-block;position:relative;vertical-align:baseline}
+x-wc{display:inline-block;position:relative;vertical-align:baseline}
+x-ws{visibility:hidden}
+x-wg{position:absolute;left:0;top:0;white-space:pre;will-change:transform}
 x-sc{display:inline-block;padding:0 .3em;margin:0 -.3em}   /* scrub: one span per digit, padded so the blur isn't clipped */
 x-dg>x-dn{display:block;padding:.35em;margin:-.35em}
 x-dg>x-do{position:absolute;left:0;top:0;padding:.35em;margin:-.35em}
@@ -2613,7 +2616,7 @@ function renderHV(g, t) {
     el.classList.remove('ok', 'under', 'over'); el.classList.add(state);
     { const ve = el.querySelector(':scope .v'); if (ve.tagName === 'B' && el.classList.contains('hc')) rollNum(ve, String(r0(v))); else ve.textContent = r0(v); } el.querySelector(':scope .g').textContent = r0(goalV);
     const sg = dev > 0 ? '+' : dev < 0 ? '−' : '±';
-    { const de = el.querySelector(':scope .d'); if (state === 'ok' && el.classList.contains('hc')) { if (de.dataset.n !== 'ok') { de.innerHTML = CHK_T2; de.dataset.n = 'ok'; } } else if (el.classList.contains('hc')) { if (de.dataset.n === 'ok') { delete de.dataset.n; de.textContent = ''; } rollNum(de, sg + Math.abs(dev)); } else de.textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev); }
+    { const de = el.querySelector(':scope .d'); if (state === 'ok' && el.classList.contains('hc')) { if (de.dataset.n !== 'ok') { de._wh = null; de.innerHTML = CHK_T2; de.dataset.n = 'ok'; } } else if (el.classList.contains('hc')) { if (de.dataset.n === 'ok') { delete de.dataset.n; de._wh = null; de.textContent = ''; } rollNum(de, sg + Math.abs(dev)); } else de.textContent = (state === 'ok' ? '✓ ' : '') + sg + Math.abs(dev); }
     const tr = el.querySelector(':scope > .ht') || [...el.children].find(c => c.classList && c.classList.contains('ht'));
     if (tr) tr.style.setProperty('--x', Math.max(4, Math.min(96, 50 + (v - goalV) / (half * 5) * 100)).toFixed(1) + '%');
   });
@@ -2629,11 +2632,12 @@ let wasAllOk = null;
 const EASES = { standard: 'cubic-bezier(.4,0,.2,1)', out: 'cubic-bezier(.23,1,.32,1)', soft: 'cubic-bezier(.3,1.3,.5,1)', linear: 'linear' };
 const EZ = { standard: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, out: x => 1 - Math.pow(1 - x, 3),
              soft: x => { const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }, linear: x => x };
-const MOTION_DEF = { roll: { style: 'blur', dur: 450, fade: 450, damping: .68, travel: 50, blurEm: .1, blurMax: 10, squish: 0, stagger: 20, ease: 'out', fastGap: 140, scrubEm: .14, scrubMax: 10, settle: 140 },   // 5 Nov: «blur spring» — spring slide + eased blur/fade, as animated-blur-number (iOS numericText with blur)
+const MOTION_DEF = { wheel: { response: 380, damping: .82, travel: .75, window: .6, edgeBlur: .08, velBlur: .0015, blurMax: 4 },
+                     roll: { style: 'wheel', dur: 450, fade: 450, damping: .68, travel: 50, blurEm: .1, blurMax: 10, squish: 0, stagger: 20, ease: 'out', fastGap: 140, scrubEm: .14, scrubMax: 10, settle: 140 },   // 5 Nov: «blur spring» — spring slide + eased blur/fade, as animated-blur-number (iOS numericText with blur)
                      ruler: { dur: 200, fade: 450, ease: 'standard' } };
 const MOTION = JSON.parse(JSON.stringify(MOTION_DEF));
-try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 6) ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
-const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 6 })); } catch (e) {} };
+try { const m = JSON.parse(localStorage.getItem('rovno-motion') || 'null'); if (m && m.v === 7) ['wheel', 'roll', 'ruler'].forEach(k => Object.assign(MOTION[k], m[k] || {})); } catch (e) {}
+const saveMotion = () => { try { localStorage.setItem('rovno-motion', JSON.stringify({ ...MOTION, v: 7 })); } catch (e) {} };
 /* 5 Nov: the reference roll — how iOS numericText / NumberFlow's iOS preset move a digit:
    a whole-line slide on a slightly bouncy spring (750 ms), a separate 350 ms ease-out fade for the leaving and arriving glyph,
    blur and horizontal squish that follow the digit's speed (sharp at rest, peak ~4 px / 30% mid-flight),
@@ -2689,6 +2693,56 @@ function rollIOS(el, o, s, M_) {
   anims.forEach(([n, k, opt]) => n.animate(k, opt));
   return M_.dur + lead * M_.stagger;
 }
+/* 5 Nov v4 — «Wheel» (default): one continuous odometer per digit position, driven by a spring that retargets without losing
+   velocity — so a fast flick never restarts anything, the wheels just spin faster and settle. Each position's state is the
+   integer floor(value / 10^i); its glyphs sit one line apart, the next value waiting above (growing) and the old one leaving below.
+   Glyphs fade and blur by their distance from the centre line (soft edges, no frame) and blur with the wheel's speed.
+   A leading digit's column grows / shrinks its width with the same spring (99 → 100). */
+const WHEELS = new Set(); let wheelRaf = 0, wheelT = 0;
+const WRE = /^([+\-−]?)(\d+)(\D*)$/;
+function wheelNum(el, o, s) {
+  const m = WRE.exec(s); if (!m) return false;
+  let w = el._wh;
+  if (!w) { const pm = WRE.exec(o || ''); if (!pm) return false;
+    const cs = getComputedStyle(el); w = el._wh = { cols: [], fs: parseFloat(cs.fontSize) || 16, lh: parseFloat(cs.lineHeight) || (parseFloat(cs.fontSize) || 16) * 1.15, ls: parseFloat(cs.letterSpacing) || 0, pre: null, suf: null, v: +pm[2] };
+    el.textContent = ''; w.pre = document.createElement('x-wa'); w.suf = document.createElement('x-wa'); el.append(w.pre, w.suf);
+    w.pre.textContent = pm[1]; w.suf.textContent = pm[3]; wheelCols(w, el, String(+pm[2]).length);
+    w.cols.forEach((c, i) => { c.p = Math.floor(w.v / 10 ** i); c.vel = 0; }); }
+  w.pre.textContent = m[1]; w.suf.textContent = m[3]; w.v = +m[2];
+  wheelCols(w, el, Math.max(w.cols.length, m[2].length));
+  w.cols.forEach((c, i) => { const T = Math.floor(w.v / 10 ** i); if (Math.abs(T - c.p) > 12) c.p = T - Math.sign(T - c.p) * 12; c.T = T; });
+  WHEELS.add(el); if (!wheelRaf) { wheelT = performance.now(); wheelRaf = requestAnimationFrame(wheelTick); }
+  return true;
+}
+function wheelCols(w, el, n) {   // make sure there are n columns (index 0 = units, columns are inserted on the left)
+  while (w.cols.length < n) { const i = w.cols.length, c = { p: 0, vel: 0, T: 0, g: [] };
+    c.el = document.createElement('x-wc'); const sp = document.createElement('x-ws'); sp.textContent = '0'; c.el.append(sp);
+    for (let k = 0; k < 3; k++) { const g = document.createElement('x-wg'); c.el.append(g); c.g.push(g); }
+    el.insertBefore(c.el, i ? w.cols[i - 1].el : w.suf); w.cols.push(c); }
+}
+function wheelTick(now) {
+  const dt = Math.min(.05, (now - wheelT) / 1000); wheelT = now;
+  const W = MOTION.wheel, om = 2 * Math.PI / Math.max(.05, W.response / 1000), K = om * om, C = 2 * W.damping * om;
+  WHEELS.forEach(el => {
+    const w = el._wh; if (!w || !el.isConnected) { WHEELS.delete(el); return; }
+    let busy = false;
+    w.cols.forEach((c, i) => {
+      for (let st = 0; st < 2; st++) { const h = dt / 2, a = -K * (c.p - c.T) - C * c.vel; c.vel += a * h; c.p += c.vel * h; }   // semi-implicit Euler, 2 substeps
+      if (Math.abs(c.p - c.T) < .002 && Math.abs(c.vel) < .02) { c.p = c.T; c.vel = 0; } else busy = true;
+      const lead = i > 0, pres = lead ? Math.max(0, Math.min(1, c.p)) : 1;   // a leading column only exists while its integer is ≥ 1
+      c.el.style.width = pres >= 1 ? '' : `${(pres * (w.fs * .6 + w.ls)).toFixed(2)}px`;
+      const base = Math.floor(c.p), vb = Math.min(W.blurMax, Math.abs(c.vel) * W.velBlur * w.fs);
+      for (let j = 0; j < 3; j++) { const k = base + j - (c.p - base < .5 ? 1 : 0), d = c.p - k, g = c.g[j], ad = Math.abs(d);
+        const ch = (lead && k <= 0) || k < 0 ? '' : String(((k % 10) + 10) % 10);
+        if (g.textContent !== ch) g.textContent = ch;
+        const q = Math.min(1, ad / W.window), op = 1 - q * q * (3 - 2 * q), b = Math.min(W.blurMax * 1.5, ad * W.edgeBlur * w.fs + vb);
+        g.style.transform = `translateY(${(d * w.lh * W.travel).toFixed(2)}px)`; g.style.opacity = (op * (lead ? pres : 1)).toFixed(3);
+        g.style.filter = b > .2 ? `blur(${b.toFixed(2)}px)` : ''; }
+    });
+    if (!busy) { WHEELS.delete(el); while (w.cols.length > 1 && w.cols[w.cols.length - 1].T === 0) w.cols.pop().el.remove(); }
+  });
+  wheelRaf = WHEELS.size ? requestAnimationFrame(wheelTick) : 0;
+}
 function scrubNum(el, o, s) {
   const R = MOTION.roll, fs = parseFloat(getComputedStyle(el).fontSize) || 16, maxB = Math.min(R.scrubMax, fs * R.scrubEm);
   let st = el._scr;
@@ -2717,6 +2771,8 @@ function rollNum(el, s, o2 = {}) {
   // digit gets a motion blur that grows with how often it changes (units blur most, the leading digits stay crisp, like a real
   // odometer), then melts back to sharp within «settle» ms after the finger slows down.
   const o = el.dataset.n; if (o === s) return;
+  if (R.style === 'wheel' && !RM && o != null && !document.hidden && el.isConnected && wheelNum(el, o, s)) { el.dataset.n = s; return; }
+  el._wh = null;
   const fast = !RM && o != null && (el._scr || now - (el._last || -1e9) < R.fastGap || el._until > now); el._last = now;
   if (fast) { el.dataset.n = s; return scrubNum(el, o, s); }
   el.dataset.n = s;
@@ -2904,6 +2960,7 @@ const HS_STYLES = [['plain', 'Plain', 'Chips straight on the background'], ['21'
 /* Motion lab (5 Nov): tune animations on the phone — values live on this device (localStorage «rovno-motion»),
    «Send to Claude» files them as a GitHub issue so they can become the defaults */
 const ML_ROWS = [
+  ['wheel', 'Wheel (style «Wheel»)', [['response', 'Spring · response', 120, 1200, 10, 'ms'], ['damping', 'Spring · damping', .4, 1.2, .01, ''], ['travel', 'Line spacing', .3, 1.5, .05, '×'], ['window', 'Visible window (share of a line)', .2, 1, .05, ''], ['edgeBlur', 'Blur at the edges, share of size', 0, .3, .01, ''], ['velBlur', 'Blur from speed', 0, .02, .0005, ''], ['blurMax', 'Blur · max', 0, 30, 1, 'px']]],
   ['roll', 'Numbers roll', [['dur', 'Duration', 100, 1500, 10, 'ms'], ['fade', 'Fade + blur (Blur spring, iOS)', 0, 1000, 10, 'ms'], ['damping', 'Spring damping (Blur spring, iOS)', .3, 1, .01, ''], ['travel', 'Travel', 0, 150, 1, '%'], ['blurEm', 'Blur · share of size', 0, .5, .01, ''], ['blurMax', 'Blur · max', 0, 40, 1, 'px'], ['squish', 'Squish while moving', 0, .5, .01, ''], ['stagger', 'Delay between digits', 0, 80, 1, 'ms'], ['fastGap', 'Fast · when changes come faster than', 40, 400, 10, 'ms'], ['scrubEm', 'Fast · blur, share of size', 0, .4, .01, ''], ['scrubMax', 'Fast · blur max', 0, 30, 1, 'px'], ['settle', 'Fast · sharpens in', 40, 600, 10, 'ms']]],
   ['ruler', 'Ruler opens', [['dur', 'Ticks open', 0, 800, 10, 'ms'], ['fade', 'Number and marker fade', 0, 600, 10, 'ms']]]];
 const ML_EASE = [['standard', 'Smooth'], ['out', 'Out'], ['soft', 'Spring'], ['linear', 'Linear']];
@@ -2911,10 +2968,10 @@ const mlFmt = (v, u) => (Math.abs(v) < 1 && v !== 0 ? (+v).toFixed(2) : Math.rou
 function mlabHTML() {
   return `<div class="ml-demo"><b class="ml-big" data-n="3045">3045</b><b class="ml-small" data-n="3045">3045</b>
       <div class="ml-btns"><button data-ml="-">−</button><button data-ml="+">+</button><button data-ml="big">Random</button><button data-ml="ruler">Ruler</button></div></div>` +
-    `<div class="ml-r ml-e"><span>Style</span><div class="st-seg">${[['blur', 'Blur spring'], ['ios', 'iOS'], ['dissolve', 'Dissolve']].map(([k, l]) => `<button data-mst="${k}" class="${(MOTION.roll.style || 'dissolve') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` +
-    ML_ROWS.map(([g, title, rows]) => `<div class="ml-t">${title}</div>` + rows.map(([k, l, mn, mx, st, u]) =>
+    `<div class="ml-r ml-e"><span>Style</span><div class="st-seg">${[['wheel', 'Wheel'], ['blur', 'Blur spring'], ['ios', 'iOS'], ['dissolve', 'Dissolve']].map(([k, l]) => `<button data-mst="${k}" class="${(MOTION.roll.style || 'dissolve') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>` +
+    ML_ROWS.map(([g, title, rows]) => `<div class="ml-t">${title}</div>` + (g === 'wheel' ? '' : '') + rows.map(([k, l, mn, mx, st, u]) =>
       `<label class="ml-r"><span>${l}</span><em data-mv="${g}.${k}">${mlFmt(MOTION[g][k], u)}</em><input type="range" min="${mn}" max="${mx}" step="${st}" value="${MOTION[g][k]}" data-mk="${g}.${k}" data-u="${u}"></label>`).join('') +
-      `<div class="ml-r ml-e"><span>Curve</span><div class="st-seg">${ML_EASE.map(([k, l]) => `<button data-me="${g}.${k}" class="${MOTION[g].ease === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`).join('') +
+      (g === 'wheel' ? '' : `<div class="ml-r ml-e"><span>Curve</span><div class="st-seg">${ML_EASE.map(([k, l]) => `<button data-me="${g}.${k}" class="${MOTION[g].ease === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`)).join('') +
     `<div class="ml-act"><button data-ml="send">Send to Claude</button><button data-ml="reset">Reset</button></div>`;
 }
 (() => { let demo = 3045;
@@ -2928,7 +2985,7 @@ function mlabHTML() {
     const b = e.target.closest('#mlab [data-ml]'); if (!b) return; const a = b.dataset.ml; haptic();
     if (a === '+') return roll(demo + 1); if (a === '-') return roll(demo - 1);
     if (a === 'big') return roll(Math.floor(Math.random() * 4000));
-    if (a === 'reset') { ['roll', 'ruler'].forEach(k => Object.assign(MOTION[k], MOTION_DEF[k])); saveMotion(); $('#mlab').innerHTML = mlabHTML(); return toast('Motion reset'); }
+    if (a === 'reset') { ['wheel', 'roll', 'ruler'].forEach(k => Object.assign(MOTION[k], MOTION_DEF[k])); saveMotion(); $('#mlab').innerHTML = mlabHTML(); return toast('Motion reset'); }
     if (a === 'send') { const body = 'Значения из Motion lab — сделать по умолчанию:\n\n```json\n' + JSON.stringify(MOTION, null, 1) + '\n```\n';
       const u = `https://github.com/redmermark-beep/kcal/issues/new?labels=${encodeURIComponent('polish,motion')}&title=${encodeURIComponent('Motion lab: значения')}&body=${encodeURIComponent(body)}`;
       let w = null; try { w = window.open(u, '_blank'); } catch (er) {} if (!w) toast('Motion values', { label: 'Open', fn: () => { if (!window.open(u, '_blank')) location.href = u; } }); return; }
