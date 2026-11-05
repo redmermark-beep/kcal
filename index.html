@@ -2160,6 +2160,23 @@ html body.f31.pal-fresh #app #secMeal #mhead.stuck::after{opacity:1}
 html body.f31.pal-fresh #app .hv53 .hc b.v,html body.f31.pal-fresh #app .hv53 .hc .of{font-family:var(--mono)!important;letter-spacing:-.04em!important}
 html body.f31.pal-fresh #app #secMeal .info .mac>span{font-family:var(--mono)!important;letter-spacing:-.02em!important}
 html body.f31.pal-fresh #app #secMeal .info .mac>span>i{font-family:var(--sans)!important;letter-spacing:0!important}
+/* ruler (5 Nov, Figma 540:33500): solid background under the chips, ticks every 16 px at x 16 (2 px, 26 / every 5th 42),
+   the centre tick grows to 66 px in full ink; name 15/510 .6, number SF Mono 72/600, «g» SF Mono 32/700, macros 11/590 */
+html body.f31.pal-fresh .precise.px-ov.px-below{background:#f6f6fa;-webkit-backdrop-filter:none;backdrop-filter:none}
+html body.f31.pal-fresh .px-below .px.px18{padding:0 0 4px}
+html body.f31.pal-fresh .px18 .px-ruler{left:16px;width:66px}
+html body.f31.pal-fresh .px18 .px-ruler i{height:2px;margin-top:-1px;border-radius:0;background:#111115}
+html body.f31.pal-fresh .px18 .px-mark,html body.f31.pal-fresh .px18 .pmax{display:none}
+html body.f31.pal-fresh .px18 .px-info{left:114px;right:16px;top:calc(50% - 65px);transform:none;gap:0}
+html body.f31.pal-fresh .px18 .px-name{font:510 15px/20px var(--sans);letter-spacing:-.15px;color:rgba(60,60,67,.6)}
+html body.f31.pal-fresh .px18 .px-num{margin-top:4px;gap:0;align-items:baseline}
+html body.f31.pal-fresh .px18 .px-num b{font:600 72px/72px var(--mono);letter-spacing:-3.6px;color:#111115}
+html body.f31.pal-fresh .px18 .px-num .pxu{font:700 32px/32px var(--mono);letter-spacing:-1.6px;color:#111115;margin-left:2px}
+html body.f31.pal-fresh .px18 .px-mline{margin-top:8px;display:flex;gap:8px;font:590 11px/14px var(--sans)}
+html body.f31.pal-fresh .px18 .px-mline em{font-style:normal;display:inline-flex;color:#111115}
+html body.f31.pal-fresh .px18 .px-mline i{margin:0;color:rgba(60,60,67,.6);font-style:normal}
+/* issue #12 (5 Nov): no shadows anywhere while dragging — the lifted row, its clone and the merge target are flat */
+html body.f31 .drag-clone,html body.f31 .drag-clone::before,html body.f31 .drag-clone>.rc,html body.f31 #app #secMeal li.lifted,html body.f31 #app #secMeal li.lifted::before,html body.f31 #app #secMeal li.row::before,html body.f31 #app #secMeal li.merge-target,html body.f31 #app #secMeal li.merge-target::before{box-shadow:none!important;filter:none!important}
 /* swipe (issue #4): tiles only ever fill the space the row has left — they never slide under it */
 html body.f31 #app #secMeal .sa{width:max(0px,calc(60px * var(--rv,0) - 4px))!important;border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}
 </style>
@@ -3298,7 +3315,7 @@ function dayState() {
   });
 }
 function openPrecise2(r, y, holding, pv) {
-  const e = r.e, ruler = pv !== '16', STEP = pv === '16' ? 50 : 14;
+  const e = r.e, ruler = pv !== '16', STEP = pv === '16' ? 50 : pv === '18' ? 16 : 14;   // 18: ticks every 16 px (Figma 540:33500)
   const ov = document.createElement('div'); ov.className = 'precise px-ov';
   const head = ''; // 18: the real header chips stay in place above the overlay and update live
   const info = pv === '16'
@@ -3309,7 +3326,7 @@ function openPrecise2(r, y, holding, pv) {
                    : `<div class="px-mline"></div>`) + (pv === '15' ? '<div class="px-chips"></div>' : '');
   ov.innerHTML = `<div class="px px${pv}">${head}<div class="px-body">${ruler ? '<div class="px-ruler"></div><i class="px-mark"></i>' : ''}<div class="px-info">${info}${e.t === 'g' ? '<div class="pmax"></div>' : ''}</div></div></div>`;
   if (pv === '18') { const hv = $('#hv'), b = (hv && hv.offsetParent ? hv : document.querySelector('header.plan')).getBoundingClientRect().bottom;
-    ov.style.top = Math.round(b + 10) + 'px'; ov.classList.add('px-below'); }
+    ov.style.top = Math.round(b) + 'px'; ov.classList.add('px-below'); }
   document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('show'));
   const card = ov.querySelector('.px-info'), rul = ov.querySelector('.px-ruler');
   const unit = isPc(e) ? e.uw : (S.ui.step || 5), lim = e.t === 'g' ? maxOf(e) : 99999;
@@ -3333,7 +3350,7 @@ function openPrecise2(r, y, holding, pv) {
       rollNum(ov.querySelector('.pxv'), fmtN(e.g), {}); ov.querySelector('.pxu').textContent = e.t === 'g' ? 'g' : uLab(e);
       if (pv === '12') [m.k, m.p, m.f, m.c].forEach((v, i) => rollNum(ov.querySelector('.m' + i), r0(v), {}));
       else { const ml = ov.querySelector('.px-mline');   // 5 Nov: the K P F C line rolls too — built once, then only the numbers change
-        if (!ml.firstChild) ml.innerHTML = '<i>K</i><span class="rk"></span><i>P</i><span class="rp"></span><i>F</i><span class="rf"></span><i>C</i><span class="rc2"></span>' + (isPc(e) ? '<i>·</i><span class="rg"></span>' : '');
+        if (!ml.firstChild) ml.innerHTML = '<em><span class="rk"></span><i>K</i></em><em><span class="rp"></span><i>P</i></em><em><span class="rf"></span><i>F</i></em><em><span class="rc2"></span><i>C</i></em>' + (isPc(e) ? '<em><span class="rg"></span></em>' : '');   // 5 Nov: «450K 30P 10F 40C», as under the products
         [['rk', r0(m.k)], ['rp', r0(m.p)], ['rf', r0(m.f)], ['rc2', r0(m.c)], ['rg', e.g + 'g']].forEach(([c, v]) => { const x = ml.querySelector('.' + c); if (x) rollNum(x, v, {}); }); }
     } else {
       const rows = []; for (let k = -4; k <= 4; k++) { const g = e.g + k * unit; if (g < 0 || g > lim) continue; const mm = macAt(e, g), d = Math.abs(k * STEP + off);
@@ -3342,8 +3359,12 @@ function openPrecise2(r, y, holding, pv) {
     }
     const pm = ov.querySelector('.pmax'); if (pm) pm.textContent = `max ${maxOf(e)}g`;
     if (rul) { const n0 = Math.round(e.g / unit), c = H / 2;
-      ticks.forEach((t, i) => { const k = i - M, yy = c + (k * STEP + off) * openK, big = ((n0 + k) % 5 + 5) % 5 === 0, d = Math.min(1, Math.abs(yy - c) / c);
-        t.style.transform = `translateY(${yy.toFixed(1)}px)`; t.style.width = (big ? 40 : 22) + 'px'; t.style.opacity = ((big ? .55 : .28) * (1 - d * .85) * fadeK).toFixed(3); }); }
+      // 5 Nov (Figma 540:33500, issue #14): no fixed marker — the tick at the centre IS the marker. As a tick nears the centre it
+      // grows from 26 (every 5th: 42) to 66 px and from .1 (.2) to full ink; ticks fade out towards the top and bottom edges.
+      ticks.forEach((t, i) => { const k = i - M, yy = c + (k * STEP + off) * openK, big = ((n0 + k) % 5 + 5) % 5 === 0, dd = Math.abs(yy - c);
+        const pr = Math.max(0, 1 - dd / STEP), q = pr * pr * (3 - 2 * pr), w0 = big ? 42 : 26, a0 = big ? .2 : .1, edge = Math.max(0, 1 - dd / c);
+        t.style.transform = `translateY(${yy.toFixed(1)}px)`; t.style.width = (w0 + (66 - w0) * q).toFixed(1) + 'px';
+        t.style.opacity = ((a0 + (1 - a0) * q) * (q > 0 ? 1 : edge) * fadeK).toFixed(3); }); }
     if (pv === '15') {
       const ds = dayState();
       if (pv === '15') ov.querySelector('.px-chips').innerHTML = ds.map(x => `<span class="hs ${x.st}"><small>${x.k === 'k' ? 'kcal' : x.l[0]}</small><em>${x.d}</em></span>`).join('');
@@ -3359,6 +3380,15 @@ function openPrecise2(r, y, holding, pv) {
     setGrams(e, v, r.parent); return true;
   };
   const step = (deg, speed) => {
+    // 5 Nov (issue #13): bound to the ticks — one tick = one step, always. The value changes exactly when a tick crosses the
+    // centre (the offset wraps by one tick at the same moment), so ticks and number never disagree. At the min / max the ruler stops.
+    if (pv === '18') {
+      phase += deg; let changed = false;
+      while (phase >= 7.5) { if (bump(-5)) { phase -= 15; changed = true; } else { phase = 7.5 * .6; break; } }
+      while (phase < -7.5) { if (bump(+5)) { phase += 15; changed = true; } else { phase = -7.5 * .6; break; } }
+      if (changed) { patchRow(e.id); haptic(); }
+      return paint();
+    }
     phase += deg; acc += deg;
     const size = speed > 1.6 ? 50 : speed > .7 ? 25 : 5; let changed = false;
     while (acc <= -15) { acc += 15; changed = bump(+size) || changed; }
@@ -3369,7 +3399,7 @@ function openPrecise2(r, y, holding, pv) {
   };
   const PX = 15 / STEP; // degrees per pixel so one notch = one tick spacing
   const snapBack = () => { const from = phase, t0 = performance.now();
-    const f = now => { const x = Math.min(1, (now - t0) / 220); phase = from * Math.pow(1 - x, 3); paint(); if (x < 1) raf = requestAnimationFrame(f); };
+    const f = now => { const x = Math.min(1, (now - t0) / 260); phase = from * Math.pow(1 - x, 3); paint(); if (x < 1) raf = requestAnimationFrame(f); };
     raf = requestAnimationFrame(f); };
   precise = {
     holding,
