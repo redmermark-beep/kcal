@@ -2191,6 +2191,83 @@ html body.f31 #app #secMeal .qn .caret{width:0!important;height:0!important;marg
 html body.f31 #app #secMeal .qn .caret::after{content:"";position:absolute;left:-.75px;bottom:-3px;width:1.5px;height:16px;border-radius:1px;background:#111115}
 /* swipe (issue #4): tiles only ever fill the space the row has left — they never slide under it */
 html body.f31 #app #secMeal .sa{border-radius:max(0px,min(16px,calc(30px * var(--rv,0) - 2px)))!important}   /* width: see issue #7 above */
+/* ===== Product sheet (7 Nov 2026, canvas «Шторка продукта · финал») — its own grid: card inset 8, content 16 inside ===== */
+html body .sheet.ps{--pt:14px;--pb:16px;left:8px;right:8px;border-radius:40px;padding:14px 16px 16px;background:rgba(250,250,252,.84);-webkit-backdrop-filter:blur(30px) saturate(1.6);backdrop-filter:blur(30px) saturate(1.6);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.7),0 12px 40px rgba(0,0,0,.14);color:#111115}
+html body .sheet.ps .grab{display:none}
+.sheet.ps .ps-bar{position:sticky;top:-14px;z-index:6;display:flex;align-items:center;gap:8px;min-height:44px;margin:-14px -16px 0;padding:14px 14px 8px;background:rgba(248,248,251,.96);border-radius:40px 40px 0 0;transition:box-shadow .2s}
+.sheet.ps.scrolled .ps-bar{box-shadow:0 .5px 0 rgba(60,60,67,.18)}
+.sheet.ps .ps-c{flex:none;width:44px;height:44px;border:0;padding:0;border-radius:22px;background:rgba(118,118,128,.14);color:#111115;display:flex;align-items:center;justify-content:center;transition:background-color .2s,color .2s,transform .2s var(--spring)}
+.sheet.ps .ps-c:active{transform:scale(.92)}
+.sheet.ps .ps-ok{background:#2669ed;color:#fff}
+.sheet.ps .ps-ok.off{background:rgba(118,118,128,.07);color:rgba(60,60,67,.3)}
+.sheet.ps .ps-kick{flex:1;text-align:center;font-size:13px;line-height:16px;color:rgba(60,60,67,.6)}
+.sheet.ps textarea.ps-title,.sheet.ps input.ps-title{flex:1;min-width:0;max-height:40px;overflow:hidden;margin:0;padding:0 4px;border:0;background:none;resize:none;outline:none;text-align:center;font:510 15px/20px -apple-system,system-ui,sans-serif;letter-spacing:-.15px;color:#111115}
+.sheet.ps textarea.ps-title:focus{max-height:none}
+.sheet.ps textarea.ps-head,.sheet.ps input.ps-head{display:block;width:100%;box-sizing:border-box;margin:6px 0 0;padding:0 10px;border:0;background:none;resize:none;outline:none;font:590 20px/24px -apple-system,system-ui,sans-serif;letter-spacing:-.3px;color:#111115}
+.sheet.ps .ps-head::placeholder,.sheet.ps .ps-title::placeholder{color:rgba(60,60,67,.45)}
+.sheet.ps .ps-cap{display:flex;align-items:center;justify-content:space-between;min-height:14px;margin:24px 0 8px;padding-left:10px;font-size:12px;line-height:14px;text-transform:uppercase;letter-spacing:.02em;color:rgba(60,60,67,.6)}
+.sheet.ps .ps-cap.ps-u{min-height:28px;margin-top:14px}
+.sheet.ps .ps-ur{display:flex;align-items:center;gap:6px;text-transform:none;letter-spacing:0}
+.sheet.ps .ps-unit{height:28px;border:0;padding:0 10px 0 8px;border-radius:14px;background:rgba(118,118,128,.12);color:#111115;font-size:13px;font-weight:510;display:flex;align-items:center;gap:5px}
+.sheet.ps .ps-pc{display:flex;align-items:center;gap:6px}
+.sheet.ps .ps-pc[hidden]{display:none}
+.sheet.ps .ps-pcl{font-size:13px;color:rgba(60,60,67,.6)}
+/* number tiles */
+.sheet.ps .ps-chips{display:grid;grid-template-columns:1.9fr 1fr 1fr 1fr;gap:4px}
+.sheet.ps .ps-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+html body .sheet.ps .vt{min-height:84px;padding:10px;border-radius:20px;background:rgba(118,118,128,.12);box-shadow:none;color:#111115;gap:0}
+html body .sheet.ps .ps-two .vt{min-height:64px;border-radius:16px}
+html body .sheet.ps .vt .l{font-size:12px;line-height:14px;font-weight:590;color:#111115}
+html body .sheet.ps .ps-two .vt .l{color:rgba(60,60,67,.6)}
+html body .sheet.ps .vt b{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:20px;line-height:20px;font-weight:600;letter-spacing:-.04em}
+html body .sheet.ps .ps-chips .vt:first-child b{font-size:30px;line-height:30px}
+html body .sheet.ps .vt b .u{order:2;margin-left:2px;font-size:12px;font-weight:500;letter-spacing:0;color:rgba(60,60,67,.6)}
+html body .sheet.ps .vt b .cr{order:3;width:1.5px;height:16px;margin-left:2px;background:rgba(60,60,67,.6)}
+html body .sheet.ps .vt b .v.ph{color:rgba(60,60,67,.45)}
+html body .sheet.ps .vt.on{background:#fff;color:#111115;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12)}
+html body .sheet.ps .vt.on .l{color:#111115}
+html body .sheet.ps .ps-two .vt.on .l{color:rgba(60,60,67,.6)}
+html body .sheet.ps .vt.on b .u{color:rgba(60,60,67,.6)}
+html body .sheet.ps .vt.on b .v.ph{color:rgba(60,60,67,.45)}
+html body .sheet.ps .vt.warn{box-shadow:none}
+html body .sheet.ps .vt.on.warn{box-shadow:inset 0 0 0 1px rgba(60,60,67,.12)}
+html body .sheet.ps .vt.ed::after{display:none}
+html body .sheet.ps .vt.ps-mini{min-height:0;height:28px;padding:0 8px;border-radius:12px;flex-direction:row;align-items:center;justify-content:flex-start}
+html body .sheet.ps .vt.ps-mini .l{display:none}
+html body .sheet.ps .vt.ps-mini b{font-size:13px;line-height:16px}
+html body .sheet.ps .vt.ps-mini b .u{font-size:13px}
+html body .sheet.ps .vt.ps-mini b .cr{height:14px}
+html body .sheet.ps .vt.ps-mini.err{background:#fff;box-shadow:inset 0 0 0 1px #d02c2a}
+/* kcal ≠ macros */
+.sheet.ps .ps-warn{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;margin-top:4px;box-sizing:border-box;padding:0 8px 0 10px;border-radius:16px;background:rgba(118,118,128,.12);font-size:13px;color:rgba(60,60,67,.6)}
+.sheet.ps .ps-warn[hidden]{display:none}
+.sheet.ps .ps-warn b{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-weight:600;color:#111115}
+.sheet.ps .ps-chip{height:28px;border:0;padding:0 12px;border-radius:14px;background:#fff;color:#2669ed;font-size:13px;font-weight:510;flex:none}
+/* pills at the bottom */
+.sheet.ps .ps-pill{flex:1;width:100%;height:48px;box-sizing:border-box;border:0;padding:0 16px;border-radius:24px;background:rgba(118,118,128,.12);color:#111115;font-size:15px;font-weight:510;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .2s var(--spring)}
+.sheet.ps .ps-pill:active{transform:scale(.97)}
+.sheet.ps .ps-pill[hidden]{display:none}
+.sheet.ps .ps-pill.red{color:#d02c2a}
+.sheet.ps .ps-nut{justify-content:space-between;margin-top:24px}
+.sheet.ps .ps-nut .r{display:flex;align-items:center;gap:8px;font-weight:400;color:rgba(60,60,67,.6)}
+.sheet.ps .ps-acts{display:flex;gap:4px;margin-top:4px}
+/* pages inside the sheet: ‹ on the left, title in the middle */
+html body .sheet.ps .nu-pick{--pt:14px;padding:14px 16px 16px;background:#f8f8fb}
+html body .sheet.ps .nu-pick>.sh-head,html body .sheet.ps .nu-pick>h3{position:sticky;top:-14px;display:flex;align-items:center;justify-content:center;min-height:44px;margin:-14px -16px 8px;padding:14px 14px 8px;background:#f8f8fb;font-size:15px;font-weight:510}
+html body .sheet.ps .nu-pick .sh-kick{display:none}
+html body .sheet.ps .nu-pick .nu-sht{font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.15px;text-align:center;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body .sheet.ps .nu-pick .ps-back{position:absolute;left:14px;top:14px;width:44px;height:44px;margin:0;border:0;border-radius:22px;background:rgba(118,118,128,.14);color:#111115;display:flex;align-items:center;justify-content:center}
+html body .sheet.ps .nu-pick .ps-back svg{width:20px;height:20px}
+html body .sheet.ps .nu-srcb{border-radius:16px;background:rgba(118,118,128,.12)}
+html body .sheet.ps .nu-pick .sh-chip{background:#fff;border-radius:14px}
+html body .sheet.ps .ps-head,html body .sheet.ps .ps-title{border:0!important;box-shadow:none!important;outline:none!important;background:none!important;-webkit-appearance:none;appearance:none;border-radius:0!important}
+html body .sheet.ps .nu-pick .sh-chip,html body .sheet.ps .nu-srcb .sh-chip{color:#111115}
+html body .sheet.ps .nu-pick>.sh-head .sh-kick{display:block;font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.15px;color:#111115;text-transform:none}
+html body .sheet.ps .nu-pick>.sh-head .sh-kick+.nu-sht{display:none}
+html body .sheet.ps .nu-pick>.sh-head{flex-direction:row!important}
+html body .sheet.ps .nu-pick>.sh-head .sh-kick{flex:none;width:auto;margin:0;text-align:center}
+.sheet.ps .ps-bar{background:transparent}
+.sheet.ps.scrolled .ps-bar{background:rgba(248,248,251,.96)}
 </style>
 
 <div class="app" id="app">
@@ -3753,11 +3830,11 @@ function shPrep(c) {
     while (p && p.matches('.btnrow.wide, .sbtn.primary') && foot.length < 2) { foot.unshift(p); p = p.previousElementSibling; }
     const f = document.createElement('div'); f.className = 'sh-foot'; last.after(f); foot.forEach(x => f.append(x)); }
 }
-function sheet(html, onReady) {
+function sheet(html, onReady, cls) {
   hideToast();
   closeSheet(true);
   const scrim = document.createElement('div'); scrim.className = 'scrim';
-  const s = document.createElement('div'); s.className = 'sheet'; s.setAttribute('role', 'dialog');
+  const s = document.createElement('div'); s.className = 'sheet' + (cls ? ' ' + cls : ''); s.setAttribute('role', 'dialog');
   s.innerHTML = `<div class="grab"></div>${html}`;
   shPrep(s);
   document.body.append(scrim, s); document.documentElement.classList.add('sh-lock');
@@ -3812,7 +3889,7 @@ function kpBind(s) {
   s.addEventListener('input', () => s.querySelectorAll('.vt[data-f] input').forEach(fit));
 }
 function closeSheet(fast) {
-  if (!openSheet) return; const { s, scrim, kbOff } = openSheet; openSheet = null; if (kbOff) kbOff(); document.documentElement.classList.remove('sh-lock');
+  if (!openSheet) return; if (!fast && openSheet.s._guard && openSheet.s._guard()) return; const { s, scrim, kbOff } = openSheet; openSheet = null; if (kbOff) kbOff(); document.documentElement.classList.remove('sh-lock');
   if (document.activeElement && s.contains(document.activeElement)) document.activeElement.blur();
   s.classList.remove('show'); scrim.classList.remove('show'); setTimeout(() => { s.remove(); scrim.remove(); }, fast ? 0 : 450);
 }
@@ -3831,77 +3908,86 @@ const val = (s, id) => numIn(s.querySelector('#' + id).value);
 function nudge(el) { const f = el.closest('.field,.vt') || el; f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); }
 
 /* ---- product / group sheets ---- */
+/* ---- product sheet (7 Nov 2026, canvas «Шторка продукта · финал»): glass card, ✕ / ✓ on top, unit menu, piece weight next to it,
+   KBJU as chips (whole numbers), Shopping plates, Nutrients as a page inside the sheet, Duplicate / Delete at the bottom ---- */
+const PSI = {
+  x: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  ok: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  back: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  chev: '<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chevR: '<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  scan: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M7 12h10"/></svg>'
+};
+const PS_UNITS = { g: 'Grams', ml: 'Millilitres', pc: 'Pieces' };
+const psUnitBtn = u => `${SHI[u].replace(/width="18" height="18"/, 'width="14" height="14"')}<span>${PS_UNITS[u]}</span>${PSI.chev}`;
+/* page inside the product sheet: a back button on the left, title in the middle */
+function psPage(title, html, ready) {
+  nOver(`<div class="sh-head"><span class="nu-sht">${esc(title)}</span>${nOX}</div>${html}`, ready);
+}
 function foodSheet(e, isNew) {
   const n = e ? e.n : { k: '', p: '', f: '', c: '' }, unit0 = e ? U(e) : 'g';
-  const st = { src: e ? e.src || null : undefined, m: e ? e.m : null, k: e ? e.n.k : null };   // what the Nutrients section shows
-  const ul = u => u === 'pc' ? 'pc' : u;
-  const chipsUI = S.ui.sheet === 'g';
-  const unitsHTML = `${segHTML('fU', [['g', 'Grams', SHI.g], ['ml', 'Millilitres', SHI.ml], ['pc', 'Pieces', SHI.pc]], unit0)}
-    <div class="card" id="fUwBox" style="margin-top:6px"${unit0 === 'pc' ? '' : ' hidden'}>${fnum('fUw', 'One piece weighs', e && e.uw, 'g', '60')}</div>`;
-  sheet(isNew ? `<div class="sh-head"><span class="sh-kick">New product</span><input class="sh-name" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name"><button type="button" class="sh-ic" id="fScan" aria-label="Scan a label or barcode">${SCAN_IC}</button>${XBTN}</div>
-    <div class="cap">Per 100 g</div>
-    <div class="card c4">${fnum('fP', 'Protein', '', 'g')}${fnum('fF', 'Fat', '', 'g')}${fnum('fC', 'Carbs', '', 'g')}${fnum('fK', 'kcal', '', '', '0')}</div>
-    <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
-    ${nSecHTML(st)}
-    <div class="cap">Counted in</div>${unitsHTML}
-    <button type="button" class="npb-cap" id="fMore" aria-expanded="false"><span class="l">More details</span><span class="r">Amount · Pack · Price</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <div id="fMoreBox" hidden><div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>
-      <div class="cap">Shopping</div><div class="card">${fnum('fPk', 'Pack', '', ul(unit0), '—')}${fnum('fPr', 'Price', '', esc(S.ui.cur), '—')}</div></div>
-    <button class="sbtn primary" id="fSave">Add to the list</button>` : `<div class="sh-head">${isNew ? '<span class="sh-kick">New product</span>' : ''}<input class="sh-name" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic" id="fDup" aria-label="Duplicate">${SHI.copy}</button><button type="button" class="sh-ic red" id="fDel" aria-label="Delete">${SHI.trash}</button>`}${XBTN}</div>
-    ${chipsUI
-      ? `<div class="card c5">${fnum('fK', 'KCAL', isNew ? '' : n.k, '', '0', '\u00a0')}${fnum('fP', 'P', n.p, '', '0', '\u00a0')}${fnum('fF', 'F', n.f, '', '0', '\u00a0')}${fnum('fC', 'C', n.c, '', '0', '\u00a0')}</div><div class="cap" style="margin-top:8px">per 100 g</div>`
-      : `<div class="cap">Per 100 g</div><div class="card c4">${fnum('fP', 'Protein', n.p, 'g')}${fnum('fF', 'Fat', n.f, 'g')}${fnum('fC', 'Carbs', n.c, 'g')}${fnum('fK', 'kcal', isNew ? '' : n.k, '', '0')}</div>`}
-    <div class="sh-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="sh-chip" id="fUse"></button></div>
-    ${nSecHTML(st)}
-    <div class="cap">Counted in</div>${unitsHTML}
-    ${isNew ? `<div class="cap">Daily amount<span class="r">${esc(plan().name)}</span></div><div class="card">${fnum('fG', 'Amount', '', ul(unit0), '0')}</div>` : ''}
-    <div class="cap">Shopping<span class="r">optional</span></div>
-    <div class="card">${fnum('fPk', 'Pack', e && e.pk ? toU(e, e.pk) : '', ul(unit0), '—')}${fnum('fPr', 'Price', e && e.pr, esc(S.ui.cur), '—')}</div>
-    ${isNew ? '<button class="sbtn primary" id="fSave">Add to the list</button>'
-      : `<div class="sh-act" id="fAct"><button type="button" class="sh-ic big" id="fUndo" aria-label="Undo changes" disabled>${SHI.undo}</button><button class="sbtn primary" id="fSave" disabled>Save</button></div>`}`, s => {
-    const seg = s.querySelector('#fU');
-    const ins = () => [...s.querySelectorAll('input')].filter(i => !i.closest('.nu-pick'));
-    const snap = () => JSON.stringify([seg.dataset.v, ...ins().map(i => i.value)]), snap0 = snap(), vals0 = ins().map(i => i.value), unit00 = seg.dataset.v;
+  const st = { src: e ? e.src || null : undefined, m: e ? e.m : null, k: e ? e.n.k : null };   // what the Nutrients page shows
+  const ul = u => u === 'pc' ? 'pc' : u, w0 = v => v === '' || v == null ? '' : r0(v);
+  const mini = `<span class="ps-pc" id="fUwBox"${unit0 === 'pc' ? '' : ' hidden'}><span class="ps-pcl">1 pc</span><div class="vt ps-mini" data-f="fUw"><span class="l">One piece</span><b><span class="v"></span><i class="cr"></i><span class="u">g</span><input id="fUw" inputmode="decimal" enterkeyhint="next" value="${e && e.uw ? e.uw : ''}" placeholder="0" autocomplete="off" aria-label="One piece weighs, g"></b></div></span>`;
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="fX" aria-label="Close">${PSI.x}</button>
+      ${isNew ? '<span class="ps-kick">New product</span>' : `<input class="sh-name ps-title" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">`}
+      ${isNew ? `<button type="button" class="ps-c" id="fScan" aria-label="Scan a label or barcode">${PSI.scan}</button>` : ''}
+      <button type="button" class="ps-c ps-ok off" id="fSave" aria-label="Save">${PSI.ok}</button></div>
+    ${isNew ? '<input class="sh-name ps-head" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name">' : ''}
+    <div class="ps-cap ps-u"><span>Per 100 g</span><span class="ps-ur">${mini}<button type="button" class="ps-unit" id="fU" data-v="${unit0}" aria-label="Counted in">${psUnitBtn(unit0)}</button></span></div>
+    <div class="ps-chips">${fnum('fK', 'KCAL', isNew ? '' : w0(n.k), '', '0')}${fnum('fP', 'P', w0(n.p), 'g')}${fnum('fF', 'F', w0(n.f), 'g')}${fnum('fC', 'C', w0(n.c), 'g')}</div>
+    <div class="ps-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="ps-chip" id="fUse"></button></div>
+    <div class="ps-cap"><span>Shopping</span></div>
+    <div class="ps-two">${fnum('fPk', 'Pack', e && e.pk ? toU(e, e.pk) : '', ul(unit0), '—')}${fnum('fPr', 'Price', e && e.pr, esc(S.ui.cur), '—')}</div>
+    <button type="button" class="ps-pill ps-nut" id="fNut"${isNew ? ' hidden' : ''}><span>Nutrients</span><span class="r"><span id="fNutR">${nSrcTxt(st.src)}</span>${PSI.chevR}</span></button>
+    ${isNew ? '' : `<div class="ps-acts"><button type="button" class="ps-pill" id="fDup">${SHI.copy}<span>Duplicate</span></button><button type="button" class="ps-pill red" id="fDel">${SHI.trash}<span>Delete</span></button></div>`}`, s => {
+    const unitB = s.querySelector('#fU'), ok = s.querySelector('#fSave'), nameIn = s.querySelector('#fName');
+    const ins = () => [...s.querySelectorAll('input,textarea')].filter(i => !i.closest('.nu-pick'));
+    const snap = () => JSON.stringify([unitB.dataset.v, ...ins().map(i => i.value)]), snap0 = snap();
+    const changed = () => snap() !== snap0;
+    const missing = () => !s.querySelector('#fName').value.trim() ? 'name' : unitB.dataset.v === 'pc' && !(val(s, 'fUw') > 0) ? 'piece' : null;
     const sync = () => {
       const auto = r0((val(s, 'fP') || 0) * 4 + (val(s, 'fF') || 0) * 9 + (val(s, 'fC') || 0) * 4), k = val(s, 'fK');
       const off = k != null && (val(s, 'fP') || val(s, 'fF') || val(s, 'fC')) && Math.abs(k - auto) > Math.max(15, auto * .08);
-      const w = s.querySelector('#fWarn'); w.hidden = !off; s.querySelector('[data-f="fK"]').classList.toggle('warn', !!off);
-      if (off) { w.querySelector('.t').innerHTML = `Macros add up to <b>${auto}</b> kcal, you have <b>${r0(k)}</b>.`; w.querySelector('#fUse').textContent = `Use ${auto}`; }
-      if (chipsUI) {
-        const hl = (id, t) => { const h = s.querySelector(`[data-f="${id}"] .h`); if (h) h.textContent = t; };
-        hl('fP', `${r0((val(s, 'fP') || 0) * 4)} kcal`); hl('fF', `${r0((val(s, 'fF') || 0) * 9)} kcal`); hl('fC', `${r0((val(s, 'fC') || 0) * 4)} kcal`);
-        const kNow = k != null ? r0(k) : auto;
-        hl('fK', !isNew && kNow !== r0(n.k) ? `was ${r0(n.k)}` : k != null ? `macros ${auto}` : 'from macros');
-      }
-      if (isNew) return;
-      const ch = snap() !== snap0; s.querySelector('#fSave').disabled = !ch; s.querySelector('#fUndo').disabled = !ch;
-      s.querySelectorAll('.vt[data-f]').forEach(t => { const i = t.querySelector('input'), j = ins().indexOf(i); t.classList.toggle('ed', j >= 0 && i.value !== vals0[j]); });
+      const w = s.querySelector('#fWarn'); w.hidden = !off;
+      if (off) { w.querySelector('.t').innerHTML = `Macros add up to <b>${auto}</b> kcal`; w.querySelector('#fUse').textContent = `Use ${auto}`; }
+      ok.classList.toggle('off', !!missing() || (!isNew && !changed()));
+      s.querySelector('[data-f="fUw"]').classList.toggle('err', ok.dataset.tried === '1' && missing() === 'piece');
+      const nb = s.querySelector('#fNut'); if (isNew) nb.hidden = !nameIn.value.trim();
     };
-    s.addEventListener('input', sync); seg.addEventListener('click', () => setTimeout(sync));
-    const mb = s.querySelector('#fMore');
-    if (mb) mb.addEventListener('click', () => { haptic(); const box = s.querySelector('#fMoreBox'), open = box.hidden; box.hidden = !open; mb.setAttribute('aria-expanded', open); mb.classList.toggle('open', open); mb.querySelector('.l').textContent = open ? 'Fewer details' : 'More details'; mb.querySelector('.r').textContent = open ? '' : 'Amount · Pack · Price';
-      if (open && !RM) box.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: SPRING }); });
+    s.addEventListener('input', sync);
+    /* closing with changes asks first (✕, the scrim, a swipe down) */
+    s._guard = () => { if (!changed() || (isNew && !nameIn.value.trim() && !ins().some(i => i !== nameIn && i.value))) return false;
+      haptic(); menu(s.querySelector('#fX'), [{ head: 'Discard changes?' }, { label: 'Discard', danger: true, now: true, do: () => { s._guard = null; closeSheet(); } }, { label: 'Keep editing', do: () => {} }]); return true; };
+    s.querySelector('#fX').addEventListener('click', () => { haptic(); closeSheet(); });
+    /* unit: a short list → a menu at the button; pieces bring the weight of one piece next to it */
+    const setU = u => { unitB.dataset.v = u; unitB.innerHTML = psUnitBtn(u); s.querySelector('#fUwBox').hidden = u !== 'pc';
+      const pk = s.querySelector('[data-f="fPk"] .u'); if (pk) pk.textContent = ul(u); sync(); };
+    unitB.addEventListener('click', () => { haptic(); menu(unitB, ['g', 'ml', 'pc'].map(u => ({ label: PS_UNITS[u], check: unitB.dataset.v === u, do: () => { setU(u); if (u === 'pc' && !(val(s, 'fUw') > 0)) setTimeout(() => s.querySelector('#fUw').focus(), 60); } }))); });
     s.querySelector('#fUse').addEventListener('click', () => { const i = s.querySelector('#fK'); i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); });
-    if (!isNew) s.querySelector('#fUndo').addEventListener('click', () => { ins().forEach((i, j) => { i.value = vals0[j]; i.dispatchEvent(new Event('input', { bubbles: true })); }); segSet(seg, unit00); setU(unit00); sync(); });
     setTimeout(sync);
-    /* Nutrients section: a saved product changes its source right away (Undo in the toast); a new one keeps it until «Add to the list» */
-    const TI = ['fP', 'fF', 'fC', 'fK'], tv = () => TI.map(id => s.querySelector('#' + id).value).join('|'), nameIn = s.querySelector('#fName');
-    let pend = null, autoN = null, drawNut = () => {};
+    /* Nutrients: a page inside the sheet; a saved product changes its source right away (Undo in the toast), a new one keeps it until ✓ */
+    const TI = ['fP', 'fF', 'fC', 'fK'], tv = () => TI.map(id => s.querySelector('#' + id).value).join('|');
+    let pend = null, autoN = null, page = null, all = false;
+    const drawPage = () => { if (!page || !page.isConnected) return; const b = page.querySelector('.ps-nb'); b.innerHTML = nSecBody(st, all);
+      const f = b.querySelector('[data-nfind]'); if (f) f.addEventListener('click', () => { haptic(); onFind(); });
+      const m = b.querySelector('[data-nall]'); if (m) m.addEventListener('click', () => { haptic(); all = !all; drawPage(); }); };
+    const drawNut = () => { s.querySelector('#fNutR').textContent = nSrcTxt(st.src); drawPage(); };
+    s.querySelector('#fNut').addEventListener('click', () => { haptic(); all = false; psPage('Nutrients', '<div class="ps-nb"></div>', box => { page = box; drawPage(); }); });
     const fill = (nn, partial) => { const v = { fP: nn.p, fF: nn.f, fC: nn.c, fK: nn.k }; TI.forEach(id => { if (partial && v[id] == null) return; const i = s.querySelector('#' + id);
-      i.value = v[id] == null ? '' : id === 'fK' ? r0(v[id]) : r1(v[id]); i.dispatchEvent(new Event('input', { bubbles: true })); }); autoN = tv(); };
+      i.value = v[id] == null ? '' : r0(v[id]); i.dispatchEvent(new Event('input', { bubbles: true })); }); autoN = tv(); };
     const canFill = () => TI.every(id => !s.querySelector('#' + id).value) || (autoN && tv() === autoN);
     const unfill = () => { if (autoN && tv() === autoN) fill({}); autoN = null; };
     const setPend = (p, auto) => { pend = p ? { ...p, auto } : null; st.src = p ? p.src : undefined; st.m = p ? p.m : null; drawNut(); };
     const scanned = (r, closeFind) => { closeFind && closeFind(); if (r.name && !nameIn.value.trim()) { nameIn.value = r.name; nameIn.dispatchEvent(new Event('input', { bubbles: true })); }
       fill(r.n, true); autoN = null; setPend({ src: r.src, m: r.m }, false); haptic();
       toast(r.via === 'barcode' ? `Found by barcode · ${r.name}` : `Read ${Object.keys(r.n).length + Object.keys(r.m).length} values — check them${nMissTxt(r)}`); };
-    const headScan = isNew ? nScanner(s.querySelector('.sh-head'), r => scanned(r)) : null;
-    const onFind = () => { if (!isNew) { const r = find(e.id); if (r) nFindFor(r.e, () => { st.src = r.e.src || null; st.m = r.e.m; drawNut(); }, { macros: nn => fill(nn, true) }); return; }
+    const headScan = isNew ? nScanner(s, r => scanned(r)) : null;
+    function onFind() { if (!isNew) { const r = find(e.id); if (r) nFindFor(r.e, () => { st.src = r.e.src || null; st.m = r.e.m; drawNut(); }, { macros: nn => fill(nn, true) }); return; }
       nFind({ name: nameIn.value.trim(), src: st.src, done: p => { setPend(p, false); if (canFill()) fill(p.n); },
         hand: () => nValSheet({ kick: 'Per 100 g · type them in', name: nameIn.value.trim() || 'New product', m: st.m, done: ({ m }) => setPend({ src: { t: 'hand' }, m }, false) }),
         scanned,
-        none: st.src && st.src.t !== 'none' ? () => { setPend({ src: { t: 'none' } }, false); unfill(); } : null }); };
-    drawNut = nSecBind(s, st, onFind);
+        none: st.src && st.src.t !== 'none' ? () => { setPend({ src: { t: 'none' } }, false); unfill(); } : null }); }
     if (isNew) {
       let mt; const match = () => { const nm = nameIn.value.trim(); if (pend && !pend.auto) return;
         if (!nm) { setPend(null); unfill(); return; } if (!NDB.ok) { st.src = null; drawNut(); }
@@ -3910,26 +3996,26 @@ function foodSheet(e, isNew) {
           .catch(() => { st.src = undefined; drawNut(); }); };
       nameIn.addEventListener('input', () => { clearTimeout(mt); mt = setTimeout(match, 350); });
       s.querySelector('#fScan').addEventListener('click', () => { haptic(); headScan.start('code'); });
+      setTimeout(() => nameIn.focus(), 380);
     } else if (!e.src) ndbLoad().then(() => { const r = find(e.id); if (!r || r.e.src) return; const x = ndbMatch(r.e.name, r.e.n);
       if (x.t === 'db') nSet(r.e, nDbPick(x.id)); else r.e.src = x; save(); st.src = r.e.src; st.m = r.e.m; drawNut(); }).catch(() => { st.src = { t: 'none' }; drawNut(); });
-    const setU = u => { s.querySelector('#fUwBox').hidden = u !== 'pc';
-      ['fG', 'fPk'].forEach(id => { const i = s.querySelector('#' + id); if (i) i.parentElement.querySelector('.u').textContent = ul(u); }); };
-    segBind(seg, v => { setU(v); if (v === 'pc') setTimeout(() => s.querySelector('#fUw').focus(), 50); });
     const kIn = s.querySelector('#fK'), auto = () => { const p = val(s, 'fP') || 0, f = val(s, 'fF') || 0, c = val(s, 'fC') || 0; kIn.placeholder = r0(p * 4 + f * 9 + c * 4); };
     ['fP', 'fF', 'fC'].forEach(id => s.querySelector('#' + id).addEventListener('input', auto)); auto();
-    const read = () => { const p = val(s, 'fP') || 0, f = val(s, 'fF') || 0, c = val(s, 'fC') || 0, k = val(s, 'fK'); return { p, f, c, k: k != null ? k : r0(p * 4 + f * 9 + c * 4) }; };
-    s.querySelector('#fSave').addEventListener('click', () => {
-      const name = s.querySelector('#fName').value.trim();
-      if (!name) { nudge(s.querySelector('#fName')); return s.querySelector('#fName').focus(); }
-      const unit = seg.dataset.v, uw = val(s, 'fUw');
-      if (unit === 'pc' && !(uw > 0)) { nudge(s.querySelector('#fUw')); return s.querySelector('#fUw').focus(); }
+    const read = () => { const p = r0(val(s, 'fP') || 0), f = r0(val(s, 'fF') || 0), c = r0(val(s, 'fC') || 0), k = val(s, 'fK'); return { p, f, c, k: k != null ? r0(k) : r0(p * 4 + f * 9 + c * 4) }; };
+    ok.addEventListener('click', () => {
+      const miss = missing();
+      if (miss) { ok.dataset.tried = '1'; sync(); haptic(); const el = miss === 'name' ? nameIn : s.querySelector('#fUw'); nudge(el); el.focus(); return; }
+      if (!isNew && !changed()) return;
+      haptic();
+      const name = nameIn.value.trim(), unit = unitB.dataset.v, uw = val(s, 'fUw');
       const toG = v => v == null ? null : unit === 'pc' ? r0(v * uw) : r0(v);
       const pk = toG(val(s, 'fPk')), pr = val(s, 'fPr');
       const props = { name, n: read(), unit, uw: unit === 'pc' ? uw : undefined, pk: pk > 0 ? pk : undefined, pr: pr > 0 ? pr : undefined };
       const renamed = !isNew && e && name !== e.name;
+      s._guard = null;
       if (isNew) {
         const nid = uid(), src = pend && pend.src && pend.src.t ? { src: pend.src, ...(pend.m && Object.keys(pend.m).length ? { m: pend.m } : {}) } : {};
-        S.items.unshift({ id: nid, t: 'f', g: toG(val(s, 'fG') || 0), ...props, ...src }); setTimeout(ndbAuto, 600);
+        S.items.unshift({ id: nid, t: 'f', g: 0, ...props, ...src }); setTimeout(ndbAuto, 600);
         query = ''; $('#q').value = '';
         setTimeout(() => { const el = document.querySelector(`#secMeal [data-id="${nid}"]`); if (!el) return;
           el.scrollIntoView({ block: 'center', behavior: RM ? 'auto' : 'smooth' }); el.classList.add('just-added'); setTimeout(() => el.classList.remove('just-added'), 1600); }, 380);
@@ -3942,14 +4028,14 @@ function foodSheet(e, isNew) {
       save(); closeSheet(); renderAll(true);
     });
     if (!isNew) {
-      s.querySelector('#fDup').addEventListener('click', () => { const r = find(e.id); if (!r) return closeSheet();
+      s.querySelector('#fDup').addEventListener('click', () => { haptic(); s._guard = null; const r = find(e.id); if (!r) return closeSheet();
         const c = JSON.parse(JSON.stringify(r.e)); c.id = uid(); c.g = 0; r.arr.splice(r.i + 1, 0, c); save(); closeSheet(); renderAll(true); });
-      s.querySelector('#fDel').addEventListener('click', () => { closeSheet(); const host = list.querySelector(`[data-id="${e.id}"]`);
+      s.querySelector('#fDel').addEventListener('click', () => { haptic(); s._guard = null; closeSheet(); const host = list.querySelector(`[data-id="${e.id}"]`);
         if (host && S.ui.tab === 'meal') removeWithUndo('meal', e.id, host);
         else { const r = find(e.id); if (r) { const keep = JSON.stringify(S.items); r.arr.splice(r.i, 1); if (r.parent) fixGroup(r.parent, S.items); save(); renderAll(true);
           toast(`Deleted ${e.name}`, { label: 'Undo', fn: () => { S.items = JSON.parse(keep); save(); renderAll(true); } }); } } });
     }
-  });
+  }, 'ps');
 }
 function groupSheet(g) {
   sheet(`<div class="sh-head"><span class="sh-kick">Group</span><input class="sh-name" id="gName" value="${esc(g.name)}" placeholder="Group name" autocomplete="off" aria-label="Group name"><span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic red" id="gDel" aria-label="Delete group">${SHI.trash}</button>${XBTN}</div>
@@ -4684,12 +4770,14 @@ function nSecBind(s, st, onFind) {
 }
 /* an overlay inside the open sheet (like «Add a nutrient»), or its own sheet when nothing is open */
 function nOver(html, ready) {
-  if (openSheet) { const box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; shPrep(box); openSheet.s.scrollTop = 0; openSheet.s.append(box);
+  if (openSheet) { const box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; shPrep(box); openSheet.s.scrollTop = 0; openSheet.s.append(box); psBack(box);
     const close = () => box.remove(); box.querySelectorAll('[data-ox]').forEach(b => b.addEventListener('click', () => { haptic(); close(); }));
     if (!RM) box.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: SPRING });
     ready(box, close); kpBind(box); return; }
   sheet(html, s => { s.querySelectorAll('[data-ox]').forEach(b => b.addEventListener('click', () => closeSheet())); ready(s, () => closeSheet()); });
 }
+/* inside the product sheet a page closes with ‹ on the left, like a page in iOS */
+function psBack(box) { if (!openSheet || !openSheet.s.classList.contains('ps')) return; const b = box.querySelector('[data-ox],[data-np-x]'); if (!b) return; b.innerHTML = PSI.back; b.classList.add('ps-back'); b.setAttribute('aria-label', 'Back'); }
 const nOX = `<button class="x" data-ox aria-label="Close">${ICON.x}</button>`;
 /* Find nutrients: database first (names in Russian or English), Open Food Facts online, a label, or by hand.
    o = { name, k, src, done(pick), hand(), scan(), none() }  — pick = { src, m, n } */
@@ -5290,7 +5378,7 @@ function nutPick(done, standalone) {   // search the full list; inside a sheet i
   const html = `<h3>${standalone ? 'Find a nutrient' : 'Add a nutrient'}<button class="x" aria-label="Close" data-np-x>${ICON.x}</button></h3><label class="tfield"><input class="nu-q" placeholder="Vitamin, mineral…" autocomplete="off"></label><div class="nu-pl-l"></div>`;
   let box, R = null;
   if (standalone) { R = nRows().R; sheet(html, s => { box = s; wire(); }); }
-  else { box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.scrollTop = 0; openSheet.s.append(box); wire(); }
+  else { box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.scrollTop = 0; openSheet.s.append(box); psBack(box); wire(); }
   function wire() { const L = box.querySelector('.nu-pl-l'), q = box.querySelector('.nu-q');
     const draw = () => { const t = q.value.trim().toLowerCase(); L.innerHTML = ['vit', 'min', 'fat', 'carb', 'amino'].map(g => { const xs = NUT.filter(n => n.g === g && (!t || (n.n + ' ' + n.s).toLowerCase().includes(t))); return xs.length ? `<div class="cap">${NG[g]}</div><div class="bal-rows">${xs.map(n => { const x = R && R.find(r => r.n.id === n.id); return `<button class="bal-r" data-k="${n.id}"><b>${n.n}</b><em class="${x ? 'nst-t-' + x.s : 'nu-nf'}">${x ? nTile(x) : n.u}</em></button>`; }).join('')}</div>` : ''; }).join('');
       L.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => { haptic(); if (standalone) { done(b.dataset.k); } else { box.remove(); done(b.dataset.k); } })); };
