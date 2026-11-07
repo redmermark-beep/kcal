@@ -2268,6 +2268,73 @@ html body .sheet.ps .nu-pick>.sh-head{flex-direction:row!important}
 html body .sheet.ps .nu-pick>.sh-head .sh-kick{flex:none;width:auto;margin:0;text-align:center}
 .sheet.ps .ps-bar{background:transparent}
 .sheet.ps.scrolled .ps-bar{background:rgba(248,248,251,.96)}
+/* product sheet, 7 Nov late: solid card (no blur anywhere), pages take the sheet over, page contents in the sheet's style */
+html body .sheet.ps{background:#f8f8fb;-webkit-backdrop-filter:none;backdrop-filter:none}
+.sheet.ps.scrolled .ps-bar{background:#f8f8fb}
+html body .sheet.ps .sh-foot{background:#f8f8fb;margin:24px -16px -16px;padding:8px 16px 16px}
+html body .sheet.ps .sh-foot::before{display:none}
+html body .sheet.ps.paged{overflow:auto!important}
+html body .sheet.ps.paged>*:not(.nu-pick){display:none!important}
+html body .sheet.ps .nu-pick{position:static;inset:auto;margin:0;padding:0;background:none;overflow:visible;border-radius:0}
+html body .sheet.ps .nu-pick.under{display:none}
+html body .sheet.ps .nu-pick>.sh-head,html body .sheet.ps .nu-pick>h3{position:sticky;top:-14px;margin:-14px -16px 0;padding:14px 66px 8px;min-height:44px;background:#f8f8fb;border-radius:40px 40px 0 0}
+html body .sheet.ps.scrolled .nu-pick>.sh-head,html body .sheet.ps.scrolled .nu-pick>h3{box-shadow:0 .5px 0 rgba(60,60,67,.18)}
+html body .sheet.ps .nu-pick .ps-pok{position:absolute;right:14px;top:14px}
+html body .sheet.ps .nu-pick>h3 .x:not(.ps-back){display:none}
+/* captions and notes */
+html body .sheet.ps .nu-pick .cap{display:flex;justify-content:space-between;margin:24px 0 8px;padding:0 10px;font-size:12px;line-height:14px;font-weight:400;text-transform:uppercase;letter-spacing:.02em;color:rgba(60,60,67,.6)}
+html body .sheet.ps .nu-pick .cap .r{font-weight:400}
+html body .sheet.ps .nu-pick .nu-vn{display:none}
+html body .sheet.ps .nu-pick .note{margin:0;padding:12px 10px;font-size:15px;line-height:20px;color:rgba(60,60,67,.6)}
+/* search field */
+html body .sheet.ps .nu-pick .tfield{position:relative;height:44px;margin-top:14px;padding:0 12px 0 38px;border-radius:12px;background:rgba(118,118,128,.12);box-shadow:none}
+html body .sheet.ps .nu-pick .tfield:focus-within{background:#fff;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12)}
+html body .sheet.ps .nu-pick .tfield::before{content:"";position:absolute;left:12px;top:13px;width:18px;height:18px;background:rgba(60,60,67,.45);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6'/%3E%3Cpath d='M20 20l-4.5-4.5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6'/%3E%3Cpath d='M20 20l-4.5-4.5'/%3E%3C/svg%3E") center/contain no-repeat}
+html body .sheet.ps .nu-pick .tfield input{font-size:15px;color:#111115}
+html body .sheet.ps .nu-pick .tfield input::placeholder{color:rgba(60,60,67,.45)}
+/* rows: no fill; the chosen one — light grey with a check */
+html body .sheet.ps .nu-pick .bal-rows{gap:4px;max-height:none;overflow:visible}
+html body .sheet.ps .nu-pick .bal-r{min-height:44px;padding:10px;border-radius:16px;background:none;box-shadow:none;gap:10px;text-align:left}
+html body .sheet.ps .nu-pick .bal-r.on{background:rgba(118,118,128,.12)}
+html body .sheet.ps .nu-pick .bal-r.on::after{content:"";flex:none;width:16px;height:16px;background:#111115;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat}
+html body .sheet.ps .nu-pick .bal-r b{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:15px;line-height:20px;font-weight:510;color:#111115}
+html body .sheet.ps .nu-pick .bal-r b small{font-size:12px;line-height:16px;font-weight:400;color:rgba(60,60,67,.6);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
+html body .sheet.ps .nu-pick .bal-r em{flex:none;font-style:normal;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;color:rgba(60,60,67,.6)}
+html body .sheet.ps .nu-pick .bal-r em i{font-style:normal;font-family:-apple-system,system-ui,sans-serif}
+/* buttons → pills */
+html body .sheet.ps .nu-pick .so-chip,html body .sheet.ps .nu-pick .nu-more,html body .sheet.ps .nu-pick .sbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;margin:0;padding:0 16px;border:0;border-radius:24px;background:rgba(118,118,128,.12);box-shadow:none;color:#111115;font-size:15px;font-weight:510}
+html body .sheet.ps .nu-pick .nu-more{margin-top:24px}
+html body .sheet.ps .nu-pick .btnrow{display:flex;gap:4px;margin:0}
+html body .sheet.ps .nu-pick .btnrow+.btnrow,html body .sheet.ps .nu-pick .sh-foot>*+*{margin-top:4px!important}
+html body .sheet.ps .nu-pick .sbtn[data-fa="none"]{background:none;color:rgba(60,60,67,.6)}
+html body .sheet.ps .nu-pick .sbtn:disabled,html body .sheet.ps .nu-pick .so-chip:disabled{color:rgba(60,60,67,.3)}
+/* nutrient rows: % plate, name, amount on the right */
+html body .sheet.ps .nu-pick .nu-l{display:flex;flex-direction:column;gap:4px;margin:0;padding:0}
+html body .sheet.ps .nu-pick .nu-l .row{min-height:36px;padding:0;border:0;background:none}
+html body .sheet.ps .nu-pick .nu-l .rc{display:flex;align-items:center;gap:10px;width:100%}
+html body .sheet.ps .nu-pick .nu-l .pill{flex:none;min-width:0;width:60px;height:32px;padding:0;border-radius:10px;background:rgba(118,118,128,.12);display:flex;align-items:center;justify-content:center;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:#111115}
+html body .sheet.ps .nu-pick .nu-l .info{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px}
+html body .sheet.ps .nu-pick .nu-l .name{font-size:15px;line-height:20px;font-weight:510;color:#111115}
+html body .sheet.ps .nu-pick .nu-l .mac{margin:0;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;color:rgba(60,60,67,.6)}
+html body .sheet.ps .nu-pick .nu-l .mac i,html body .sheet.ps .nu-pick .nu-l .mac span{color:rgba(60,60,67,.6)}
+html body .sheet.ps .nu-pick .nu-srcb{margin-top:14px;padding:10px;min-height:0}
+/* typed-in nutrients: plates two in a row, + Nutrient across */
+html body .sheet.ps .nu-pick .card:has(>.vt){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin-top:8px}
+html body .sheet.ps .nu-pick .vt{min-height:64px;border-radius:16px}
+html body .sheet.ps .nu-pick .vt .l{color:rgba(60,60,67,.6)}
+html body .sheet.ps .nu-pick .vt.nu-addn{grid-column:1/-1;min-height:48px;height:48px;margin-top:20px;border-radius:24px;flex-direction:row;background:rgba(118,118,128,.12)!important;box-shadow:none!important;color:#111115;font-size:15px;font-weight:510}
+/* caret (#19): before the grey hint when the field is empty, after the unit when there is a value */
+html body .sheet.ps .vt b:has(.v.ph) .cr{order:-1;margin:0 -1.5px 0 0}
+html body.f31 #app #secMeal .qn .caret::after{background:rgba(60,60,67,.6)}
+html body .sheet.ps .nu-pick .nu-l .info{flex-direction:row!important;text-align:left}
+html body .sheet.ps .nu-pick .btnrow>.sbtn{flex:1 1 0;width:auto;min-width:0}
+html body .sheet.ps .nu-pick .bal-r b{align-items:flex-start;text-align:left}
+html body .sheet.ps .nu-pick .bal-r{justify-content:flex-start;width:100%}
+.sheet.ps .ps-bar{position:sticky}
+.sheet.ps .ps-kick{position:absolute;left:50%;top:14px;height:44px;line-height:44px;transform:translateX(-50%);white-space:nowrap;pointer-events:none}
+.sheet.ps .ps-bar #fScan{margin-left:auto}
+html body .sheet.ps .nu-pick .nu-fl,html body .sheet.ps .nu-pick .nu-pl-l{max-height:none;overflow:visible;margin:0;padding:0}
+html body .sheet.ps .nu-pick .nu-addday{margin-top:0}
 </style>
 
 <div class="app" id="app">
@@ -2825,7 +2892,7 @@ const toU = (e, g) => isPc(e) ? Math.round(g / e.uw * 10) / 10 : g;
 const fmtAmt = (e, g) => e.t === 'g' ? `${g}g` : `${toU(e, g)}${uLab(e)}`;
 const money = v => Math.round(v).toLocaleString('ru-RU');
 const macHTML = m => `<span>${r0(m.k)}<i>KCAL</i></span><span>${r0(m.p)}<i>P</i></span><span>${r0(m.f)}<i>F</i></span><span>${r0(m.c)}<i>C</i></span>`;   // issue #16 (5 Nov): KCAL, not K. BASIC (4 Nov): number, then the chip's letter — «450K 30P 10F 40C»
-function fieldHTML(buf, ph, unit) { return buf ? `${buf}<i class="caret"></i>${unit}` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
+function fieldHTML(buf, ph, unit) { return buf ? `${buf}${unit}<i class="caret"></i>` : `<i class="caret"></i><span class="ph">${ph}${unit}</span>`; }
 /* To review (24 Oct): products added from Nutrients wait under the plan with a suggested portion until they get grams */
 const revOf = (p = plan()) => (p.rev ||= {});
 const revGet = e => e && e.t !== 'g' && e.g === 0 && !ghostSnap ? revOf()[e.id] || null : null;
@@ -2836,7 +2903,7 @@ function pillHTML(e) { return `<span class="qv"><span class="qn">${pillIn(e)}</s
 function pillIn(e) {
   const rv = revGet(e);
   const U2 = e.t === 'g' ? 'g' : uLab(e), A = g => `${e.t === 'g' ? g : toU(e, g)}<small>${U2}</small>`;   // B3 (25 Oct): the amount is a plain number, the unit small and grey
-  if (editing && editing.id === e.id) { const ph = e.t === 'g' ? maxOf(e) : toU(e, rv ? rv.ph : e.g); return editing.buf ? `${editing.buf}<i class="caret"></i><small>${U2}</small>` : `<i class="caret"></i><span class="ph">${ph}<small>${U2}</small></span>`; }
+  if (editing && editing.id === e.id) { const ph = e.t === 'g' ? maxOf(e) : toU(e, rv ? rv.ph : e.g); return editing.buf ? `${editing.buf}<small>${U2}</small><i class="caret"></i>` : `<i class="caret"></i><span class="ph">${ph}<small>${U2}</small></span>`; }
   if (rv) return `<span class="ph">${A(rv.ph)}</span>`;
   return A(e.g);
 }
@@ -3964,7 +4031,7 @@ function foodSheet(e, isNew) {
     const setU = u => { unitB.dataset.v = u; unitB.innerHTML = psUnitBtn(u); s.querySelector('#fUwBox').hidden = u !== 'pc';
       const pk = s.querySelector('[data-f="fPk"] .u'); if (pk) pk.textContent = ul(u); sync(); };
     unitB.addEventListener('click', () => { haptic(); menu(unitB, ['g', 'ml', 'pc'].map(u => ({ label: PS_UNITS[u], check: unitB.dataset.v === u, do: () => { setU(u); if (u === 'pc' && !(val(s, 'fUw') > 0)) setTimeout(() => s.querySelector('#fUw').focus(), 60); } }))); });
-    s.querySelector('#fUse').addEventListener('click', () => { const i = s.querySelector('#fK'); i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); });
+    s.querySelector('#fUse').addEventListener('click', () => { haptic(); const i = s.querySelector('#fK'); i.value = r0((val(s, 'fP') || 0) * 4 + (val(s, 'fF') || 0) * 9 + (val(s, 'fC') || 0) * 4); i.dispatchEvent(new Event('input', { bubbles: true })); });
     setTimeout(sync);
     /* Nutrients: a page inside the sheet; a saved product changes its source right away (Undo in the toast), a new one keeps it until ✓ */
     const TI = ['fP', 'fF', 'fC', 'fK'], tv = () => TI.map(id => s.querySelector('#' + id).value).join('|');
@@ -4035,6 +4102,7 @@ function foodSheet(e, isNew) {
         else { const r = find(e.id); if (r) { const keep = JSON.stringify(S.items); r.arr.splice(r.i, 1); if (r.parent) fixGroup(r.parent, S.items); save(); renderAll(true);
           toast(`Deleted ${e.name}`, { label: 'Undo', fn: () => { S.items = JSON.parse(keep); save(); renderAll(true); } }); } } });
     }
+    new MutationObserver(() => psPaged(s)).observe(s, { childList: true });
   }, 'ps');
 }
 function groupSheet(g) {
@@ -4777,7 +4845,11 @@ function nOver(html, ready) {
   sheet(html, s => { s.querySelectorAll('[data-ox]').forEach(b => b.addEventListener('click', () => closeSheet())); ready(s, () => closeSheet()); });
 }
 /* inside the product sheet a page closes with ‹ on the left, like a page in iOS */
-function psBack(box) { if (!openSheet || !openSheet.s.classList.contains('ps')) return; const b = box.querySelector('[data-ox],[data-np-x]'); if (!b) return; b.innerHTML = PSI.back; b.classList.add('ps-back'); b.setAttribute('aria-label', 'Back'); }
+function psBack(box) { if (!openSheet || !openSheet.s.classList.contains('ps')) return; const b = box.querySelector('[data-ox],[data-np-x]'); if (b) { b.innerHTML = PSI.back; b.classList.add('ps-back'); b.setAttribute('aria-label', 'Back'); }
+  const head = box.querySelector('.sh-head,h3'), sv = box.querySelector('.sh-foot .sbtn.primary, :scope > .sbtn.primary');   // a page's Save becomes ✓ in its header
+  if (head && sv) { const f = sv.closest('.sh-foot'); sv.className = 'ps-c ps-ok ps-pok'; sv.innerHTML = PSI.ok; sv.setAttribute('aria-label', 'Save'); head.append(sv); if (f && !f.children.length) f.remove(); } }
+/* a page inside the product sheet takes the sheet over: the sheet grows with it up to the screen height, only the top page shows */
+function psPaged(s) { const pk = [...s.children].filter(c => c.classList.contains('nu-pick')); s.classList.toggle('paged', pk.length > 0); pk.forEach((p, i) => p.classList.toggle('under', i < pk.length - 1)); s.scrollTop = 0; }
 const nOX = `<button class="x" data-ox aria-label="Close">${ICON.x}</button>`;
 /* Find nutrients: database first (names in Russian or English), Open Food Facts online, a label, or by hand.
    o = { name, k, src, done(pick), hand(), scan(), none() }  — pick = { src, m, n } */
