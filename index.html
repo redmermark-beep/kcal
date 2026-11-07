@@ -2351,6 +2351,12 @@ html body .sheet.ps .nu-pick .nu-l .row.nz .name{color:rgba(60,60,67,.45)}
 html body .sheet.ps .nu-pick .nu-p100{margin-top:14px}
 .menu .mi .mic{display:flex;color:#111115}
 .menu .mi .mic svg{width:20px;height:20px}
+/* one text field in the sheet's style (group name) */
+.sheet.ps .ps-field{height:44px;margin-top:14px;box-sizing:border-box;padding:0 12px;border-radius:12px;background:rgba(118,118,128,.12);display:flex;align-items:center;transition:background-color .2s,box-shadow .2s}
+.sheet.ps .ps-field:focus-within{background:#fff;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12)}
+.sheet.ps .ps-field input{flex:1;min-width:0;border:0;background:none;outline:none;padding:0;font:510 15px/20px -apple-system,system-ui,sans-serif;letter-spacing:-.15px;color:#111115;caret-color:rgba(60,60,67,.6)}
+html body .sheet.ps .ps-field input{box-shadow:none!important;background:none!important}
+.sheet.ps.ps-short .ps-kick{font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115}
 </style>
 
 <div class="app" id="app">
@@ -4123,15 +4129,21 @@ function foodSheet(e, isNew) {
     new MutationObserver(() => psPaged(s)).observe(s, { childList: true });
   }, 'ps');
 }
+/* group: swipe → edit only renames it (canvas «Группа · переименование», variant 1); delete is the red swipe tile */
 function groupSheet(g) {
-  sheet(`<div class="sh-head"><span class="sh-kick">Group</span><input class="sh-name" id="gName" value="${esc(g.name)}" placeholder="Group name" autocomplete="off" aria-label="Group name"><span class="sh-pen" aria-hidden="true">${SHI.pen}</span><button type="button" class="sh-ic red" id="gDel" aria-label="Delete group">${SHI.trash}</button>${XBTN}</div>
-    <div class="cap">${g.ch.length} products<span class="r">${g.g} of ${maxOf(g)} g eaten</span></div>
-    <div class="card">${g.ch.map(c => `<div class="field"><span class="fl">${esc(c.name)}</span><span class="calc">${c.g}g</span></div>`).join('')}</div>
-    <button class="sbtn primary" id="gSave" disabled>Save</button>`, s => {
-    const gi = s.querySelector('#gName'); gi.addEventListener('input', () => { s.querySelector('#gSave').disabled = !gi.value.trim() || gi.value.trim() === g.name; });
-    s.querySelector('#gSave').addEventListener('click', () => { g.name = s.querySelector('#gName').value.trim() || g.name; save(); closeSheet(); renderMeal(true); });
-    s.querySelector('#gDel').addEventListener('click', () => { closeSheet(); const el = list.querySelector(`[data-id="${g.id}"] > .ghead`); if (el) removeWithUndo('meal', g.id, el); });
-  });
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="gX" aria-label="Close">${PSI.x}</button><span class="ps-kick">Rename group</span><button type="button" class="ps-c ps-ok off" id="gSave" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
+    <div class="ps-field"><input id="gName" value="${esc(g.name)}" placeholder="Group name" autocomplete="off" enterkeyhint="done" aria-label="Group name"></div>`, s => {
+    const gi = s.querySelector('#gName'), ok = s.querySelector('#gSave');
+    const changed = () => gi.value.trim() !== g.name, valid = () => !!gi.value.trim();
+    const sync = () => ok.classList.toggle('off', !valid() || !changed());
+    const done = () => { if (!valid()) { nudge(gi); gi.focus(); return; } if (!changed()) return; haptic(); s._guard = null; g.name = gi.value.trim(); save(); closeSheet(); renderMeal(true); };
+    gi.addEventListener('input', sync);
+    gi.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); done(); } });
+    ok.addEventListener('click', done);
+    s.querySelector('#gX').addEventListener('click', () => { haptic(); closeSheet(); });
+    s._guard = () => { if (!changed()) return false; haptic(); menu(s.querySelector('#gX'), [{ head: 'Discard changes?' }, { label: 'Discard', danger: true, now: true, do: () => { s._guard = null; closeSheet(); } }, { label: 'Keep editing', do: () => {} }]); return true; };
+    setTimeout(() => { gi.focus(); gi.select(); }, 380);
+  }, 'ps ps-short');
 }
 function nameSheet(title, value, cta, cb) {
   sheet(`<h3>${title}${XBTN}</h3><div class="card">${ftxt('nName', value, 'Name')}</div><button class="sbtn primary" id="nSave">${cta}</button>`, s => {
