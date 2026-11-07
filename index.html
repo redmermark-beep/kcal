@@ -4224,7 +4224,9 @@ function planMenu(anchor) {
       if (k === 'dup') { save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); toast('Meal plan duplicated'); }
       if (k === 'ren') nameSheet('Rename meal plan', plan().name, 'Save', v => { plan().name = v; save(); renderMeal(false); });
       if (k === 'del') confirmSheet('Delete meal plan?', `“${esc(plan().name)}” and its portions will be removed. Products stay in your list.`, 'Delete', () => {
-        const i = S.plans.indexOf(plan()); S.plans.splice(i, 1); switchPlan(S.plans[Math.max(0, i - 1)].id); toast('Meal plan deleted'); });
+        const i = S.plans.indexOf(plan()); S.plans.splice(i, 1);
+        /* not switchPlan(): it saves the current grams into the «active» plan first — after the splice that is the neighbour, which got overwritten */
+        S.active = S.plans[Math.max(0, i - 1)].id; applyGrams(plan()); save(); renderAll(true); toast('Meal plan deleted'); });
     }, 60);
   });
 }
