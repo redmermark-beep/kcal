@@ -2081,7 +2081,8 @@ html body.f31.pal-fresh #app #secMeal .zero .qn,html body.f31.pal-fresh #app #se
 html body.f31.pal-fresh.lk-new.v2 #app #secMeal .zhead{font:400 12px/14px var(--sans)!important;color:rgba(60,60,67,.6)!important}
 html body.f31.pal-fresh #app header.plan .title-row{margin-top:7px!important}
 html body.f31.pal-fresh #app header.plan #hv{margin-top:16px!important}
-html body.f31.pal-fresh #app #secMeal #mhead{padding-top:24px!important;padding-bottom:16px!important}
+html body.f31.pal-fresh #app #secMeal #mhead{padding-top:24px!important;padding-bottom:8px!important}
+html body.f31.pal-fresh #app #secMeal #mhead+#list,html body.f31.pal-fresh #app #secMeal #pullS+#list{margin-top:8px!important}
 html body.f31.pal-fresh #app #secMeal #list{margin-top:0!important}
 html body.f31.pal-fresh #app #secMeal #mhead .list-head{margin-bottom:0!important}
 html body.f31.pal-fresh #app #secMeal #mhead .tools{width:auto!important;flex:none!important}
@@ -2335,6 +2336,10 @@ html body .sheet.ps .nu-pick .bal-r{justify-content:flex-start;width:100%}
 .sheet.ps .ps-bar #fScan{margin-left:auto}
 html body .sheet.ps .nu-pick .nu-fl,html body .sheet.ps .nu-pick .nu-pl-l{max-height:none;overflow:visible;margin:0;padding:0}
 html body .sheet.ps .nu-pick .nu-addday{margin-top:0}
+html body .sheet.ps{max-height:calc(100vh - var(--sat,env(safe-area-inset-top,0px)) - env(safe-area-inset-bottom,0px) - 24px);max-height:calc(100dvh - var(--sat,env(safe-area-inset-top,0px)) - env(safe-area-inset-bottom,0px) - 24px)}
+html body .sheet.ps .nu-pick .nu-fa{margin-top:24px}
+html body .sheet.ps .nu-pick .nu-fa .sbtn svg{width:18px;height:18px;flex:none}
+html body .sheet.ps .nu-pick .nu-quiet{margin-top:4px!important;background:none!important;color:rgba(60,60,67,.6)!important}
 </style>
 
 <div class="app" id="app">
@@ -3897,6 +3902,8 @@ function shPrep(c) {
     while (p && p.matches('.btnrow.wide, .sbtn.primary') && foot.length < 2) { foot.unshift(p); p = p.previousElementSibling; }
     const f = document.createElement('div'); f.className = 'sh-foot'; last.after(f); foot.forEach(x => f.append(x)); }
 }
+/* the status bar's height (real, or faked by ?sat=) — sheets must never reach under it */
+function satPx() { const d = document.createElement('div'); d.style.cssText = 'position:fixed;visibility:hidden;height:var(--sat,env(safe-area-inset-top,0px))'; document.body.append(d); const h = d.offsetHeight; d.remove(); return h; }
 function sheet(html, onReady, cls) {
   hideToast();
   closeSheet(true);
@@ -3928,7 +3935,7 @@ function sheet(html, onReady, cls) {
     if (!vv) return;
     const kb = Math.max(0, innerHeight - vv.height - vv.offsetTop), on = kb > 80;
     s.style.bottom = on ? `${kb + 8}px` : '';
-    s.style.maxHeight = on ? `${vv.height - 16}px` : '';
+    s.style.maxHeight = on ? `${vv.height - 16 - satPx()}px` : '';
     const a = document.activeElement;
     if (on && a && s.contains(a)) setTimeout(() => (a.closest('.vt,.tfield,.sh-head') || a).scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' }), 30);
   };
@@ -4857,8 +4864,8 @@ function nFind(o) {
   const html = `<div class="sh-head"><span class="sh-kick">Find nutrients</span><span class="nu-sht">${esc(o.name || 'New product')}</span>${nOX}</div>
     <label class="tfield"><input class="nu-q" value="${esc(o.name || '')}" placeholder="Apple, яблоко, chicken…" autocomplete="off" enterkeyhint="search" aria-label="Search"></label>
     <div class="nu-fl"></div>
-    <div class="btnrow wide"><button class="sbtn plain" data-fa="code">Barcode</button><button class="sbtn plain" data-fa="table">Nutrition table</button></div>
-    <div class="btnrow"><button class="sbtn plain" data-fa="hand">Enter by hand</button>${o.none ? '<button class="sbtn plain" data-fa="none">Leave unknown</button>' : ''}</div>`;
+    <div class="nu-fa"><div class="btnrow"><button class="sbtn plain" data-fa="scan">${PSI.scan}Scan label</button><button class="sbtn plain" data-fa="hand">${SHI.pen}Enter by hand</button></div>
+    ${o.none ? '<button class="sbtn plain nu-quiet" data-fa="none">Leave unknown</button>' : ''}</div>`;
   nOver(html, (box, close) => {
     const L = box.querySelector('.nu-fl'), q = box.querySelector('.nu-q'); let online = null, onQ = '';
     const kc = k => k == null ? '' : `${r0(k)}<i> kcal</i>`;
@@ -4867,11 +4874,11 @@ function nFind(o) {
       if (!NDB.ok) { L.innerHTML = `<p class="note nu-fn">${NDB.err ? 'The database didn’t load — check the connection.' : 'Loading the database…'}</p>`; }
       else { const ask = o.src && o.src.t === 'ask' && t === (o.name || '').trim() ? o.src.c : [];
         const ids = [...new Set([...ask, ...(t ? ndbSearch(t, true, 30).map(z => z.id) : [])])].slice(0, 30);
-        L.innerHTML = `<div class="cap">${ask.length ? 'Possible matches · USDA database' : 'USDA database'}<span class="r">per 100 g</span></div>
+        L.innerHTML = `<div class="cap">Possible matches<span class="r">USDA</span></div>
           ${ids.length ? `<div class="bal-rows">${ids.map(id => { const r = NDB.by.get(id); return row(`data-db="${id}"`, esc(r.ru || r.d), r.ru ? esc(r.d) : esc(r.g), r.k, o.src && o.src.t === 'db' && o.src.id === id); }).join('')}</div>` : `<p class="note nu-fn">${t ? 'Nothing in the database.' : 'Type a product name.'}</p>`}`; }
-      L.innerHTML += `<div class="cap">Online · Open Food Facts<span class="r">brands, barcodes</span></div>` + (online && onQ === t
+      L.innerHTML += `<div class="cap">Online</div>` + (online && onQ === t
         ? (online.length ? `<div class="bal-rows">${online.map((x, i) => row(`data-off="${i}"`, esc(x.d), esc([x.brand, x.cnt ? `${x.cnt} nutrients` : 'KBJU only'].filter(Boolean).join(' · ')), x.n.k)).join('')}</div>` : '<p class="note nu-fn">Nothing found online.</p>')
-        : `<button class="so-chip nu-addday" data-fa="online"${t ? '' : ' disabled'}>${online === false ? 'Searching…' : `Search “${esc(t || '…')}” online`}</button>`);
+        : `<button class="so-chip nu-addday" data-fa="online"${t ? '' : ' disabled'}>${online === false ? 'Searching Open Food Facts…' : 'Search Open Food Facts'}</button>`);
       L.querySelectorAll('[data-db]').forEach(b => b.addEventListener('click', () => { haptic(); close(); o.done(nDbPick(b.dataset.db)); }));
       L.querySelectorAll('[data-off]').forEach(b => b.addEventListener('click', () => { haptic(); const x = online[+b.dataset.off]; close(); o.done({ src: { t: 'off', code: x.code, d: x.d }, m: x.m, n: x.n }); }));
       const on = L.querySelector('[data-fa="online"]'); if (on) on.addEventListener('click', () => { if (!t || online === false) return; haptic(); online = false; onQ = t; draw();
@@ -4879,8 +4886,7 @@ function nFind(o) {
     let qt; q.addEventListener('input', () => { clearTimeout(qt); qt = setTimeout(draw, 120); });
     q.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); q.blur(); } });
     const sc = nScanner(box.querySelector('.sh-head'), r => o.scanned(r, close));
-    box.querySelector('[data-fa="code"]').addEventListener('click', () => { haptic(); sc.start('code'); });
-    box.querySelector('[data-fa="table"]').addEventListener('click', () => { haptic(); sc.start('table'); });
+    box.querySelector('[data-fa="scan"]').addEventListener('click', () => { haptic(); sc.start('code'); });
     box.querySelector('[data-fa="hand"]').addEventListener('click', () => { haptic(); close(); o.hand(); });
     const un = box.querySelector('[data-fa="none"]'); if (un) un.addEventListener('click', () => { haptic(); close(); o.none(); });
     draw(); if (!NDB.ok) ndbLoad().then(draw).catch(() => { NDB.err = true; if (box.isConnected) draw(); });
