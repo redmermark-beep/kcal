@@ -2357,6 +2357,27 @@ html body .sheet.ps .nu-pick .nu-p100{margin-top:14px}
 .sheet.ps .ps-field input{flex:1;min-width:0;border:0;background:none;outline:none;padding:0;font:510 15px/20px -apple-system,system-ui,sans-serif;letter-spacing:-.15px;color:#111115;caret-color:rgba(60,60,67,.6)}
 html body .sheet.ps .ps-field input{box-shadow:none!important;background:none!important}
 .sheet.ps.ps-short .ps-kick{font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115}
+/* Meal plans sheet */
+.sheet.ps .pl-list{display:flex;flex-direction:column;gap:4px;margin-top:14px}
+.sheet.ps .pl-r{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;box-sizing:border-box;padding:10px;border:0;border-radius:16px;background:none;text-align:left;color:#111115;position:relative;isolation:isolate;transition:transform .2s var(--spring)}
+.sheet.ps .pl-r:active{transform:scale(.98)}
+.sheet.ps .pl-r.on{background:rgba(118,118,128,.12)}
+.sheet.ps .pl-r.hl::before{content:"";position:absolute;inset:-6px;border-radius:20px;background:rgba(118,118,128,.16);z-index:-1;animation:justAdded2 1.6s ease-out forwards}
+.sheet.ps .pl-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.sheet.ps .pl-n{font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet.ps .pl-m{display:flex;gap:8px;margin-top:2px;font-size:11px;line-height:14px}
+.sheet.ps .pl-m b{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-weight:400;color:rgba(17,17,21,.8)}
+.sheet.ps .pl-m i{font-style:normal;color:rgba(60,60,67,.6)}
+.sheet.ps .pl-m .pm-o b,.sheet.ps .pl-m .pm-o i{color:#d02c2a}
+.sheet.ps .pl-m .pm-u b,.sheet.ps .pl-m .pm-u i{color:#2669ed}
+.sheet.ps .pl-ck{display:flex;color:#111115}
+.sheet.ps .pl-ck svg{width:16px;height:16px}
+.sheet.ps .pl-acts{margin-top:24px}
+.sheet.ps .pl-del{margin-top:4px}
+.sheet.ps .ps-pill:disabled{color:rgba(60,60,67,.3)}
+.sheet.ps .ps-pill svg{width:18px;height:18px;flex:none}
+.sheet.ps .ps-field.err{background:#fff;box-shadow:inset 0 0 0 1px #d02c2a}
+.sheet.ps .ps-kick.ps-ttl{font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115}
 </style>
 
 <div class="app" id="app">
@@ -4203,32 +4224,44 @@ function planTotals(p) {
   if (p === plan()) return totals();
   const keep = JSON.stringify(S.items); applyGrams(p); const t = totals(); S.items = JSON.parse(keep); return t;
 }
-// Menu 4: plans with their K/P/F/C status, actions in a tray
-function planMenu(anchor) {
+/* Meal plans (8 Nov 2026, canvas «Meal plans · финал», variant 2.1): a sheet — plans as rows with KCAL P F C like products on Meal
+   (colour only on what's off), ✎ renames the selected one, New / Duplicate / Delete at the bottom. Sort is gone for now. */
+function psName(title, value, cb, o = {}) {   // a short sheet with one name field — New plan, Rename plan
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="nmX" aria-label="Close">${PSI.x}</button><span class="ps-kick">${esc(title)}</span><button type="button" class="ps-c ps-ok off" id="nmOk" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
+    <div class="ps-field"><input id="nmIn" value="${esc(value || '')}" placeholder="${esc(o.ph || 'Name')}" autocomplete="off" enterkeyhint="done" aria-label="${esc(o.ph || 'Name')}"></div>`, s => {
+    const i = s.querySelector('#nmIn'), ok = s.querySelector('#nmOk'), f = s.querySelector('.ps-field'), v0 = value || '';
+    const valid = () => !!i.value.trim(), changed = () => o.isNew || i.value.trim() !== v0;
+    const sync = () => { ok.classList.toggle('off', !valid() || !changed()); f.classList.toggle('err', ok.dataset.tried === '1' && !valid()); };
+    const done = () => { if (!valid()) { ok.dataset.tried = '1'; sync(); haptic(); nudge(i); i.focus(); return; } if (!changed()) return; haptic(); s._guard = null; const v = i.value.trim(); closeSheet(true); cb(v); };
+    i.addEventListener('input', sync); i.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); done(); } });
+    ok.addEventListener('click', done); s.querySelector('#nmX').addEventListener('click', () => { haptic(); closeSheet(); if (o.back) setTimeout(o.back, 300); });
+    s._guard = () => { if (o.isNew || !changed() || !valid()) return false; haptic(); menu(s.querySelector('#nmX'), [{ head: 'Discard changes?' }, { label: 'Discard', danger: true, now: true, do: () => { s._guard = null; closeSheet(); } }, { label: 'Keep editing', do: () => {} }]); return true; };
+    sync(); setTimeout(() => { i.focus(); if (o.select !== false) i.select(); }, 380);
+  }, 'ps ps-short');
+}
+function planMenu(anchor, hl) {
   save();
-  const SL = { o: 'over', u: 'under', k: 'in range' }, ML = ['kcal', 'protein', 'fat', 'carbs'];
-  const rows = S.plans.map(p => { const t = planTotals(p), st = statusOf(t), on = p.id === S.active;
-    return `<button class="mpr${on ? ' on' : ''}" data-pid="${p.id}" role="menuitemradio" aria-checked="${on}">
-      <span class="mpt"><b>${esc(p.name)}</b><span>${r0(t.k)} kcal</span></span>
-      <span class="mpd" aria-label="${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span><span class="mck">${on ? MI.check : ''}</span></button>`; }).join('');
-  const acts = [['sort', 'Sort', MI.sort], ['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['ren', 'Rename', MI.pen], ['del', 'Delete', MI.trash]]
-    .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.plans.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
-  popup(anchor || $('#planTitle'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
-    const r = e.target.closest('[data-pid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
-    haptic(); closeMenu();
-    setTimeout(() => {
-      if (r) { if (r.dataset.pid !== S.active) switchPlan(r.dataset.pid); return; }
-      const k = a.dataset.a;
-      if (k === 'sort') return sortMenu();
-      if (k === 'new') nameSheet('New meal plan', 'New meal', 'Create', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); });
-      if (k === 'dup') { save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); toast('Meal plan duplicated'); }
-      if (k === 'ren') nameSheet('Rename meal plan', plan().name, 'Save', v => { plan().name = v; save(); renderMeal(false); });
-      if (k === 'del') confirmSheet('Delete meal plan?', `“${esc(plan().name)}” and its portions will be removed. Products stay in your list.`, 'Delete', () => {
-        const i = S.plans.indexOf(plan()); S.plans.splice(i, 1);
-        /* not switchPlan(): it saves the current grams into the «active» plan first — after the splice that is the neighbour, which got overwritten */
-        S.active = S.plans[Math.max(0, i - 1)].id; applyGrams(plan()); save(); renderAll(true); toast('Meal plan deleted'); });
-    }, 60);
-  });
+  const row = p => { const t = planTotals(p), st = statusOf(t), on = p.id === S.active;
+    const mac = ['k', 'p', 'f', 'c'].map((k, j) => `<span class="pm-${st[j]}"><b>${r0(t[k])}</b><i>${['KCAL', 'P', 'F', 'C'][j]}</i></span>`).join('');
+    return `<button type="button" class="pl-r${on ? ' on' : ''}${p.id === hl ? ' hl' : ''}" data-pid="${p.id}"><span class="pl-t"><span class="pl-n">${esc(p.name)}</span><span class="pl-m">${mac}</span></span>${on ? `<span class="pl-ck">${PSI.ok}</span>` : ''}</button>`; };
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="plX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">Meal plans</span><button type="button" class="ps-c" id="plRen" aria-label="Rename the plan" style="margin-left:auto">${SHI.pen}</button></div>
+    <div class="pl-list"></div>
+    <div class="ps-acts pl-acts"><button type="button" class="ps-pill" id="plNew">${SHI.plus}<span>New plan</span></button><button type="button" class="ps-pill" id="plDup">${SHI.copy}<span>Duplicate</span></button></div>
+    <button type="button" class="ps-pill red pl-del" id="plDel">${SHI.trash}<span>Delete plan</span></button>`, s => {
+    const L = s.querySelector('.pl-list'), del = s.querySelector('#plDel');
+    const draw = h => { L.innerHTML = S.plans.map(row).join(''); del.disabled = S.plans.length < 2; if (h) { const r = L.querySelector(`[data-pid="${h}"]`); if (r) { r.classList.add('hl'); setTimeout(() => r.classList.remove('hl'), 1600); } } };
+    draw(hl);
+    L.addEventListener('click', e => { const r = e.target.closest('[data-pid]'); if (!r) return; haptic(); const id = r.dataset.pid; closeSheet(); if (id !== S.active) setTimeout(() => switchPlan(id), 120); });
+    s.querySelector('#plX').addEventListener('click', () => { haptic(); closeSheet(); });
+    s.querySelector('#plRen').addEventListener('click', () => { haptic(); const p = plan(); psName('Rename plan', p.name, v => { p.name = v; save(); renderAll(false); setTimeout(() => planMenu(anchor), 60); }, { ph: 'Plan name', back: () => planMenu(anchor) }); });
+    s.querySelector('#plNew').addEventListener('click', () => { haptic(); psName('New plan', 'New meal', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`Created “${v}” · all portions start at 0 g`); }, { ph: 'Plan name', isNew: true, back: () => planMenu(anchor) }); });
+    s.querySelector('#plDup').addEventListener('click', () => { haptic(); save(); const c = { id: uid(), name: plan().name + ' copy', g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); setTimeout(() => draw(c.id), 200); });
+    del.addEventListener('click', () => { if (S.plans.length < 2) return; haptic(); save();
+      const p = plan(), i = S.plans.indexOf(p); S.plans.splice(i, 1);
+      /* not switchPlan(): it saves the current grams into the «active» plan first — after the splice that is the neighbour */
+      S.active = S.plans[Math.max(0, i - 1)].id; applyGrams(plan()); save(); closeSheet(); renderAll(true);
+      toast(`${p.name} deleted`, { label: 'Undo', fn: () => { S.plans.splice(i, 0, p); S.active = p.id; applyGrams(p); save(); renderAll(true); } }); });
+  }, 'ps');
 }
 // Sort 1: rows + a tray (direction, sort inside groups). Stays open so you see the list re-order behind it.
 const SORTS = [['k', 'K', 'Calories', e => mac(e).k], ['p', 'P', 'Protein', e => mac(e).p], ['g', 'g', 'Amount', e => e.g], ['n', 'A', 'Name', null]];
