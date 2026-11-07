@@ -2081,8 +2081,10 @@ html body.f31.pal-fresh #app #secMeal .zero .qn,html body.f31.pal-fresh #app #se
 html body.f31.pal-fresh.lk-new.v2 #app #secMeal .zhead{font:400 12px/14px var(--sans)!important;color:rgba(60,60,67,.6)!important}
 html body.f31.pal-fresh #app header.plan .title-row{margin-top:7px!important}
 html body.f31.pal-fresh #app header.plan #hv{margin-top:16px!important}
-html body.f31.pal-fresh #app #secMeal #mhead{padding-top:24px!important;padding-bottom:8px!important}
-html body.f31.pal-fresh #app #secMeal #mhead+#list,html body.f31.pal-fresh #app #secMeal #pullS+#list{margin-top:8px!important}
+/* the pinned header ends 4 px above the list: the top row's swipe tiles (4 px taller than the row) aren't cut,
+   and the 40 px circles behind the ghost / pressed «+» (10 px below the row) stay inside the header (#22) */
+html body.f31.pal-fresh #app #secMeal #mhead{padding-top:24px!important;padding-bottom:12px!important}
+html body.f31.pal-fresh #app #secMeal #mhead+#list,html body.f31.pal-fresh #app #secMeal #pullS+#list{margin-top:4px!important}
 html body.f31.pal-fresh #app #secMeal #list{margin-top:0!important}
 html body.f31.pal-fresh #app #secMeal #mhead .list-head{margin-bottom:0!important}
 html body.f31.pal-fresh #app #secMeal #mhead .tools{width:auto!important;flex:none!important}
@@ -2340,6 +2342,15 @@ html body .sheet.ps{max-height:calc(100vh - var(--sat,env(safe-area-inset-top,0p
 html body .sheet.ps .nu-pick .nu-fa{margin-top:24px}
 html body .sheet.ps .nu-pick .nu-fa .sbtn svg{width:18px;height:18px;flex:none}
 html body .sheet.ps .nu-pick .nu-quiet{margin-top:4px!important;background:none!important;color:rgba(60,60,67,.6)!important}
+/* #21: the just-added product's flash is a plate larger than the row (6 px above and below, 8 px at the sides) */
+html body #secMeal .just-added>.rc,html body #secMeal .just-added>.ghead{animation:none;position:relative;isolation:isolate}
+html body #secMeal .just-added>.rc::before,html body #secMeal .just-added>.ghead::before{content:"";position:absolute;inset:-6px -8px;border-radius:20px;background:rgba(118,118,128,.16);z-index:-1;pointer-events:none;animation:justAdded2 1.6s ease-out forwards}
+@keyframes justAdded2{0%,40%{opacity:1}100%{opacity:0}}
+html body .sheet.ps .nu-pick .nu-l .row.nz .pill{color:rgba(60,60,67,.45);background:rgba(118,118,128,.07)}
+html body .sheet.ps .nu-pick .nu-l .row.nz .name{color:rgba(60,60,67,.45)}
+html body .sheet.ps .nu-pick .nu-p100{margin-top:14px}
+.menu .mi .mic{display:flex;color:#111115}
+.menu .mi .mic svg{width:20px;height:20px}
 </style>
 
 <div class="app" id="app">
@@ -3873,7 +3884,7 @@ function menu(anchor, items) {
   const m = document.createElement('div'); m.className = 'menu'; m.setAttribute('role', 'menu');
   m.innerHTML = items.map((it, i) => it === '-' ? '<div class="msep"></div>' : it.head ? `<div class="mlab">${esc(it.head)}</div>` :
     `<button class="mi${it.danger ? ' danger' : ''}" data-i="${i}" role="menuitem" ${it.disabled ? 'disabled' : ''}>
-      <span class="ck">${it.check ? ICON.check : ''}</span><span class="ml">${esc(it.label)}</span>${it.right != null ? `<span class="mr">${esc(it.right)}</span>` : ''}</button>`).join('');
+      <span class="ck">${it.check ? ICON.check : ''}</span><span class="ml">${esc(it.label)}</span>${it.icon ? `<span class="mr mic">${it.icon}</span>` : it.right != null ? `<span class="mr">${esc(it.right)}</span>` : ''}</button>`).join('');
   document.body.appendChild(m);
   const a = anchor.getBoundingClientRect(), w = m.offsetWidth, h = m.offsetHeight;
   const left = Math.min(Math.max(12, a.left), innerWidth - w - 12);
@@ -4037,7 +4048,7 @@ function foodSheet(e, isNew) {
     /* unit: a short list → a menu at the button; pieces bring the weight of one piece next to it */
     const setU = u => { unitB.dataset.v = u; unitB.innerHTML = psUnitBtn(u); s.querySelector('#fUwBox').hidden = u !== 'pc';
       const pk = s.querySelector('[data-f="fPk"] .u'); if (pk) pk.textContent = ul(u); sync(); };
-    unitB.addEventListener('click', () => { haptic(); menu(unitB, ['g', 'ml', 'pc'].map(u => ({ label: PS_UNITS[u], check: unitB.dataset.v === u, do: () => { setU(u); if (u === 'pc' && !(val(s, 'fUw') > 0)) setTimeout(() => s.querySelector('#fUw').focus(), 60); } }))); });
+    unitB.addEventListener('click', () => { haptic(); menu(unitB, ['g', 'ml', 'pc'].map(u => ({ label: PS_UNITS[u], icon: SHI[u], check: unitB.dataset.v === u, do: () => { setU(u); if (u === 'pc' && !(val(s, 'fUw') > 0)) setTimeout(() => s.querySelector('#fUw').focus(), 60); } }))); });
     s.querySelector('#fUse').addEventListener('click', () => { haptic(); const i = s.querySelector('#fK'); i.value = r0((val(s, 'fP') || 0) * 4 + (val(s, 'fF') || 0) * 9 + (val(s, 'fC') || 0) * 4); i.dispatchEvent(new Event('input', { bubbles: true })); });
     setTimeout(sync);
     /* Nutrients: a page inside the sheet; a saved product changes its source right away (Undo in the toast), a new one keeps it until ✓ */
@@ -4059,7 +4070,7 @@ function foodSheet(e, isNew) {
     const headScan = isNew ? nScanner(s, r => scanned(r)) : null;
     function onFind() { if (!isNew) { const r = find(e.id); if (r) nFindFor(r.e, () => { st.src = r.e.src || null; st.m = r.e.m; drawNut(); }, { macros: nn => fill(nn, true) }); return; }
       nFind({ name: nameIn.value.trim(), src: st.src, done: p => { setPend(p, false); if (canFill()) fill(p.n); },
-        hand: () => nValSheet({ kick: 'Per 100 g · type them in', name: nameIn.value.trim() || 'New product', m: st.m, done: ({ m }) => setPend({ src: { t: 'hand' }, m }, false) }),
+        hand: () => nValSheet({ kick: 'Your values', name: nameIn.value.trim() || 'New product', m: st.m, done: ({ m }) => setPend({ src: { t: 'hand' }, m }, false) }),
         scanned,
         none: st.src && st.src.t !== 'none' ? () => { setPend({ src: { t: 'none' } }, false); unfill(); } : null }); }
     if (isNew) {
@@ -4829,7 +4840,10 @@ function nSecBody(st, all) {   // the open part of the product sheet's Nutrients
   const rows = known.map(n => { const q = need(n), v = st.m[n.id], base = q.t || q.lim; return { n, v, p: base ? Math.round(v / base * 100) : null, lim: !q.t && !!q.lim }; });
   const top = rows.filter(x => x.p !== null && !x.lim && x.n.g !== 'amino').sort((x, y) => y.p - x.p).slice(0, 5), list = all ? rows : top;
   return `<div class="sh-warn nu-srcb"><span class="t"><span class="nu-s1">${a}</span>${b ? `<span class="nu-s2">${b}</span>` : ''}</span>${chip ? `<button type="button" class="sh-chip" data-nfind>${chip}</button>` : ''}</div>
-    ${list.length ? `${all ? '' : '<div class="cap">Most per 100 g<span class="r">of daily need</span></div>'}<ul class="list nu-l nu-pl">${list.map(x => `<li class="row"><div class="rc"><span class="pill">${x.p === null ? nFmt(x.v) : x.p + '%'}</span><div class="info"><div class="name">${x.n.n}</div><div class="mac"><span>${nFmt(x.v)}<i> ${x.n.u}</i></span>${x.lim ? '<i>limit</i>' : ''}</div></div></div></li>`).join('')}</ul>` : ''}
+    ${(() => { const li = x => `<li class="row${x.v ? '' : ' nz'}"><div class="rc"><span class="pill">${x.p === null ? nFmt(x.v) : x.p + '%'}</span><div class="info"><div class="name">${x.n.n}</div><div class="mac"><span>${nFmt(x.v)}<i> ${x.n.u}</i></span>${x.lim ? '<i>limit</i>' : ''}</div></div></div></li>`;
+      if (!list.length) return '';
+      if (!all) return `<div class="cap">Most per 100 g<span class="r">of daily need</span></div><ul class="list nu-l nu-pl">${list.map(li).join('')}</ul>`;
+      return Object.keys(NG).map((g, i) => { const xs = list.filter(x => x.n.g === g); return xs.length ? `<div class="cap">${NG[g]}${i ? '' : '<span class="r">of daily need</span>'}</div><ul class="list nu-l nu-pl">${xs.map(li).join('')}</ul>` : ''; }).join(''); })()}
     ${rows.length > top.length || all ? `<button type="button" class="nu-more" data-nall>${all ? 'Show less' : `Show all ${rows.length}`}</button>` : ''}`;
 }
 /* the section itself: a caption that opens like «More details»; st is kept up to date by the sheet */
@@ -4897,7 +4911,7 @@ function nValSheet(o) {   // o = { name, kick, n, m, done({n, m}) }
   const d = {}; Object.entries(o.m || {}).forEach(([k, v]) => { if (NUT.some(z => z.id === k)) d[k] = v; });
   const mac = o.n ? `<div class="cap">Per 100 g</div><div class="card c4">${fnum('vP', 'Protein', o.n.p ?? '', 'g')}${fnum('vF', 'Fat', o.n.f ?? '', 'g')}${fnum('vC', 'Carbs', o.n.c ?? '', 'g')}${fnum('vK', 'kcal', o.n.k ?? '', '', '0')}</div><div class="cap">Vitamins, minerals and more</div>` : '';
   nOver(`<div class="sh-head"><span class="sh-kick">${o.kick}</span><span class="nu-sht">${esc(o.name)}</span>${nOX}</div>
-    <p class="note nu-vn">${o.n || o.scan ? 'Check it against the label — the reader can mix up numbers.' : 'Copy what the label says. Whatever you leave out stays unknown — better than a guess.'}</p>${mac}
+    <p class="note nu-vn">${o.n || o.scan ? 'Check it against the label — the reader can mix up numbers.' : 'Copy what the label says. Whatever you leave out stays unknown — better than a guess.'}</p>${mac}${o.n ? '' : '<div class="cap nu-p100">Per 100 g</div>'}
     <div class="card c3" id="lbT"></div><button class="sbtn primary" id="lbSave">Save</button>`, (box, close) => {
     nTiles(box.querySelector('#lbT'), d);
     box.querySelector('#lbSave').addEventListener('click', () => { const m = {}; Object.entries(d).forEach(([k, v]) => { if (v !== '' && v != null) m[k] = +v; });
@@ -5445,7 +5459,7 @@ function nFindFor(e, after, sh) {   // sh = the open product sheet's hooks { mac
   const put = (pick, label) => { const k = keep(); nSet(e, pick); save(); renderAll(true); after && after(); toast(label, { label: 'Undo', fn: back(k) }); };
   const done = pick => put(pick, pick.src.t === 'db' ? `Nutrients from ${NDB.by.get(pick.src.id).ru || pick.src.d}` : `Nutrients from ${pick.src.d || 'Open Food Facts'}`);
   nFind({ name: e.name, k: e.n && e.n.k, src: e.src, done,
-    hand: () => nValSheet({ kick: 'Per 100 g · type them in', name: e.name, m: e.m, done: ({ m }) => put({ src: { t: 'hand' }, m }, `${e.name} · ${Object.keys(m).length} nutrients saved`) }),
+    hand: () => nValSheet({ kick: 'Your values', name: e.name, m: e.m, done: ({ m }) => put({ src: { t: 'hand' }, m }, `${e.name} · ${Object.keys(m).length} nutrients saved`) }),
     scanned: (r, closeFind) => { closeFind(); const n0 = e.n || {}; nValSheet({ kick: r.via === 'barcode' ? 'Per 100 g · Open Food Facts' : 'Per 100 g · from the table' + nMissTxt(r), scan: true, name: e.name,
           n: sh ? null : { p: r.n.p ?? n0.p, f: r.n.f ?? n0.f, c: r.n.c ?? n0.c, k: r.n.k ?? n0.k }, m: r.m,
           done: ({ n, m }) => { if (n) e.n = { p: n.p || 0, f: n.f || 0, c: n.c || 0, k: n.k ?? r0((n.p || 0) * 4 + (n.f || 0) * 9 + (n.c || 0) * 4) }; else if (sh) sh.macros(r.n);
@@ -5453,7 +5467,7 @@ function nFindFor(e, after, sh) {   // sh = the open product sheet's hooks { mac
     none: e.src && e.src.t !== 'none' ? () => put({ src: { t: 'none' } }, `${e.name} · left unknown`) : null });
 }
 function nutPick(done, standalone) {   // search the full list; inside a sheet it slides over it, alone it is its own sheet
-  const html = `<h3>${standalone ? 'Find a nutrient' : 'Add a nutrient'}<button class="x" aria-label="Close" data-np-x>${ICON.x}</button></h3><label class="tfield"><input class="nu-q" placeholder="Vitamin, mineral…" autocomplete="off"></label><div class="nu-pl-l"></div>`;
+  const html = `<h3>${standalone ? 'Find a nutrient' : 'Add a nutrient'}<button class="x" aria-label="Close" data-np-x>${ICON.x}</button></h3><label class="tfield"><input class="nu-q" placeholder="Find a nutrient" autocomplete="off"></label><div class="nu-pl-l"></div>`;
   let box, R = null;
   if (standalone) { R = nRows().R; sheet(html, s => { box = s; wire(); }); }
   else { box = document.createElement('div'); box.className = 'nu-pick'; box.innerHTML = html; openSheet.s.scrollTop = 0; openSheet.s.append(box); psBack(box); wire(); }
