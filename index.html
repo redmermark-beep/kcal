@@ -2420,6 +2420,49 @@ html body .sheet.ps .nu-pick .vt.nu-addn{height:56px;min-height:56px;border-radi
 html body .sheet.ps .nu-pick .vt.nu-clr{grid-column:1/-1;min-height:44px;height:44px;margin-top:4px;border-radius:22px;flex-direction:row;background:none!important;box-shadow:none!important;color:#d02c2a;font-size:15px;font-weight:510;justify-content:center;align-items:center}
 .vt.nu-clr{color:#d02c2a}
 html body .sheet .vt{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+
+/* goals (9 Nov) */
+.sheet.ps .gt-seg{display:flex;gap:4px}
+.sheet.ps .gt-seg button{flex:1;height:36px;padding:0 14px;border:0;border-radius:18px;background:none;color:rgba(60,60,67,.6);font:510 15px/1 -apple-system,system-ui,sans-serif}
+.sheet.ps .gt-seg button.on{background:rgba(118,118,128,.12);color:#111115}
+.sheet.ps .gt-ty{margin-top:14px}.sheet.ps .gt-ty.gap{margin-top:24px}
+.sheet.ps .gt-ty .gt-seg button{flex:none}
+.sheet.ps #gSex,.sheet.ps #gAct{margin:0}.sheet.ps .ps-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:4px 0}
+html body .sheet.ps .ps-three .vt{min-height:64px;border-radius:16px}html body .sheet.ps .ps-three .vt .l{color:rgba(60,60,67,.6)}
+.sheet.ps .gt-r{text-transform:none;letter-spacing:0;padding-right:10px}
+.sheet.ps .gr{position:relative;height:248px;margin:8px -16px 0;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;overflow:hidden}
+.sheet.ps .gr-t span{position:absolute;left:16px;height:2px;border-radius:1px;margin-top:-1px}
+.sheet.ps .gr-c{position:absolute;left:16px;top:123px;width:66px;height:2px;border-radius:1px;background:#111115}
+.sheet.ps .gr-v{position:absolute;left:114px;top:76px;display:flex;flex-direction:column;pointer-events:none}
+.sheet.ps .gr-l{font-size:15px;font-weight:510;color:rgba(60,60,67,.6)}
+.sheet.ps .gr-v b{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:72px;font-weight:600;letter-spacing:-3.6px;line-height:1;color:#111115}
+.sheet.ps .gr-v b i{font-style:normal;font-size:32px;font-weight:700;letter-spacing:0}
+.sheet.ps .gr-s{font-size:11px;font-weight:590;color:rgba(60,60,67,.6);margin-top:4px}
+.sheet.ps .gr-now{position:absolute;right:16px;top:0;height:32px;padding:0 12px;border-radius:16px;background:rgba(118,118,128,.12);display:flex;align-items:center;gap:4px;font-size:13px;color:rgba(60,60,67,.6);cursor:text}
+.sheet.ps .gr-now:focus-within{background:#fff;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12)}
+.sheet.ps .gr-now input{width:4.2ch;padding:0;border:0;background:none;outline:none;font:600 13px/1 "SF Mono",ui-monospace,Menlo,monospace;color:#111115;text-align:right}
+.sheet.ps .gp{display:flex;gap:4px;overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none;scroll-snap-type:x proximity}
+.sheet.ps .gp::-webkit-scrollbar{display:none}
+.sheet.ps .gp button{flex:none;height:36px;padding:0 12px;border:0;border-radius:18px;background:none;color:rgba(60,60,67,.6);font-size:12px;white-space:nowrap;scroll-snap-align:center}
+.sheet.ps .gp button b{font:600 14px/1 "SF Mono",ui-monospace,Menlo,monospace}
+.sheet.ps .gp button.on{background:rgba(118,118,128,.12);color:#111115}
+.sheet.ps .gt-warn{display:flex;align-items:center;min-height:44px;margin-top:4px;padding:0 10px;border-radius:16px;background:rgba(208,44,42,.12);color:#d02c2a;font-size:13px;line-height:18px}
+.sheet.ps .gt-warn[hidden]{display:none}
+.sheet.ps #gRulB+.ps-cap,.sheet.ps #gPlB+.ps-cap{margin-top:24px}
+html body .sheet.ps .ps-chips .vt .h{font:400 10px/12px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.6);margin-top:auto;white-space:nowrap}
+html body .sheet.ps .vt.pin .l{display:flex;justify-content:space-between}
+html body .sheet.ps .vt.pin .l::after{content:"";width:6px;height:6px;border-radius:3px;background:#111115;margin-top:3px}
+html body .sheet.ps .vt.gt-ro{cursor:default}
+html body .sheet.ps .vt[hidden]{display:none}
+.sheet.ps .gt-use{display:flex;justify-content:flex-end;padding:8px 10px 0}
+.sheet.ps .gt-use button{border:0;background:none;padding:0;font-size:13px;font-weight:510;color:#2669ed}
+.sheet.ps .gt-use button[hidden]{display:none}
+.sheet.ps .gl-sub{display:block;margin-top:2px;font-size:11px;color:rgba(60,60,67,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet.ps .gl-sub b{font:400 11px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(17,17,21,.8)}
+.sheet.ps .gl-r .pl-t{flex:1;min-width:0}
+.sheet.ps .gl-k{flex:none;font-size:12px;color:rgba(60,60,67,.6)}
+.sheet.ps .gl-k b{font:600 14px "SF Mono",ui-monospace,Menlo,monospace;color:#111115}
+
 </style>
 
 <div class="app" id="app">
@@ -4425,74 +4468,196 @@ function designMenu() {
     '-', { head: 'Fine-tune style (hold grams)' },
     ...PV_STYLES.map(([k, l]) => ({ label: l, check: (S.ui.pv || 'classic') === k, do: () => { S.ui.pv = k; save(); toast(l + ' — hold any amount'); } }))]);
 }
-// Goal plans: a sheet (canvas Menus · Bulk plan 2) — the active plan with its targets, the others to switch to
-const DOTS = st => `<span class="sh-dots">${st.map(x => `<i class="${x}"></i>`).join('')}</span>`;
-function goalMenu() {
-  // GP3: same popup as the meal-plan menu — goal rows + a New / Duplicate / Edit / Delete tray
-  const g = goal(), t = totals();
-  const SL = { o: 'over', u: 'under', k: 'in range' }, ML = ['kcal', 'protein', 'fat', 'carbs'];
-  const rows = S.goals.map(x => { const st = statusOf(t, x), on = x.id === g.id;
-    return `<button class="mpr${on ? ' on' : ''}" data-gid="${x.id}" role="menuitemradio" aria-checked="${on}">
-      <span class="mpt"><b>${esc(x.name)}</b><span>${esc(typeName(x.type))} · ${r0(x.k)} kcal</span></span>
-      <span class="mpd" aria-label="${st.map((s, i) => ML[i] + ' ' + SL[s]).join(', ')}">${st.map(s => `<i class="${s}"></i>`).join('')}</span><span class="mck">${on ? MI.check : ''}</span></button>`; }).join('');
-  const acts = [['new', 'New', MI.plus], ['dup', 'Duplicate', MI.copy], ['edit', 'Edit', MI.pen], ['del', 'Delete', MI.trash]]
-    .map(([k, l, ic]) => `<button data-a="${k}" class="${k === 'del' ? 'danger' : ''}" ${k === 'del' && S.goals.length < 2 ? 'disabled' : ''} role="menuitem">${ic}<span>${l}</span></button>`).join('');
-  popup($('#goalName'), 'mp', rows + `<div class="mpa">${acts}</div>`, e => {
-    const r = e.target.closest('[data-gid]'), a = e.target.closest('[data-a]'); if (!r && !a) return;
-    haptic(); closeMenu();
-    setTimeout(() => {
-      if (r) { if (r.dataset.gid !== g.id) switchGoal(r.dataset.gid); return; }
-      const k = a.dataset.a;
-      if (k === 'edit') goalSheet(g, false);
-      if (k === 'new') goalSheet(null, true);
-      if (k === 'dup') { const c = { ...g, id: uid(), name: g.name + ' copy' }; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); switchGoal(c.id); toast('Goal plan duplicated'); }
-      if (k === 'del') confirmSheet('Delete goal plan?', `“${esc(g.name)}” targets will be removed. Your meals and measurements stay.`, 'Delete', () => {
-        const i = S.goals.indexOf(g); S.goals.splice(i, 1); switchGoal(S.goals[Math.max(0, i - 1)].id); toast('Goal plan deleted'); });
-    }, 60);
-  });
+/* Goal plans (9 Nov 2026, canvas «Цели · финал», variant 3): body first (type → target weight on a ruler → weekly pace),
+   the daily target is computed — Mifflin–St Jeor × activity until there are 2–3 weeks of weigh-ins, then from the data
+   (plan kcal minus what the weight trend says). Any number can be set by hand: it gets a dot and «yours», the rest recompute. */
+const ACT_M = { l: 1.4, m: 1.55, h: 1.75 };
+const P_KG = { cut: 2.2, bulk: 2, maintain: 1.8, recomp: 2.2 };
+const F_SH = { cut: .25, bulk: .27, maintain: .28, recomp: .25 };
+const RNG_W = { k: 50, p: 10, f: 5, c: 12 };
+const bodyReady = () => { const b = S.body; return !!(b && b.sex && +b.age > 0 && +b.h > 0 && b.act); };
+function bmrOf(w, b) { return b && +b.h > 0 && +b.age > 0 && w ? 10 * w + 6.25 * b.h - 5 * b.age + (b.sex === 'f' ? -161 : 5) : null; }
+function goalCalc(type, rate, w, b) {
+  const st = weightStats(), t = totals(), bmr = bmrOf(w, b);
+  let m = null, src = 'formula';
+  if (st.rate != null && t.k > 0) { m = t.k - st.rate * 7700 / 7; src = 'data'; }
+  else if (bmr) m = bmr * (ACT_M[b.act] || 1.55);
+  if (!m || !w) return null;
+  const k = Math.round((m + (type === 'recomp' ? -m * .1 : type === 'maintain' ? 0 : rate * 1100)) / 25) * 25;
+  return { k, src, bmr, w };
 }
-function goalSheet(g0, isNew) {
-  const src = g0 || goal(), d = { ...src };
-  if (isNew) { d.name = ''; d.sw = latest('w') ?? src.sw; }
-  const curW = latest('w');
-  sheet(`<div class="sh-head"><span class="sh-kick">${isNew ? 'New goal plan' : 'Goal plan'}</span><input class="sh-name" id="gN" value="${esc(d.name)}" placeholder="Plan name" autocomplete="off" aria-label="Plan name">${isNew ? '' : `<span class="sh-pen" aria-hidden="true">${SHI.pen}</span>`}${XBTN}</div>
-
-    <div style="margin-top:12px">${segHTML('gT', TYPES, d.type)}</div>
-    <div class="cap">Daily target</div>
-    <div class="card">${[['gK', 'Calories', 'k', 'kcal'], ['gP', 'Protein', 'p', 'g'], ['gF', 'Fat', 'f', 'g'], ['gC', 'Carbs', 'c', 'g']].map(([id, l, k, u]) =>
-      fnum(id, l, d[k], u, '0', d.rng && d.rng[k] ? `${d.rng[k][0]}–${d.rng[k][1]} ${u}` : '')).join('')}</div>
-    <div class="cap">Body target</div>
-    <div class="card">${fnum('gTw', 'Target weight', d.tw, 'kg')}
-      <div class="vt" data-f="gR"><span class="l">Weekly change</span><b><span class="u sg" id="gSign"></span><span class="v"></span><i class="cr"></i><span class="u">kg</span><input id="gR" inputmode="decimal" enterkeyhint="next" value="${Math.abs(d.rate)}" placeholder="0" autocomplete="off" aria-label="Weekly change"></b></div>
-      ${fnum('gBf', 'Target body fat', d.tbf, '%')}${fnum('gSw', 'Start weight', d.sw, 'kg', '0', curW != null ? `latest ${curW.toFixed(1)} kg` : '')}</div>
-    <p class="note" id="gEta" style="margin-top:12px"></p>
-    <button class="sbtn primary" id="gSave">${isNew ? 'Create plan' : 'Save'}</button>`, s => {
-    const seg = s.querySelector('#gT'), rIn = s.querySelector('#gR');
-    let type = d.type, touched = false;
-    const sign = () => type === 'cut' ? -1 : type === 'bulk' ? 1 : 0;
-    const eta = () => {
-      const tw = val(s, 'gTw'), r = (val(s, 'gR') || 0) * sign(), w = latest('w') ?? val(s, 'gSw');
-      const el = s.querySelector('#gEta');
-      if (tw == null || w == null) return el.textContent = '';
-      if (!r) return el.textContent = `Hold around ${tw.toFixed(1)} kg.`;
-      const weeks = (tw - w) / r;
-      el.textContent = weeks > 0 ? `At ${sgn(r)} kg a week you reach ${tw.toFixed(1)} kg around ${shortDate(Date.now() + weeks * 7 * DAY)} (${Math.ceil(weeks)} weeks).`
-                                 : `Target weight is on the other side of this plan’s direction.`;
+function goalMacros(type, base, pin) {   // pinned values stay, everything else follows
+  const k = pin.k ?? base.k, p = pin.p ?? r0(P_KG[type] * base.w), f = pin.f ?? r0(k * F_SH[type] / 9);
+  const c = pin.c ?? Math.max(0, r0((k - p * 4 - f * 9) / 4));
+  return { k, p, f, c };
+}
+const fmtKg = v => (Math.round(v * 10) / 10).toFixed(1).replace(/\.0$/, '');
+const goalSub = x => `${typeName(x.type)} · <b>${fmtKg(x.tw)} kg</b> · <b>${x.rate > 0 ? '+' : x.rate < 0 ? '−' : ''}${Math.abs(x.rate)} kg/wk</b>`;
+function setTodayWeight(w) {
+  const d = todayISO(), e = S.log.find(x => x.d === d);
+  if (e) e.w = w; else S.log.push({ id: uid(), d, w });
+}
+function goalMenu(hl) {
+  const row = x => { const on = x.id === S.goalActive;
+    return `<div class="pl-w" data-gid="${x.id}"><div class="pl-acts"><button type="button" class="pl-sa ed" aria-label="Edit">${PSI.pen}</button><button type="button" class="pl-sa del" aria-label="Delete">${PSI.bin}</button></div>
+      <button type="button" class="pl-r gl-r${on ? ' on' : ''}"><span class="pl-t"><span class="pl-n">${esc(x.name)}</span><span class="gl-sub">${goalSub(x)}</span></span><span class="gl-k"><b>${r0(x.k)}</b> kcal</span>${on ? `<span class="pl-ck">${PSI.ok}</span>` : ''}</button></div>`; };
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="glX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">Goal plans</span></div>
+    <div class="pl-list"></div>
+    <div class="ps-acts pl-acts2"><button type="button" class="ps-pill" id="glNew">${SHI.plus}<span>New goal</span></button><button type="button" class="ps-pill" id="glDup">${SHI.copy}<span>Duplicate</span></button></div>`, s => {
+    const L = s.querySelector('.pl-list');
+    const draw = h => { L.innerHTML = S.goals.map(row).join(''); L.querySelectorAll('.pl-w').forEach(bindSwipe); if (h) { const r = L.querySelector(`[data-gid="${h}"] .pl-r`); if (r) { r.classList.add('hl'); setTimeout(() => r.classList.remove('hl'), 1600); } } };
+    /* swipe left like a meal plan: edit and delete grow into the freed space; past 60 % the bin takes it all */
+    let openW = null;
+    const setX = (w, x, anim) => { const r = w.querySelector('.pl-r'), ed = w.querySelector('.ed'), dl = w.querySelector('.del'), canDel = S.goals.length > 1, n = canDel ? 2 : 1;
+      const full = canDel && x > w.offsetWidth * .6, each = Math.max(0, (x - 4 * n) / n);
+      [r, ed, dl].forEach(el => el.style.transition = anim ? 'transform .45s var(--spring), width .45s var(--spring), border-radius .45s var(--spring)' : 'none');
+      r.style.transform = x ? `translateX(${-x}px)` : ''; w.classList.toggle('sw', x > 0); w.classList.toggle('full', full);
+      ed.style.width = (full ? 0 : each) + 'px'; dl.style.width = (canDel ? (full ? x - 4 : each) : 0) + 'px';
+      const rv = Math.min(1, each / 56); [ed, dl].forEach(el => el.style.setProperty('--rv', rv)); return full; };
+    const close = (w, anim = true) => { if (w) setX(w, 0, anim); if (w === openW) openW = null; };
+    function bindSwipe(w) {
+      const r = w.querySelector('.pl-r'); let T = null;
+      w.addEventListener('touchstart', e => { const t = e.touches[0]; if (openW && openW !== w) close(openW); T = { x: t.clientX, y: t.clientY, x0: w === openW ? (S.goals.length > 1 ? 124 : 64) : 0, h: null, cur: 0, full: false }; }, { passive: true });
+      w.addEventListener('touchmove', e => { if (!T) return; const t = e.touches[0], dx = t.clientX - T.x, dy = t.clientY - T.y;
+        if (T.h === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) T.h = Math.abs(dx) > Math.abs(dy);
+        if (!T.h) return; e.preventDefault(); e.stopPropagation();
+        T.cur = Math.max(0, T.x0 - dx); const f = setX(w, T.cur, false); if (f !== T.full) { T.full = f; haptic(); } }, { passive: false });
+      const end = () => { if (!T) return; const t = T; T = null; if (!t.h) return;
+        if (t.full) { delGoal(w.dataset.gid); return; }
+        if (t.cur > 50) { setX(w, S.goals.length > 1 ? 124 : 64, true); openW = w; } else close(w); };
+      w.addEventListener('touchend', end); w.addEventListener('touchcancel', end);
+      r.addEventListener('click', () => { if (openW === w) { close(w); return; } if (openW) { close(openW); return; }
+        haptic(); const id = w.dataset.gid; closeSheet(); if (id !== S.goalActive) setTimeout(() => switchGoal(id), 120); });
+      w.querySelector('.ed').addEventListener('click', () => { haptic(); const g = S.goals.find(q => q.id === w.dataset.gid); if (g) goalSheet(g, false, () => goalMenu(g.id)); });
+      w.querySelector('.del').addEventListener('click', () => delGoal(w.dataset.gid));
+    }
+    function delGoal(id) { if (S.goals.length < 2) return; haptic();
+      const i = S.goals.findIndex(q => q.id === id), g = S.goals[i], wasOn = id === S.goalActive; if (!g) return;
+      const w = L.querySelector(`[data-gid="${id}"]`);
+      const gone = () => { S.goals.splice(i, 1); if (wasOn) S.goalActive = S.goals[Math.max(0, i - 1)].id;
+        save(); renderAll(true); openW = null; draw();
+        toast(`${g.name} deleted`, { label: 'Undo', fn: () => { S.goals.splice(i, 0, g); if (wasOn) S.goalActive = g.id; save(); renderAll(true); if (L.isConnected) draw(); } });
+        $('#toast').style.bottom = (innerHeight - s.getBoundingClientRect().top + 12) + 'px'; };
+      if (w && !RM) { w.style.transition = 'height .3s var(--ease), opacity .2s'; w.style.height = w.offsetHeight + 'px'; requestAnimationFrame(() => { w.style.height = '0px'; w.style.opacity = '0'; }); setTimeout(gone, 300); } else gone(); }
+    draw(hl);
+    s.querySelector('#glX').addEventListener('click', () => { haptic(); closeSheet(); });
+    s.querySelector('#glNew').addEventListener('click', () => { haptic(); goalSheet(null, true, () => goalMenu()); });
+    s.querySelector('#glDup').addEventListener('click', () => { haptic(); const g = goal(), base = g.name.replace(/\s+\d+$/, ''), used = new Set(S.goals.map(q => q.name)); let n = 2; while (used.has(`${base} ${n}`)) n++;
+      const c = JSON.parse(JSON.stringify(g)); c.id = uid(); c.name = `${base} ${n}`; S.goals.splice(S.goals.indexOf(g) + 1, 0, c); S.goalActive = c.id; save(); renderAll(true); draw(c.id); });
+  }, 'ps');
+}
+function goalSheet(g0, isNew, back) {
+  const src = g0 || goal(), b0 = S.body || {}, needAbout = !bodyReady();
+  let now = latest('w') ?? src.sw ?? 70;
+  const now0 = now;
+  let type = isNew ? 'cut' : src.type, rate = isNew ? TYPE_RATE.cut : src.rate;
+  let tw = isNew ? Math.round(now - 3) : (src.tw ?? now);
+  const pin = isNew ? {} : { ...(src.pin || {}) };
+  if (!isNew && !src.pin) ['k', 'p', 'f', 'c'].forEach(k => pin[k] = src[k]);   // old goals were typed by hand — keep their numbers as yours
+  const TY = [['bulk', 'Bulk'], ['cut', 'Cut'], ['maintain', 'Maintain'], ['recomp', 'Recomp']];
+  const pill = (id, opts, v) => `<div class="gt-seg" id="${id}">${opts.map(([k, l]) => `<button type="button" data-v="${k}"${k === v ? ' class="on"' : ''}>${l}</button>`).join('')}</div>`;
+  const about = needAbout ? `<div class="ps-cap"><span>About you</span><span class="gt-r">once</span></div>
+    ${pill('gSex', [['m', 'Male'], ['f', 'Female']], b0.sex || 'm')}
+    <div class="ps-three">${fnum('gAge', 'Age', b0.age || '', '', '—')}${fnum('gAw', 'Weight', fmtKg(now), 'kg', '—')}${fnum('gH', 'Height', b0.h || '', 'cm', '—')}</div>
+    ${pill('gAct', [['l', 'Low'], ['m', 'Medium'], ['h', 'High']], b0.act || 'm')}` : '';
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="gX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">${isNew ? 'New goal' : 'Goal'}</span><button type="button" class="ps-c ps-ok" id="gOk" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
+    ${isNew ? '' : `<input class="sh-name ps-head" id="gN" value="${esc(src.name)}" placeholder="Goal name" autocomplete="off" aria-label="Goal name">`}
+    ${about}
+    <div class="gt-ty${needAbout ? ' gap' : ''}">${pill('gT', TY, type)}</div>
+    <div id="gRulB"><div class="gr" id="gRul"><div class="gr-t"></div><i class="gr-c"></i>
+        <div class="gr-v"><span class="gr-l">Target weight</span><b><span id="gTwV"></span><i>kg</i></b><span class="gr-s" id="gEta"></span></div>
+        <label class="gr-now"><span>Now</span><input id="gNow" inputmode="decimal" value="${fmtKg(now)}" autocomplete="off" aria-label="Current weight, kg"><span>kg</span></label></div>
+      <div class="gp" id="gPace"></div>
+      <div class="gt-warn" id="gWarn" hidden></div></div>
+    <div id="gPlB" hidden><div class="ps-cap"><span>Body</span><span class="gt-r" id="gBfNow"></span></div>
+      <div class="ps-two">${fnum('gKw', 'Keep weight', fmtKg(now), 'kg', '—')}<div class="vt gt-ro" id="gWin"><span class="l">Window</span><b><span class="v">±0.3</span><span class="u">kg</span></b></div>${fnum('gBf', 'Target body fat', src.tbf ?? '', '%', '—')}</div></div>
+    <div class="ps-cap"><span>Daily target</span><span class="gt-r" id="gSrc"></span></div>
+    <div class="ps-chips">${fnum('gK', 'KCAL', '', '', '—')}${fnum('gP', 'P', '', 'g', '—')}${fnum('gF', 'F', '', 'g', '—')}${fnum('gC', 'C', '', 'g', '—')}</div>
+    <div class="gt-warn" id="gLow" hidden></div>
+    <div class="gt-use"><button type="button" id="gUse" hidden>Use calculated</button></div>`, s => {
+    const q = id => s.querySelector('#' + id), KS = ['k', 'p', 'f', 'c'], IDS = { k: 'gK', p: 'gP', f: 'gF', c: 'gC' };
+    const dir = () => type === 'cut' ? -1 : type === 'bulk' ? 1 : 0;
+    const body = () => needAbout ? { sex: q('gSex').querySelector('.on').dataset.v, age: val(s, 'gAge'), h: val(s, 'gH'), act: q('gAct').querySelector('.on').dataset.v } : S.body;
+    let cur = null, rng = null;
+    /* ruler: 32 px a kilo, a tick every half kilo; drag up or down */
+    const T = q('gRul').querySelector('.gr-t');
+    const drawRul = () => { let h = '';
+      for (let v = Math.floor((tw - 4.5) * 2) / 2; v <= tw + 4.5; v += .5) { const y = 124 - (v - tw) * 32; if (y < 4 || y > 244) continue;
+        const whole = Math.abs(v - Math.round(v)) < .01, op = Math.max(.15, 1 - Math.abs(y - 124) / 150);
+        h += `<span style="top:${y.toFixed(1)}px;width:${whole ? 42 : 26}px;opacity:${op.toFixed(2)};background:rgba(17,17,21,${whole ? .2 : .1})"></span>`; }
+      T.innerHTML = h; q('gTwV').textContent = fmtKg(tw); };
+    const paces = () => { const top = type === 'cut' ? 1.5 : 1, L = [];
+      for (let x = .05; x <= top + 1e-9; x += .05) L.push(Math.round(x * 100) / 100);
+      q('gPace').innerHTML = L.map(x => { const v = x * dir(); return `<button type="button" data-v="${v}"${Math.abs(v - rate) < 1e-6 ? ' class="on"' : ''}><b>${v > 0 ? '+' : '−'}${x}</b> kg/wk</button>`; }).join('');
+      const on = q('gPace').querySelector('.on'); if (on) requestAnimationFrame(() => { const P = q('gPace'); P.scrollLeft = on.offsetLeft - (P.clientWidth - on.offsetWidth) / 2; }); };
+    const eta = () => { const d = tw - now, el = q('gEta');
+      if (!rate || Math.sign(d) !== Math.sign(rate) || Math.abs(d) < .05) { el.textContent = Math.abs(d) < .05 ? 'You are there' : `${d > 0 ? '+' : '−'}${fmtKg(Math.abs(d))} kg · other way`; return; }
+      el.textContent = `${d > 0 ? '+' : '−'}${fmtKg(Math.abs(d))} kg · ${shortDate(Date.now() + d / rate * 7 * DAY)}`; };
+    const calc = () => {
+      const bd = body(), c0 = goalCalc(type, rate, now, bd);
+      const src = c0 ? (c0.src === 'data' ? 'from your data' : 'from formula') : 'by hand';
+      const np = KS.filter(k => pin[k] != null).length; q('gSrc').textContent = np === 4 ? 'yours' : np && c0 ? src.replace('from', 'partly from') : src;
+      cur = c0 ? goalMacros(type, c0, pin) : { ...pin };
+      rng = {}; KS.forEach(k => { const v = cur[k], i = q(IDS[k]);
+        if (pin[k] == null) i.value = v != null ? r0(v) : ''; else if (document.activeElement !== i) i.value = r0(pin[k]);
+        if (v != null) rng[k] = [r0(v - RNG_W[k]), r0(v + RNG_W[k])];
+        const t = i.closest('.vt'); t.classList.toggle('pin', pin[k] != null);
+        let hn = t.querySelector('.h'); if (!hn) { hn = document.createElement('span'); hn.className = 'h'; t.appendChild(hn); }
+        hn.textContent = pin[k] != null ? (c0 ? 'yours' : '') : rng[k] ? `${rng[k][0]}–${rng[k][1]}` : ''; });
+      q('gUse').hidden = !c0 || !KS.some(k => pin[k] != null);
+      const lo = q('gLow'), bmr = bmrOf(now, bd); lo.hidden = !(bmr && cur.k && cur.k < bmr);
+      if (!lo.hidden) lo.textContent = `Below what your body burns at rest, ${r0(bmr)} kcal`;
+      const w = q('gWarn'), fast = rate && Math.abs(rate) > now * .01; w.hidden = !fast;
+      if (fast) w.textContent = `${rate > 0 ? '+' : '−'}${Math.abs(rate)} kg a week is more than 1% of your weight`;
+      q('gOk').classList.toggle('off', !(val(s, 'gK') > 0));
+      s.dispatchEvent(new Event('input'));
     };
-    const syncSign = () => { const sg = sign(); s.querySelector('#gSign').textContent = sg > 0 ? '+' : sg < 0 ? '−' : '±';
-      rIn.disabled = sg === 0; if (sg === 0) rIn.value = 0; else if (!touched && !(val(s, 'gR') > 0)) rIn.value = Math.abs(TYPE_RATE[type]); eta(); };
-    segBind(seg, v => { type = v; if (!touched) rIn.value = Math.abs(TYPE_RATE[v]); syncSign(); });
-    rIn.addEventListener('input', () => { touched = true; eta(); });
-    ['gTw', 'gSw'].forEach(id => s.querySelector('#' + id).addEventListener('input', eta));
-    syncSign();
-    s.querySelector('#gSave').addEventListener('click', () => {
-      const name = s.querySelector('#gN').value.trim(); if (!name) { nudge(s.querySelector('#gN')); return s.querySelector('#gN').focus(); }
-      const out = { name, type, k: r0(val(s, 'gK') || d.k), p: r0(val(s, 'gP') ?? d.p), f: r0(val(s, 'gF') ?? d.f), c: r0(val(s, 'gC') ?? d.c),
-        tw: val(s, 'gTw') ?? d.tw, rate: (val(s, 'gR') || 0) * sign(), tbf: val(s, 'gBf') ?? d.tbf, sw: val(s, 'gSw') ?? d.sw };
-      if (isNew) { const ng = { id: uid(), ...out }; S.goals.push(ng); closeSheet(); switchGoal(ng.id); toast(`Created “${name}”`); }
-      else { Object.assign(g0, out); recenter(g0); save(); closeSheet(); renderAll(true); }
+    const layout = () => {
+      const ru = type === 'cut' || type === 'bulk';
+      q('gRulB').hidden = !ru; q('gPlB').hidden = ru; q('gWin').hidden = type !== 'maintain'; q('gBf').closest('.vt').hidden = type !== 'recomp';
+      const bf = latest('bf'); q('gBfNow').textContent = type === 'recomp' && bf != null ? `now ${bf.toFixed(1)}%` : '';
+      if (ru) { if ((tw - now) * dir() <= 0) tw = Math.round(now + (type === 'cut' ? -3 : 4)); if (rate * dir() <= 0) rate = TYPE_RATE[type]; drawRul(); paces(); eta(); }
+      else rate = 0;
+      calc(); };
+    /* type, pace */
+    q('gT').addEventListener('click', e => { const bt = e.target.closest('button'); if (!bt || bt.dataset.v === type) return; haptic();
+      q('gT').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === bt)); type = bt.dataset.v; layout(); });
+    ['gSex', 'gAct'].forEach(id => { const el = q(id); if (el) el.addEventListener('click', e => { const bt = e.target.closest('button'); if (!bt) return; haptic(); el.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === bt)); calc(); }); });
+    q('gPace').addEventListener('click', e => { const bt = e.target.closest('button'); if (!bt) return; haptic(); rate = +bt.dataset.v;
+      q('gPace').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === bt)); eta(); calc(); });
+    /* ruler drag */
+    let D = null;
+    q('gRul').addEventListener('pointerdown', e => { if (e.target.closest('.gr-now')) return; D = { y: e.clientY, v: tw, kg: Math.round(tw) }; q('gRul').setPointerCapture(e.pointerId); });
+    q('gRul').addEventListener('pointermove', e => { if (!D) return; tw = Math.min(250, Math.max(30, Math.round((D.v + (e.clientY - D.y) / 32) * 2) / 2));
+      if (Math.round(tw) !== D.kg) { D.kg = Math.round(tw); haptic(); } drawRul(); eta(); });
+    const up = () => { if (!D) return; D = null; calc(); };
+    q('gRul').addEventListener('pointerup', up); q('gRul').addEventListener('pointercancel', up);
+    /* numbers typed by hand: current weight (three places show it), macros (pinned) */
+    s.addEventListener('input', e => { if (e.target === s) return; const id = e.target && e.target.id; if (!id) return;
+      if (['gNow', 'gKw', 'gAw'].includes(id)) { const v = numIn(e.target.value); if (v > 20) { now = v; ['gNow', 'gKw', 'gAw'].forEach(o => { if (o !== id && q(o)) q(o).value = fmtKg(v); }); if (type === 'cut' || type === 'bulk') { eta(); } calc(); } return; }
+      if (['gAge', 'gH'].includes(id)) { calc(); return; }
+      const k = KS.find(k => IDS[k] === id); if (!k) return;
+      const v = numIn(e.target.value); if (v == null || isNaN(v)) delete pin[k]; else pin[k] = v; calc(); });
+    q('gUse').addEventListener('click', () => { haptic(); KS.forEach(k => delete pin[k]); calc(); });
+    /* close / save */
+    const snap = () => JSON.stringify([type, rate, tw, now, pin, q('gN') ? q('gN').value : '', q('gBf').value, needAbout ? body() : 0]), snap0 = (layout(), snap());
+    const leave = () => { if (back) setTimeout(back, 300); };
+    s._guard = () => { if (snap() === snap0) return false; haptic(); menu(q('gX'), [{ head: 'Discard changes?' }, { label: 'Discard', danger: true, now: true, do: () => { s._guard = null; closeSheet(); leave(); } }, { label: 'Keep editing', do: () => {} }]); return true; };
+    q('gX').addEventListener('click', () => { haptic(); if (s._guard && s._guard()) return; s._guard = null; closeSheet(); leave(); });
+    q('gOk').addEventListener('click', () => { if (!(val(s, 'gK') > 0)) { haptic(); nudge(q('gK')); return; }
+      if (!isNew && snap() === snap0) { haptic(); s._guard = null; closeSheet(); leave(); return; }
+      haptic();
+      if (needAbout) { const bd = body(); S.body = { ...(S.body || {}), ...bd, age: bd.age ? r0(bd.age) : (S.body || {}).age }; }
+      if (Math.abs(now - (now0 ?? now)) > .001 || latest('w') == null) setTodayWeight(r1(now));
+      const ru = type === 'cut' || type === 'bulk';
+      const out = { type, k: r0(val(s, 'gK')), p: r0(val(s, 'gP') || 0), f: r0(val(s, 'gF') || 0), c: r0(val(s, 'gC') || 0), rng,
+        tw: ru ? tw : r1(now), rate: ru ? rate : 0, tbf: val(s, 'gBf') ?? src.tbf, sw: r1(now), pin: { ...pin } };
+      s._guard = null; closeSheet(true);
+      if (isNew) { const base = typeName(type), used = new Set(S.goals.map(x => x.name)); let name = base, n = 2; while (used.has(name)) name = `${base} ${n++}`;
+        const ng = { id: uid(), name, ...out }; S.goals.push(ng); S.goalActive = ng.id; save(); renderAll(true); toast(`${name} created`); setTimeout(() => goalMenu(ng.id), 120); }
+      else { const nm = q('gN').value.trim(); Object.assign(g0, out, nm ? { name: nm } : {}); save(); renderAll(true); if (back) setTimeout(back, 120); }
     });
-  });
+  }, 'ps');
 }
 
 /* ================= budget ================= */
@@ -4558,7 +4723,7 @@ function profileSheet(then) {
     const seg = s.querySelector('#pS'); segBind(seg);
     s.querySelector('#pSave').addEventListener('click', () => {
       const age = val(s, 'pA'); if (!(age > 10 && age < 100)) { nudge(s.querySelector('#pA')); return s.querySelector('#pA').focus(); }
-      S.body = { sex: seg.dataset.v, age: r0(age) }; save(); closeSheet(); renderAll();
+      S.body = { ...(S.body || {}), sex: seg.dataset.v, age: r0(age) }; save(); closeSheet(); renderAll();
       if (then) setTimeout(then, 420);
     });
   });
@@ -5639,8 +5804,8 @@ $('#ptabs').addEventListener('click', e => { const b = e.target.closest('.ptab')
   switchPlan(b.dataset.pid); });
 $('#planBtn').addEventListener('click', () => planMenu($('#planBtn')));
 $('#planTitle').addEventListener('click', () => planMenu($('#planTitle')));
-$('#goalBtn').addEventListener('click', goalMenu);
-$('#goalName').addEventListener('click', goalMenu);
+$('#goalBtn').addEventListener('click', () => goalMenu());
+$('#goalName').addEventListener('click', () => goalMenu());
 $('#sortBtn').addEventListener('click', () => sortMenu());
 $('#addBtn').addEventListener('click', () => foodSheet(null, true));
 $('#metricBtn').addEventListener('click', metricMenu);
