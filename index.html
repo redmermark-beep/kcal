@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+<style>html:not(.booted){background:#f6f6fa}html:not(.booted) body{visibility:hidden}/* Balance: the chips (the live preview) stay above the dim */
+body.bal-open #app header.plan{z-index:40}
+</style><script>setTimeout(function(){document.documentElement.classList.add("booted")},2500)</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Rovno</title>
@@ -2393,6 +2396,30 @@ html body .sheet.ps .ps-pill,html body .sheet.ps .nu-pick .so-chip,html body .sh
 html body .sheet.ps .nu-pick .vt.nu-addn{height:56px;min-height:56px;border-radius:28px}
 .sheet.ps .pl-w.sw .pl-ck{opacity:0}
 .sheet.ps .pl-ck{transition:opacity .15s}
+/* Balance sheet */
+.sheet.ps .bl-tags{display:flex;gap:4px;margin-top:14px}
+.sheet.ps .bl-tags button{height:36px;padding:0 14px;border:0;border-radius:18px;background:none;color:rgba(60,60,67,.6);font-size:15px;font-weight:510}
+.sheet.ps .bl-tags button.on{background:rgba(118,118,128,.12);color:#111115}
+.sheet.ps #blTags:empty+#blBody .ps-cap{margin-top:14px}
+.sheet.ps .bl-cnt{font-family:"SF Mono",ui-monospace,Menlo,monospace;text-transform:none;letter-spacing:0}
+.sheet.ps .bl-rows{display:flex;flex-direction:column;gap:4px}
+.sheet.ps .bl-r{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:0 10px}
+.sheet.ps .bl-n{display:flex;flex-direction:column;min-width:0}
+.sheet.ps .bl-n b{font-size:15px;line-height:20px;font-weight:510;letter-spacing:-.15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet.ps .bl-n small{font-size:11px;line-height:14px;margin-top:2px;color:rgba(60,60,67,.6)}
+.sheet.ps .bl-v{flex:none;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;white-space:nowrap}
+.sheet.ps .bl-v i{font-style:normal;color:rgba(60,60,67,.45)}
+.sheet.ps .bl-v b{font-weight:600;color:#111115}
+.sheet.ps .bl-v u{text-decoration:none;color:rgba(60,60,67,.6)}
+.sheet.ps .bl-fx{margin-top:12px;padding:0 10px;font-size:13px;line-height:22px;color:rgba(60,60,67,.6)}
+.sheet.ps .bl-fx b{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-weight:600;color:#111115}
+.sheet.ps .bl-more{height:22px;padding:0 8px;margin-left:2px;border:0;border-radius:11px;background:rgba(118,118,128,.12);font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;font-weight:600;color:#111115;vertical-align:1px}
+.sheet.ps .bl-none{margin:14px 0 0;padding:0 10px;font-size:15px;line-height:20px;color:rgba(60,60,67,.6)}
+.sheet.ps .bl-foot{margin-top:24px}
+.sheet.ps .ps-pill.bl-go{background:#2669ed;color:#fff;font-weight:590}
+html body .sheet.ps .nu-pick .vt.nu-clr{grid-column:1/-1;min-height:44px;height:44px;margin-top:4px;border-radius:22px;flex-direction:row;background:none!important;box-shadow:none!important;color:#d02c2a;font-size:15px;font-weight:510;justify-content:center;align-items:center}
+.vt.nu-clr{color:#d02c2a}
+html body .sheet .vt{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 </style>
 
 <div class="app" id="app">
@@ -2573,7 +2600,9 @@ const haptic = (() => {
     } catch (e) {}
   }
 })();
-const ACTS = `<div class="acts"><button class="sa ed" data-sw="edit" aria-label="Edit"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M2.29492 0C2.51628 0 2.70182 0.078125 2.85156 0.234375C3.00781 0.384115 3.08594 0.569661 3.08594 0.791016V8.64258H1.51367V0.791016C1.51367 0.569661 1.58854 0.384115 1.73828 0.234375C1.89453 0.078125 2.08008 0 2.29492 0ZM2.29492 14.5703C1.8457 14.5703 1.44857 14.4727 1.10352 14.2773C0.758464 14.082 0.488281 13.8118 0.292969 13.4668C0.0976562 13.1217 0 12.7246 0 12.2754V10.4004C0 9.95117 0.0976562 9.55404 0.292969 9.20898C0.488281 8.86393 0.758464 8.59375 1.10352 8.39844C1.44857 8.20312 1.8457 8.10547 2.29492 8.10547C2.74414 8.10547 3.14128 8.20312 3.48633 8.39844C3.83789 8.59375 4.11133 8.86393 4.30664 9.20898C4.50195 9.55404 4.59961 9.95117 4.59961 10.4004V12.2754C4.59961 12.7246 4.50195 13.1217 4.30664 13.4668C4.11133 13.8118 3.83789 14.082 3.48633 14.2773C3.14128 14.4727 2.74414 14.5703 2.29492 14.5703ZM2.29492 13.3887C2.62695 13.3887 2.89714 13.2845 3.10547 13.0762C3.3138 12.8678 3.41797 12.6009 3.41797 12.2754V10.4004C3.41797 10.0684 3.3138 9.80143 3.10547 9.59961C2.89714 9.39128 2.62695 9.28711 2.29492 9.28711C1.9694 9.28711 1.70247 9.39128 1.49414 9.59961C1.28581 9.80143 1.18164 10.0684 1.18164 10.4004V12.2754C1.18164 12.6009 1.28581 12.8678 1.49414 13.0762C1.70247 13.2845 1.9694 13.3887 2.29492 13.3887ZM2.29492 17.1875C2.08008 17.1875 1.89453 17.1126 1.73828 16.9629C1.58854 16.8132 1.51367 16.6374 1.51367 16.4355V14.0332H3.08594V16.4355C3.08594 16.6374 3.00781 16.8132 2.85156 16.9629C2.70182 17.1126 2.51628 17.1875 2.29492 17.1875ZM8.88672 0C9.10807 0 9.29362 0.0748698 9.44336 0.224609C9.5931 0.374349 9.66797 0.55013 9.66797 0.751953V3.1543H8.0957V0.751953C8.0957 0.55013 8.17057 0.374349 8.32031 0.224609C8.47656 0.0748698 8.66536 0 8.88672 0ZM8.88672 9.08203C8.4375 9.08203 8.04036 8.98438 7.69531 8.78906C7.35026 8.59375 7.07682 8.32357 6.875 7.97852C6.67969 7.63346 6.58203 7.23633 6.58203 6.78711V4.91211C6.58203 4.46289 6.67969 4.06576 6.875 3.7207C7.07682 3.37565 7.35026 3.10547 7.69531 2.91016C8.04036 2.71484 8.4375 2.61719 8.88672 2.61719C9.33594 2.61719 9.73307 2.71484 10.0781 2.91016C10.4232 3.10547 10.6934 3.37565 10.8887 3.7207C11.084 4.06576 11.1816 4.46289 11.1816 4.91211V6.78711C11.1816 7.23633 11.084 7.63346 10.8887 7.97852C10.6934 8.32357 10.4232 8.59375 10.0781 8.78906C9.73307 8.98438 9.33594 9.08203 8.88672 9.08203ZM8.88672 7.90039C9.21224 7.90039 9.47917 7.79948 9.6875 7.59766C9.89583 7.38932 10 7.11914 10 6.78711V4.91211C10 4.58659 9.89583 4.31966 9.6875 4.11133C9.47917 3.90299 9.21224 3.79883 8.88672 3.79883C8.55469 3.79883 8.28451 3.90299 8.07617 4.11133C7.87435 4.31966 7.77344 4.58659 7.77344 4.91211V6.78711C7.77344 7.11914 7.87435 7.38932 8.07617 7.59766C8.28451 7.79948 8.55469 7.90039 8.88672 7.90039ZM8.88672 17.1875C8.66536 17.1875 8.47656 17.1094 8.32031 16.9531C8.17057 16.8034 8.0957 16.6178 8.0957 16.3965V8.54492H9.66797V16.3965C9.66797 16.6178 9.5931 16.8034 9.44336 16.9531C9.29362 17.1094 9.10807 17.1875 8.88672 17.1875ZM15.4688 0C15.6901 0 15.8757 0.078125 16.0254 0.234375C16.1816 0.384115 16.2598 0.569661 16.2598 0.791016V8.64258H14.6875V0.791016C14.6875 0.569661 14.7624 0.384115 14.9121 0.234375C15.0618 0.078125 15.2474 0 15.4688 0ZM15.4688 14.5703C15.0195 14.5703 14.6224 14.4727 14.2773 14.2773C13.9323 14.082 13.6621 13.8118 13.4668 13.4668C13.2715 13.1217 13.1738 12.7246 13.1738 12.2754V10.4004C13.1738 9.95117 13.2715 9.55404 13.4668 9.20898C13.6621 8.86393 13.9323 8.59375 14.2773 8.39844C14.6224 8.20312 15.0195 8.10547 15.4688 8.10547C15.918 8.10547 16.3151 8.20312 16.6602 8.39844C17.0117 8.59375 17.2852 8.86393 17.4805 9.20898C17.6758 9.55404 17.7734 9.95117 17.7734 10.4004V12.2754C17.7734 12.7246 17.6758 13.1217 17.4805 13.4668C17.2852 13.8118 17.0117 14.082 16.6602 14.2773C16.3151 14.4727 15.918 14.5703 15.4688 14.5703ZM15.4688 13.3887C15.8008 13.3887 16.071 13.2845 16.2793 13.0762C16.4876 12.8678 16.5918 12.6009 16.5918 12.2754V10.4004C16.5918 10.0684 16.4876 9.80143 16.2793 9.59961C16.071 9.39128 15.8008 9.28711 15.4688 9.28711C15.1432 9.28711 14.8763 9.39128 14.668 9.59961C14.4596 9.80143 14.3555 10.0684 14.3555 10.4004V12.2754C14.3555 12.6009 14.4596 12.8678 14.668 13.0762C14.8763 13.2845 15.1432 13.3887 15.4688 13.3887ZM15.4688 17.1875C15.2474 17.1875 15.0618 17.1126 14.9121 16.9629C14.7624 16.8132 14.6875 16.6374 14.6875 16.4355V14.0332H16.2598V16.4355C16.2598 16.6374 16.1816 16.8132 16.0254 16.9629C15.8757 17.1126 15.6901 17.1875 15.4688 17.1875Z"/></svg></button><button class="sa del" data-sw="del" aria-label="Delete"><svg viewBox="0 0 19 22" fill="currentColor" aria-hidden="true"><path d="M6.5625 18.6035C6.38021 18.6035 6.23372 18.5514 6.12305 18.4473C6.01237 18.3431 5.95378 18.2031 5.94727 18.0273L5.6543 7.58789C5.64779 7.41862 5.69987 7.2819 5.81055 7.17773C5.92773 7.06706 6.07747 7.01172 6.25977 7.01172C6.43555 7.01172 6.57878 7.0638 6.68945 7.16797C6.80664 7.27214 6.86523 7.40885 6.86523 7.57812L7.16797 18.0273C7.16797 18.1966 7.11263 18.3366 7.00195 18.4473C6.89128 18.5514 6.74479 18.6035 6.5625 18.6035ZM9.45312 18.6035C9.27083 18.6035 9.12109 18.5514 9.00391 18.4473C8.88672 18.3366 8.82812 18.1966 8.82812 18.0273V7.58789C8.82812 7.41862 8.88672 7.2819 9.00391 7.17773C9.12109 7.06706 9.27083 7.01172 9.45312 7.01172C9.64193 7.01172 9.79492 7.06706 9.91211 7.17773C10.0293 7.2819 10.0879 7.41862 10.0879 7.58789V18.0273C10.0879 18.1966 10.0293 18.3366 9.91211 18.4473C9.79492 18.5514 9.64193 18.6035 9.45312 18.6035ZM12.3535 18.6035C12.1647 18.6035 12.015 18.5514 11.9043 18.4473C11.7936 18.3366 11.7415 18.1966 11.748 18.0273L12.041 7.58789C12.0475 7.41211 12.1061 7.27214 12.2168 7.16797C12.3275 7.0638 12.4707 7.01172 12.6465 7.01172C12.8353 7.01172 12.985 7.06706 13.0957 7.17773C13.2064 7.2819 13.2585 7.41862 13.252 7.58789L12.959 18.0273C12.9525 18.2031 12.8939 18.3431 12.7832 18.4473C12.6725 18.5514 12.5293 18.6035 12.3535 18.6035ZM5.16602 4.46289V2.27539C5.16602 1.57227 5.38086 1.01888 5.81055 0.615234C6.24674 0.205078 6.83919 0 7.58789 0H11.2988C12.0475 0 12.6367 0.205078 13.0664 0.615234C13.5026 1.01888 13.7207 1.57227 13.7207 2.27539V4.46289H12.168V2.37305C12.168 2.09961 12.0768 1.87826 11.8945 1.70898C11.7188 1.53971 11.4844 1.45508 11.1914 1.45508H7.69531C7.40234 1.45508 7.16471 1.53971 6.98242 1.70898C6.80664 1.87826 6.71875 2.09961 6.71875 2.37305V4.46289H5.16602ZM0.732422 5.24414C0.537109 5.24414 0.364583 5.17253 0.214844 5.0293C0.0716146 4.87956 0 4.70378 0 4.50195C0 4.30664 0.0716146 4.13737 0.214844 3.99414C0.364583 3.8444 0.537109 3.76953 0.732422 3.76953H18.1836C18.3789 3.76953 18.5482 3.84115 18.6914 3.98438C18.8346 4.1276 18.9062 4.30013 18.9062 4.50195C18.9062 4.70378 18.8346 4.87956 18.6914 5.0293C18.5547 5.17253 18.3854 5.24414 18.1836 5.24414H0.732422ZM4.98047 21.748C4.27734 21.748 3.70768 21.5397 3.27148 21.123C2.8418 20.7129 2.61068 20.1562 2.57812 19.4531L1.88477 5.05859H3.41797L4.11133 19.2773C4.12435 19.5638 4.22526 19.8014 4.41406 19.9902C4.60286 20.179 4.83724 20.2734 5.11719 20.2734H13.7793C14.0658 20.2734 14.3034 20.179 14.4922 19.9902C14.681 19.8079 14.7819 19.5703 14.7949 19.2773L15.4492 5.05859H17.0215L16.3379 19.4434C16.3053 20.1465 16.071 20.7064 15.6348 21.123C15.1986 21.5397 14.6322 21.748 13.9355 21.748H4.98047Z"/></svg></button></div>`;   // SF Symbols from Figma (2 Nov)
+const ACTS = `<div class="acts"><button class="sa ed" data-sw="edit" aria-label="Edit"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M2.29492 0C2.51628 0 2.70182 0.078125 2.85156 0.234375C3.00781 0.384115 3.08594 0.569661 3.08594 0.791016V8.64258H1.51367V0.791016C1.51367 0.569661 1.58854 0.384115 1.73828 0.234375C1.89453 0.078125 2.08008 0 2.29492 0ZM2.29492 14.5703C1.8457 14.5703 1.44857 14.4727 1.10352 14.2773C0.758464 14.082 0.488281 13.8118 0.292969 13.4668C0.0976562 13.1217 0 12.7246 0 12.2754V10.4004C0 9.95117 0.0976562 9.55404 0.292969 9.20898C0.488281 8.86393 0.758464 8.59375 1.10352 8.39844C1.44857 8.20312 1.8457 8.10547 2.29492 8.10547C2.74414 8.10547 3.14128 8.20312 3.48633 8.39844C3.83789 8.59375 4.11133 8.86393 4.30664 9.20898C4.50195 9.55404 4.59961 9.95117 4.59961 10.4004V12.2754C4.59961 12.7246 4.50195 13.1217 4.30664 13.4668C4.11133 13.8118 3.83789 14.082 3.48633 14.2773C3.14128 14.4727 2.74414 14.5703 2.29492 14.5703ZM2.29492 13.3887C2.62695 13.3887 2.89714 13.2845 3.10547 13.0762C3.3138 12.8678 3.41797 12.6009 3.41797 12.2754V10.4004C3.41797 10.0684 3.3138 9.80143 3.10547 9.59961C2.89714 9.39128 2.62695 9.28711 2.29492 9.28711C1.9694 9.28711 1.70247 9.39128 1.49414 9.59961C1.28581 9.80143 1.18164 10.0684 1.18164 10.4004V12.2754C1.18164 12.6009 1.28581 12.8678 1.49414 13.0762C1.70247 13.2845 1.9694 13.3887 2.29492 13.3887ZM2.29492 17.1875C2.08008 17.1875 1.89453 17.1126 1.73828 16.9629C1.58854 16.8132 1.51367 16.6374 1.51367 16.4355V14.0332H3.08594V16.4355C3.08594 16.6374 3.00781 16.8132 2.85156 16.9629C2.70182 17.1126 2.51628 17.1875 2.29492 17.1875ZM8.88672 0C9.10807 0 9.29362 0.0748698 9.44336 0.224609C9.5931 0.374349 9.66797 0.55013 9.66797 0.751953V3.1543H8.0957V0.751953C8.0957 0.55013 8.17057 0.374349 8.32031 0.224609C8.47656 0.0748698 8.66536 0 8.88672 0ZM8.88672 9.08203C8.4375 9.08203 8.04036 8.98438 7.69531 8.78906C7.35026 8.59375 7.07682 8.32357 6.875 7.97852C6.67969 7.63346 6.58203 7.23633 6.58203 6.78711V4.91211C6.58203 4.46289 6.67969 4.06576 6.875 3.7207C7.07682 3.37565 7.35026 3.10547 7.69531 2.91016C8.04036 2.71484 8.4375 2.61719 8.88672 2.61719C9.33594 2.61719 9.73307 2.71484 10.0781 2.91016C10.4232 3.10547 10.6934 3.37565 10.8887 3.7207C11.084 4.06576 11.1816 4.46289 11.1816 4.91211V6.78711C11.1816 7.23633 11.084 7.63346 10.8887 7.97852C10.6934 8.32357 10.4232 8.59375 10.0781 8.78906C9.73307 8.98438 9.33594 9.08203 8.88672 9.08203ZM8.88672 7.90039C9.21224 7.90039 9.47917 7.79948 9.6875 7.59766C9.89583 7.38932 10 7.11914 10 6.78711V4.91211C10 4.58659 9.89583 4.31966 9.6875 4.11133C9.47917 3.90299 9.21224 3.79883 8.88672 3.79883C8.55469 3.79883 8.28451 3.90299 8.07617 4.11133C7.87435 4.31966 7.77344 4.58659 7.77344 4.91211V6.78711C7.77344 7.11914 7.87435 7.38932 8.07617 7.59766C8.28451 7.79948 8.55469 7.90039 8.88672 7.90039ZM8.88672 17.1875C8.66536 17.1875 8.47656 17.1094 8.32031 16.9531C8.17057 16.8034 8.0957 16.6178 8.0957 16.3965V8.54492H9.66797V16.3965C9.66797 16.6178 9.5931 16.8034 9.44336 16.9531C9.29362 17.1094 9.10807 17.1875 8.88672 17.1875ZM15.4688 0C15.6901 0 15.8757 0.078125 16.0254 0.234375C16.1816 0.384115 16.2598 0.569661 16.2598 0.791016V8.64258H14.6875V0.791016C14.6875 0.569661 14.7624 0.384115 14.9121 0.234375C15.0618 0.078125 15.2474 0 15.4688 0ZM15.4688 14.5703C15.0195 14.5703 14.6224 14.4727 14.2773 14.2773C13.9323 14.082 13.6621 13.8118 13.4668 13.4668C13.2715 13.1217 13.1738 12.7246 13.1738 12.2754V10.4004C13.1738 9.95117 13.2715 9.55404 13.4668 9.20898C13.6621 8.86393 13.9323 8.59375 14.2773 8.39844C14.6224 8.20312 15.0195 8.10547 15.4688 8.10547C15.918 8.10547 16.3151 8.20312 16.6602 8.39844C17.0117 8.59375 17.2852 8.86393 17.4805 9.20898C17.6758 9.55404 17.7734 9.95117 17.7734 10.4004V12.2754C17.7734 12.7246 17.6758 13.1217 17.4805 13.4668C17.2852 13.8118 17.0117 14.082 16.6602 14.2773C16.3151 14.4727 15.918 14.5703 15.4688 14.5703ZM15.4688 13.3887C15.8008 13.3887 16.071 13.2845 16.2793 13.0762C16.4876 12.8678 16.5918 12.6009 16.5918 12.2754V10.4004C16.5918 10.0684 16.4876 9.80143 16.2793 9.59961C16.071 9.39128 15.8008 9.28711 15.4688 9.28711C15.1432 9.28711 14.8763 9.39128 14.668 9.59961C14.4596 9.80143 14.3555 10.0684 14.3555 10.4004V12.2754C14.3555 12.6009 14.4596 12.8678 14.668 13.0762C14.8763 13.2845 15.1432 13.3887 15.4688 13.3887ZM15.4688 17.1875C15.2474 17.1875 15.0618 17.1126 14.9121 16.9629C14.7624 16.8132 14.6875 16.6374 14.6875 16.4355V14.0332H16.2598V16.4355C16.2598 16.6374 16.1816 16.8132 16.0254 16.9629C15.8757 17.1126 15.6901 17.1875 15.4688 17.1875Z"/></svg></button><button class="sa del" data-sw="del" aria-label="Delete"><svg viewBox="0 0 19 22" fill="currentColor" aria-hidden="true"><path d="M6.5625 18.6035C6.38021 18.6035 6.23372 18.5514 6.12305 18.4473C6.01237 18.3431 5.95378 18.2031 5.94727 18.0273L5.6543 7.58789C5.64779 7.41862 5.69987 7.2819 5.81055 7.17773C5.92773 7.06706 6.07747 7.01172 6.25977 7.01172C6.43555 7.01172 6.57878 7.0638 6.68945 7.16797C6.80664 7.27214 6.86523 7.40885 6.86523 7.57812L7.16797 18.0273C7.16797 18.1966 7.11263 18.3366 7.00195 18.4473C6.89128 18.5514 6.74479 18.6035 6.5625 18.6035ZM9.45312 18.6035C9.27083 18.6035 9.12109 18.5514 9.00391 18.4473C8.88672 18.3366 8.82812 18.1966 8.82812 18.0273V7.58789C8.82812 7.41862 8.88672 7.2819 9.00391 7.17773C9.12109 7.06706 9.27083 7.01172 9.45312 7.01172C9.64193 7.01172 9.79492 7.06706 9.91211 7.17773C10.0293 7.2819 10.0879 7.41862 10.0879 7.58789V18.0273C10.0879 18.1966 10.0293 18.3366 9.91211 18.4473C9.79492 18.5514 9.64193 18.6035 9.45312 18.6035ZM12.3535 18.6035C12.1647 18.6035 12.015 18.5514 11.9043 18.4473C11.7936 18.3366 11.7415 18.1966 11.748 18.0273L12.041 7.58789C12.0475 7.41211 12.1061 7.27214 12.2168 7.16797C12.3275 7.0638 12.4707 7.01172 12.6465 7.01172C12.8353 7.01172 12.985 7.06706 13.0957 7.17773C13.2064 7.2819 13.2585 7.41862 13.252 7.58789L12.959 18.0273C12.9525 18.2031 12.8939 18.3431 12.7832 18.4473C12.6725 18.5514 12.5293 18.6035 12.3535 18.6035ZM5.16602 4.46289V2.27539C5.16602 1.57227 5.38086 1.01888 5.81055 0.615234C6.24674 0.205078 6.83919 0 7.58789 0H11.2988C12.0475 0 12.6367 0.205078 13.0664 0.615234C13.5026 1.01888 13.7207 1.57227 13.7207 2.27539V4.46289H12.168V2.37305C12.168 2.09961 12.0768 1.87826 11.8945 1.70898C11.7188 1.53971 11.4844 1.45508 11.1914 1.45508H7.69531C7.40234 1.45508 7.16471 1.53971 6.98242 1.70898C6.80664 1.87826 6.71875 2.09961 6.71875 2.37305V4.46289H5.16602ZM0.732422 5.24414C0.537109 5.24414 0.364583 5.17253 0.214844 5.0293C0.0716146 4.87956 0 4.70378 0 4.50195C0 4.30664 0.0716146 4.13737 0.214844 3.99414C0.364583 3.8444 0.537109 3.76953 0.732422 3.76953H18.1836C18.3789 3.76953 18.5482 3.84115 18.6914 3.98438C18.8346 4.1276 18.9062 4.30013 18.9062 4.50195C18.9062 4.70378 18.8346 4.87956 18.6914 5.0293C18.5547 5.17253 18.3854 5.24414 18.1836 5.24414H0.732422ZM4.98047 21.748C4.27734 21.748 3.70768 21.5397 3.27148 21.123C2.8418 20.7129 2.61068 20.1562 2.57812 19.4531L1.88477 5.05859H3.41797L4.11133 19.2773C4.12435 19.5638 4.22526 19.8014 4.41406 19.9902C4.60286 20.179 4.83724 20.2734 5.11719 20.2734H13.7793C14.0658 20.2734 14.3034 20.179 14.4922 19.9902C14.681 19.8079 14.7819 19.5703 14.7949 19.2773L15.4492 5.05859H17.0215L16.3379 19.4434C16.3053 20.1465 16.071 20.7064 15.6348 21.123C15.1986 21.5397 14.6322 21.748 13.9355 21.748H4.98047Z"/></svg></button></div>`;
+/* group rows: edit = rename, so a pencil (#27) */
+const ACTS_G = ACTS.replace(/<button class="sa ed"([^>]*)>[\s\S]*?<\/button>/, '<button class="sa ed"$1><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button>');   // SF Symbols from Figma (2 Nov)
 const XBTN = `<button class="x" data-close aria-label="Close">${ICON.x}</button>`;
 const SHI = {
   g: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14l-1.5 11h-11z"/><path d="M9 9a3 3 0 0 1 6 0"/></svg>',
@@ -3001,7 +3030,7 @@ function rowHTML(e, i) {
 }
 function groupHTML(e, i) {
   return `<li class="group${e.open ? ' open' : ''}${e.g === 0 ? ' zero' : ''}${editing && editing.id === e.id ? ' editing' : ''}" data-id="${e.id}" style="--d:${i * 18}ms">
-    <div class="ghead">${ACTS}<div class="rc"><button class="pill" data-act="pill" data-k="${r0(mac(e).k)}" aria-label="${esc(e.name)}, ${e.g} of ${maxOf(e)} grams">${pillHTML(e)}</button>
+    <div class="ghead">${ACTS_G}<div class="rc"><button class="pill" data-act="pill" data-k="${r0(mac(e).k)}" aria-label="${esc(e.name)}, ${e.g} of ${maxOf(e)} grams">${pillHTML(e)}</button>
     <div class="info"><div class="name"><span class="gname" data-act="gname">${esc(e.name)}</span><button class="chev" data-act="chev" aria-label="${e.open ? 'Collapse' : 'Expand'}" aria-expanded="${!!e.open}"><svg viewBox="0 0 14 8" fill="currentColor"><path d="M6.92188 7.95312C6.66146 7.95312 6.42448 7.84896 6.21094 7.64062L0.265625 1.55469C0.177083 1.47135 0.109375 1.3776 0.0625 1.27344C0.0208333 1.16406 0 1.04688 0 0.921875C0 0.75 0.0390625 0.59375 0.117188 0.453125C0.200521 0.3125 0.309896 0.203125 0.445312 0.125C0.580729 0.0416667 0.734375 0 0.90625 0C1.15625 0 1.375 0.09375 1.5625 0.28125L7.30469 6.16406H6.54688L12.2812 0.28125C12.4688 0.09375 12.6875 0 12.9375 0C13.1094 0 13.263 0.0416667 13.3984 0.125C13.5339 0.203125 13.6406 0.3125 13.7188 0.453125C13.8021 0.59375 13.8438 0.75 13.8438 0.921875C13.8438 1.16667 13.7552 1.3776 13.5781 1.55469L7.63281 7.64062C7.53385 7.74479 7.42448 7.82292 7.30469 7.875C7.1849 7.92708 7.05729 7.95312 6.92188 7.95312Z"/></svg></button></div>
     <div class="mac">${macHTML(mac(e))}</div></div><div class="kr2"><div class="kr">${krHTML(e)}</div></div></div></div>
     <ul class="kids">${e.open ? e.ch.map((c, j) => rowHTML(c, i + j + 1)).join('') : ''}</ul></li>`;
@@ -3878,38 +3907,49 @@ function balKinds(all) {
   out.cheap.sort((a, b) => a.money - b.money || a.cost - b.cost); out.cheap = out.cheap.slice(0, 6);
   if (!out.cheap.length || out.cheap[0].money >= 0) out.cheap = [];   // only when something actually saves money
   return out; }
+/* Balance (8 Nov 2026, canvas «Balance · финал (6)»): the result shows right on Meal's chips above the sheet (a live preview),
+   the sheet keeps only the way (chips), the changes «was → now», one quiet line of what the way gives, Another way + Apply.
+   The sheet never covers the chips; a long Build-the-plan list scrolls inside. Closing without Apply puts the grams back. */
 function balanceSheet() {
   let r = balanceOptions(); if (!r.opts.length) r = balanceOptions(1.5); if (!r.opts.length) r = balanceOptions(2);   // relax the portion limits only if nothing fits
   const { build } = r, K = balKinds(r.all || r.opts), cur = esc(S.ui.cur || 'RSD'), days = S.ui.bdays || 15;
   const kinds = [['simple', 'Simplest'], ['nut', 'Nutrients'], ['cheap', 'Cheapest']].filter(([k]) => K[k].length);
-  let kind = 'simple', i = 0; const L = () => K[kind];
+  let kind = kinds.length ? kinds[0][0] : 'simple', i = 0, more = false; const L = () => K[kind] || [];
   const sgn = v => (v < 0 ? '−' : '+') + money(Math.abs(v));
-  const tileSub = k => { const o = K[k][0]; return k === 'simple' ? `${o.changes.length} ${o.changes.length === 1 ? 'small change' : 'small changes'}` : k === 'nut' ? `fixes ${o.fixed.length}` : `${sgn(o.money)} ${cur}`; };
-  const amt = ch => { const e = ch.e, g = e.t === 'g', u = g ? 'g' : uLab(e), f = g ? ch.from : toU(e, ch.from), t = g ? ch.to : toU(e, ch.to), F = v => Math.round(v * 10) / 10;
-    return ch.from === 0 ? `${F(t)} ${u}` : `<i>${F(f)} →</i> ${F(t)} ${u}`; };
-  const body = () => { if (!L().length) return `<p class="bal-none">Couldn't find a plan that fits with these products.<br>Add a few more products and try again.</p>`;
-    const o = L()[i];
-    return `<div class="bal-rows">${o.changes.map(ch => `<div class="bal-r"><b>${ch.e.t === 'g' ? BOWL_I : ''}<span class="bal-nm">${esc(ch.e.name)}</span>${ch.parent ? `<small class="bal-in">in ${esc(ch.parent.name)}</small>` : ch.from === 0 ? '<small class="bal-new">new</small>' : ''}</b><em class="${ch.to > ch.from ? 'p' : ''}">${amt(ch)}</em></div>`).join('')}</div>`; };
-  const nav = () => L().length > 1 ? `<button type="button" id="balPrev"${i === 0 ? ' disabled' : ''}>‹ Previous</button><span>${i + 1} of ${L().length}</span><button type="button" id="balAlt"${i === L().length - 1 ? ' disabled' : ''}>Another way ›</button>` : '';
+  const F = v => Math.round(v * 10) / 10;
+  const row = ch => { const e = ch.e, g = e.t === 'g', u = g ? 'g' : uLab(e), f = g ? ch.from : toU(e, ch.from), t = g ? ch.to : toU(e, ch.to);
+    const sub = ch.parent ? `in ${esc(ch.parent.name)}` : ch.from === 0 && !find(e.id) ? 'new' : '';
+    return `<div class="bl-r"><span class="bl-n"><b>${esc(e.name)}</b>${sub ? `<small>${sub}</small>` : ''}</span><span class="bl-v"><i>${F(f)} → </i><b>${F(t)}</b><u>${u}</u></span></div>`; };
   const fx = () => { const o = L()[i]; if (!o) return '';
-    if (kind === 'nut') return `To fix <b>${o.before} → ${o.before - o.fixed.length}</b> · ${esc(o.fixed.join(', '))}`;
+    if (kind === 'nut') { const all = o.fixed, k = all.length; if (!k) return '';
+      return more ? `Fixes ${k} of ${o.before} · ${esc(all.join(', '))} <button type="button" class="bl-more" data-more>Less</button>`
+        : `Fixes ${k} · ${esc(all.slice(0, 3).join(', '))}${k > 3 ? ` <button type="button" class="bl-more" data-more>+${k - 3}</button>` : ''}`; }
     if (kind === 'cheap') return `<b>${sgn(o.money)} ${cur}</b> for ${days} days`; return ''; };
-  const tiles = () => kinds.length > 1 ? `<div class="bal-kinds">${kinds.map(([k, l]) => `<button type="button" data-kind="${k}" class="${k === kind ? 'on' : ''}" aria-pressed="${k === kind}"><b>${l}</b><span>${tileSub(k)}</span></button>`).join('')}</div>` : '';
-  sheet(`<h3>${build ? 'Build the plan' : 'Balance the plan'}${XBTN}</h3><div id="balK">${tiles()}</div><div id="balBody">${body()}</div>
-    <div class="bal-nav" id="balNav">${nav()}</div>
-    <div id="balRes">${L().length ? balRes(L()[i].t) : ''}</div><p class="bal-fx" id="balFx">${fx()}</p>
-    ${L().length ? `<button class="sbtn primary" id="balGo">Apply</button>` : ''}`, s => {
-    const paint = () => { s.querySelector('#balK').innerHTML = tiles(); s.querySelector('#balBody').innerHTML = body(); s.querySelector('#balNav').innerHTML = nav();
-      s.querySelector('#balRes').innerHTML = L().length ? balRes(L()[i].t) : ''; const f = fx(), fe = s.querySelector('#balFx'); fe.innerHTML = f; fe.hidden = !f; };
-    s.querySelector('#balFx').hidden = !fx();
-    s.addEventListener('click', e => { const k = e.target.closest('[data-kind]'), pv = e.target.closest('#balPrev'), al = e.target.closest('#balAlt');
-      if (k && k.dataset.kind !== kind) { haptic(); kind = k.dataset.kind; i = 0; paint(); }
-      else if (pv && i > 0) { haptic(); i--; paint(); } else if (al && i < L().length - 1) { haptic(); i++; paint(); } });
-    const go = s.querySelector('#balGo'); if (go) go.addEventListener('click', () => {
-      const o = L()[i], undo = o.changes.map(ch => [ch.e, ch.from, ch.parent]);
-      o.changes.forEach(ch => setGrams(ch.e, ch.to, ch.parent)); save(); closeSheet(); haptic(); renderAll(true);
-      toast('Plan balanced', { label: 'Undo', fn: () => { undo.forEach(([e, g, p]) => setGrams(e, g, p)); save(); renderAll(true); } }); });
-  });
+  const tags = () => kinds.length > 1 ? `<div class="bl-tags">${kinds.map(([k, l]) => `<button type="button" data-kind="${k}" class="${k === kind ? 'on' : ''}" aria-pressed="${k === kind}">${l}</button>`).join('')}</div>` : '';
+  const body = () => { const o = L()[i]; if (!o) return `<p class="bl-none">Couldn't find a plan that fits with these products. Add a few more products and try again.</p>`;
+    const f = fx(); return `<div class="ps-cap"><span>Changes</span>${L().length > 1 ? `<span class="bl-cnt">${i + 1} of ${L().length}</span>` : ''}</div>
+      <div class="bl-rows">${o.changes.map(row).join('')}</div>${f ? `<div class="bl-fx">${f}</div>` : ''}`; };
+  /* live preview on Meal's chips */
+  let shown = null;
+  const unshow = () => { if (!shown) return; shown.slice().reverse().forEach(([e, g, p]) => setGrams(e, g, p)); shown = null; };
+  const show = () => { unshow(); const o = L()[i]; if (!o) { renderAll(true); return; } shown = o.changes.map(ch => [ch.e, ch.from, ch.parent]); o.changes.forEach(ch => setGrams(ch.e, ch.to, ch.parent)); renderAll(true); };
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="blX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">${build ? 'Build the plan' : 'Balance'}</span></div>
+    <div id="blTags">${tags()}</div><div id="blBody">${body()}</div>
+    ${L().length ? `<div class="ps-acts bl-foot"><button type="button" class="ps-pill" id="blAlt"${L().length < 2 ? ' disabled' : ''}>Another way</button><button type="button" class="ps-pill bl-go" id="blGo">Apply</button></div>` : ''}`, s => {
+    const fit = () => { const t = $('#planTitle'); if (!t) return; const top = Math.max(satPx() + 8, t.getBoundingClientRect().top - 16); s.style.maxHeight = (innerHeight - top - (innerHeight - s.getBoundingClientRect().bottom)) + 'px'; };
+    const paint = () => { s.querySelector('#blTags').innerHTML = tags(); s.querySelector('#blBody').innerHTML = body(); const a = s.querySelector('#blAlt'); if (a) a.disabled = L().length < 2; show(); };
+    s.addEventListener('click', e => { const k = e.target.closest('[data-kind]'), m = e.target.closest('[data-more]');
+      if (k && k.dataset.kind !== kind) { haptic(); kind = k.dataset.kind; i = 0; more = false; paint(); }
+      else if (m) { haptic(); more = !more; s.querySelector('#blBody').innerHTML = body(); } });
+    const alt = s.querySelector('#blAlt'); if (alt) alt.addEventListener('click', () => { if (L().length < 2) return; haptic(); i = (i + 1) % L().length; more = false; paint(); });
+    s.querySelector('#blX').addEventListener('click', () => { haptic(); closeSheet(); });
+    s._guard = () => { unshow(); renderAll(true); return false; };   // closing without Apply: grams back, chips back
+    const go = s.querySelector('#blGo'); if (go) go.addEventListener('click', () => {
+      const o = L()[i], undo = shown || o.changes.map(ch => [ch.e, ch.from, ch.parent]); if (!shown) o.changes.forEach(ch => setGrams(ch.e, ch.to, ch.parent));
+      shown = null; s._guard = null; save(); closeSheet(); haptic(); renderAll(true);
+      toast('Plan balanced', { label: 'Undo', fn: () => { undo.slice().reverse().forEach(([e, g, p]) => setGrams(e, g, p)); save(); renderAll(true); } }); });
+    document.body.classList.add('bal-open'); show(); requestAnimationFrame(fit); setTimeout(fit, 400);
+  }, 'ps');
 }
 $('#balBtn').addEventListener('click', () => { haptic(); balanceSheet(); });
 $('#ghostBtn').addEventListener('click', () => {
@@ -4016,7 +4056,7 @@ function kpBind(s) {
   s.addEventListener('input', () => s.querySelectorAll('.vt[data-f] input').forEach(fit));
 }
 function closeSheet(fast) {
-  if (!openSheet) return; if (!fast && openSheet.s._guard && openSheet.s._guard()) return; const { s, scrim, kbOff } = openSheet; openSheet = null; if (kbOff) kbOff(); document.documentElement.classList.remove('sh-lock');
+  if (!openSheet) return; if (!fast && openSheet.s._guard && openSheet.s._guard()) return; const { s, scrim, kbOff } = openSheet; openSheet = null; $('#toast').style.bottom = ''; document.body.classList.remove('bal-open'); if (kbOff) kbOff(); document.documentElement.classList.remove('sh-lock');
   if (document.activeElement && s.contains(document.activeElement)) document.activeElement.blur();
   s.classList.remove('show'); scrim.classList.remove('show'); setTimeout(() => { s.remove(); scrim.remove(); }, fast ? 0 : 450);
 }
@@ -4080,7 +4120,7 @@ function foodSheet(e, isNew) {
       const off = k != null && (val(s, 'fP') || val(s, 'fF') || val(s, 'fC')) && Math.abs(k - auto) > Math.max(15, auto * .08);
       const w = s.querySelector('#fWarn'); w.hidden = !off;
       if (off) { w.querySelector('.t').innerHTML = `Macros add up to <b>${auto}</b> kcal`; w.querySelector('#fUse').textContent = `Use ${auto}`; }
-      ok.classList.toggle('off', !!missing() || (!isNew && !changed()));
+      ok.classList.toggle('off', !!missing());
       s.querySelector('[data-f="fUw"]').classList.toggle('err', ok.dataset.tried === '1' && missing() === 'piece');
       const nb = s.querySelector('#fNut'); if (isNew) nb.hidden = !nameIn.value.trim();
     };
@@ -4134,7 +4174,7 @@ function foodSheet(e, isNew) {
     ok.addEventListener('click', () => {
       const miss = missing();
       if (miss) { ok.dataset.tried = '1'; sync(); haptic(); const el = miss === 'name' ? nameIn : s.querySelector('#fUw'); nudge(el); el.focus(); return; }
-      if (!isNew && !changed()) return;
+      if (!isNew && !changed()) { haptic(); s._guard = null; closeSheet(); return; }
       haptic();
       const name = nameIn.value.trim(), unit = unitB.dataset.v, uw = val(s, 'fUw');
       const toG = v => v == null ? null : unit === 'pc' ? r0(v * uw) : r0(v);
@@ -4173,8 +4213,8 @@ function groupSheet(g) {
     <div class="ps-field"><input id="gName" value="${esc(g.name)}" placeholder="Group name" autocomplete="off" enterkeyhint="done" aria-label="Group name"></div>`, s => {
     const gi = s.querySelector('#gName'), ok = s.querySelector('#gSave');
     const changed = () => gi.value.trim() !== g.name, valid = () => !!gi.value.trim();
-    const sync = () => ok.classList.toggle('off', !valid() || !changed());
-    const done = () => { if (!valid()) { nudge(gi); gi.focus(); return; } if (!changed()) return; haptic(); s._guard = null; g.name = gi.value.trim(); save(); closeSheet(); renderMeal(true); };
+    const sync = () => ok.classList.toggle('off', !valid());
+    const done = () => { if (!valid()) { nudge(gi); gi.focus(); return; } if (!changed()) { haptic(); s._guard = null; closeSheet(); return; } haptic(); s._guard = null; g.name = gi.value.trim(); save(); closeSheet(); renderMeal(true); };
     gi.addEventListener('input', sync);
     gi.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); done(); } });
     ok.addEventListener('click', done);
@@ -4248,8 +4288,8 @@ function psName(title, value, cb, o = {}) {   // a short sheet with one name fie
     <div class="ps-field"><input id="nmIn" value="${esc(value || '')}" placeholder="${esc(o.ph || 'Name')}" autocomplete="off" enterkeyhint="done" aria-label="${esc(o.ph || 'Name')}"></div>`, s => {
     const i = s.querySelector('#nmIn'), ok = s.querySelector('#nmOk'), f = s.querySelector('.ps-field'), v0 = value || '';
     const valid = () => !!i.value.trim(), changed = () => o.isNew || i.value.trim() !== v0;
-    const sync = () => { ok.classList.toggle('off', !valid() || !changed()); f.classList.toggle('err', ok.dataset.tried === '1' && !valid()); };
-    const done = () => { if (!valid()) { ok.dataset.tried = '1'; sync(); haptic(); nudge(i); i.focus(); return; } if (!changed()) return; haptic(); s._guard = null; const v = i.value.trim(); closeSheet(true); cb(v); };
+    const sync = () => { ok.classList.toggle('off', !valid()); f.classList.toggle('err', ok.dataset.tried === '1' && !valid()); };
+    const done = () => { if (!valid()) { ok.dataset.tried = '1'; sync(); haptic(); nudge(i); i.focus(); return; } if (!changed()) { haptic(); s._guard = null; closeSheet(); if (o.back) setTimeout(o.back, 300); return; } haptic(); s._guard = null; const v = i.value.trim(); closeSheet(true); cb(v); };
     i.addEventListener('input', sync); i.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); done(); } });
     ok.addEventListener('click', done); s.querySelector('#nmX').addEventListener('click', () => { haptic(); closeSheet(); if (o.back) setTimeout(o.back, 300); });
     s._guard = () => { if (o.isNew || !changed() || !valid()) return false; haptic(); menu(s.querySelector('#nmX'), [{ head: 'Discard changes?' }, { label: 'Discard', danger: true, now: true, do: () => { s._guard = null; closeSheet(); } }, { label: 'Keep editing', do: () => {} }]); return true; };
@@ -5503,10 +5543,18 @@ function nPicker() {
 /* tiles of nutrient values — shared by the supplement sheet and «from the label» */
 const nVt = (f, label, val, unit, attr) => `<div class="vt" data-f="${f}"><span class="l">${label}</span><b><span class="v"></span><i class="cr"></i><span class="u">${unit || ''}</span><input ${attr || ''} inputmode="decimal" enterkeyhint="next" value="${val ?? ''}" placeholder="0" autocomplete="off" aria-label="${label}"></b></div>`;
 function nTiles(host, d, extraFirst) { let first = true;
-  const draw = () => { host.innerHTML = (extraFirst || '') + Object.entries(d).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? nVt('n-' + k, n.n, v, n.u, `data-nk="${k}"`) : ''; }).join('') + `<button type="button" class="vt nu-addn">+ Nutrient</button>`;
+  const draw = () => { host.innerHTML = (extraFirst || '') + Object.entries(d).map(([k, v]) => { const n = NUT.find(z => z.id === k); return n ? nVt('n-' + k, n.n, v, n.u, `data-nk="${k}"`) : ''; }).join('') + `<button type="button" class="vt nu-addn">+ Nutrient</button>` + (Object.keys(d).length ? '<button type="button" class="vt nu-clr">Remove all</button>' : '');
     if (!first) kpBind(host); first = false;
     host.querySelectorAll('[data-nk]').forEach(i => i.addEventListener('input', () => { const t = i.value.replace(',', '.'); d[i.dataset.nk] = t === '' ? '' : (parseFloat(t) || 0); }));
     host.querySelector('.nu-addn').addEventListener('click', () => { haptic(); nutPick(k => { if (!(k in d)) d[k] = ''; draw(); const i = host.querySelector(`[data-nk="${k}"]`); if (i) i.focus(); }); });
+    host.querySelectorAll('[data-nk]').forEach(inp => { const t = inp.closest('.vt'), k = inp.dataset.nk, n = NUT.find(z => z.id === k); let tm = null, x0 = 0, y0 = 0;
+      t.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; tm = setTimeout(() => { tm = null; haptic(); inp.blur(); t.classList.add('lp');
+        menu(t, [{ label: `Remove ${n ? n.n : ''}`, danger: true, do: () => { delete d[k]; draw(); } }]); setTimeout(() => t.classList.remove('lp'), 300); }, 500); }, { passive: true });
+      t.addEventListener('touchmove', e => { if (tm && Math.hypot(e.touches[0].clientX - x0, e.touches[0].clientY - y0) > 8) { clearTimeout(tm); tm = null; } }, { passive: true });
+      ['touchend', 'touchcancel'].forEach(ev => t.addEventListener(ev, e => { if (tm === null && t.classList.contains('lp')) e.preventDefault(); clearTimeout(tm); tm = null; }));
+      t.addEventListener('contextmenu', e => e.preventDefault()); });
+    const clr = host.querySelector('.nu-clr'); if (clr) clr.addEventListener('click', () => { haptic(); const keep = { ...d }; Object.keys(d).forEach(k => delete d[k]); draw();
+      toast('Nutrients removed', { label: 'Undo', fn: () => { Object.assign(d, keep); draw(); } }); });
     if (host._after) host._after(); };
   draw(); return draw;
 }
@@ -5742,6 +5790,8 @@ if (!RM) document.querySelectorAll('.plan > *, .tabsec:not([hidden]) > .list-hea
   [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 520, delay: Math.min(i, 14) * 28, easing: SPRING, fill: 'backwards' }));
 })();
 
+/* #26: nothing shows until the current design is in place — no flash of old markup */
+requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.add('booted')));
 </script>
 
 </body>
