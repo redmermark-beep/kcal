@@ -2372,13 +2372,27 @@ html body .sheet.ps .ps-field input{box-shadow:none!important;background:none!im
 .sheet.ps .pl-m .pm-u b,.sheet.ps .pl-m .pm-u i{color:#2669ed}
 .sheet.ps .pl-ck{display:flex;color:#111115}
 .sheet.ps .pl-ck svg{width:16px;height:16px}
-.sheet.ps .pl-acts{margin-top:24px}
 .sheet.ps .pl-del{margin-top:4px}
 .sheet.ps .ps-pill:disabled{color:rgba(60,60,67,.3)}
 .sheet.ps .ps-pill svg{width:18px;height:18px;flex:none}
 .sheet.ps .ps-field.err{background:#fff;box-shadow:inset 0 0 0 1px #d02c2a}
 .sheet.ps .ps-kick.ps-ttl{font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115}
 .sheet.ps .pl-m .pm-z b,.sheet.ps .pl-m .pm-z i{color:rgba(60,60,67,.45)}
+/* plan rows: swipe like a product on Meal — tiles exactly as tall as the row, pencil for rename */
+.sheet.ps .pl-w{position:relative}
+.sheet.ps .pl-w .pl-r{position:relative;z-index:1}
+.sheet.ps .pl-w.sw .pl-r:not(.on){background:rgba(118,118,128,.07)}
+.sheet.ps .pl-acts{position:absolute;right:0;top:0;bottom:0;display:flex;gap:4px;justify-content:flex-end}
+.sheet.ps .pl-w.full .pl-acts{gap:0}
+.sheet.ps .pl-sa{width:0;height:100%;padding:0;border:0;overflow:hidden;border-radius:calc(7px + 9px * var(--rv,0));background:rgba(118,118,128,.12);color:#111115;display:flex;align-items:center;justify-content:center}
+.sheet.ps .pl-sa.del{color:#d02c2a}
+.sheet.ps .pl-sa svg{flex:none;width:20px;height:20px;opacity:clamp(0,calc(var(--rv,0) * 2 - .6),1);transform:scale(calc(.6 + .4 * var(--rv,0)))}
+.sheet.ps .pl-acts2{margin-top:24px}
+/* bottom buttons in every sheet: 56 tall (8 Nov) */
+html body .sheet.ps .ps-pill,html body .sheet.ps .nu-pick .so-chip,html body .sheet.ps .nu-pick .nu-more,html body .sheet.ps .nu-pick .sbtn{height:56px;border-radius:28px}
+html body .sheet.ps .nu-pick .vt.nu-addn{height:56px;min-height:56px;border-radius:28px}
+.sheet.ps .pl-w.sw .pl-ck{opacity:0}
+.sheet.ps .pl-ck{transition:opacity .15s}
 </style>
 
 <div class="app" id="app">
@@ -3171,7 +3185,7 @@ $('#secSettings').addEventListener('change', e => {
 /* ================= toast ================= */
 let toastT;
 function toast(msg, act) {
-  const t = $('#toast');
+  const t = $('#toast'); t.style.bottom = '';
   t.innerHTML = `<span class="tm">${esc(msg)}</span>${act ? `<button>${esc(act.label)}</button>` : ''}`;
   if (act) t.querySelector('button').addEventListener('click', () => { act.fn(); hideToast(); });
   t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(hideToast, act ? 5000 : 1900);
@@ -4029,6 +4043,8 @@ const PSI = {
   back: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
   chev: '<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   chevR: '<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  pen: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
+  bin: '<svg width="20" height="22" viewBox="0 0 19 22" fill="currentColor" aria-hidden="true"><path d="M6.6 18.6c-.4 0-.6-.3-.6-.6l-.3-10.4c0-.3.2-.6.6-.6.3 0 .6.2.6.6l.3 10.4c0 .4-.3.6-.6.6zm2.9 0c-.4 0-.6-.3-.6-.6V7.6c0-.3.3-.6.6-.6s.6.3.6.6V18c0 .3-.3.6-.6.6zm2.9 0c-.4 0-.6-.3-.6-.6l.3-10.4c0-.4.3-.6.6-.6s.6.3.6.6l-.3 10.4c0 .3-.3.6-.6.6zM5.2 4.5V2.3C5.2.9 6.1 0 7.6 0h3.7c1.5 0 2.4.9 2.4 2.3v2.2h-1.5V2.4c0-.6-.4-.9-1-.9H7.7c-.6 0-1 .3-1 .9v2.1H5.2zM.7 5.2C.3 5.2 0 4.9 0 4.5s.3-.7.7-.7h17.5c.4 0 .7.3.7.7s-.3.7-.7.7H.7zm4.3 16.5c-1.4 0-2.4-.9-2.4-2.3L1.9 5.1h1.5l.7 14.2c0 .6.5 1 1 1h8.7c.6 0 1-.4 1-1l.7-14.2H17l-.7 14.4c-.1 1.4-1 2.3-2.4 2.3H5z"/></svg>',
   scan: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M7 12h10"/></svg>'
 };
 const PS_UNITS = { g: 'Grams', ml: 'Millilitres', pc: 'Pieces' };
@@ -4244,25 +4260,54 @@ function planMenu(anchor, hl) {
   save();
   const row = p => { const t = planTotals(p), on = p.id === S.active, st = t.k > 0 || t.p > 0 || t.f > 0 || t.c > 0 ? statusOf(t) : ['z', 'z', 'z', 'z'];
     const mac = ['k', 'p', 'f', 'c'].map((k, j) => `<span class="pm-${st[j]}"><b>${r0(t[k])}</b><i>${['KCAL', 'P', 'F', 'C'][j]}</i></span>`).join('');
-    return `<button type="button" class="pl-r${on ? ' on' : ''}${p.id === hl ? ' hl' : ''}" data-pid="${p.id}"><span class="pl-t"><span class="pl-n">${esc(p.name)}</span><span class="pl-m">${mac}</span></span>${on ? `<span class="pl-ck">${PSI.ok}</span>` : ''}</button>`; };
-  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="plX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">Meal plans</span><button type="button" class="ps-c" id="plRen" aria-label="Rename the plan" style="margin-left:auto">${SHI.pen}</button></div>
+    return `<div class="pl-w" data-pid="${p.id}"><div class="pl-acts"><button type="button" class="pl-sa ed" aria-label="Rename">${PSI.pen}</button><button type="button" class="pl-sa del" aria-label="Delete">${PSI.bin}</button></div>
+      <button type="button" class="pl-r${on ? ' on' : ''}"><span class="pl-t"><span class="pl-n">${esc(p.name)}</span><span class="pl-m">${mac}</span></span>${on ? `<span class="pl-ck">${PSI.ok}</span>` : ''}</button></div>`; };
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="plX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">Meal plans</span></div>
     <div class="pl-list"></div>
-    <div class="ps-acts pl-acts"><button type="button" class="ps-pill" id="plNew">${SHI.plus}<span>New plan</span></button><button type="button" class="ps-pill" id="plDup">${SHI.copy}<span>Duplicate</span></button></div>
-    <button type="button" class="ps-pill red pl-del" id="plDel">${SHI.trash}<span>Delete plan</span></button>`, s => {
-    const L = s.querySelector('.pl-list'), del = s.querySelector('#plDel');
-    const draw = h => { L.innerHTML = S.plans.map(row).join(''); del.disabled = S.plans.length < 2; if (h) { const r = L.querySelector(`[data-pid="${h}"]`); if (r) { r.classList.add('hl'); setTimeout(() => r.classList.remove('hl'), 1600); } } };
+    <div class="ps-acts pl-acts2"><button type="button" class="ps-pill" id="plNew">${SHI.plus}<span>New plan</span></button><button type="button" class="ps-pill" id="plDup">${SHI.copy}<span>Duplicate</span></button></div>`, s => {
+    const L = s.querySelector('.pl-list');
+    const draw = h => { L.innerHTML = S.plans.map(row).join(''); L.querySelectorAll('.pl-w').forEach(bindSwipe); if (h) { const r = L.querySelector(`[data-pid="${h}"] .pl-r`); if (r) { r.classList.add('hl'); setTimeout(() => r.classList.remove('hl'), 1600); } } };
+    /* swipe left on a plan, like a product on Meal: edit (rename) and delete tiles grow into the freed space; past 60 % the bin takes it all */
+    let openW = null;
+    const setX = (w, x, anim) => { const r = w.querySelector('.pl-r'), ed = w.querySelector('.ed'), dl = w.querySelector('.del'), canDel = S.plans.length > 1, n = canDel ? 2 : 1;
+      const full = canDel && x > w.offsetWidth * .6, each = Math.max(0, (x - 4 * n) / n);
+      [r, ed, dl].forEach(el => el.style.transition = anim ? 'transform .45s var(--spring), width .45s var(--spring), border-radius .45s var(--spring)' : 'none');
+      r.style.transform = x ? `translateX(${-x}px)` : ''; w.classList.toggle('sw', x > 0); w.classList.toggle('full', full);
+      ed.style.width = (full ? 0 : each) + 'px'; dl.style.width = (canDel ? (full ? x - 4 : each) : 0) + 'px';
+      const rv = Math.min(1, each / 56); [ed, dl].forEach(el => { el.style.setProperty('--rv', rv); }); return full; };
+    const close = (w, anim = true) => { if (w) setX(w, 0, anim); if (w === openW) openW = null; };
+    function bindSwipe(w) {
+      const r = w.querySelector('.pl-r'); let T = null;
+      w.addEventListener('touchstart', e => { const t = e.touches[0]; if (openW && openW !== w) close(openW); T = { x: t.clientX, y: t.clientY, x0: w === openW ? (S.plans.length > 1 ? 124 : 64) : 0, h: null, cur: 0, full: false }; }, { passive: true });
+      w.addEventListener('touchmove', e => { if (!T) return; const t = e.touches[0], dx = t.clientX - T.x, dy = t.clientY - T.y;
+        if (T.h === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) T.h = Math.abs(dx) > Math.abs(dy);
+        if (!T.h) return; e.preventDefault(); e.stopPropagation();
+        T.cur = Math.max(0, T.x0 - dx); const f = setX(w, T.cur, false); if (f !== T.full) { T.full = f; haptic(); } }, { passive: false });
+      const end = () => { if (!T) return; const t = T; T = null; if (!t.h) return;
+        if (t.full) { delPlan(w.dataset.pid); return; }
+        if (t.cur > 50) { setX(w, S.plans.length > 1 ? 124 : 64, true); openW = w; } else close(w); };
+      w.addEventListener('touchend', end); w.addEventListener('touchcancel', end);
+      r.addEventListener('click', () => { if (openW === w) { close(w); return; } if (openW) { close(openW); return; }
+        haptic(); const id = w.dataset.pid; closeSheet(); if (id !== S.active) setTimeout(() => switchPlan(id), 120); });
+      w.querySelector('.ed').addEventListener('click', () => { haptic(); const p = S.plans.find(q => q.id === w.dataset.pid); if (!p) return;
+        psName('Rename plan', p.name, v => { p.name = v; save(); renderAll(false); setTimeout(() => planMenu(anchor), 60); }, { ph: 'Plan name', back: () => planMenu(anchor) }); });
+      w.querySelector('.del').addEventListener('click', () => delPlan(w.dataset.pid));
+    }
+    /* delete right away; the sheet stays open, Undo sits in a toast just above it */
+    function delPlan(id) { if (S.plans.length < 2) return; haptic(); save();
+      const i = S.plans.findIndex(q => q.id === id), p = S.plans[i], wasOn = id === S.active; if (!p) return;
+      const w = L.querySelector(`[data-pid="${id}"]`);
+      const gone = () => { S.plans.splice(i, 1);
+        if (wasOn) { S.active = S.plans[Math.max(0, i - 1)].id; applyGrams(plan()); }   /* not switchPlan(): it would save the current grams into the neighbour */
+        save(); renderAll(true); openW = null; draw();
+        toast(`${p.name} deleted`, { label: 'Undo', fn: () => { S.plans.splice(i, 0, p); if (wasOn) { S.active = p.id; applyGrams(p); } save(); renderAll(true); if (L.isConnected) draw(); } });
+        const tt = $('#toast'); tt.style.bottom = (innerHeight - s.getBoundingClientRect().top + 12) + 'px'; };
+      if (w && !RM) { w.style.transition = 'height .3s var(--ease), opacity .2s'; w.style.height = w.offsetHeight + 'px'; requestAnimationFrame(() => { w.style.height = '0px'; w.style.opacity = '0'; }); setTimeout(gone, 300); } else gone(); }
     draw(hl);
-    L.addEventListener('click', e => { const r = e.target.closest('[data-pid]'); if (!r) return; haptic(); const id = r.dataset.pid; closeSheet(); if (id !== S.active) setTimeout(() => switchPlan(id), 120); });
     s.querySelector('#plX').addEventListener('click', () => { haptic(); closeSheet(); });
-    s.querySelector('#plRen').addEventListener('click', () => { haptic(); const p = plan(); psName('Rename plan', p.name, v => { p.name = v; save(); renderAll(false); setTimeout(() => planMenu(anchor), 60); }, { ph: 'Plan name', back: () => planMenu(anchor) }); });
     s.querySelector('#plNew').addEventListener('click', () => { haptic(); psName('New plan', 'New meal', v => { const p = { id: uid(), name: v, g: {} }; save(); S.plans.push(p); switchPlan(p.id); toast(`${v} created`); }, { ph: 'Plan name', isNew: true, back: () => planMenu(anchor) }); });
     s.querySelector('#plDup').addEventListener('click', () => { haptic(); save(); const base = plan().name.replace(/\s+\d+$/, ''), used = new Set(S.plans.map(q => q.name)); let n = 2; while (used.has(`${base} ${n}`)) n++;
       const c = { id: uid(), name: `${base} ${n}`, g: { ...plan().g } }; S.plans.splice(S.plans.indexOf(plan()) + 1, 0, c); switchPlan(c.id); setTimeout(() => draw(c.id), 200); });
-    del.addEventListener('click', () => { if (S.plans.length < 2) return; haptic(); save();
-      const p = plan(), i = S.plans.indexOf(p); S.plans.splice(i, 1);
-      /* not switchPlan(): it saves the current grams into the «active» plan first — after the splice that is the neighbour */
-      S.active = S.plans[Math.max(0, i - 1)].id; applyGrams(plan()); save(); closeSheet(); renderAll(true);
-      toast(`${p.name} deleted`, { label: 'Undo', fn: () => { S.plans.splice(i, 0, p); S.active = p.id; applyGrams(p); save(); renderAll(true); } }); });
   }, 'ps');
 }
 // Sort 1: rows + a tray (direction, sort inside groups). Stays open so you see the list re-order behind it.
