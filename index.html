@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<style>html:not(.booted){background:#f6f6fa}html:not(.booted) body{visibility:hidden}/* Balance: the chips (the live preview) stay above the dim */
-body.bal-open #app header.plan{z-index:40}
+<style>html:not(.booted){background:#f6f6fa}html:not(.booted) body{visibility:hidden}.sheet.ps .ps-pill.bl-prev{flex:none;width:56px;padding:0}
+.sheet.ps .ps-pill.bl-prev svg{width:20px;height:20px}
 </style><script>setTimeout(function(){document.documentElement.classList.add("booted")},2500)</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -3935,13 +3935,14 @@ function balanceSheet() {
   const show = () => { unshow(); const o = L()[i]; if (!o) { renderAll(true); return; } shown = o.changes.map(ch => [ch.e, ch.from, ch.parent]); o.changes.forEach(ch => setGrams(ch.e, ch.to, ch.parent)); renderAll(true); };
   sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="blX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">${build ? 'Build the plan' : 'Balance'}</span></div>
     <div id="blTags">${tags()}</div><div id="blBody">${body()}</div>
-    ${L().length ? `<div class="ps-acts bl-foot"><button type="button" class="ps-pill" id="blAlt"${L().length < 2 ? ' disabled' : ''}>Another way</button><button type="button" class="ps-pill bl-go" id="blGo">Apply</button></div>` : ''}`, s => {
+    ${L().length ? `<div class="ps-acts bl-foot"><button type="button" class="ps-pill bl-prev" id="blPrev" aria-label="Previous way"${L().length < 2 ? ' disabled' : ''}>${PSI.back}</button><button type="button" class="ps-pill" id="blAlt"${L().length < 2 ? ' disabled' : ''}>Another way</button><button type="button" class="ps-pill bl-go" id="blGo">Apply</button></div>` : ''}`, s => {
     const fit = () => { const t = $('#planTitle'); if (!t) return; const top = Math.max(satPx() + 8, t.getBoundingClientRect().top - 16); s.style.maxHeight = (innerHeight - top - (innerHeight - s.getBoundingClientRect().bottom)) + 'px'; };
-    const paint = () => { s.querySelector('#blTags').innerHTML = tags(); s.querySelector('#blBody').innerHTML = body(); const a = s.querySelector('#blAlt'); if (a) a.disabled = L().length < 2; show(); };
+    const paint = () => { s.querySelector('#blTags').innerHTML = tags(); s.querySelector('#blBody').innerHTML = body(); const a = s.querySelector('#blAlt'), pv = s.querySelector('#blPrev'); if (a) a.disabled = L().length < 2; if (pv) pv.disabled = L().length < 2; show(); };
     s.addEventListener('click', e => { const k = e.target.closest('[data-kind]'), m = e.target.closest('[data-more]');
       if (k && k.dataset.kind !== kind) { haptic(); kind = k.dataset.kind; i = 0; more = false; paint(); }
       else if (m) { haptic(); more = !more; s.querySelector('#blBody').innerHTML = body(); } });
     const alt = s.querySelector('#blAlt'); if (alt) alt.addEventListener('click', () => { if (L().length < 2) return; haptic(); i = (i + 1) % L().length; more = false; paint(); });
+    const prv = s.querySelector('#blPrev'); if (prv) prv.addEventListener('click', () => { if (L().length < 2) return; haptic(); i = (i - 1 + L().length) % L().length; more = false; paint(); });
     s.querySelector('#blX').addEventListener('click', () => { haptic(); closeSheet(); });
     s._guard = () => { unshow(); renderAll(true); return false; };   // closing without Apply: grams back, chips back
     const go = s.querySelector('#blGo'); if (go) go.addEventListener('click', () => {
