@@ -2465,13 +2465,18 @@ html body .sheet.ps .vt[hidden]{display:none}
 
 
 /* ================= Measure (9 Nov, canvas «Measure · финал») ================= */
-body.tab-measure header.plan{display:none!important}
+body.tab-measure #mHero,body.tab-measure #divider,body.tab-measure #bigRow,body.tab-measure #bars{display:none!important}
+#msHistTop{display:none}body.tab-measure #msHistTop{display:flex;margin:0 0 0 auto;padding:0;height:20px}
+html body #app.app header.plan:is(body.tab-measure *){position:static!important;margin:0 -16px!important;padding:calc(var(--sat,env(safe-area-inset-top,0px)) + 9px) 16px 0!important;height:auto!important;background:none!important}
+html body.tab-measure #app header.plan .title-row{margin:7px 0 0!important;padding:0 10px!important;height:20px!important}
+html body.tab-measure #app header.plan #goalName,html body.tab-measure #app header.plan #goalBtn{top:0!important}
+html body #app #secMeasure{padding:0!important}
 #secMeasure #mOld{display:none}
-#msr{position:relative;padding:calc(var(--sat,env(safe-area-inset-top,0px)) + 16px) 0 200px;color:#111115}
+#msr{position:relative;padding:0 0 200px;color:#111115}
 #msr .ms-mono,#msr b.m{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-weight:600}
-.ms-hero{position:relative;height:270px}
+.ms-hero{position:relative;height:250px}
 .ms-hero>*{position:relative;z-index:1}
-.ms-chart{position:absolute!important;z-index:0!important;left:-16px;right:-16px;top:26px;height:216px;pointer-events:none}
+.ms-chart{position:absolute!important;z-index:0!important;left:-16px;right:-16px;top:6px;height:216px;pointer-events:none}
 .ms-chart svg{display:block;width:100%;height:100%;overflow:hidden}
 .ms-tr{display:flex;align-items:center;justify-content:space-between;height:20px;padding:0 10px}
 .ms-gl{display:flex;align-items:center;gap:8px;border:0;background:none;padding:0;font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115}
@@ -2487,15 +2492,15 @@ body.tab-measure header.plan{display:none!important}
 .ms-rate{margin-top:2px;padding:0 10px;font-size:13px;line-height:18px;color:rgba(60,60,67,.6)}
 .ms-rate b{font:600 13px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(17,17,21,.8)}
 .ms-rate .bl,.ms-rate .bl b{color:#2669ed}
-.ms-axis{position:absolute!important;left:10px;right:10px;top:242px;display:flex;justify-content:space-between;font-size:11px;color:rgba(60,60,67,.45)}
+.ms-axis{position:absolute!important;left:10px;right:10px;top:222px;display:flex;justify-content:space-between;font-size:11px;color:rgba(60,60,67,.45)}
 .ms-axis .pl{color:#2669ed}.ms-axis .pl b{font:600 11px "SF Mono",ui-monospace,Menlo,monospace}
 /* advice */
 .ms-card{position:relative;padding:14px 16px 16px;border-radius:24px;background:rgba(38,105,237,.12);color:#2669ed}
 .ms-card .k{font-size:12px;font-weight:590}
 .ms-card .r{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
 .ms-card .n{font:600 30px/1 "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:-.04em}
-.ms-card .n small{font-size:13px;font-weight:500;letter-spacing:0;color:rgba(38,105,237,.7)}
-.ms-card .ap{height:44px;padding:0 22px;border:0;border-radius:22px;background:#2669ed;color:#fff;font-size:15px;font-weight:590}
+.ms-card .n small{font:500 13px -apple-system,'SF Pro Text',system-ui,sans-serif;letter-spacing:0;color:rgba(38,105,237,.7)}
+.ms-card .ap{position:absolute;right:16px;top:14px;height:44px;padding:0 22px;border:0;border-radius:22px;background:#2669ed;color:#fff;font-size:15px;font-weight:590}
 .ms-card .t{margin-top:6px;font-size:13px;line-height:18px;color:rgba(38,105,237,.85)}
 .ms-card .nx{margin-top:8px;font-size:12px;color:rgba(38,105,237,.6)}
 .ms-card.grey{background:rgba(118,118,128,.12);color:#111115}
@@ -2593,6 +2598,7 @@ html body .toast button{flex:none;height:44px;padding:0 16px;margin:0;border:0;b
 .sheet.ps .ms-rv input{position:absolute;inset:0;opacity:0;width:100%;border:0;font-size:16px}
 .sheet.ps .ms-rv .s{font-size:11px;font-weight:590;color:rgba(60,60,67,.6);margin-top:4px}
 .sheet.ps .ms-rv .s b{font:590 11px "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:0;color:rgba(60,60,67,.6)}
+html body .sheet.ps #msBody .vt:has(input:placeholder-shown):not(:focus-within){background:rgba(118,118,128,.06)}
 .sheet.ps .ms-st{display:flex;gap:2px}.sheet.ps .ms-st button{height:22px;padding:0 8px;border:0;border-radius:11px;background:none;font-size:12px;text-transform:none;letter-spacing:0;color:rgba(60,60,67,.6)}
 .sheet.ps .ms-st button.on{background:rgba(118,118,128,.12);color:#111115}
 .sheet.ps .ms-date{position:relative;margin-top:14px;min-height:64px;box-sizing:border-box;padding:10px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12);display:flex;flex-direction:column;justify-content:space-between}
@@ -2617,6 +2623,7 @@ html body .toast button{flex:none;height:44px;padding:0 16px;margin:0;border:0;b
     <div class="title-row">
       <h1 id="goalName">Bulk plan</h1>
       <button class="dots" id="goalBtn" aria-label="Goal plans"><svg width="17" height="4" viewBox="0 0 17 4" fill="none" aria-hidden="true"><circle cx="1.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="2.5" r="1.5" fill="currentColor"/></svg></button>
+      <button type="button" class="ms-hist" id="msHistTop">History<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="rgba(60,60,67,.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
     <div class="kcal-row" id="bigRow">
       <div class="ring" id="ring" aria-hidden="true">
@@ -6155,13 +6162,15 @@ function msChart(el) {
   const span = MS_PER[m.per][1] || Math.max(7, (now - first) / DAY);
   const t0 = Math.max(now - span * DAY, Math.min(first, now - 6 * DAY)), vp = pts.filter(p => p.t >= t0), tr = trendOf(pts).filter(p => p.t >= t0);
   if (!vp.length) { el.innerHTML = ''; return null; }
-  const vals = vp.map(p => p.v).concat(tr.map(p => p.v));
-  let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < .6) { const c = (hi + lo) / 2; lo = c - .3; hi = c + .3; }
-  const X = t => (t - t0) / (now - t0) * W, Y = v => safe + (hi - v) / (hi - lo) * (bot - safe);
-  const g = goal(), sd = g.sd ? dnum(g.sd) : first, sw = g.sw ?? (pts[0] ? pts[0].v : null), exp = t => sw + g.rate * (t - sd) / (7 * DAY);
-  const ck = msCheck();
+  const g = goal(), sd = g.sd ? dnum(g.sd) : first, sw = g.sw ?? (pts[0] ? pts[0].v : null);
+  const tw = g.tw ?? sw, exp = t => { if (sw == null) return null; const v = sw + (g.rate || 0) * (t - sd) / (7 * DAY); return g.rate > 0 ? Math.min(v, Math.max(tw, sw)) : g.rate < 0 ? Math.max(v, Math.min(tw, sw)) : (g.type === 'maintain' ? tw : v); };
+  const ps = Math.max(t0, sd), pv = sw != null ? [exp(ps), exp(now)] : [];
+  const wv = vp.map(p => p.v).concat(tr.map(p => p.v)), wmin = Math.min(...wv), wmax = Math.max(...wv);
+  const lo = Math.min(wmin, ...pv), pmax = pv.length ? Math.max(...pv) : wmax;
+  const k = Math.min((bot - safe) / Math.max(.6, wmax - lo), (bot - 6) / Math.max(.6, pmax - lo));
+  const X = t => (t - t0) / (now - t0) * W, Y = v => bot - (v - lo) * k;
   let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">`;
-  if (!ck.learn && sw != null && g.rate) s += `<line x1="${X(Math.max(t0, sd)).toFixed(1)}" y1="${Y(exp(Math.max(t0, sd))).toFixed(1)}" x2="${W}" y2="${Y(exp(now)).toFixed(1)}" stroke="#2669ed" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="round"/>`;
+  if (pv.length) s += `<line x1="${X(ps).toFixed(1)}" y1="${Y(pv[0]).toFixed(1)}" x2="${W}" y2="${Y(pv[1]).toFixed(1)}" stroke="#2669ed" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="round"/>`;
   s += vp.map(p => `<circle cx="${X(p.t).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="2.5" fill="rgba(17,17,21,.18)"/>`).join('');
   if (tr.length > 1) { const P = tr.map(p => [X(p.t), Y(p.v)]); let d = `M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
     for (let i = 1; i < P.length; i++) { const [x0, y0] = P[i - 1], [x1, y1] = P[i], mx = (x0 + x1) / 2; d += ` C${mx.toFixed(1)},${y0.toFixed(1)} ${mx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; }
@@ -6169,7 +6178,7 @@ function msChart(el) {
   const L = tr.length ? tr[tr.length - 1] : vp[vp.length - 1];
   s += `<circle cx="${Math.min(X(L.t), W - 6).toFixed(1)}" cy="${Y(L.v).toFixed(1)}" r="4.5" fill="#111115" stroke="#f6f6fa" stroke-width="2"/></svg>`;
   el.innerHTML = s;
-  return { t0, plan: !ck.learn && sw != null ? exp(now) : null };
+  return { t0, plan: pv.length ? pv[1] : null };
 }
 
 function msSpark(vals) {
@@ -6182,7 +6191,7 @@ function msSpark(vals) {
 const MS_M = {
   fat: ['Body fat', '%', e => bfOf(e)], waist: ['Waist', 'cm', e => e.circ && e.circ.waist], lean: ['Lean mass', 'kg', e => { const b = bfOf(e); return b != null && e.w != null ? e.w * (1 - b / 100) : null; }],
   arm: ['Arm', 'cm', e => e.circ && e.circ.arm], chest: ['Chest', 'cm', e => e.circ && e.circ.chest], folds: ['Skinfolds', 'mm', e => sfSum(e)],
-  hips: ['Hips', 'cm', e => e.circ && e.circ.hips], neck: ['Neck', 'cm', e => e.circ && e.circ.neck], thigh: ['Thigh', 'cm', e => e.circ && e.circ.thigh],
+  hips: ['Hips', 'cm', e => e.circ && e.circ.hips], neck: ['Neck', 'cm', e => e.circ && e.circ.neck], shoulders: ['Shoulders', 'cm', e => e.circ && e.circ.shoulders], forearm: ['Forearm', 'cm', e => e.circ && e.circ.forearm], thigh: ['Thigh', 'cm', e => e.circ && e.circ.thigh], calf: ['Calf', 'cm', e => e.circ && e.circ.calf],
 };
 function msSeries(k, per) {
   const f = MS_M[k][2], now = dnum(todayISO()), span = MS_PER[per || msS().per][1];
@@ -6204,8 +6213,8 @@ function msRender() {
   else if (m.applied === iso(ck.t)) card = `<div class="ms-ok">${MS_CHK}<div class="tt">Food updated: ${r0(g.k)} kcal a day<span>Next check ${msFmtD(ck.next)}</span></div>${m.undo ? '<button type="button" id="msUndo">Undo</button>' : ''}</div>`;
   else if (Math.abs(ck.adj) < 50) card = `<div class="ms-ok">${MS_CHK}<div class="tt">On track, food stays the same<span>Next check ${msFmtD(ck.next)}</span></div></div>`;
   else { const more = ck.adj > 0;
-    card = `<div class="ms-card"><div class="k">${more ? 'EAT MORE' : 'EAT LESS'}</div>
-      <div class="r"><span class="n">${more ? '+' : '−'}${Math.abs(ck.adj)}<small> kcal a day</small></span><button type="button" class="ap" id="msApply">Apply</button></div>
+    card = `<div class="ms-card"><button type="button" class="ap" id="msApply">Apply</button><div class="k">${more ? 'EAT MORE' : 'EAT LESS'}</div>
+      <div class="r"><span class="n">${more ? '+' : '−'}${Math.abs(ck.adj)}<small> kcal a day</small></span></div>
       <div class="t">You ${rate >= 0 ? 'gain' : 'lose'} ${msG(rate)} g a week, the plan is ${msG(g.rate)} g. ${esc(g.name)}: ${r0(g.k)} → ${r0(g.k + ck.adj)} kcal</div>
       <div class="nx">Next check ${msFmtD(ck.next)}</div></div>`; }
   // calendar: three days back, today, three ahead
@@ -6225,14 +6234,12 @@ function msRender() {
     const v = s[s.length - 1].v, d = v - s[0].v;
     return `<button type="button" class="ms-tile" data-m="${k}"><span class="h">${lab.toUpperCase()}<span>${d >= 0 ? '+' : '−'}${msFmtV(k, Math.abs(d))}</span></span><span class="v">${msFmtV(k, v)}<small>${u}</small></span>${msSpark(s.map(p => p.v))}</button>`; }).join('');
   root.innerHTML = `<div class="ms-hero"><div class="ms-chart" id="msChart"></div>
-      <div class="ms-tr"><button type="button" class="ms-gl" id="msGoal">${esc(g.name)}${MS_DOTS}</button><button type="button" class="ms-hist" id="msHist">History${MS_CHEV}</button></div>
       <div class="ms-kick"><span>AVERAGE WEIGHT</span><span class="ms-per" id="msPer">${Object.entries(MS_PER).map(([k, [l]]) => `<button type="button" data-v="${k}"${k === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</span></div>
       ${msBig(last)}<div class="ms-rate">${rateTxt}</div>
       <div class="ms-axis" id="msAxis"></div></div>
     ${card}
     <div class="ms-sec"><span>Weigh-ins</span><button type="button" class="ms-sch" id="msSch">${MS_CAL}Schedule</button></div>
     <div class="ms-cal">${cal}</div>
-    <div class="ms-leg"><span><i></i>weight</span><span><i></i><i></i>weight + body</span></div>
     <div class="ms-sec"><span>Body · ${MS_PERL[m.per]}</span><button type="button" class="ms-edit" id="msEdit">Edit</button></div>
     ${m.tiles.length ? `<div class="ms-tiles">${tiles}</div>` : ''}`;
   const info = msChart($('#msChart'));
@@ -6248,8 +6255,7 @@ function msRender() {
   ban.className = 'ms-ban' + (B[2] ? ' ' + B[2] : '');
   ban.innerHTML = `<div class="tx"><span>${B[0]}</span>${B[1]}</div><button type="button" aria-label="${B[0] === 'ALL DONE FOR TODAY' ? 'Done for today, add another' : 'Measure'}">${B[3]}</button>`;
   // events
-  $('#msGoal').addEventListener('click', () => goalMenu());
-  $('#msHist').addEventListener('click', () => { haptic(); msHistory(); });
+  if (!$('#msHistTop')._b) { $('#msHistTop')._b = 1; $('#msHistTop').addEventListener('click', () => { haptic(); msHistory(); }); }
   $('#msPer').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.v === m.per) return; haptic(); m.per = b.dataset.v; save(); msRender(); });
   $('#msSch').addEventListener('click', () => { haptic(); msSchedule(); });
   $('#msEdit').addEventListener('click', () => { haptic(); msCharts(); });
@@ -6282,7 +6288,7 @@ function msTodaySheet(d0, isNew) {
   const bodyHTML = () => `<div class="ps-cap"><span>Skinfolds · mm</span><span class="ms-st" id="msSt"><button type="button" data-v="3"${sites === 3 ? ' class="on"' : ''}>3 sites</button><button type="button" data-v="7"${sites === 7 ? ' class="on"' : ''}>7 sites</button></span></div>
     <div class="ps-three">${MS_SITES7[sex].slice(0, sites).map(([k, l]) => fnum('msF' + k, l, v7(k), 'mm', ph7(k))).join('')}</div>
     <div class="ps-cap"><span>Circumferences · cm</span><span style="text-transform:none;letter-spacing:0">optional</span></div>
-    <div class="ps-three">${[['waist', 'Waist'], ['neck', 'Neck'], ['hips', 'Hips'], ['chest', 'Chest'], ['arm', 'Arm'], ['thigh', 'Thigh']].map(([k, l]) => fnum('msC' + k, l, circ[k] ?? '', 'cm', cph(k))).join('')}</div>`;
+    <div class="ps-three">${[['waist', 'Waist'], ['neck', 'Neck'], ['hips', 'Hips'], ['chest', 'Chest'], ['shoulders', 'Shoulders'], ['arm', 'Arm'], ['forearm', 'Forearm'], ['thigh', 'Thigh'], ['calf', 'Calf']].map(([k, l]) => fnum('msC' + k, l, circ[k] ?? '', 'cm', cph(k))).join('')}</div>`;
   sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="msX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">${esc(title)}</span><button type="button" class="ps-c ps-ok" id="msOk" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
     ${isNew ? `<label class="ms-date"><span>Date</span><b id="msDv">${esc(fmtDate(d))}</b><input type="date" id="msD" value="${d}" max="${todayISO()}"></label>` : ''}
     <div class="ms-r" id="msR"><div class="gr-t"></div><div class="ms-rv" id="msRv"><span class="l">Weight</span><b id="msWv"></b><input id="msWi" inputmode="decimal" autocomplete="off" aria-label="Weight, kg"><span class="s" id="msWs"></span></div></div>
@@ -6321,7 +6327,7 @@ function msTodaySheet(d0, isNew) {
         const m3 = MS_3[sex], s3 = {}; ['a', 'b', 'c'].forEach(a => { if (s7[m3[a]] > 0) s3[a] = s7[m3[a]]; });
         if (Object.keys(s3).length) e.sf = s3; else delete e.sf;
         if (sites === 7 && Object.keys(s7).length) e.sf7 = s7; else delete e.sf7;
-        const c = {}; ['waist', 'neck', 'hips', 'chest', 'arm', 'thigh'].forEach(k => { const v = val(s, 'msC' + k); if (v > 0) c[k] = v; });
+        const c = {}; ['waist', 'neck', 'hips', 'chest', 'shoulders', 'arm', 'forearm', 'thigh', 'calf'].forEach(k => { const v = val(s, 'msC' + k); if (v > 0) c[k] = v; });
         if (Object.keys(c).length) e.circ = c; else delete e.circ;
       }
       save(); closeSheet(); renderHeader(); msRender(); msRefreshPage();
