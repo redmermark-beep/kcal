@@ -3,6 +3,14 @@
 <head>
 <style>html:not(.booted){background:#f6f6fa}html:not(.booted) body{visibility:hidden}.sheet.ps .ps-pill.bl-prev{flex:none;width:56px;padding:0}
 .sheet.ps .ps-pill.bl-prev svg{width:20px;height:20px}
+.ms-ta{display:block;width:100%;box-sizing:border-box;height:120px;margin:14px 0 0;padding:14px 16px;border:0;border-radius:20px;background:rgba(17,17,21,.06);font:400 13px/18px ui-monospace,"SF Mono",Menlo,monospace;color:#111115;resize:none;outline:0}
+.ms-ta::placeholder{color:rgba(17,17,21,.35);font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;font-size:17px}
+.ms-imp{margin:14px 0 0;border-radius:20px;background:rgba(17,17,21,.06);padding:4px 16px}
+.ms-imp .r{display:flex;justify-content:space-between;align-items:center;height:44px;font:400 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;color:rgba(17,17,21,.6)}
+.ms-imp .r+.r{border-top:1px solid rgba(17,17,21,.07)}
+.ms-imp .r b{font-weight:500;color:#111115}
+.ms-imb{display:block;margin:20px auto 0;padding:0 16px;height:44px;border:0;background:none;color:#2669ed;font:500 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif}
+.ps-ok:disabled{opacity:.3}
 </style><script>setTimeout(function(){document.documentElement.classList.add("booted")},2500)</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -6415,6 +6423,7 @@ function msHistory() {
           return msHRow(e, msKg(e.w), 'kg', fmtDate(e.d), mac, true); }).join(''); buf = []; };
       rows.forEach(e => { const k = wkStart(dnum(e.d)); if (k !== wk) { flush(); wk = k; } buf.push(e); }); flush();
       if (!rows.length) body = '<div class="ms-wk"><span>No weigh-ins yet</span></div>';
+      body += '<button type="button" class="ms-imb" id="hImp">Import from a table</button>';
     } else {
       const rows = logSorted().filter(e => e.sf || e.circ).reverse();
       body = '<div style="height:16px"></div>' + rows.map(e => { const b = bfOf(e), fs = sfSum(e), c = e.circ || {};
@@ -6425,6 +6434,7 @@ function msHistory() {
     el.querySelector('#hB').addEventListener('click', () => { haptic(); msClosePage(); });
     el.querySelector('#hAdd').addEventListener('click', () => { haptic(); msTodaySheet(iso(dnum(todayISO()) - DAY), true); });
     el.querySelector('#hT').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.v === msHTab) return; haptic(); msHTab = b.dataset.v; msRefreshPage(); });
+    const im = el.querySelector('#hImp'); if (im) im.addEventListener('click', () => { haptic(); msImport(); });
     el.querySelectorAll('.ms-hr').forEach(r => msBindRow(r));
   });
 }
@@ -6473,9 +6483,80 @@ function msMetric(k) {
 (() => { const t = $('#toast'); if (!t) return; new MutationObserver(() => document.body.classList.toggle('toast-on', t.classList.contains('show'))).observe(t, { attributes: true, attributeFilter: ['class'] }); })();
 addEventListener('resize', () => { if (S.ui.tab === 'measure' && $('#msChart')) msChart($('#msChart')); });
 
+/* ---- import: a weekly table pasted from a spreadsheet (one row per week, Mon–Fri weigh-ins, weekly skinfolds and waist) ---- */
+function msParse(txt) {
+  const num = x => { x = String(x || '').replace(/[\s+]/g, '').replace(',', '.'); return /^-?\d+(\.\d+)?$/.test(x) ? +x : null; };
+  const W = [];
+  for (const ln of String(txt || '').split(/\r?\n/)) {
+    const c = ln.split('\t').map(x => x.trim()); if (!/^\d{1,2}-\d{1,2}\.\d{1,2}$/.test(c[1] || '')) continue;
+    const f = k => { const i = c.indexOf(k); return i >= 0 ? num(c[i + 1]) : null; }, pi = c.findIndex((x, i) => i > 6 && /^(bulk|cut|dld|deload|maintain|recomp)$/i.test(x));
+    W.push({ lab: c[1], w: c.slice(2, 7).map(num).map(v => v != null && v > 25 && v < 300 ? v : null), n: num(c[0]), k: num(c[pi - 1]), p: pi > 0 ? c[pi].toLowerCase() : '',
+      ch: f('chest'), ab: f('belly'), th: f('hip'), waist: f('waist') });
+  }
+  while (W.length && !W[W.length - 1].w.some(v => v != null)) W.pop();
+  if (!W.length) return null;
+  // the labels are often off, so only the first one dates the table; every next row is the next week
+  const now = dnum(todayISO());
+  const [dd, mm] = [W[0].lab.split('-')[0], W[0].lab.split('.')[1]].map(Number);
+  let y = new Date().getFullYear() + 1, mon;
+  do { y--; const t = new Date(y, mm - 1, dd); mon = new Date(y, mm - 1, dd - (t.getDay() + 6) % 7); } while (y > 2000 && new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 7 * (W.length - 1)).getTime() > now);
+  const day = (i, k) => iso(new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 7 * i + k).getTime());
+  const log = [], wk = {};
+  W.forEach((r, i) => {
+    const ws = day(i, 0); wk[ws] = { n: r.n, k: r.k, p: r.p };
+    let first = null;
+    r.w.forEach((v, k) => { if (v == null) return; const d = day(i, k); if (d > todayISO()) return; const e = { id: uid(), d, w: v }; log.push(e); if (!first) first = e; });
+    if (!first) return;
+    if (r.ch > 0 && r.ab > 0 && r.th > 0) first.sf = { a: r.ch, b: r.ab, c: r.th };
+    if (r.waist > 0) first.circ = { waist: r.waist };
+  });
+  // where the current phase started: walk back over the same phase, allowing single deload weeks inside it
+  const ph = W.map(r => r.p), last = [...ph].reverse().find(p => p && !/^(dld|deload)$/.test(p)); let s = W.length - 1, dl = 0;
+  for (let i = W.length - 1; i >= 0; i--) { if (ph[i] === last) { s = i; dl = 0; } else if (/^(dld|deload)$/.test(ph[i]) && ++dl < 2) continue; else break; }
+  const sw = W[s].w.filter(v => v != null), start = { phase: last, d: day(s, 0), w: sw.length ? Math.round(sw.reduce((a, b) => a + b, 0) / sw.length * 10) / 10 : null };
+  return { log, wk, start, weeks: W.length, from: day(0, 0), to: log.length ? log[log.length - 1].d : day(W.length - 1, 0) };
+}
+function msImport(txt) {
+  let R = txt ? msParse(txt) : null;
+  const sum = () => {
+    if (!R) return `<div class="ms-tip"><b>Paste your table</b>One row per week: workouts, dates, up to five weigh-ins (Mon–Fri), average, change, kcal, phase, then chest, belly, hip, fat and waist. Weeks are counted from the first row.</div>`;
+    const b = R.log.filter(e => e.sf || e.circ).length, g = goal(), mt = R.start.phase && g.type === R.start.phase;
+    return `<div class="ms-imp">
+      <div class="r"><span>Weeks</span><b>${R.weeks}</b></div>
+      <div class="r"><span>Dates</span><b>${shortDate(dnum(R.from))} ${R.from.slice(0, 4)} – ${shortDate(dnum(R.to))} ${R.to.slice(0, 4)}</b></div>
+      <div class="r"><span>Weigh-ins</span><b>${R.log.length}</b></div>
+      <div class="r"><span>Body measurements</span><b>${b}</b></div>
+      ${mt && R.start.w ? `<div class="r"><span>${esc(g.name)} starts</span><b>${shortDate(dnum(R.start.d))} at ${msKg(R.start.w)} kg</b></div>` : ''}
+    </div><div class="ms-tip"><b>Replaces History</b>${S.log.length ? `The ${S.log.length} entries there now go away. You can undo right after.` : 'History is empty now.'}</div>`;
+  };
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="imX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">Import</span><button type="button" class="ps-c ps-ok" id="imOk" aria-label="Import" style="margin-left:auto">${PSI.ok}</button></div>
+    ${txt ? '' : '<textarea class="ms-ta" id="imT" placeholder="Paste here" spellcheck="false" autocapitalize="off"></textarea>'}<div id="imS">${sum()}</div>`, s => {
+    const q = id => s.querySelector('#' + id), ok = q('imOk'), upd = () => { q('imS').innerHTML = sum(); ok.disabled = !R || !R.log.length; }; upd();
+    const ta = q('imT'); if (ta) ta.addEventListener('input', () => { R = msParse(ta.value); upd(); });
+    q('imX').addEventListener('click', () => { haptic(); closeSheet(); });
+    ok.addEventListener('click', () => { if (!R || !R.log.length) return; haptic();
+      const g = goal(), before = { log: S.log, wk: S.wk, gid: g.id, sd: g.sd, sw: g.sw, ms: JSON.parse(JSON.stringify(msS())) };
+      S.log = R.log; S.wk = R.wk;
+      if (R.start.phase && g.type === R.start.phase && R.start.w) { g.sd = R.start.d; g.sw = R.start.w; }
+      const m = msS(); m.days = [1, 2, 3, 4, 5]; m.body = 1; m.applied = null; m.undo = null;
+      save(); closeSheet(); msClosePage(true); if (S.ui.tab !== 'measure') switchTab('measure'); renderHeader(); msRender();
+      toast(`${R.log.length} weigh-ins imported`, { label: 'Undo', fn: () => { S.log = before.log; S.wk = before.wk; const gg = S.goals.find(x => x.id === before.gid); if (gg) { gg.sd = before.sd; gg.sw = before.sw; } S.ms = before.ms; save(); renderHeader(); msRender(); } });
+    });
+  }, 'ps');
+}
+/* a link with the table packed into the hash (#import=…) opens the import with it; the hash never leaves the phone */
+async function msHashImport() {
+  const h = location.hash; if (!h.startsWith('#import=')) return;
+  history.replaceState(null, '', location.pathname + location.search);
+  try { const b = Uint8Array.from(atob(h.slice(8).replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+    const txt = await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text();
+    msImport(txt);
+  } catch (e) { toast('This import link is broken'); }
+}
 /* ================= boot ================= */
 syncTabs(); renderAll(false); $('#planName').textContent = plan().name;
 setTimeout(ndbAuto, 1200);
+msHashImport(); addEventListener('hashchange', msHashImport);
 if (!RM) document.querySelectorAll('.plan > *, .tabsec:not([hidden]) > .list-head, .tabsec:not([hidden]) .list > *').forEach((el, i) => el.animate(
   [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 520, delay: Math.min(i, 14) * 28, easing: SPRING, fill: 'backwards' }));
 })();
