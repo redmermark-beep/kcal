@@ -11,6 +11,47 @@
 .ms-imp .r b{font-weight:500;color:#111115}
 .ms-imb{display:block;margin:20px auto 0;padding:0 16px;height:44px;border:0;background:none;color:#2669ed;font:500 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif}
 .ps-ok:disabled{opacity:.3}
+/* Measure v2 */
+.ms2{margin:0 -16px;padding:0 0 180px}
+.ms2 .nw{white-space:nowrap}
+.ms2-h{margin:22px 26px 0;font:600 30px/35px -apple-system,"SF Pro Display",system-ui,sans-serif;letter-spacing:-.6px;color:#111115;text-wrap:balance}
+.ms2-h .bl{color:#2669ed}.ms2-h .rd{color:#d02c2a}
+.ms2-s{margin:6px 26px 0;font:400 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;color:rgba(60,60,67,.6);text-wrap:pretty}
+.ms2-s b{font:600 15px/20px "SF Mono",ui-monospace,Menlo,monospace;color:#111115}
+.ms2-b{display:flex;gap:8px;margin:16px 16px 0}
+.ms2-b button{height:44px;padding:0 20px;border:0;border-radius:22px;background:rgba(118,118,128,.12);color:#111115;font:590 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px}
+.ms2-b button.p{background:#2669ed;color:#fff}.ms2-b button.p.red{background:#d02c2a}
+.ms2-tabs{margin:28px 0 0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ms2-tabs::-webkit-scrollbar{display:none}
+.ms2-tabs>div{display:flex;gap:2px;padding:0 16px;width:max-content}
+.ms2-tabs button{flex:none;height:32px;padding:0 12px;border:0;border-radius:16px;background:none;white-space:nowrap;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;color:rgba(60,60,67,.6)}
+.ms2-tabs button.on{background:rgba(118,118,128,.12);color:#111115}
+.ms2-ch{position:relative;margin:20px 0 0;height:196px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.ms2-ch svg{display:block;overflow:visible}
+.ms2-ch .ax{font:400 11px "SF Mono",ui-monospace,Menlo,monospace;fill:rgba(60,60,67,.45)}
+.ms2-ch .pl{font:600 12px "SF Mono",ui-monospace,Menlo,monospace;fill:#fff}
+.ms2-tip{position:absolute;top:-20px;transform:translateX(-50%);height:26px;padding:0 11px;border-radius:13px;background:#111115;color:#fff;font:590 12px/26px -apple-system,"SF Pro Text",system-ui,sans-serif;white-space:nowrap;pointer-events:none}
+.ms2-none{height:170px;display:grid;place-items:center;font:400 15px/20px -apple-system,system-ui,sans-serif;color:rgba(60,60,67,.45)}
+.ms2-per{display:flex;margin:22px 16px 0}
+.ms2-per button{height:28px;padding:0 9px;border:0;border-radius:14px;background:none;font:600 12px/28px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.45)}
+.ms2-per button.on{background:rgba(118,118,128,.12);color:#111115}
+.ms2-hh{display:flex;justify-content:space-between;align-items:center;margin:28px 26px 0;height:24px;font:590 17px/22px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.3px;color:#111115}
+.ms2-hh button{border:0;background:none;padding:0;width:24px;height:24px}
+.ms2-list{margin:8px 0 0}
+.ms2-wk{display:flex;justify-content:space-between;margin:16px 26px 8px;font:590 12px/14px -apple-system,"SF Pro Text",system-ui,sans-serif;color:rgba(60,60,67,.6);text-transform:uppercase}
+.ms2-wk span:last-child{text-transform:none;font-weight:400}.ms2-wk b{font:600 12px "SF Mono",ui-monospace,Menlo,monospace}
+.ms2-r{position:relative;margin:0 16px;height:48px}
+.ms2-r .rc{position:relative;z-index:1;height:48px;box-sizing:border-box;padding:0 10px;display:flex;align-items:center;justify-content:space-between;background:#f6f6fa;border-radius:14px;transition:transform .35s cubic-bezier(.2,.9,.3,1),background-color .15s}
+.ms2-r+.ms2-r .rc::before{content:"";position:absolute;left:10px;right:10px;top:0;height:1px;background:rgba(60,60,67,.08)}
+.ms2-r.hl .rc{background:rgba(118,118,128,.07)}.ms2-r.hl .rc::before,.ms2-r.hl+.ms2-r .rc::before{opacity:0}
+.ms2-r .dt{font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;color:#111115}
+.ms2-r .vv{display:flex;align-items:baseline;gap:14px;font:400 13px/20px -apple-system,system-ui,sans-serif;color:rgba(60,60,67,.6)}
+.ms2-r .vv i{font:400 12px "SF Mono",ui-monospace,Menlo,monospace;font-style:normal;color:rgba(60,60,67,.45);white-space:nowrap}
+.ms2-r .vv b{font:600 15px "SF Mono",ui-monospace,Menlo,monospace;color:#111115}
+.ms2-r .del{position:absolute;right:0;top:-2px;width:56px;height:52px;border:0;border-radius:16px;background:rgba(0,0,0,.06);color:#d33425;display:grid;place-items:center;opacity:0;transition:opacity .2s}
+.ms2-r .del svg{width:18px;height:21px}
+.ms2-r.sw .del{opacity:1}
+/* the shared header on Measure: Schedule where History was */
+body.tab-measure .ms-hero,body.tab-measure .ms-card,body.tab-measure .ms-tiles{display:none}
 </style><script>setTimeout(function(){document.documentElement.classList.add("booted")},2500)</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -2445,7 +2486,7 @@ html body .sheet.ps .ps-three .vt{min-height:64px;border-radius:16px}html body .
 .sheet.ps .gr-l{font-size:15px;font-weight:510;color:rgba(60,60,67,.6)}
 .sheet.ps .gr-v b{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:72px;font-weight:600;letter-spacing:-3.6px;line-height:1;color:#111115}
 .sheet.ps .gr-v b i{font-style:normal;font-size:32px;font-weight:700;letter-spacing:0}
-.sheet.ps .gr-s{font-size:11px;font-weight:590;color:rgba(60,60,67,.6);margin-top:4px}
+.sheet.ps .gr-s{font-size:11px;font-weight:590;color:rgba(60,60,67,.6);margin-top:6px;display:flex;align-items:baseline;gap:8px;white-space:nowrap}.sheet.ps .gr-s em{font-style:normal;font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;font-size:17px;font-weight:590;letter-spacing:-.3px;color:#111115}.sheet.ps .gr-s span{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;font-weight:600}
 .sheet.ps .gr-now{position:absolute;right:16px;top:0;height:32px;padding:0 12px;border-radius:16px;background:rgba(118,118,128,.12);display:flex;align-items:center;gap:4px;font-size:13px;color:rgba(60,60,67,.6);cursor:text}
 .sheet.ps .gr-now:focus-within{background:#fff;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12)}
 .sheet.ps .gr-now input{width:4.2ch;padding:0;border:0;background:none;outline:none;font:600 13px/1 "SF Mono",ui-monospace,Menlo,monospace;color:#111115;text-align:right}
@@ -2631,7 +2672,7 @@ html body .sheet.ps #msBody .vt:has(input:placeholder-shown):not(:focus-within){
     <div class="title-row">
       <h1 id="goalName">Bulk plan</h1>
       <button class="dots" id="goalBtn" aria-label="Goal plans"><svg width="17" height="4" viewBox="0 0 17 4" fill="none" aria-hidden="true"><circle cx="1.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="8.5" cy="2.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="2.5" r="1.5" fill="currentColor"/></svg></button>
-      <button type="button" class="ms-hist" id="msHistTop">History<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="rgba(60,60,67,.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" class="ms-hist" id="msHistTop"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111115" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Schedule</button>
     </div>
     <div class="kcal-row" id="bigRow">
       <div class="ring" id="ring" aria-hidden="true">
@@ -4760,11 +4801,11 @@ function goalSheet(g0, isNew, back) {
       q('gPace').innerHTML = L.map(x => { const v = Math.round(x * dir() * 100) / 100; return `<button type="button" data-v="${v}"${Math.abs(v - rate) < 1e-6 ? ' class="on"' : ''}>${v > 0 ? '+' : '−'}${x}${x === best ? '<i></i>' : ''}</button>`; }).join(''); };
     const eta = () => { const d = tw - now, el = q('gEta');
       if (!rate || Math.sign(d) !== Math.sign(rate) || Math.abs(d) < .05) { el.textContent = Math.abs(d) < .05 ? 'You are there' : `${d > 0 ? '+' : '−'}${fmtKg(Math.abs(d))} kg · other way`; return; }
-      el.textContent = `${d > 0 ? '+' : '−'}${fmtKg(Math.abs(d))} kg · ${shortDate(Date.now() + d / rate * 7 * DAY)}`; };
+      el.innerHTML = `<em>by ${shortDate(Date.now() + d / rate * 7 * DAY)}</em><span>${d > 0 ? '+' : '−'}${fmtKg(Math.abs(d))} kg</span>`; };
     const calc = () => {
       const bd = body(), c0 = goalCalc(type, rate, now, bd);
-      const src = c0 ? (c0.src === 'data' ? 'from your data' : 'from formula') : 'by hand';
-      const np = KS.filter(k => pin[k] != null).length; q('gSrc').textContent = np === 4 ? 'yours' : np && c0 ? src.replace('from', 'partly from') : src;
+      const src = c0 ? (c0.src === 'data' ? 'from your data' : '') : 'by hand';
+      const np = KS.filter(k => pin[k] != null).length; q('gSrc').textContent = np === 4 ? 'yours' : np && c0 && src ? src.replace('from', 'partly from') : src;
       cur = c0 ? goalMacros(type, c0, pin) : { ...pin };
       rng = {}; KS.forEach(k => { const v = cur[k], i = q(IDS[k]);
         if (pin[k] == null) { if (document.activeElement !== i) i.value = v != null ? r0(v) : ''; } else if (document.activeElement !== i) i.value = r0(pin[k]);
@@ -6207,52 +6248,91 @@ function msSeries(k, per) {
 }
 const msFmtV = (k, v) => k === 'folds' ? String(Math.round(v)) : msKg(v);
 
-/* ---- render ---- */
+/* ---- Measure v2 (canvas row 20): the answer on top, the chart with tabs, the history under it ---- */
+const MS_RED = '#d02c2a', MS_BLUE = '#2669ed';
+const MS_CIRC = [['waist', 'Waist'], ['neck', 'Neck'], ['chest', 'Chest'], ['shoulders', 'Shoulders'], ['arm', 'Arm'], ['forearm', 'Forearm'], ['hips', 'Hips'], ['thigh', 'Thigh'], ['calf', 'Calf']];
+const MS_FOLD = { ch: 'Chest fold', ab: 'Belly fold', th: 'Thigh fold', tr: 'Triceps fold', ss: 'Back fold', si: 'Hip fold', ma: 'Side fold' };
+const MS_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const msNw = t => `<span class="nw">${t}</span>`;
+const msGs = v => (v >= 0 ? '+' : '−') + Math.round(Math.abs(v) * 100) * 10;            // kg → "+280" (grams, step 10)
+const msKg2 = v => { const r = Math.round(v * 100) / 100; return Math.abs(r * 10 - Math.round(r * 10)) < 1e-6 ? r.toFixed(1) : r.toFixed(2); };
+function msFold(e, k) { if (e.sf7 && e.sf7[k] != null) return e.sf7[k]; const m3 = MS_3[S.body.sex === 'f' ? 'f' : 'm']; const a = Object.keys(m3).find(x => m3[x] === k); return a && e.sf && e.sf[a] > 0 ? e.sf[a] : null; }
+function msMetrics() {                       // every metric measured at least once, in a fixed order
+  const L = logSorted(), out = [{ k: 'w', lab: 'Weight', u: 'kg', get: e => e.w, dp: 1 }];
+  const has = f => L.some(e => { const v = f(e); return v != null && isFinite(v) && v > 0; });
+  const fat = e => bfOf(e); if (has(fat)) out.push({ k: 'fat', lab: 'Body fat', u: '%', get: fat, dp: 1 });
+  MS_CIRC.forEach(([k, lab]) => { const f = e => e.circ && e.circ[k]; if (has(f)) out.push({ k, lab, u: 'cm', get: f, dp: 1 }); });
+  Object.keys(MS_FOLD).forEach(k => { const f = e => msFold(e, k); if (has(f)) out.push({ k: 'f_' + k, lab: MS_FOLD[k], u: 'mm', get: f, dp: 0 }); });
+  return out;
+}
+function msWeeks() {                         // weekly averages, Monday-based
+  const map = new Map();
+  msWLog().forEach(e => { const k = wkStart(dnum(e.d)); if (!map.has(k)) map.set(k, []); map.get(k).push(e.w); });
+  return [...map.entries()].sort((a, b) => a[0] - b[0]).map(([t, ws]) => ({ t, avg: ws.reduce((a, b) => a + b, 0) / ws.length, n: ws.length }));
+}
+function msSlope(ws) { const n = ws.length; if (n < 2) return null; const xs = ws.map(w => w.t / (7 * DAY)), ys = ws.map(w => w.avg);
+  const mx = xs.reduce((a, b) => a + b) / n, my = ys.reduce((a, b) => a + b) / n; let a = 0, b = 0; xs.forEach((x, i) => { a += (x - mx) * (ys[i] - my); b += (x - mx) ** 2; }); return a / b; }
+function msPlanFn(g) {                       // planned weight on day t, from the plan's start
+  const L = msWLog(); if (!L.length) return null;
+  const sd = g.sd ? dnum(g.sd) : dnum(L[0].d), sw = g.sw ?? L[0].w, tw = g.tw ?? sw, r = g.rate || 0;
+  return t => { if (t < sd) return null; const v = sw + r * (t - sd) / (7 * DAY); return r > 0 ? Math.min(v, Math.max(tw, sw)) : r < 0 ? Math.max(v, Math.min(tw, sw)) : (g.type === 'maintain' ? tw : v); };
+}
+/* the weekly check: on the body day after that day's weigh-in, from weekly averages (≤ 6 weeks), one big week waits */
+function msCheck2() {
+  const m = msS(), g = goal(), today = dnum(todayISO()); let t = today;
+  while (new Date(t).getDay() !== m.body) t -= DAY;
+  const te = S.log.find(e => e.d === iso(t)); if (t === today && !(te && te.w != null)) t -= 7 * DAY;
+  const L = msWLog(), first = L.length ? dnum(L[0].d) : null;
+  const ck = { t, next: t + 7 * DAY, d: iso(t), fresh: t === today };
+  if (!first) return { ...ck, kind: 'empty' };
+  const sd = g.sd ? wkStart(dnum(g.sd)) : 0;
+  const all = msWeeks().filter(w => w.t < wkStart(t));
+  let ws = all.filter(w => w.t >= sd).slice(-6); if (ws.length < 3) ws = all.slice(-3);
+  const days = Math.round((t - first) / DAY);
+  if (days < 14 || ws.length < 2) return { ...ck, kind: 'learn', left: Math.max(1, 14 - Math.round((today - first) / DAY)) };
+  const rate = msSlope(ws), last = ws[ws.length - 1].avg - ws[ws.length - 2].avg, before = ws.length > 2 ? msSlope(ws.slice(0, -1)) : rate;
+  if (Math.abs(last - before) >= .6) return { ...ck, kind: 'big', last, rate };
+  const adj = Math.max(-500, Math.min(500, Math.round((g.rate - rate) * 1100 / 10) * 10));
+  return { ...ck, kind: Math.abs(adj) < 50 ? 'ok' : 'adj', rate, adj };
+}
+function msHead(ck) {
+  const m = msS(), g = goal(), st = m.chk && m.chk.d === ck.d ? m.chk : {}, kcal = r0(g.k), nx = msNw(`Next check ${msFmtD(ck.next)}.`);
+  const gw = (r, plan) => `${r >= 0 ? 'Gaining' : 'Losing'} <b>${msG(r)}</b> g a week`;
+  if (ck.kind === 'empty') return { h: 'Start weighing in', s: 'A few mornings a week. The first advice comes in two weeks.' };
+  if (ck.kind === 'learn') return { h: 'Learning your trend', s: `Weigh in for <b>${ck.left}</b> more ${ck.left === 1 ? 'day' : 'days'}, then the first advice.` };
+  if (ck.kind === 'big') return { h: `Big ${ck.last < 0 ? 'drop' : 'jump'} this week`, s: `<b>${msGs(ck.last)}</b> g in a week — often it’s water. Let’s see next Monday. Food stays the same.` };
+  if (st.act === 'apply') return { h: `Plan updated: ${msNw(kcal + ' kcal')} a day`, s: `Was ${st.was}. ${nx}` };
+  if (ck.fresh && !st.ans) return { h: `Did you mostly eat ${msNw(r0(st.k ?? g.k) + ' kcal')} a day?`, s: 'Last week. It decides the advice.', q: true };
+  if (st.ans === 'n') return { h: `Stick to ${msNw(kcal + ' kcal')} this week`, s: `Food stays the same. ${nx}` };
+  const planTxt = `plan ${g.rate >= 0 ? '' : '−'}<b>${msG(g.rate)}</b>`;
+  if (ck.kind === 'ok') return { h: 'You’re on track', s: `${gw(ck.rate)}, ${planTxt}. ${nx}` };
+  const more = ck.adj > 0, c = more ? 'bl' : 'rd';
+  let h;
+  if (g.rate > 0) h = ck.rate < 0 ? `You’re <span class="${c}">losing</span> instead of gaining` : `You’re gaining <span class="${c}">${more ? 'slower' : 'faster'}</span> than the plan`;
+  else if (g.rate < 0) h = ck.rate > 0 ? `You’re <span class="${c}">gaining</span> instead of losing` : `You’re losing <span class="${c}">${more ? 'faster' : 'slower'}</span> than the plan`;
+  else h = `You’re <span class="${c}">${more ? 'losing' : 'gaining'}</span> weight`;
+  const opp = g.rate && Math.sign(ck.rate) !== Math.sign(g.rate);
+  const s = `${gw(ck.rate)} instead of ${g.rate ? `${opp ? (g.rate > 0 ? 'gaining ' : 'losing ') : ''}<b>${msG(g.rate)}</b>` : 'holding'}.${st.act === 'later' ? ' ' + nx : ''}`;
+  return { h, s, adj: st.act === 'later' ? null : ck.adj };
+}
 function msRender() {
   const sec = $('#secMeasure'); if (!sec) return;
   let root = $('#msr'); if (!root) { root = document.createElement('div'); root.id = 'msr'; sec.appendChild(root); }
-  const m = msS(), g = goal(), ck = msCheck(), tr = msTrend(), last = tr.length ? tr[tr.length - 1].v : null, td = msToday();
-  const rate = ck.rate, slow = rate != null && Math.abs(g.rate - rate) * 1100 >= 50;
-  const rateTxt = ck.learn ? 'Not enough data for a trend yet'
-    : `${rate >= 0 ? 'Gaining' : 'Losing'} <span class="${slow ? 'bl' : ''}"><b>${msG(rate)}</b> g</span> a week, plan <b>${msG(g.rate)}</b> g`;
-  let card;
-  if (ck.learn) card = `<div class="ms-card grey"><div class="k">LEARNING YOUR TREND<span>${Math.min(ck.days, 14)} of 14 days</span></div><div class="r"><span class="n">${Math.max(1, 14 - ck.days)}<small> more days</small></span></div>
-      <div class="t">Keep weighing in. Then we’ll tell you if ${esc(g.name)} needs more or less food.</div><div class="bar"><i style="width:${Math.min(100, ck.days / 14 * 100).toFixed(0)}%"></i></div></div>`;
-  else if (m.applied === iso(ck.t)) card = `<div class="ms-ok">${MS_CHK}<div class="tt">Food updated: ${r0(g.k)} kcal a day<span>Next check ${msFmtD(ck.next)}</span></div>${m.undo ? '<button type="button" id="msUndo">Undo</button>' : ''}</div>`;
-  else if (Math.abs(ck.adj) < 50) card = `<div class="ms-ok">${MS_CHK}<div class="tt">On track, food stays the same<span>Next check ${msFmtD(ck.next)}</span></div></div>`;
-  else { const more = ck.adj > 0;
-    card = `<div class="ms-card"><button type="button" class="ap" id="msApply">Apply</button><div class="k">${more ? 'EAT MORE' : 'EAT LESS'}</div>
-      <div class="r"><span class="n">${more ? '+' : '−'}${Math.abs(ck.adj)}<small> kcal a day</small></span></div>
-      <div class="t">You ${rate >= 0 ? 'gain' : 'lose'} ${msG(rate)} g a week, the plan is ${msG(g.rate)} g. ${esc(g.name)}: ${r0(g.k)} → ${r0(g.k + ck.adj)} kcal</div>
-      <div class="nx">Next check ${msFmtD(ck.next)}</div></div>`; }
-  // calendar: three days back, today, three ahead
-  const logd = new Set(msWLog().map(e => e.d));
-  let cal = '';
-  for (let i = -3; i <= 3; i++) {
-    const t = td.t + i * DAY, k = msDayKind(t), d = iso(t); let st;
-    if (i < 0) st = logd.has(d) ? 'done' : k ? 'plan' : 'off';
-    else if (i === 0) st = k === 0 ? (td.w ? 'done' : 'off') : td.done ? 'done' : td.w && k === 2 ? 'part' : 'due';
-    else st = k ? 'plan' : 'off';
-    const inner = st === 'done' || st === 'part' ? MS_CHK : new Date(t).getDate();
-    cal += `<div class="ms-d" data-st="${st}"${i === 0 ? ' data-today="1"' : ''}><span class="w">${i === 0 ? 'Today' : 'SMTWTFS'[new Date(t).getDay()]}</span><span class="c">${inner}</span><span class="dt">${'<i></i>'.repeat(k)}</span></div>`;
-  }
-  // body tiles
-  const tiles = m.tiles.map(k => { const s = msSeries(k), [lab, u] = MS_M[k];
-    if (!s.length) return `<button type="button" class="ms-tile" data-m="${k}"><span class="h">${lab.toUpperCase()}</span><span class="no">No data yet</span></button>`;
-    const v = s[s.length - 1].v, d = v - s[0].v;
-    return `<button type="button" class="ms-tile" data-m="${k}"><span class="h">${lab.toUpperCase()}<span>${d >= 0 ? '+' : '−'}${msFmtV(k, Math.abs(d))}</span></span><span class="v">${msFmtV(k, v)}<small>${u}</small></span>${msSpark(s.map(p => p.v))}</button>`; }).join('');
-  root.innerHTML = `<div class="ms-hero"><div class="ms-chart" id="msChart"></div>
-      <div class="ms-kick"><span>AVERAGE WEIGHT</span><span class="ms-per" id="msPer">${Object.entries(MS_PER).map(([k, [l]]) => `<button type="button" data-v="${k}"${k === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</span></div>
-      ${msBig(last)}<div class="ms-rate">${rateTxt}</div>
-      <div class="ms-axis" id="msAxis"></div></div>
-    ${card}
-    <div class="ms-sec"><span>Weigh-ins</span><button type="button" class="ms-sch" id="msSch">${MS_CAL}Schedule</button></div>
-    <div class="ms-cal">${cal}</div>
-    <div class="ms-sec"><span>Body · ${MS_PERL[m.per]}</span><button type="button" class="ms-edit" id="msEdit">Edit</button></div>
-    ${m.tiles.length ? `<div class="ms-tiles">${tiles}</div>` : ''}`;
-  const info = msChart($('#msChart'));
-  if (info) $('#msAxis').innerHTML = `<span>${shortDate(info.t0)}</span>${info.plan != null ? `<span class="pl">plan <b>${msKg(info.plan)}</b></span>` : '<span></span>'}<span>today</span>`;
-  // banner
+  const m = msS(), g = goal(), ck = msCheck2(), H = msHead(ck);
+  const mets = msMetrics(); if (!mets.find(x => x.k === m.tab)) m.tab = 'w';
+  const met = mets.find(x => x.k === m.tab);
+  let btns = '';
+  if (H.q) btns = `<div class="ms2-b"><button type="button" class="p" data-a="y">Yes</button><button type="button" data-a="n">No</button></div>`;
+  else if (H.adj) btns = `<div class="ms2-b"><button type="button" class="p${H.adj < 0 ? ' red' : ''}" data-a="apply">Eat ${Math.abs(H.adj)} kcal ${H.adj > 0 ? 'more' : 'less'}</button><button type="button" data-a="later">Later</button></div>`;
+  root.innerHTML = `<div class="ms2"><h2 class="ms2-h">${H.h}</h2><p class="ms2-s">${H.s}</p>${btns}
+    <div class="ms2-tabs" id="msTabs"><div>${mets.map(x => `<button type="button" data-k="${x.k}"${x.k === m.tab ? ' class="on"' : ''}>${x.lab}</button>`).join('')}</div></div>
+    <div class="ms2-ch" id="msChart"></div>
+    <div class="ms2-per" id="msPer">${Object.entries(MS_PER).map(([k, [l]]) => `<button type="button" data-v="${k}"${k === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</div>
+    <div class="ms2-hh"><span>History</span><button type="button" id="msAdd" aria-label="Add a past entry"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10.25" stroke="#111115" stroke-width="1.5"/><path d="M12 7.5v9M7.5 12h9" stroke="#111115" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+    <div class="ms2-list" id="msList"></div></div>`;
+  msDrawChart(); msDrawList(met);
+  // banner (unchanged)
+  const td = msToday();
   let ban = $('#msBan'); if (!ban) { ban = document.createElement('div'); ban.className = 'ms-ban'; ban.id = 'msBan'; document.body.appendChild(ban); ban.addEventListener('click', () => { haptic(); msTodaySheet(); }); }
   let next = td.t + DAY; for (let i = 0; i < 7 && !msDayKind(next); i++) next += DAY;
   const nday = next - td.t === DAY ? 'tomorrow' : 'on ' + new Date(next).toLocaleDateString('en-GB', { weekday: 'long' });
@@ -6263,17 +6343,136 @@ function msRender() {
   ban.className = 'ms-ban' + (B[2] ? ' ' + B[2] : '');
   ban.innerHTML = `<div class="tx"><span>${B[0]}</span>${B[1]}</div><button type="button" aria-label="${B[0] === 'ALL DONE FOR TODAY' ? 'Done for today, add another' : 'Measure'}">${B[3]}</button>`;
   // events
-  if (!$('#msHistTop')._b) { $('#msHistTop')._b = 1; $('#msHistTop').addEventListener('click', () => { haptic(); msHistory(); }); }
-  $('#msPer').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.v === m.per) return; haptic(); m.per = b.dataset.v; save(); msRender(); });
-  $('#msSch').addEventListener('click', () => { haptic(); msSchedule(); });
-  $('#msEdit').addEventListener('click', () => { haptic(); msCharts(); });
-  root.querySelectorAll('.ms-tile').forEach(b => b.addEventListener('click', () => { haptic(); msMetric(b.dataset.m); }));
-  const ap = $('#msApply'); if (ap) ap.addEventListener('click', () => {
-    haptic(); const before = JSON.parse(JSON.stringify(g)), d = ck.adj;
-    applyKcal(d); m.applied = iso(ck.t); m.undo = { gid: g.id, before }; save(); msRender();
-    toast(`${g.name} is now ${r0(goal().k)} kcal`, { label: 'Balance', fn: () => { switchTab('meal'); setTimeout(() => balanceSheet(), 520); } });
-  });
-  const un = $('#msUndo'); if (un) un.addEventListener('click', () => { haptic(); const u = m.undo, gg = S.goals.find(x => x.id === u.gid); if (gg) Object.assign(gg, u.before); m.applied = null; m.undo = null; save(); renderHeader(); msRender(); });
+  const top = $('#msHistTop'); if (top && !top._b) { top._b = 1; top.addEventListener('click', () => { haptic(); msSchedule(); }); }
+  root.querySelectorAll('.ms2-b button').forEach(b => b.addEventListener('click', () => {
+    haptic(); const a = b.dataset.a, d = ck.d;
+    if (a === 'y' || a === 'n') { m.chk = { d, ans: a, k: r0(g.k) }; save(); msRender(); return; }
+    if (a === 'later') { m.chk = { ...(m.chk || { d }), d, act: 'later' }; save(); msRender(); return; }
+    if (a === 'apply') { const was = r0(g.k); applyKcal(H.adj); m.chk = { ...(m.chk || { d }), d, act: 'apply', was }; save(); renderHeader(); msRender();
+      toast(`${g.name} is now ${r0(goal().k)} kcal`, { label: 'Balance', fn: () => { switchTab('meal'); setTimeout(() => balanceSheet(), 520); } }); }
+  }));
+  $('#msTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.k === m.tab) return; haptic(); m.tab = b.dataset.k; save(); const x = $('#msTabs').scrollLeft; msRender(); $('#msTabs').scrollLeft = x; });
+  $('#msPer').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.v === m.per) return; haptic(); m.per = b.dataset.v; save(); const x = $('#msTabs').scrollLeft; msRender(); $('#msTabs').scrollLeft = x; });
+  $('#msAdd').addEventListener('click', () => { haptic(); msTodaySheet(iso(dnum(todayISO()) - DAY), true); });
+  const on = $('#msTabs .on'); if (on && on.offsetLeft + on.offsetWidth > $('#msTabs').clientWidth) $('#msTabs').scrollLeft = on.offsetLeft - 16;
+}
+let msPts = [];
+function msDrawChart(markT) {
+  const el = $('#msChart'); if (!el) return;
+  const m = msS(), g = goal(), met = msMetrics().find(x => x.k === m.tab) || msMetrics()[0], ck = msCheck2();
+  const W = el.clientWidth || 376, H = 170, X0 = 16, PW = W - 76;
+  const now = dnum(todayISO()), L = logSorted();
+  let pts = L.map(e => ({ t: dnum(e.d), v: met.get(e), e })).filter(p => p.v != null && isFinite(p.v) && p.v > 0);
+  if (!pts.length) { el.innerHTML = '<div class="ms2-none">No data yet</div>'; msPts = []; return; }
+  const span = MS_PER[m.per][1], t0 = span ? now - span * DAY : Math.min(pts[0].t, now - 7 * DAY);
+  pts = pts.filter(p => p.t >= t0);
+  const isW = met.k === 'w', line = isW ? trendOf(series('w')).filter(p => p.t >= t0) : pts;
+  if (!pts.length) { el.innerHTML = '<div class="ms2-none">Nothing in this period</div>'; msPts = []; return; }
+  const pf = isW ? msPlanFn(g) : null, planNow = pf ? pf(now) : null, goalV = met.k === 'fat' && g.tbf ? g.tbf : null;
+  const vals = pts.map(p => p.v).concat(line.map(p => p.v), planNow != null ? [planNow] : [], goalV != null ? [goalV] : []);
+  let mn = Math.min(...vals), mx = Math.max(...vals);
+  const step = met.u === 'kg' ? (mx - mn > 8 ? 2 : 1) : met.u === '%' ? (mx - mn < 3 ? .5 : 1) : (mx - mn > 8 ? 2 : 1);
+  let lo = Math.floor((mn - step * .3) / step) * step, hi = Math.ceil((mx + step * .3) / step) * step; if (hi - lo < 3 * step) hi = lo + 3 * step;
+  const X = t => X0 + (t - t0) / (now - t0) * PW, Y = v => 6 + (hi - v) / (hi - lo) * (H - 12);
+  const last = line[line.length - 1], fmt = v => met.dp ? (Math.round(v * 10) / 10).toFixed(1) : String(Math.round(v));
+  let s = `<svg width="${W}" height="${H + 26}" viewBox="0 0 ${W} ${H + 26}" aria-hidden="true">`;
+  const pills = [[Y(last.v), fmt(last.v), '#111115']]; if (planNow != null) pills.push([Y(planNow), (Math.round(planNow * 10) / 10).toFixed(1), MS_BLUE]); if (goalV != null) pills.push([Y(goalV), fmt(goalV), MS_BLUE]);
+  for (let v = lo; v <= hi + 1e-6; v += step) { const y = Y(v);
+    s += `<line x1="${X0}" x2="${X0 + PW}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(60,60,67,.09)"/>`;
+    if (!pills.some(p => Math.abs(p[0] - y) < 13)) s += `<text x="${X0 + PW + 10}" y="${(y + 4).toFixed(1)}" class="ax">${step < 1 ? v.toFixed(1) : Math.round(v)}</text>`; }
+  // the gap to the plan: above it red (eat less), below it blue (eat more); hidden while the trend is still learning
+  if (pf && ck.kind !== 'learn' && ck.kind !== 'empty') {
+    const seg = line.filter(p => pf(p.t) != null);
+    if (seg.length > 1) {
+      const tp = seg.map(p => [X(p.t), Y(pf(p.t))]), bt = seg.map(p => [X(p.t), Y(p.v)]), f = a => a.map(([x, y]) => `L${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+      const area = `M${tp[0][0].toFixed(1)},${tp[0][1].toFixed(1)} ${f(tp.slice(1))} ${f(bt.slice().reverse())} Z`;
+      const up = `M${tp[0][0].toFixed(1)},-40 L${tp[0][0].toFixed(1)},${tp[0][1].toFixed(1)} ${f(tp.slice(1))} L${tp[tp.length - 1][0].toFixed(1)},-40 Z`;
+      const dn = `M${tp[0][0].toFixed(1)},${H + 40} L${tp[0][0].toFixed(1)},${tp[0][1].toFixed(1)} ${f(tp.slice(1))} L${tp[tp.length - 1][0].toFixed(1)},${H + 40} Z`;
+      s += `<defs><clipPath id="msUp"><path d="${up}"/></clipPath><clipPath id="msDn"><path d="${dn}"/></clipPath></defs>
+        <path d="${area}" fill="rgba(208,44,42,.13)" clip-path="url(#msUp)"/><path d="${area}" fill="rgba(38,105,237,.13)" clip-path="url(#msDn)"/>`;
+    }
+  }
+  if (goalV != null) s += `<line x1="${X0}" x2="${X0 + PW + 6}" y1="${Y(goalV).toFixed(1)}" y2="${Y(goalV).toFixed(1)}" stroke="${MS_BLUE}" stroke-opacity=".35" stroke-dasharray="1 4" stroke-linecap="round"/>`;
+  if (isW) s += pts.map(p => `<circle cx="${X(p.t).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="2.5" fill="rgba(17,17,21,.18)"/>`).join('');
+  const P = line.map(p => [X(p.t), Y(p.v)]);
+  if (isW && P.length > 1) { let d = `M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
+    for (let i = 1; i < P.length; i++) { const [a, b] = P[i - 1], [c, e] = P[i], mx2 = (a + c) / 2; d += ` C${mx2.toFixed(1)},${b.toFixed(1)} ${mx2.toFixed(1)},${e.toFixed(1)} ${c.toFixed(1)},${e.toFixed(1)}`; }
+    s += `<path d="${d}" fill="none" stroke="#111115" stroke-width="2" stroke-linecap="round"/>`; }
+  if (!isW) { s += `<polyline points="${P.map(([a, b]) => `${a.toFixed(1)},${b.toFixed(1)}`).join(' ')}" fill="none" stroke="#111115" stroke-width="2" stroke-linejoin="round"/>`;
+    s += P.slice(0, -1).map(([a, b]) => `<circle cx="${a.toFixed(1)}" cy="${b.toFixed(1)}" r="3" fill="#111115"/>`).join(''); }
+  const [lx, ly] = P[P.length - 1];
+  let ly2 = ly; pills.slice(1).forEach(p => { if (Math.abs(ly2 - p[0]) < 24) ly2 = ly2 > p[0] ? p[0] + 24 : p[0] - 24; });
+  s += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="5" fill="#111115" stroke="#f6f6fa" stroke-width="2"/>`;
+  s += `<line x1="${lx.toFixed(1)}" x2="${X0 + PW + 6}" y1="${ly.toFixed(1)}" y2="${ly2.toFixed(1)}" stroke="#111115" stroke-dasharray="2 3"/>`;
+  pills[0][0] = ly2;
+  pills.forEach(([y, t, c]) => { const w = 8 * t.length + 14; s += `<rect x="${(X0 + PW + 29 - w / 2).toFixed(1)}" y="${(y - 11).toFixed(1)}" width="${w}" height="22" rx="11" fill="${c}"/><text x="${X0 + PW + 29}" y="${(y + 4).toFixed(1)}" text-anchor="middle" class="pl">${t}</text>`; });
+  // x labels: months, every second month past 100 days, years past 400
+  const days = (now - t0) / DAY; let dd = new Date(t0); dd = new Date(dd.getFullYear(), dd.getMonth() + 1, 1);
+  if (days > 400) { for (let y = new Date(t0).getFullYear() + 1; y <= new Date(now).getFullYear(); y++) { const x = X(new Date(y, 0, 1).getTime()); if (x > X0 + 14 && x < X0 + PW - 14) s += `<text x="${x.toFixed(1)}" y="${H + 20}" text-anchor="middle" class="ax">${y}</text>`; } }
+  else { let i = 0; while (dd.getTime() <= now) { const x = X(dd.getTime()); if (i++ % (days > 100 ? 2 : 1) === 0 && x > X0 + 10 && x < X0 + PW - 10) s += `<text x="${x.toFixed(1)}" y="${H + 20}" text-anchor="middle" class="ax">${MS_MON[dd.getMonth()]}</text>`; dd = new Date(dd.getFullYear(), dd.getMonth() + 1, 1); } }
+  // the finger mark
+  if (markT != null) { const p = pts.reduce((a, b) => Math.abs(b.t - markT) < Math.abs(a.t - markT) ? b : a), x = X(p.t), y = Y(p.v);
+    const lab = `${msFmtD(p.t)} · ${fmt(p.v)} ${met.u}`, w = 7 * lab.length + 22, px = Math.min(Math.max(X0 + w / 2, x), X0 + PW - w / 2);
+    s += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="0" y2="${H}" stroke="#111115" stroke-opacity=".3"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="#111115" stroke="#f6f6fa" stroke-width="2.5"/>`;
+    el.dataset.mark = p.e.d;
+    el.innerHTML = s + '</svg>' + `<span class="ms2-tip" style="left:${px.toFixed(0)}px">${lab}</span>`;
+  } else { delete el.dataset.mark; el.innerHTML = s + '</svg>'; }
+  msPts = pts.map(p => ({ x: X(p.t), t: p.t, d: p.e.d }));
+  if (!el._b) { el._b = 1;
+    const at = ev => { const r = el.getBoundingClientRect(), x = ev.clientX - r.left; if (!msPts.length) return null; return msPts.reduce((a, b) => Math.abs(b.x - x) < Math.abs(a.x - x) ? b : a); };
+    const lite = d => { document.querySelectorAll('#msList .ms2-r').forEach(r => r.classList.toggle('hl', r.dataset.d === d)); };
+    let on = false, last_ = null;
+    el.addEventListener('pointerdown', ev => { on = true; el.setPointerCapture(ev.pointerId); const p = at(ev); if (p) { last_ = p.d; msDrawChart(p.t); lite(p.d); haptic(); } });
+    el.addEventListener('pointermove', ev => { if (!on) return; const p = at(ev); if (p && p.d !== last_) { last_ = p.d; msDrawChart(p.t); lite(p.d); haptic(); } });
+    const up = () => { if (!on) return; on = false; last_ = null; msDrawChart(); lite(null); };
+    el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  }
+}
+function msDrawList(met) {
+  const el = $('#msList'); if (!el) return;
+  const m = msS(), now = dnum(todayISO()), span = MS_PER[m.per][1], t0 = span ? now - span * DAY : -Infinity;
+  const row = (d, val, unit, dl) => `<div class="ms2-r" data-d="${d}"><button type="button" class="del" aria-label="Delete">${MS_TRASH}</button>
+    <div class="rc"><span class="dt">${msFmtD(dnum(d))}</span><span class="vv">${dl ? `<i>${dl}</i>` : ''}${msNw(`<b>${val}</b> ${unit}`)}</span></div></div>`;
+  let h = '';
+  if (met.k === 'w') {
+    const L = msWLog(), tw = wkStart(now); let wk = null, buf = [];
+    const flush = () => { if (!buf.length) return; const avg = buf.reduce((a, e) => a + e.w, 0) / buf.length;
+      const lab = wk === tw ? 'This week' : wk === tw - 7 * DAY ? 'Last week' : `${shortDate(wk)} – ${shortDate(wk + 6 * DAY)}`;
+      h += `<div class="ms2-wk"><span>${lab}</span><span>average ${msNw(`<b>${msKg(avg)}</b> kg`)}</span></div>` + buf.map(e => { const i = L.indexOf(e), p = i ? L[i - 1] : null;
+        return row(e.d, msKg2(e.w), 'kg', p ? (Math.abs(e.w - p.w) < .005 ? '±0' : msGs(e.w - p.w)) + ' g' : ''); }).join(''); buf = []; };
+    [...L].reverse().filter(e => dnum(e.d) >= t0).forEach(e => { const k = wkStart(dnum(e.d)); if (k !== wk) { flush(); wk = k; } buf.push(e); }); flush();
+    if (!h) h = '<div class="ms2-wk"><span>No weigh-ins in this period</span></div>';
+    h += '<button type="button" class="ms-imb" id="hImp">Import from a table</button>';
+  } else {
+    const L = logSorted().filter(e => { const v = met.get(e); return v != null && isFinite(v) && v > 0; });
+    const fmt = v => met.dp ? (Math.round(v * 10) / 10).toFixed(1) : String(Math.round(v));
+    h = '<div style="height:6px"></div>' + [...L].reverse().filter(e => dnum(e.d) >= t0).map(e => { const i = L.indexOf(e), p = i ? met.get(L[i - 1]) : null, v = met.get(e);
+      const dv = p != null ? Math.round((v - p) * (met.dp ? 10 : 1)) / (met.dp ? 10 : 1) : null;
+      return row(e.d, fmt(v), met.u, dv == null ? '' : dv === 0 ? '±0' : (dv > 0 ? '+' : '−') + fmt(Math.abs(dv))); }).join('') || '<div class="ms2-wk"><span>Nothing in this period</span></div>';
+  }
+  el.innerHTML = h;
+  const im = $('#hImp'); if (im) im.addEventListener('click', () => { haptic(); msImport(); });
+  el.querySelectorAll('.ms2-r').forEach(r => msBindRow2(r, met));
+}
+function msBindRow2(r, met) {
+  const rc = r.querySelector('.rc'), del = r.querySelector('.del'); let P = null;
+  const mark = on => { msDrawChart(on ? dnum(r.dataset.d) : undefined); };
+  rc.addEventListener('click', () => { if (r._moved) { r._moved = false; return; } if (r.classList.contains('sw')) { r.classList.remove('sw'); rc.style.transform = ''; return; } haptic(); msTodaySheet(r.dataset.d); });
+  rc.addEventListener('pointerdown', e => { P = { x: e.clientX, y: e.clientY, open: r.classList.contains('sw'), go: false }; r.classList.add('hl'); mark(true); });
+  rc.addEventListener('pointermove', e => { if (!P) return; const dx = e.clientX - P.x; if (!P.go && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - P.y)) { P.go = true; rc.setPointerCapture(e.pointerId); rc.style.transition = 'none'; }
+    if (P.go) { const x = Math.min(0, (P.open ? -64 : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
+  const end = () => { r.classList.remove('hl'); mark(false); if (!P) return; const go = P.go; P = null; if (!go) return; r._moved = true; rc.style.transition = ''; const x = parseFloat((rc.style.transform.match(/-?[\d.]+/) || [0])[0]);
+    if (x < -r.offsetWidth * .6) return msDel2(r, met); if (x < -32) { r.classList.add('sw'); rc.style.transform = 'translateX(-64px)'; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
+  rc.addEventListener('pointerup', end); rc.addEventListener('pointercancel', end); rc.addEventListener('pointerleave', () => { if (!P) { r.classList.remove('hl'); } });
+  del.addEventListener('click', () => msDel2(r, met));
+}
+function msDel2(r, met) {           // weight tab: drops the weigh-in; a body tab: drops that day's body measurements, the weight stays
+  haptic(); const i = S.log.findIndex(e => e.d === r.dataset.d); if (i < 0) return;
+  const before = JSON.parse(JSON.stringify(S.log[i])), e = S.log[i];
+  if (met.k === 'w') { delete e.w; } else { delete e.sf; delete e.sf7; delete e.circ; }
+  if (e.w == null && !e.sf && !e.circ && !e.sf7) S.log.splice(i, 1);
+  save(); renderHeader(); msRender();
+  toast(`${msFmtD(dnum(before.d))} deleted`, { label: 'Undo', fn: () => { const j = S.log.findIndex(x => x.d === before.d); if (j >= 0) S.log[j] = before; else S.log.push(before); save(); renderHeader(); msRender(); } });
 }
 
 /* ---- Today / entry sheet: weight on a ruler (0.1 kg a tick), tap the number to type; body on the body day ---- */
@@ -6481,7 +6680,7 @@ function msMetric(k) {
 }
 /* the toast hides the banner while it is up */
 (() => { const t = $('#toast'); if (!t) return; new MutationObserver(() => document.body.classList.toggle('toast-on', t.classList.contains('show'))).observe(t, { attributes: true, attributeFilter: ['class'] }); })();
-addEventListener('resize', () => { if (S.ui.tab === 'measure' && $('#msChart')) msChart($('#msChart')); });
+addEventListener('resize', () => { if (S.ui.tab === 'measure' && $('#msChart')) msDrawChart(); });
 
 /* ---- import: a weekly table pasted from a spreadsheet (one row per week, Mon–Fri weigh-ins, weekly skinfolds and waist) ---- */
 function msParse(txt) {
