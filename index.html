@@ -2463,6 +2463,153 @@ html body .sheet.ps .vt[hidden]{display:none}
 .sheet.ps .gl-k{flex:none;font-size:12px;color:rgba(60,60,67,.6)}
 .sheet.ps .gl-k b{font:600 14px "SF Mono",ui-monospace,Menlo,monospace;color:#111115}
 
+
+/* ================= Measure (9 Nov, canvas «Measure · финал») ================= */
+body.tab-measure header.plan{display:none!important}
+#secMeasure #mOld{display:none}
+#msr{position:relative;padding:calc(var(--sat,env(safe-area-inset-top,0px)) + 16px) 0 200px;color:#111115}
+#msr .ms-mono,#msr b.m{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-weight:600}
+.ms-hero{position:relative;height:270px}
+.ms-hero>*{position:relative;z-index:1}
+.ms-chart{position:absolute!important;z-index:0!important;left:-16px;right:-16px;top:26px;height:216px;pointer-events:none}
+.ms-chart svg{display:block;width:100%;height:100%;overflow:hidden}
+.ms-tr{display:flex;align-items:center;justify-content:space-between;height:20px;padding:0 10px}
+.ms-gl{display:flex;align-items:center;gap:8px;border:0;background:none;padding:0;font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115}
+.ms-gl svg{flex:none}
+.ms-hist{display:flex;align-items:center;gap:6px;border:0;background:none;padding:8px 0;margin:-8px 0;font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115}
+.ms-kick{display:flex;align-items:center;justify-content:space-between;height:14px;margin-top:16px;padding:0 0 0 10px;font-size:12px;font-weight:590;color:rgba(60,60,67,.6)}
+.ms-per{display:flex;gap:2px}
+.ms-per button{height:28px;padding:0 10px;border:0;border-radius:14px;background:none;font:600 12px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.6)}
+.ms-per button.on{background:rgba(118,118,128,.12);color:#111115}
+.ms-big{display:block;margin:4px 0 0 8px;height:56px;font:600 56px/1 "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:-.05em;color:#111115;white-space:nowrap}
+.ms-big i{font-style:normal;font-size:28px;letter-spacing:-.02em}
+.ms-big u{text-decoration:none;font-size:18px;font-weight:700;letter-spacing:0;margin-left:4px;color:rgba(60,60,67,.6)}
+.ms-rate{margin-top:2px;padding:0 10px;font-size:13px;line-height:18px;color:rgba(60,60,67,.6)}
+.ms-rate b{font:600 13px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(17,17,21,.8)}
+.ms-rate .bl,.ms-rate .bl b{color:#2669ed}
+.ms-axis{position:absolute!important;left:10px;right:10px;top:242px;display:flex;justify-content:space-between;font-size:11px;color:rgba(60,60,67,.45)}
+.ms-axis .pl{color:#2669ed}.ms-axis .pl b{font:600 11px "SF Mono",ui-monospace,Menlo,monospace}
+/* advice */
+.ms-card{position:relative;padding:14px 16px 16px;border-radius:24px;background:rgba(38,105,237,.12);color:#2669ed}
+.ms-card .k{font-size:12px;font-weight:590}
+.ms-card .r{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.ms-card .n{font:600 30px/1 "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:-.04em}
+.ms-card .n small{font-size:13px;font-weight:500;letter-spacing:0;color:rgba(38,105,237,.7)}
+.ms-card .ap{height:44px;padding:0 22px;border:0;border-radius:22px;background:#2669ed;color:#fff;font-size:15px;font-weight:590}
+.ms-card .t{margin-top:6px;font-size:13px;line-height:18px;color:rgba(38,105,237,.85)}
+.ms-card .nx{margin-top:8px;font-size:12px;color:rgba(38,105,237,.6)}
+.ms-card.grey{background:rgba(118,118,128,.12);color:#111115}
+.ms-card.grey .n small,.ms-card.grey .t,.ms-card.grey .k span{color:rgba(60,60,67,.6)}
+.ms-card.grey .k{display:flex;justify-content:space-between}.ms-card.grey .k span{font-weight:400}
+.ms-card .bar{height:4px;margin-top:12px;border-radius:2px;background:rgba(17,17,21,.12)}.ms-card .bar i{display:block;height:4px;border-radius:2px;background:#111115}
+.ms-ok{display:flex;align-items:center;gap:12px;min-height:64px;box-sizing:border-box;padding:0 16px;border-radius:20px;background:rgba(118,118,128,.12)}
+.ms-ok .tt{flex:1;font-size:15px;font-weight:510;letter-spacing:-.15px}
+.ms-ok .tt span{display:block;margin-top:2px;font-size:12px;font-weight:400;letter-spacing:0;color:rgba(60,60,67,.6)}
+.ms-ok button{border:0;background:none;padding:8px 0;font-size:13px;font-weight:590;color:#2669ed}
+/* section heads */
+.ms-sec{display:flex;align-items:center;justify-content:space-between;min-height:36px;margin-top:12px;padding-left:10px;font-size:12px;line-height:14px;text-transform:uppercase;letter-spacing:.02em;color:rgba(60,60,67,.6)}
+.ms-sch{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:0;border-radius:18px;background:rgba(118,118,128,.12);font-size:13px;font-weight:510;letter-spacing:0;text-transform:none;color:#111115}
+.ms-edit{border:0;background:none;padding:8px 10px;margin-right:0;font-size:13px;font-weight:590;letter-spacing:0;text-transform:none;color:#2669ed}
+/* calendar */
+.ms-cal{display:grid;grid-template-columns:repeat(7,1fr);margin-top:8px}
+.ms-d{display:flex;flex-direction:column;align-items:center;gap:4px}
+.ms-d .w{font-size:11px;font-weight:590;color:rgba(60,60,67,.6)}
+.ms-d[data-today] .w{color:#2669ed}
+.ms-d .c{width:36px;height:36px;box-sizing:border-box;border-radius:18px;display:flex;align-items:center;justify-content:center;font:500 13px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.3)}
+.ms-d[data-st=done] .c,.ms-d[data-st=part] .c{background:rgba(118,118,128,.12)}
+.ms-d[data-st=part] .c,.ms-d[data-st=due] .c{border:1.5px solid #2669ed}
+.ms-d[data-st=due] .c{font-weight:600;color:#2669ed}
+.ms-d[data-st=plan] .c{border:1.5px dashed rgba(60,60,67,.3);color:rgba(60,60,67,.6)}
+.ms-d .dt{display:flex;gap:3px;height:5px}.ms-d .dt i{width:5px;height:5px;border-radius:3px;background:rgba(60,60,67,.3)}
+.ms-d[data-st=done] .dt i,.ms-d[data-st=part] .dt i:first-child{background:#111115}.ms-d[data-st=part] .dt i+i,.ms-d[data-st=due] .dt i{background:#2669ed}
+.ms-leg{display:flex;gap:14px;margin-top:10px;padding-left:10px;font-size:11px;color:rgba(60,60,67,.45)}
+.ms-leg span{display:flex;align-items:center;gap:4px}.ms-leg i{width:5px;height:5px;border-radius:3px;background:rgba(60,60,67,.3)}
+/* body tiles */
+.ms-tiles{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px}
+.ms-tile{position:relative;height:136px;border:0;border-radius:24px;background:rgba(118,118,128,.12);text-align:left;padding:0;color:#111115}
+.ms-tile .h{position:absolute;left:16px;right:16px;top:14px;display:flex;justify-content:space-between;font-size:12px;font-weight:590}
+.ms-tile .h span{font:500 12px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.6)}
+.ms-tile .v{position:absolute;left:16px;top:36px;font:600 20px/1 "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:-.04em}
+.ms-tile .v small{font-size:12px;font-weight:500;letter-spacing:0;color:rgba(60,60,67,.6)}
+.ms-tile svg{position:absolute;left:16px;right:16px;bottom:16px;width:calc(100% - 32px);height:40px}
+.ms-tile .no{position:absolute;left:16px;bottom:16px;font-size:12px;color:rgba(60,60,67,.45)}
+/* bottom banner */
+.ms-ban{position:fixed;z-index:29;left:50%;transform:translateX(-50%);bottom:calc(max(21px,calc(env(safe-area-inset-bottom,0px) - 13px)) + 76px);width:calc(min(430px,100vw) - 32px);height:60px;box-sizing:border-box;padding:0 8px 0 18px;border-radius:30px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;background:rgba(250,250,252,.72);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);
+  box-shadow:1.25px 0 0 -.75px #d0d0d0,-1.25px 0 0 -.75px #d0d0d0,0 0 0 .5px #e8e8e8,0 8px 15px rgba(0,0,0,.02);transition:opacity .25s,transform .35s var(--spring)}
+body:not(.tab-measure) .ms-ban,body.ms-page .ms-ban,body.toast-on .ms-ban,html.sh-lock .ms-ban{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(8px)}
+.ms-ban .tx{min-width:0;font-size:15px;font-weight:510;letter-spacing:-.15px;color:#111115;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ms-ban .tx span{display:block;font-size:12px;font-weight:590;letter-spacing:0;color:#2669ed}
+.ms-ban.calm .tx span{color:rgba(60,60,67,.6)}
+.ms-ban button{flex:none;width:44px;height:44px;border:0;border-radius:22px;background:#2669ed;color:#fff;display:flex;align-items:center;justify-content:center}
+.ms-ban.calm button{background:rgba(118,118,128,.12);color:#111115}
+/* toast = glass bar with a blue text button, everywhere (9 Nov) */
+html body .toast{width:calc(min(430px,100vw) - 32px);max-width:none;height:60px;box-sizing:border-box;padding:0 8px 0 18px;border-radius:30px;justify-content:space-between;gap:8px;
+  font-size:15px;font-weight:510;letter-spacing:-.15px;line-height:20px;background:rgba(250,250,252,.72);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);
+  box-shadow:1.25px 0 0 -.75px #d0d0d0,-1.25px 0 0 -.75px #d0d0d0,0 0 0 .5px #e8e8e8,0 8px 15px rgba(0,0,0,.04)}
+html body .toast button{flex:none;height:44px;padding:0 16px;margin:0;border:0;border-radius:22px;background:none;color:#2669ed;font-size:15px;font-weight:590}
+/* pages: History, one metric */
+.ms-pg{position:fixed;z-index:35;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#f6f6fa;transform:translateX(100%);transition:transform .45s var(--spring)}
+.ms-pg.show{transform:none}
+.ms-pg .in{max-width:430px;margin:0 auto;padding:calc(var(--sat,env(safe-area-inset-top,0px)) + 8px) 16px 120px;position:relative}
+.ms-pgh{display:flex;align-items:center;justify-content:space-between;height:44px}
+.ms-pgh .t{font-size:15px;font-weight:510;letter-spacing:-.15px}
+.ms-rb{width:44px;height:44px;border:0;border-radius:22px;background:rgba(118,118,128,.12);color:#111115;display:flex;align-items:center;justify-content:center;padding:0}
+.ms-seg2{display:flex;gap:4px;margin-top:12px}
+.ms-seg2 button{flex:1;height:36px;border:0;border-radius:18px;background:none;font-size:15px;font-weight:510;color:rgba(60,60,67,.6)}
+.ms-seg2 button.on{background:rgba(118,118,128,.12);color:#111115}
+.ms-wk{display:flex;justify-content:space-between;margin:24px 0 16px;padding:0 10px;font-size:12px;line-height:14px;color:rgba(60,60,67,.6)}
+.ms-wk span:first-child{text-transform:uppercase;letter-spacing:.02em}.ms-wk b{font:600 12px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(17,17,21,.8)}
+.ms-hr{position:relative;height:44px;margin-bottom:10px;touch-action:pan-y}
+.ms-hr .rc{position:relative;z-index:1;display:flex;align-items:center;gap:10px;height:44px;border-radius:16px;transition:transform .45s var(--spring),background-color .2s}
+.ms-hr.sw .rc{background:rgba(118,118,128,.12)}
+.ms-hr .cap{flex:none;width:88px;height:44px;box-sizing:border-box;padding:0 10px;border:0;border-radius:12px;background:rgba(118,118,128,.12);display:block;text-align:left;white-space:nowrap;line-height:44px;font:600 14px/44px "SF Mono",ui-monospace,Menlo,monospace;color:#111115}
+.ms-hr .cap small{font-size:14px;font-weight:500;color:rgba(60,60,67,.6)}
+.ms-hr .nm{flex:1;min-width:0;font-size:15px;font-weight:510;letter-spacing:-.15px;line-height:20px}
+.ms-hr .mc{display:block;margin-top:2px;font-size:11px;font-weight:400;letter-spacing:0;line-height:13px;color:rgba(60,60,67,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ms-hr .mc b{font:400 11px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(17,17,21,.8);margin-right:1px}
+.ms-hr .mc em{font-style:normal;margin-right:8px}
+.ms-hr .del{position:absolute;right:0;top:-4px;width:56px;height:52px;border:0;border-radius:16px;background:rgba(118,118,128,.12);color:#d02c2a;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.ms-hr .del svg{width:20px;height:22px}
+.ms-hr.sw .del{opacity:1}
+.ms-hr .rc{margin:0}.ms-hr.sw .rc{margin:-4px 0;height:52px}
+.ms-mbig{display:block;margin:4px 0 0 8px;font:600 56px/1 "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:-.05em}
+.ms-mbig i{font-style:normal;font-size:28px}.ms-mbig u{text-decoration:none;font-size:18px;font-weight:700;letter-spacing:0;margin-left:4px;color:rgba(60,60,67,.6)}
+.ms-msub{margin-top:6px;padding:0 10px;font-size:13px;color:rgba(60,60,67,.6)}.ms-msub b{font:600 13px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(17,17,21,.8)}
+.ms-mch{height:150px;margin:16px -6px 0}.ms-mch svg{width:100%;height:100%;display:block}
+.ms-ax2{display:flex;justify-content:space-between;padding:0 10px;font-size:11px;color:rgba(60,60,67,.45)}
+/* sheets */
+.sheet.ps .ms-r{position:relative;height:248px;margin:8px -16px 0;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;overflow:hidden}
+.sheet.ps .ms-r .gr-t span{position:absolute;left:16px;height:2px;border-radius:1px;margin-top:-1px}
+.sheet.ps .ms-r .gr-t em{position:absolute;left:64px;margin-top:-7px;font:400 11px "SF Mono",ui-monospace,Menlo,monospace;font-style:normal;color:rgba(60,60,67,.45)}
+.sheet.ps .ms-rv{position:absolute;left:114px;top:76px;display:flex;flex-direction:column}
+.sheet.ps .ms-rv .l{font-size:15px;font-weight:510;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-rv b{position:relative;font:600 72px/1 "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:-.05em;color:#111115;white-space:nowrap}
+.sheet.ps .ms-rv b i{font-style:normal;font-size:36px;letter-spacing:-.02em}
+.sheet.ps .ms-rv b u{text-decoration:none;font-size:24px;font-weight:700;letter-spacing:0;margin-left:4px;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-rv b .cr{display:none;width:2px;height:30px;margin-left:3px;background:rgba(60,60,67,.45);vertical-align:middle}
+.sheet.ps .ms-rv.typing b .cr{display:inline-block;animation:msBlink 1s steps(1) infinite}
+@keyframes msBlink{50%{opacity:0}}
+.sheet.ps .ms-rv input{position:absolute;inset:0;opacity:0;width:100%;border:0;font-size:16px}
+.sheet.ps .ms-rv .s{font-size:11px;font-weight:590;color:rgba(60,60,67,.6);margin-top:4px}
+.sheet.ps .ms-rv .s b{font:590 11px "SF Mono",ui-monospace,Menlo,monospace;letter-spacing:0;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-st{display:flex;gap:2px}.sheet.ps .ms-st button{height:22px;padding:0 8px;border:0;border-radius:11px;background:none;font-size:12px;text-transform:none;letter-spacing:0;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-st button.on{background:rgba(118,118,128,.12);color:#111115}
+.sheet.ps .ms-date{position:relative;margin-top:14px;min-height:64px;box-sizing:border-box;padding:10px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12);display:flex;flex-direction:column;justify-content:space-between}
+.sheet.ps .ms-date span{font-size:12px;color:rgba(60,60,67,.6)}.sheet.ps .ms-date b{font-size:17px;font-weight:590}
+.sheet.ps .ms-date input{position:absolute;inset:0;opacity:0;width:100%}
+.sheet.ps .ms-days{display:flex;gap:4px}
+.sheet.ps .ms-days button{flex:1;height:44px;border:0;border-radius:22px;background:none;font-size:15px;font-weight:510;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-days button.on{background:rgba(118,118,128,.12);color:#111115}
+.sheet.ps .ms-tip{margin-top:8px;padding:14px 16px;border-radius:20px;background:rgba(118,118,128,.07);font-size:13px;line-height:18px;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-tip b{display:block;margin-bottom:4px;font-weight:590;color:#111115}
+.sheet.ps .ms-opt{display:flex;flex-direction:column;gap:4px}
+.sheet.ps .ms-opt button{display:flex;align-items:center;justify-content:space-between;min-height:56px;box-sizing:border-box;padding:0 10px;border:0;border-radius:16px;background:none;text-align:left;color:#111115}
+.sheet.ps .ms-opt button.on{background:rgba(118,118,128,.12)}
+.sheet.ps .ms-opt button.dim{color:rgba(60,60,67,.45)}
+.sheet.ps .ms-opt .a{font-size:15px;font-weight:510;letter-spacing:-.15px}.sheet.ps .ms-opt .a span{display:block;margin-top:2px;font-size:11px;font-weight:400;letter-spacing:0;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-opt .b{display:flex;align-items:center;gap:12px;font:400 13px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.6)}
+.sheet.ps .ms-opt .b i{width:10px;display:flex}
 </style>
 
 <div class="app" id="app">
@@ -2529,6 +2676,7 @@ html body .sheet.ps .vt[hidden]{display:none}
   <div class="ltool" id="ltool" role="toolbar" aria-label="List tools"></div>
 
   <section class="tabsec" id="secMeasure" hidden>
+<div id="mOld">
     <div class="list-head">
       <button class="mtitle" id="metricBtn" aria-label="Choose metric"><h2 id="metricName">Weight</h2><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 4.25L6 7.75L9.5 4.25" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="per" id="mper"><button data-v="w">1W</button><button data-v="m">1M</button><button data-v="q">3M</button><button data-v="a">ALL</button></div>
@@ -2541,6 +2689,7 @@ html body .sheet.ps .vt[hidden]{display:none}
     </div>
     <div id="mlog"></div>
     <div id="moreBox"></div>
+  </div>
   </section>
 
   <section class="tabsec" id="secBudget" hidden>
@@ -4843,11 +4992,7 @@ function applyKcal(d) {
   g.c = r0(c); recenter(g); save(); renderHeader(); renderMeasure();
   toast(`${g.name}: ${g.k} kcal, carbs ${g.c} g`, { label: 'Undo', fn: () => { Object.assign(g, before); save(); renderHeader(); renderMeasure(); } });
 }
-function renderMeasure(animate) {
-  $('#metricName').textContent = METRICS[S.ui.metric].label;
-  perSet($('#mper'), S.ui.period);
-  drawChart(animate); renderSug(); renderLog();
-}
+function renderMeasure() { msRender(); }
 
 /* ---- chart ---- */
 let CG = null;
@@ -5963,6 +6108,365 @@ document.body.classList.add('f31');
 })();
 syncGhost();
 
+/* ================= Measure (9 Nov, canvas «Measure · финал») ================= */
+const MS_DEF = { days: [1, 2, 4, 5, 0], body: 1, when: 'm', tiles: ['fat', 'waist'], per: 'q', sites: 3 };
+const msS = () => { if (!S.ms) S.ms = {}; for (const k in MS_DEF) if (S.ms[k] == null) S.ms[k] = JSON.parse(JSON.stringify(MS_DEF[k])); return S.ms; };
+const MS_CHK = '<svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true"><path d="M1 4l2.8 2.8L9 1" stroke="#111115" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const MS_PLUS = (c = '#fff', w = 2.2, s = 20) => `<svg width="${s}" height="${s}" viewBox="0 0 18 18" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg>`;
+const MS_CAL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111115" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>';
+const MS_CHEV = '<svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="rgba(60,60,67,.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const MS_DOTS = '<svg width="17" height="4" viewBox="0 0 17 4" aria-hidden="true"><circle cx="2" cy="2" r="2" fill="#111115"/><circle cx="8.5" cy="2" r="2" fill="#111115"/><circle cx="15" cy="2" r="2" fill="#111115"/></svg>';
+const MS_BACK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
+const MS_PER = { m: ['1M', 30], q: ['3M', 91], h: ['6M', 182], a: ['ALL', 0] };
+const MS_PERL = { m: 'last month', q: 'last 3 months', h: 'last 6 months', a: 'all time' };
+const msG = v => Math.round(Math.abs(v) * 100) * 10;                       // kg a week → grams, step 10
+const msKg = v => (Math.round(v * 10) / 10).toFixed(1);
+const msBig = (v, unit = 'kg', cls = 'ms-big') => { if (v == null) return `<span class="${cls}">—</span>`; const [a, b] = msKg(v).split('.'); return `<span class="${cls}">${a}<i>.${b}</i><u>${unit}</u></span>`; };
+const msDayKind = t => { const m = msS(), wd = new Date(t).getDay(); return wd === m.body ? 2 : m.days.includes(wd) ? 1 : 0; };
+const msWLog = () => logSorted().filter(e => e.w != null);
+function msRateAt(t) {                      // kg a week, regression over the 3 weeks up to day t
+  const win = msWLog().filter(e => { const x = dnum(e.d); return x <= t && x > t - 21 * DAY; });
+  if (win.length < 4 || dnum(win[win.length - 1].d) - dnum(win[0].d) < 7 * DAY) return null;
+  const xs = win.map(e => dnum(e.d) / DAY), ys = win.map(e => e.w), mx = xs.reduce((a, b) => a + b) / xs.length, my = ys.reduce((a, b) => a + b) / ys.length;
+  let n = 0, d = 0; xs.forEach((x, i) => { n += (x - mx) * (ys[i] - my); d += (x - mx) ** 2; }); return n / d * 7;
+}
+function msCheck() {                         // the weekly check: on the body day, after that day's weigh-in
+  const m = msS(), today = dnum(todayISO()); let t = today;
+  while (new Date(t).getDay() !== m.body) t -= DAY;
+  const te = S.log.find(e => e.d === iso(t));
+  if (t === today && !(te && te.w != null)) t -= 7 * DAY;
+  const first = msWLog()[0], days = first ? Math.round((today - dnum(first.d)) / DAY) + 1 : 0;
+  const rate = msRateAt(t), g = goal();
+  const adj = rate == null ? 0 : Math.max(-500, Math.min(500, Math.round((g.rate - rate) * 1100 / 10) * 10));
+  return { t, next: t + 7 * DAY, rate, adj, learn: days < 14 || rate == null, days };
+}
+function msTrend() { const s = series('w'); return trendOf(s); }
+function msToday() {
+  const t = dnum(todayISO()), k = msDayKind(t), e = S.log.find(x => x.d === todayISO());
+  const w = !!(e && e.w != null), b = !!(e && (e.sf || e.circ));
+  return { t, k, e, w, b, done: k === 0 ? w : k === 1 ? w : w && b };
+}
+const msFmtD = t => `${new Date(t).toLocaleDateString('en-GB', { weekday: 'short' })} ${new Date(t).getDate()} ${new Date(t).toLocaleDateString('en-GB', { month: 'short' })}`;
+
+/* ---- the chart: weight (dots + black trend) never rises above the line under the header; only the blue plan may */
+function msChart(el) {
+  const m = msS(), W = el.clientWidth || 376, H = 216, safe = 116, bot = 208;   // safe = header text bottom inside the chart box
+  const now = dnum(todayISO()), pts = series('w'), first = pts.length ? pts[0].t : now;
+  const span = MS_PER[m.per][1] || Math.max(7, (now - first) / DAY);
+  const t0 = Math.max(now - span * DAY, Math.min(first, now - 6 * DAY)), vp = pts.filter(p => p.t >= t0), tr = trendOf(pts).filter(p => p.t >= t0);
+  if (!vp.length) { el.innerHTML = ''; return null; }
+  const vals = vp.map(p => p.v).concat(tr.map(p => p.v));
+  let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < .6) { const c = (hi + lo) / 2; lo = c - .3; hi = c + .3; }
+  const X = t => (t - t0) / (now - t0) * W, Y = v => safe + (hi - v) / (hi - lo) * (bot - safe);
+  const g = goal(), sd = g.sd ? dnum(g.sd) : first, sw = g.sw ?? (pts[0] ? pts[0].v : null), exp = t => sw + g.rate * (t - sd) / (7 * DAY);
+  const ck = msCheck();
+  let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">`;
+  if (!ck.learn && sw != null && g.rate) s += `<line x1="${X(Math.max(t0, sd)).toFixed(1)}" y1="${Y(exp(Math.max(t0, sd))).toFixed(1)}" x2="${W}" y2="${Y(exp(now)).toFixed(1)}" stroke="#2669ed" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="round"/>`;
+  s += vp.map(p => `<circle cx="${X(p.t).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="2.5" fill="rgba(17,17,21,.18)"/>`).join('');
+  if (tr.length > 1) { const P = tr.map(p => [X(p.t), Y(p.v)]); let d = `M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
+    for (let i = 1; i < P.length; i++) { const [x0, y0] = P[i - 1], [x1, y1] = P[i], mx = (x0 + x1) / 2; d += ` C${mx.toFixed(1)},${y0.toFixed(1)} ${mx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; }
+    s += `<path d="${d}" fill="none" stroke="#111115" stroke-width="2" stroke-linecap="round"/>`; }
+  const L = tr.length ? tr[tr.length - 1] : vp[vp.length - 1];
+  s += `<circle cx="${Math.min(X(L.t), W - 6).toFixed(1)}" cy="${Y(L.v).toFixed(1)}" r="4.5" fill="#111115" stroke="#f6f6fa" stroke-width="2"/></svg>`;
+  el.innerHTML = s;
+  return { t0, plan: !ck.learn && sw != null ? exp(now) : null };
+}
+
+function msSpark(vals) {
+  if (vals.length < 2) return '';
+  let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < 1e-6) hi = lo + 1;
+  const W = 138, H = 40, X = i => i / (vals.length - 1) * (W - 4), Y = v => 3 + (hi - v) / (hi - lo) * (H - 6);
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${vals.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ')}" fill="none" stroke="#111115" stroke-opacity=".7" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`
+    + `<circle cx="${X(vals.length - 1).toFixed(1)}" cy="${Y(vals[vals.length - 1]).toFixed(1)}" r="3" fill="#111115"/></svg>`;
+}
+const MS_M = {
+  fat: ['Body fat', '%', e => bfOf(e)], waist: ['Waist', 'cm', e => e.circ && e.circ.waist], lean: ['Lean mass', 'kg', e => { const b = bfOf(e); return b != null && e.w != null ? e.w * (1 - b / 100) : null; }],
+  arm: ['Arm', 'cm', e => e.circ && e.circ.arm], chest: ['Chest', 'cm', e => e.circ && e.circ.chest], folds: ['Skinfolds', 'mm', e => sfSum(e)],
+  hips: ['Hips', 'cm', e => e.circ && e.circ.hips], neck: ['Neck', 'cm', e => e.circ && e.circ.neck], thigh: ['Thigh', 'cm', e => e.circ && e.circ.thigh],
+};
+function msSeries(k, per) {
+  const f = MS_M[k][2], now = dnum(todayISO()), span = MS_PER[per || msS().per][1];
+  return logSorted().map(e => ({ t: dnum(e.d), v: f(e), e })).filter(p => p.v != null && isFinite(p.v) && (!span || p.t >= now - span * DAY));
+}
+const msFmtV = (k, v) => k === 'folds' ? String(Math.round(v)) : msKg(v);
+
+/* ---- render ---- */
+function msRender() {
+  const sec = $('#secMeasure'); if (!sec) return;
+  let root = $('#msr'); if (!root) { root = document.createElement('div'); root.id = 'msr'; sec.appendChild(root); }
+  const m = msS(), g = goal(), ck = msCheck(), tr = msTrend(), last = tr.length ? tr[tr.length - 1].v : null, td = msToday();
+  const rate = ck.rate, slow = rate != null && Math.abs(g.rate - rate) * 1100 >= 50;
+  const rateTxt = ck.learn ? 'Not enough data for a trend yet'
+    : `${rate >= 0 ? 'Gaining' : 'Losing'} <span class="${slow ? 'bl' : ''}"><b>${msG(rate)}</b> g</span> a week, plan <b>${msG(g.rate)}</b> g`;
+  let card;
+  if (ck.learn) card = `<div class="ms-card grey"><div class="k">LEARNING YOUR TREND<span>${Math.min(ck.days, 14)} of 14 days</span></div><div class="r"><span class="n">${Math.max(1, 14 - ck.days)}<small> more days</small></span></div>
+      <div class="t">Keep weighing in. Then we’ll tell you if ${esc(g.name)} needs more or less food.</div><div class="bar"><i style="width:${Math.min(100, ck.days / 14 * 100).toFixed(0)}%"></i></div></div>`;
+  else if (m.applied === iso(ck.t)) card = `<div class="ms-ok">${MS_CHK}<div class="tt">Food updated: ${r0(g.k)} kcal a day<span>Next check ${msFmtD(ck.next)}</span></div>${m.undo ? '<button type="button" id="msUndo">Undo</button>' : ''}</div>`;
+  else if (Math.abs(ck.adj) < 50) card = `<div class="ms-ok">${MS_CHK}<div class="tt">On track, food stays the same<span>Next check ${msFmtD(ck.next)}</span></div></div>`;
+  else { const more = ck.adj > 0;
+    card = `<div class="ms-card"><div class="k">${more ? 'EAT MORE' : 'EAT LESS'}</div>
+      <div class="r"><span class="n">${more ? '+' : '−'}${Math.abs(ck.adj)}<small> kcal a day</small></span><button type="button" class="ap" id="msApply">Apply</button></div>
+      <div class="t">You ${rate >= 0 ? 'gain' : 'lose'} ${msG(rate)} g a week, the plan is ${msG(g.rate)} g. ${esc(g.name)}: ${r0(g.k)} → ${r0(g.k + ck.adj)} kcal</div>
+      <div class="nx">Next check ${msFmtD(ck.next)}</div></div>`; }
+  // calendar: three days back, today, three ahead
+  const logd = new Set(msWLog().map(e => e.d));
+  let cal = '';
+  for (let i = -3; i <= 3; i++) {
+    const t = td.t + i * DAY, k = msDayKind(t), d = iso(t); let st;
+    if (i < 0) st = logd.has(d) ? 'done' : k ? 'plan' : 'off';
+    else if (i === 0) st = k === 0 ? (td.w ? 'done' : 'off') : td.done ? 'done' : td.w && k === 2 ? 'part' : 'due';
+    else st = k ? 'plan' : 'off';
+    const inner = st === 'done' || st === 'part' ? MS_CHK : new Date(t).getDate();
+    cal += `<div class="ms-d" data-st="${st}"${i === 0 ? ' data-today="1"' : ''}><span class="w">${i === 0 ? 'Today' : 'SMTWTFS'[new Date(t).getDay()]}</span><span class="c">${inner}</span><span class="dt">${'<i></i>'.repeat(k)}</span></div>`;
+  }
+  // body tiles
+  const tiles = m.tiles.map(k => { const s = msSeries(k), [lab, u] = MS_M[k];
+    if (!s.length) return `<button type="button" class="ms-tile" data-m="${k}"><span class="h">${lab.toUpperCase()}</span><span class="no">No data yet</span></button>`;
+    const v = s[s.length - 1].v, d = v - s[0].v;
+    return `<button type="button" class="ms-tile" data-m="${k}"><span class="h">${lab.toUpperCase()}<span>${d >= 0 ? '+' : '−'}${msFmtV(k, Math.abs(d))}</span></span><span class="v">${msFmtV(k, v)}<small>${u}</small></span>${msSpark(s.map(p => p.v))}</button>`; }).join('');
+  root.innerHTML = `<div class="ms-hero"><div class="ms-chart" id="msChart"></div>
+      <div class="ms-tr"><button type="button" class="ms-gl" id="msGoal">${esc(g.name)}${MS_DOTS}</button><button type="button" class="ms-hist" id="msHist">History${MS_CHEV}</button></div>
+      <div class="ms-kick"><span>AVERAGE WEIGHT</span><span class="ms-per" id="msPer">${Object.entries(MS_PER).map(([k, [l]]) => `<button type="button" data-v="${k}"${k === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</span></div>
+      ${msBig(last)}<div class="ms-rate">${rateTxt}</div>
+      <div class="ms-axis" id="msAxis"></div></div>
+    ${card}
+    <div class="ms-sec"><span>Weigh-ins</span><button type="button" class="ms-sch" id="msSch">${MS_CAL}Schedule</button></div>
+    <div class="ms-cal">${cal}</div>
+    <div class="ms-leg"><span><i></i>weight</span><span><i></i><i></i>weight + body</span></div>
+    <div class="ms-sec"><span>Body · ${MS_PERL[m.per]}</span><button type="button" class="ms-edit" id="msEdit">Edit</button></div>
+    ${m.tiles.length ? `<div class="ms-tiles">${tiles}</div>` : ''}`;
+  const info = msChart($('#msChart'));
+  if (info) $('#msAxis').innerHTML = `<span>${shortDate(info.t0)}</span>${info.plan != null ? `<span class="pl">plan <b>${msKg(info.plan)}</b></span>` : '<span></span>'}<span>today</span>`;
+  // banner
+  let ban = $('#msBan'); if (!ban) { ban = document.createElement('div'); ban.className = 'ms-ban'; ban.id = 'msBan'; document.body.appendChild(ban); ban.addEventListener('click', () => { haptic(); msTodaySheet(); }); }
+  let next = td.t + DAY; for (let i = 0; i < 7 && !msDayKind(next); i++) next += DAY;
+  const nday = next - td.t === DAY ? 'tomorrow' : 'on ' + new Date(next).toLocaleDateString('en-GB', { weekday: 'long' });
+  const B = td.k === 0 && !td.w ? ['NOTHING TODAY', `Next weigh-in ${nday}`, 'calm', MS_PLUS('#111115', 2)]
+    : !td.w ? ['TODAY', td.k === 2 ? 'Weigh in and measure your body' : 'Weigh in', '', MS_PLUS()]
+    : td.k === 2 && !td.b ? [`WEIGHED IN · ${msKg(td.e.w)} KG`, 'Body measurements left', '', MS_PLUS()]
+    : ['ALL DONE FOR TODAY', `Next weigh-in ${nday}`, 'calm', MS_CHK.replace('width="10" height="8"', 'width="18" height="14"').replace('stroke-width="2"', 'stroke-width="1.6"')];
+  ban.className = 'ms-ban' + (B[2] ? ' ' + B[2] : '');
+  ban.innerHTML = `<div class="tx"><span>${B[0]}</span>${B[1]}</div><button type="button" aria-label="${B[0] === 'ALL DONE FOR TODAY' ? 'Done for today, add another' : 'Measure'}">${B[3]}</button>`;
+  // events
+  $('#msGoal').addEventListener('click', () => goalMenu());
+  $('#msHist').addEventListener('click', () => { haptic(); msHistory(); });
+  $('#msPer').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.v === m.per) return; haptic(); m.per = b.dataset.v; save(); msRender(); });
+  $('#msSch').addEventListener('click', () => { haptic(); msSchedule(); });
+  $('#msEdit').addEventListener('click', () => { haptic(); msCharts(); });
+  root.querySelectorAll('.ms-tile').forEach(b => b.addEventListener('click', () => { haptic(); msMetric(b.dataset.m); }));
+  const ap = $('#msApply'); if (ap) ap.addEventListener('click', () => {
+    haptic(); const before = JSON.parse(JSON.stringify(g)), d = ck.adj;
+    applyKcal(d); m.applied = iso(ck.t); m.undo = { gid: g.id, before }; save(); msRender();
+    toast(`${g.name} is now ${r0(goal().k)} kcal`, { label: 'Balance', fn: () => { switchTab('meal'); setTimeout(() => balanceSheet(), 520); } });
+  });
+  const un = $('#msUndo'); if (un) un.addEventListener('click', () => { haptic(); const u = m.undo, gg = S.goals.find(x => x.id === u.gid); if (gg) Object.assign(gg, u.before); m.applied = null; m.undo = null; save(); renderHeader(); msRender(); });
+}
+
+/* ---- Today / entry sheet: weight on a ruler (0.1 kg a tick), tap the number to type; body on the body day ---- */
+const MS_SITES7 = { m: [['ch', 'Chest'], ['ab', 'Abdomen'], ['th', 'Thigh'], ['tr', 'Triceps'], ['ss', 'Subscap.'], ['si', 'Suprail.'], ['ma', 'Midaxillary']],
+  f: [['tr', 'Triceps'], ['si', 'Suprail.'], ['th', 'Thigh'], ['ch', 'Chest'], ['ab', 'Abdomen'], ['ss', 'Subscap.'], ['ma', 'Midaxillary']] };
+const MS_3 = { m: { a: 'ch', b: 'ab', c: 'th' }, f: { a: 'tr', b: 'si', c: 'th' } };
+function msTodaySheet(d0, isNew) {
+  const m = msS(), td = msToday(), sex = (S.body && S.body.sex) || 'm';
+  let d = d0 || todayISO();
+  const ex = () => S.log.find(e => e.d === d);
+  const prevW = dd => { const p = msWLog().filter(e => e.d < dd); return p.length ? p[p.length - 1] : null; };
+  const body = !!d0 || msDayKind(dnum(d)) === 2 || !!(ex() && (ex().sf || ex().circ));
+  let w = (ex() && ex().w != null ? ex().w : (prevW(d) || {}).w) ?? 70, sites = m.sites;
+  const title = isNew ? 'New entry' : d === todayISO() ? `Today · ${msFmtD(dnum(d))}` : fmtDate(d);
+  const e0 = ex() || {}, sf7 = e0.sf7 || {}, sf = e0.sf || {}, circ = e0.circ || {};
+  const last = [...S.log].filter(e => e.d < d && (e.sf || e.circ)).sort((a, b) => a.d < b.d ? 1 : -1)[0] || {};
+  const v7 = k => { if (sf7[k] != null) return sf7[k]; const m3 = MS_3[sex]; const a = Object.keys(m3).find(x => m3[x] === k); return a && sf[a] != null ? sf[a] : ''; };
+  const ph7 = k => { const s7 = last.sf7 || {}; if (s7[k] != null) return s7[k]; const m3 = MS_3[sex]; const a = Object.keys(m3).find(x => m3[x] === k); return a && last.sf && last.sf[a] != null ? last.sf[a] : '0'; };
+  const cph = k => last.circ && last.circ[k] != null ? last.circ[k] : '0';
+  const bodyHTML = () => `<div class="ps-cap"><span>Skinfolds · mm</span><span class="ms-st" id="msSt"><button type="button" data-v="3"${sites === 3 ? ' class="on"' : ''}>3 sites</button><button type="button" data-v="7"${sites === 7 ? ' class="on"' : ''}>7 sites</button></span></div>
+    <div class="ps-three">${MS_SITES7[sex].slice(0, sites).map(([k, l]) => fnum('msF' + k, l, v7(k), 'mm', ph7(k))).join('')}</div>
+    <div class="ps-cap"><span>Circumferences · cm</span><span style="text-transform:none;letter-spacing:0">optional</span></div>
+    <div class="ps-three">${[['waist', 'Waist'], ['neck', 'Neck'], ['hips', 'Hips'], ['chest', 'Chest'], ['arm', 'Arm'], ['thigh', 'Thigh']].map(([k, l]) => fnum('msC' + k, l, circ[k] ?? '', 'cm', cph(k))).join('')}</div>`;
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="msX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">${esc(title)}</span><button type="button" class="ps-c ps-ok" id="msOk" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
+    ${isNew ? `<label class="ms-date"><span>Date</span><b id="msDv">${esc(fmtDate(d))}</b><input type="date" id="msD" value="${d}" max="${todayISO()}"></label>` : ''}
+    <div class="ms-r" id="msR"><div class="gr-t"></div><div class="ms-rv" id="msRv"><span class="l">Weight</span><b id="msWv"></b><input id="msWi" inputmode="decimal" autocomplete="off" aria-label="Weight, kg"><span class="s" id="msWs"></span></div></div>
+    <div id="msBody">${body ? bodyHTML() : ''}</div>`, s => {
+    const q = id => s.querySelector('#' + id), T = q('msR').querySelector('.gr-t');
+    let typing = null;
+    const show = () => { const str = typing != null ? typing : msKg(w), [a, b] = str.split('.');
+      q('msWv').innerHTML = `${a || ''}${b != null ? `<i>.${b}</i>` : ''}<u>kg</u><span class="cr"></span>`; };
+    const draw = () => { let h = ''; const c = Math.round(w * 10);
+      for (let k = -8; k <= 8; k++) { const y = 124 + k * 16, tn = c - k, whole = tn % 10 === 0, op = Math.max(.12, 1 - Math.abs(k) / 9);
+        if (k === 0) { h += `<span style="top:${y}px;width:66px;background:#111115"></span>`; continue; }
+        h += `<span style="top:${y}px;width:${whole ? 42 : 26}px;opacity:${op.toFixed(2)};background:rgba(17,17,21,${whole ? .2 : .1})"></span>`;
+        if (whole) h += `<em style="top:${y}px;opacity:${op.toFixed(2)}">${tn / 10}</em>`; }
+      T.innerHTML = h; show();
+      const p = prevW(d), tr = msTrend(), av = tr.length ? tr[tr.length - 1].v : null;
+      q('msWs').innerHTML = p ? `${esc(new Date(dnum(p.d)).toLocaleDateString('en-GB', { weekday: 'long' }))} <b>${msKg(p.w)}</b>${av != null && d === todayISO() ? ` · average <b>${msKg(av)}</b>` : ''}` : ''; };
+    draw();
+    let D = null;
+    q('msR').addEventListener('pointerdown', e => { if (e.target.closest('#msRv')) return; D = { y: e.clientY, v: w, t: Math.round(w * 10) }; q('msR').setPointerCapture(e.pointerId); });
+    q('msR').addEventListener('pointermove', e => { if (!D) return; w = Math.min(300, Math.max(20, Math.round(D.v * 10 + (e.clientY - D.y) / 16) / 10)); if (Math.round(w * 10) !== D.t) { D.t = Math.round(w * 10); haptic(); } draw(); });
+    const up = () => { D = null; }; q('msR').addEventListener('pointerup', up); q('msR').addEventListener('pointercancel', up);
+    const wi = q('msWi');
+    wi.addEventListener('focus', () => { typing = ''; q('msRv').classList.add('typing'); show(); });
+    wi.addEventListener('input', () => { typing = wi.value.replace(',', '.').replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').slice(0, 6); const v = numIn(typing); if (v > 20 && v < 300) w = v; show(); });
+    wi.addEventListener('blur', () => { const v = numIn(typing); if (v > 20 && v < 300) w = Math.round(v * 100) / 100; typing = null; wi.value = ''; q('msRv').classList.remove('typing'); draw(); });
+    const bindSites = () => { const st = q('msSt'); if (!st) return; st.addEventListener('click', ev => { const b = ev.target.closest('button'); if (!b) return; haptic(); sites = +b.dataset.v; m.sites = sites; q('msBody').innerHTML = bodyHTML(); kpBind(s); bindSites(); }); };
+    bindSites();
+    if (isNew) q('msD').addEventListener('change', () => { d = q('msD').value || todayISO(); q('msDv').textContent = fmtDate(d); const x = ex(); if (x && x.w != null) w = x.w; draw(); });
+    q('msX').addEventListener('click', () => { haptic(); closeSheet(); });
+    q('msOk').addEventListener('click', () => {
+      haptic(); if (document.activeElement) document.activeElement.blur();
+      let e = ex(); if (!e) { e = { id: uid(), d }; S.log.push(e); }
+      e.w = Math.round(w * 100) / 100;
+      if (q('msBody').innerHTML) {
+        const s7 = {}; MS_SITES7[sex].slice(0, sites).forEach(([k]) => { const v = val(s, 'msF' + k); if (v > 0) s7[k] = v; });
+        const m3 = MS_3[sex], s3 = {}; ['a', 'b', 'c'].forEach(a => { if (s7[m3[a]] > 0) s3[a] = s7[m3[a]]; });
+        if (Object.keys(s3).length) e.sf = s3; else delete e.sf;
+        if (sites === 7 && Object.keys(s7).length) e.sf7 = s7; else delete e.sf7;
+        const c = {}; ['waist', 'neck', 'hips', 'chest', 'arm', 'thigh'].forEach(k => { const v = val(s, 'msC' + k); if (v > 0) c[k] = v; });
+        if (Object.keys(c).length) e.circ = c; else delete e.circ;
+      }
+      save(); closeSheet(); renderHeader(); msRender(); msRefreshPage();
+      toast(d === todayISO() ? `Saved · ${msKg(e.w)} kg` : `Saved for ${fmtDate(d)}`);
+    });
+  }, 'ps');
+}
+/* 7 sites: Jackson–Pollock 7 */
+const _bfOf0 = bfOf;
+function msBf(e) {
+  const s = e.sf7, b = S.body; if (s && b && ['ch', 'ab', 'th', 'tr', 'ss', 'si', 'ma'].every(k => s[k] > 0)) {
+    const S7 = Object.values(s).reduce((a, x) => a + x, 0), age = b.age || 30;
+    const bd = b.sex === 'f' ? 1.097 - 0.00046971 * S7 + 0.00000056 * S7 * S7 - 0.00012828 * age : 1.112 - 0.00043499 * S7 + 0.00000055 * S7 * S7 - 0.00028826 * age;
+    return 495 / bd - 450; }
+  return _bfOf0(e);
+}
+METRICS.bf.get = msBf;
+MS_M.fat[2] = msBf;
+
+/* ---- schedule ---- */
+function msSchedule() {
+  const m = msS(); let days = [...m.days], bd = m.body, when = m.when;
+  const ORD = [1, 2, 3, 4, 5, 6, 0], L = { 0: 'S', 1: 'M', 2: 'T', 3: 'W', 4: 'T', 5: 'F', 6: 'S' };
+  const dayBtns = (sel, multi) => ORD.map(i => `<button type="button" data-v="${i}"${(multi ? sel.includes(i) : sel === i) ? ' class="on"' : ''}>${L[i]}</button>`).join('');
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="scX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">Schedule</span><button type="button" class="ps-c ps-ok" id="scOk" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
+    <div class="ps-cap" style="margin-top:14px"><span>Weigh-ins</span><span id="scN" style="text-transform:none;letter-spacing:0"></span></div>
+    <div class="ms-days" id="scD">${dayBtns(days, true)}</div>
+    <div class="ms-tip"><b>Best: 5 days, one at the weekend</b>Weight swings by up to a kilo a day. Five weigh-ins a week show the real trend; fewer than four and it lags.</div>
+    <div class="ps-cap"><span>When</span></div>
+    <div class="ms-opt" id="scW">${[['m', 'Morning', 'after waking, before food'], ['e', 'Evening', 'before bed']].map(([k, a, b]) => `<button type="button" data-v="${k}"${k === when ? ' class="on"' : ''}><span class="a">${a}<span>${b}</span></span><span class="b"><i>${k === when ? MS_CHK : ''}</i></span></button>`).join('')}</div>
+    <div class="ps-cap"><span>Body measurements</span><span style="text-transform:none;letter-spacing:0">once a week</span></div>
+    <div class="ms-days" id="scB">${dayBtns(bd, false)}</div>`, s => {
+    const q = id => s.querySelector('#' + id), cnt = () => q('scN').textContent = `${days.length} a week`; cnt();
+    q('scD').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; haptic(); const v = +b.dataset.v; days = days.includes(v) ? days.filter(x => x !== v) : [...days, v]; b.classList.toggle('on'); cnt(); });
+    q('scB').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; haptic(); bd = +b.dataset.v; q('scB').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
+    q('scW').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; haptic(); when = b.dataset.v; q('scW').querySelectorAll('button').forEach(x => { const on = x === b; x.classList.toggle('on', on); x.querySelector('i').innerHTML = on ? MS_CHK : ''; }); });
+    q('scX').addEventListener('click', () => { haptic(); closeSheet(); });
+    q('scOk').addEventListener('click', () => { haptic(); m.days = days.includes(bd) ? days : [...days, bd]; m.body = bd; m.when = when; save(); closeSheet(); msRender(); });
+  }, 'ps');
+}
+
+/* ---- which charts sit on Measure ---- */
+function msCharts() {
+  const m = msS(); let on = [...m.tiles]; const last = logSorted().filter(e => e.sf || e.circ).pop() || {};
+  sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="chX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">Charts on Measure</span><button type="button" class="ps-c ps-ok" id="chOk" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
+    <div class="ps-cap" style="margin-top:14px"><span>Body</span><span style="text-transform:none;letter-spacing:0">up to 6</span></div>
+    <div class="ms-opt" id="chL">${Object.entries(MS_M).map(([k, [l, u, f]]) => { const has = msSeries(k, 'a').length, v = has ? f(msSeries(k, 'a').pop().e) : null;
+      return `<button type="button" data-v="${k}" class="${on.includes(k) ? 'on' : ''}${has ? '' : ' dim'}"><span class="a">${l}</span><span class="b">${v != null ? `${msFmtV(k, v)} ${u}` : '<span style="font-family:-apple-system,system-ui,sans-serif">no data yet</span>'}<i>${on.includes(k) ? MS_CHK : ''}</i></span></button>`; }).join('')}</div>`, s => {
+    const q = id => s.querySelector('#' + id);
+    q('chL').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.v;
+      if (on.includes(k)) on = on.filter(x => x !== k); else { if (on.length >= 6) { nudge(b); return; } on.push(k); }
+      haptic(); const o = on.includes(k); b.classList.toggle('on', o); b.querySelector('i').innerHTML = o ? MS_CHK : ''; });
+    q('chX').addEventListener('click', () => { haptic(); closeSheet(); });
+    q('chOk').addEventListener('click', () => { haptic(); m.tiles = Object.keys(MS_M).filter(k => on.includes(k)); save(); closeSheet(); msRender(); });
+  }, 'ps');
+}
+
+/* ---- pages ---- */
+let msPg = null;
+function msOpenPage(render) {
+  msClosePage(true);
+  const p = document.createElement('div'); p.className = 'ms-pg'; p.innerHTML = '<div class="in"></div>';
+  document.body.appendChild(p); document.body.classList.add('ms-page');
+  msPg = { p, render }; render(p.querySelector('.in'));
+  requestAnimationFrame(() => requestAnimationFrame(() => p.classList.add('show')));
+}
+function msClosePage(fast) { if (!msPg) return; const { p } = msPg; msPg = null; document.body.classList.remove('ms-page'); if (fast) return p.remove(); p.classList.remove('show'); setTimeout(() => p.remove(), 450); }
+function msRefreshPage() { if (msPg) msPg.render(msPg.p.querySelector('.in')); }
+const MS_TRASH = (() => { try { return ACTS.match(/<button class="sa del"[^>]*>(.*?)<\/button>/)[1]; } catch (e) { return PSI.bin; } })();
+function msHRow(e, cap, unit, name, mac, swipe) {
+  return `<div class="ms-hr" data-d="${e.d}">${swipe ? `<button type="button" class="del" aria-label="Delete">${MS_TRASH}</button>` : ''}<div class="rc"><button type="button" class="cap">${cap}<small>${unit}</small></button><div class="nm">${esc(name)}<span class="mc">${mac}</span></div></div></div>`;
+}
+let msHTab = 'w';
+function msHistory() {
+  msOpenPage(el => {
+    const head = `<div class="ms-pgh"><button type="button" class="ms-rb" id="hB" aria-label="Back">${MS_BACK}</button><span class="t">History</span><button type="button" class="ms-rb" id="hAdd" aria-label="Add a past entry">${MS_PLUS('#111115', 2, 18)}</button></div>
+      <div class="ms-seg2" id="hT"><button type="button" data-v="w"${msHTab === 'w' ? ' class="on"' : ''}>Weight</button><button type="button" data-v="b"${msHTab === 'b' ? ' class="on"' : ''}>Body</button></div>`;
+    let body = '';
+    if (msHTab === 'w') {
+      const L = msWLog(), rows = [...L].reverse(); let wk = null, buf = [];
+      const flush = () => { if (!buf.length) return; const avg = buf.reduce((a, e) => a + e.w, 0) / buf.length, tw = wkStart(dnum(todayISO()));
+        const lab = wk === tw ? 'This week' : wk === tw - 7 * DAY ? 'Last week' : weekLabel(wk);
+        body += `<div class="ms-wk"><span>${lab}</span><span>average <b>${msKg(avg)}</b> kg</span></div>` + buf.map(e => { const i = L.indexOf(e), p = i ? L[i - 1] : null, dl = p ? e.w - p.w : null;
+          const mac = (dl != null ? `<em><b>${Math.abs(dl) < .05 ? '±0' : (dl > 0 ? '+' : '−') + Math.round(Math.abs(dl) * 1000 / 10) * 10}</b> g</em>` : '') + (e.sf || e.circ ? '<em>+ body</em>' : '');
+          return msHRow(e, msKg(e.w), 'kg', fmtDate(e.d), mac, true); }).join(''); buf = []; };
+      rows.forEach(e => { const k = wkStart(dnum(e.d)); if (k !== wk) { flush(); wk = k; } buf.push(e); }); flush();
+      if (!rows.length) body = '<div class="ms-wk"><span>No weigh-ins yet</span></div>';
+    } else {
+      const rows = logSorted().filter(e => e.sf || e.circ).reverse();
+      body = '<div style="height:16px"></div>' + rows.map(e => { const b = bfOf(e), fs = sfSum(e), c = e.circ || {};
+        const mac = [fs != null ? `<em><b>${Math.round(fs)}</b> mm folds</em>` : '', c.waist ? `<em><b>${msKg(c.waist)}</b> waist</em>` : '', c.arm ? `<em><b>${msKg(c.arm)}</b> arm</em>` : ''].join('');
+        return msHRow(e, b != null ? msKg(b) : fs != null ? Math.round(fs) : msKg(c.waist || 0), b != null ? '%' : fs != null ? 'mm' : 'cm', fmtDate(e.d), mac, false); }).join('') || '<div class="ms-wk"><span>No body measurements yet</span></div>';
+    }
+    el.innerHTML = head + body;
+    el.querySelector('#hB').addEventListener('click', () => { haptic(); msClosePage(); });
+    el.querySelector('#hAdd').addEventListener('click', () => { haptic(); msTodaySheet(iso(dnum(todayISO()) - DAY), true); });
+    el.querySelector('#hT').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.v === msHTab) return; haptic(); msHTab = b.dataset.v; msRefreshPage(); });
+    el.querySelectorAll('.ms-hr').forEach(r => msBindRow(r));
+  });
+}
+function msBindRow(r) {
+  const rc = r.querySelector('.rc'), del = r.querySelector('.del'); let P = null;
+  rc.addEventListener('click', e => { if (r._moved) { r._moved = false; return; } if (r.classList.contains('sw')) { r.classList.remove('sw'); rc.style.transform = ''; return; } haptic(); msTodaySheet(r.dataset.d); });
+  if (!del) return;
+  rc.addEventListener('pointerdown', e => { P = { x: e.clientX, y: e.clientY, open: r.classList.contains('sw'), go: false }; });
+  rc.addEventListener('pointermove', e => { if (!P) return; const dx = e.clientX - P.x; if (!P.go && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - P.y)) { P.go = true; rc.setPointerCapture(e.pointerId); rc.style.transition = 'none'; }
+    if (P.go) { const x = Math.min(0, (P.open ? -64 : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
+  const end = e => { if (!P) return; const go = P.go; P = null; if (!go) return; r._moved = true; rc.style.transition = ''; const x = parseFloat((rc.style.transform.match(/-?[\d.]+/) || [0])[0]);
+    if (x < -r.offsetWidth * .6) return msDel(r); if (x < -32) { r.classList.add('sw'); rc.style.transform = 'translateX(-64px)'; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
+  rc.addEventListener('pointerup', end); rc.addEventListener('pointercancel', end);
+  del.addEventListener('click', () => msDel(r));
+}
+function msDel(r) {
+  haptic(); const i = S.log.findIndex(e => e.d === r.dataset.d); if (i < 0) return;
+  const [en] = S.log.splice(i, 1); save(); renderHeader(); msRender(); msRefreshPage();
+  toast(`${fmtDate(en.d)} deleted`, { label: 'Undo', fn: () => { S.log.push(en); save(); renderHeader(); msRender(); msRefreshPage(); } });
+}
+function msMetric(k) {
+  msOpenPage(el => {
+    const m = msS(), [lab, u] = MS_M[k], s = msSeries(k), all = msSeries(k, 'a');
+    let ch = '', sub = '';
+    if (s.length) {
+      const v = s[s.length - 1].v, d = v - s[0].v;
+      sub = `<b>${d >= 0 ? '+' : '−'}${msFmtV(k, Math.abs(d))}</b> ${u} since ${shortDate(s[0].t)}`;
+      if (s.length > 1) { let lo = Math.min(...s.map(p => p.v)), hi = Math.max(...s.map(p => p.v)); if (hi - lo < 1e-6) hi = lo + 1;
+        const W = 360, H = 150, X = t => 8 + (t - s[0].t) / (s[s.length - 1].t - s[0].t || 1) * (W - 16), Y = v => 8 + (hi - v) / (hi - lo) * (H - 16);
+        ch = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${s.map(p => `${X(p.t).toFixed(1)},${Y(p.v).toFixed(1)}`).join(' ')}" fill="none" stroke="#111115" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>${s.map(p => `<circle cx="${X(p.t).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="3" fill="#111115"/>`).join('')}</svg>`; }
+    }
+    const lastE = s.length ? s[s.length - 1] : null;
+    el.innerHTML = `<div class="ms-pgh"><button type="button" class="ms-rb" id="mB" aria-label="Back">${MS_BACK}</button><span class="t">${lab}</span><span style="width:44px"></span></div>
+      <div class="ms-kick" style="margin-top:20px"><span>${lastE ? 'LAST · ' + msFmtD(lastE.t).toUpperCase() : 'NO DATA YET'}</span><span class="ms-per" id="mP">${Object.entries(MS_PER).map(([q, [l]]) => `<button type="button" data-v="${q}"${q === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</span></div>
+      ${lastE ? (k === 'folds' ? `<span class="ms-mbig">${Math.round(lastE.v)}<u>mm</u></span>` : msBig(lastE.v, u, 'ms-mbig')) : ''}
+      <div class="ms-msub">${sub}</div><div class="ms-mch">${ch}</div>${s.length > 1 ? `<div class="ms-ax2"><span>${shortDate(s[0].t)}</span><span>today</span></div>` : ''}
+      <div class="ms-wk"><span>Entries</span><span></span></div>
+      ${[...all].reverse().map((p, i, a) => { const pv = a[i + 1]; const dl = pv ? p.v - pv.v : null;
+        return msHRow(p.e, msFmtV(k, p.v), u, fmtDate(p.e.d), dl != null ? `<em><b>${dl >= 0 ? '+' : '−'}${msFmtV(k, Math.abs(dl))}</b> ${u}</em>` : '', false); }).join('')}`;
+    el.querySelector('#mB').addEventListener('click', () => { haptic(); msClosePage(); });
+    el.querySelector('#mP').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; haptic(); m.per = b.dataset.v; save(); msRender(); msRefreshPage(); });
+    el.querySelectorAll('.ms-hr').forEach(r => msBindRow(r));
+  });
+}
+/* the toast hides the banner while it is up */
+(() => { const t = $('#toast'); if (!t) return; new MutationObserver(() => document.body.classList.toggle('toast-on', t.classList.contains('show'))).observe(t, { attributes: true, attributeFilter: ['class'] }); })();
+addEventListener('resize', () => { if (S.ui.tab === 'measure' && $('#msChart')) msChart($('#msChart')); });
+
 /* ================= boot ================= */
 syncTabs(); renderAll(false); $('#planName').textContent = plan().name;
 setTimeout(ndbAuto, 1200);
@@ -5972,6 +6476,7 @@ if (!RM) document.querySelectorAll('.plan > *, .tabsec:not([hidden]) > .list-hea
 
 /* #26: nothing shows until the current design is in place — no flash of old markup */
 requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.add('booted')));
+
 </script>
 
 </body>
