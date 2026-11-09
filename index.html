@@ -2211,7 +2211,7 @@ html body .sheet.ps .grab{display:none}
 .sheet.ps textarea.ps-title:focus{max-height:none}
 .sheet.ps textarea.ps-head,.sheet.ps input.ps-head{display:block;width:100%;box-sizing:border-box;margin:6px 0 0;padding:0 10px;border:0;background:none;resize:none;outline:none;font:590 20px/24px -apple-system,system-ui,sans-serif;letter-spacing:-.3px;color:#111115}
 .sheet.ps .ps-head::placeholder,.sheet.ps .ps-title::placeholder{color:rgba(60,60,67,.45)}
-.sheet.ps .ps-cap{display:flex;align-items:center;justify-content:space-between;min-height:14px;margin:24px 0 8px;padding-left:10px;font-size:12px;line-height:14px;text-transform:uppercase;letter-spacing:.02em;color:rgba(60,60,67,.6)}
+.sheet.ps .ps-cap{display:flex;align-items:center;justify-content:space-between;min-height:14px;margin:24px 0 8px;padding:0 10px;font-size:12px;line-height:14px;text-transform:uppercase;letter-spacing:.02em;color:rgba(60,60,67,.6)}
 .sheet.ps .ps-cap.ps-u{min-height:28px;margin-top:14px}
 .sheet.ps .ps-ur{display:flex;align-items:center;gap:6px;text-transform:none;letter-spacing:0}
 .sheet.ps .ps-unit{height:28px;border:0;padding:0 10px 0 8px;border-radius:14px;background:rgba(118,118,128,.12);color:#111115;font-size:13px;font-weight:510;display:flex;align-items:center;gap:5px}
@@ -2423,13 +2423,13 @@ html body .sheet .vt{-webkit-touch-callout:none;-webkit-user-select:none;user-se
 
 /* goals (9 Nov) */
 .sheet.ps .gt-seg{display:flex;gap:4px}
-.sheet.ps .gt-seg button{flex:1;height:36px;padding:0 14px;border:0;border-radius:18px;background:none;color:rgba(60,60,67,.6);font:510 15px/1 -apple-system,system-ui,sans-serif}
+.sheet.ps .gt-seg button{flex:1;height:36px;padding:0 10px;white-space:nowrap;border:0;border-radius:18px;background:none;color:rgba(60,60,67,.6);font:510 15px/1 -apple-system,system-ui,sans-serif}
 .sheet.ps .gt-seg button.on{background:rgba(118,118,128,.12);color:#111115}
 .sheet.ps .gt-ty{margin-top:14px}.sheet.ps .gt-ty.gap{margin-top:24px}
 .sheet.ps .gt-ty .gt-seg button{flex:none}
 .sheet.ps #gSex,.sheet.ps #gAct{margin:0}.sheet.ps .ps-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:4px 0}
 html body .sheet.ps .ps-three .vt{min-height:64px;border-radius:16px}html body .sheet.ps .ps-three .vt .l{color:rgba(60,60,67,.6)}
-.sheet.ps .gt-r{text-transform:none;letter-spacing:0;padding-right:10px}
+.sheet.ps .gt-r{text-transform:none;letter-spacing:0}
 .sheet.ps .gr{position:relative;height:248px;margin:8px -16px 0;touch-action:none;user-select:none;-webkit-user-select:none;cursor:ns-resize;overflow:hidden}
 .sheet.ps .gr-t span{position:absolute;left:16px;height:2px;border-radius:1px;margin-top:-1px}
 .sheet.ps .gr-c{position:absolute;left:16px;top:123px;width:66px;height:2px;border-radius:1px;background:#111115}
@@ -2441,10 +2441,9 @@ html body .sheet.ps .ps-three .vt{min-height:64px;border-radius:16px}html body .
 .sheet.ps .gr-now{position:absolute;right:16px;top:0;height:32px;padding:0 12px;border-radius:16px;background:rgba(118,118,128,.12);display:flex;align-items:center;gap:4px;font-size:13px;color:rgba(60,60,67,.6);cursor:text}
 .sheet.ps .gr-now:focus-within{background:#fff;box-shadow:inset 0 0 0 1px rgba(60,60,67,.12)}
 .sheet.ps .gr-now input{width:4.2ch;padding:0;border:0;background:none;outline:none;font:600 13px/1 "SF Mono",ui-monospace,Menlo,monospace;color:#111115;text-align:right}
-.sheet.ps .gp{display:flex;gap:4px;overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none;scroll-snap-type:x proximity}
+.sheet.ps .gp{display:flex;gap:4px}.sheet.ps .gp-cap{margin-top:0}.sheet.ps .gp-dot,.sheet.ps .gp button i{display:inline-block;width:5px;height:5px;border-radius:3px;background:currentColor;margin:0 5px 2px 0;vertical-align:middle}.sheet.ps .gp button i{position:absolute;top:4px;left:50%;margin:0 0 0 -2.5px}
 .sheet.ps .gp::-webkit-scrollbar{display:none}
-.sheet.ps .gp button{flex:none;height:36px;padding:0 12px;border:0;border-radius:18px;background:none;color:rgba(60,60,67,.6);font-size:12px;white-space:nowrap;scroll-snap-align:center}
-.sheet.ps .gp button b{font:600 14px/1 "SF Mono",ui-monospace,Menlo,monospace}
+.sheet.ps .gp button{position:relative;flex:1;min-width:0;height:40px;padding:0;border:0;border-radius:20px;background:none;color:rgba(60,60,67,.6);font:600 14px/1 "SF Mono",ui-monospace,Menlo,monospace;white-space:nowrap}
 .sheet.ps .gp button.on{background:rgba(118,118,128,.12);color:#111115}
 .sheet.ps .gt-warn{display:flex;align-items:center;min-height:44px;margin-top:4px;padding:0 10px;border-radius:16px;background:rgba(208,44,42,.12);color:#d02c2a;font-size:13px;line-height:18px}
 .sheet.ps .gt-warn[hidden]{display:none}
@@ -2454,6 +2453,7 @@ html body .sheet.ps .vt.pin .l{display:flex;justify-content:space-between}
 html body .sheet.ps .vt.pin .l::after{content:"";width:6px;height:6px;border-radius:3px;background:#111115;margin-top:3px}
 html body .sheet.ps .vt.gt-ro{cursor:default}
 html body .sheet.ps .vt[hidden]{display:none}
+.sheet.ps .gt-hint{padding:6px 10px 0;font-size:12px;line-height:16px;color:rgba(60,60,67,.6)}
 .sheet.ps .gt-use{display:flex;justify-content:flex-end;padding:8px 10px 0}
 .sheet.ps .gt-use button{border:0;background:none;padding:0;font-size:13px;font-weight:510;color:#2669ed}
 .sheet.ps .gt-use button[hidden]{display:none}
@@ -4058,8 +4058,8 @@ function sheet(html, onReady, cls) {
   /* touch: content scrolls inside the sheet only; the page behind never moves; pulling down from the very top drags the sheet away */
   const scroller = el => { for (let n = el; n && n !== document.body; n = n.parentElement) { if (n.scrollHeight > n.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(n).overflowY)) return n; if (n === s) break; } return null; };
   let T = null;
-  s.addEventListener('touchstart', e => { const sc = scroller(e.target), t = e.touches[0]; T = { x: t.clientX, y: t.clientY, sc, drag: false, top: !sc || sc.scrollTop <= 0, field: !!e.target.closest('input,textarea,select,.seg') }; }, { passive: true });
-  s.addEventListener('touchmove', e => { if (!T) return; const t = e.touches[0], dy = t.clientY - T.y, dx = t.clientX - T.x;
+  s.addEventListener('touchstart', e => { const sc = scroller(e.target), t = e.touches[0]; T = { x: t.clientX, y: t.clientY, sc, drag: false, top: !sc || sc.scrollTop <= 0, field: !!e.target.closest('input,textarea,select,.seg'), free: !!e.target.closest('.gr,.gp') }; }, { passive: true });
+  s.addEventListener('touchmove', e => { if (!T || T.free) return; const t = e.touches[0], dy = t.clientY - T.y, dx = t.clientX - T.x;
     if (!T.drag && !T.field && T.top && dy > 8 && dy > Math.abs(dx)) T.drag = true;
     if (T.drag) { e.preventDefault(); s.style.transition = 'none'; s.style.transform = `translateY(${Math.max(0, dy - 8)}px)`; return; }
     const sc = T.sc; if (!sc || (dy > 0 && sc.scrollTop <= 0) || (dy < 0 && sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 1)) { if (e.cancelable) e.preventDefault(); } }, { passive: false });
@@ -4471,7 +4471,8 @@ function designMenu() {
 /* Goal plans (9 Nov 2026, canvas «Цели · финал», variant 3): body first (type → target weight on a ruler → weekly pace),
    the daily target is computed — Mifflin–St Jeor × activity until there are 2–3 weeks of weigh-ins, then from the data
    (plan kcal minus what the weight trend says). Any number can be set by hand: it gets a dot and «yours», the rest recompute. */
-const ACT_M = { l: 1.4, m: 1.55, h: 1.75 };
+const ACT_M = { l: 1.3, m: 1.55, h: 1.75 };
+const ACT_T = { l: 'Mostly sitting, little exercise', m: 'Sitting job, 3–5 workouts a week', h: 'On your feet all day or hard training daily' };
 const P_KG = { cut: 2.2, bulk: 2, maintain: 1.8, recomp: 2.2 };
 const F_SH = { cut: .25, bulk: .27, maintain: .28, recomp: .25 };
 const RNG_W = { k: 50, p: 10, f: 5, c: 12 };
@@ -4559,15 +4560,15 @@ function goalSheet(g0, isNew, back) {
   const about = needAbout ? `<div class="ps-cap"><span>About you</span><span class="gt-r">once</span></div>
     ${pill('gSex', [['m', 'Male'], ['f', 'Female']], b0.sex || 'm')}
     <div class="ps-three">${fnum('gAge', 'Age', b0.age || '', '', '—')}${fnum('gAw', 'Weight', fmtKg(now), 'kg', '—')}${fnum('gH', 'Height', b0.h || '', 'cm', '—')}</div>
-    ${pill('gAct', [['l', 'Low'], ['m', 'Medium'], ['h', 'High']], b0.act || 'm')}` : '';
+    ${pill('gAct', [['l', 'Desk'], ['m', 'Desk + gym'], ['h', 'Active']], b0.act || 'm')}<div class="gt-hint" id="gActT">${ACT_T[b0.act || 'm']}</div>` : '';
   sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="gX" aria-label="Close">${PSI.x}</button><span class="ps-kick ps-ttl">${isNew ? 'New goal' : 'Goal'}</span><button type="button" class="ps-c ps-ok" id="gOk" aria-label="Save" style="margin-left:auto">${PSI.ok}</button></div>
-    ${isNew ? '' : `<input class="sh-name ps-head" id="gN" value="${esc(src.name)}" placeholder="Goal name" autocomplete="off" aria-label="Goal name">`}
+    <input class="sh-name ps-head" id="gN" value="${esc(isNew ? '' : src.name)}" placeholder="Goal name" autocomplete="off" aria-label="Goal name">
     ${about}
     <div class="gt-ty${needAbout ? ' gap' : ''}">${pill('gT', TY, type)}</div>
     <div id="gRulB"><div class="gr" id="gRul"><div class="gr-t"></div><i class="gr-c"></i>
         <div class="gr-v"><span class="gr-l">Target weight</span><b><span id="gTwV"></span><i>kg</i></b><span class="gr-s" id="gEta"></span></div>
         <label class="gr-now"><span>Now</span><input id="gNow" inputmode="decimal" value="${fmtKg(now)}" autocomplete="off" aria-label="Current weight, kg"><span>kg</span></label></div>
-      <div class="gp" id="gPace"></div>
+      <div class="ps-cap gp-cap"><span>Kg a week</span><span class="gt-r"><i class="gp-dot"></i>best for you</span></div><div class="gp" id="gPace"></div>
       <div class="gt-warn" id="gWarn" hidden></div></div>
     <div id="gPlB" hidden><div class="ps-cap"><span>Body</span><span class="gt-r" id="gBfNow"></span></div>
       <div class="ps-two">${fnum('gKw', 'Keep weight', fmtKg(now), 'kg', '—')}<div class="vt gt-ro" id="gWin"><span class="l">Window</span><b><span class="v">±0.3</span><span class="u">kg</span></b></div>${fnum('gBf', 'Target body fat', src.tbf ?? '', '%', '—')}</div></div>
@@ -4577,6 +4578,9 @@ function goalSheet(g0, isNew, back) {
     <div class="gt-use"><button type="button" id="gUse" hidden>Use calculated</button></div>`, s => {
     const q = id => s.querySelector('#' + id), KS = ['k', 'p', 'f', 'c'], IDS = { k: 'gK', p: 'gP', f: 'gF', c: 'gC' };
     const dir = () => type === 'cut' ? -1 : type === 'bulk' ? 1 : 0;
+    /* the name writes itself from what is set (#36) until it is typed by hand (#35) */
+    const autoName = () => type === 'cut' || type === 'bulk' ? `${typeName(type)} → ${fmtKg(tw)} kg` : type === 'maintain' ? `Maintain ${fmtKg(now)} kg` : val(s, 'gBf') > 0 ? `Recomp → ${r0(val(s, 'gBf'))}%` : 'Recomp';
+    let named = !isNew;
     const body = () => needAbout ? { sex: q('gSex').querySelector('.on').dataset.v, age: val(s, 'gAge'), h: val(s, 'gH'), act: q('gAct').querySelector('.on').dataset.v } : S.body;
     let cur = null, rng = null;
     /* ruler: 32 px a kilo, a tick every half kilo; drag up or down */
@@ -4586,10 +4590,10 @@ function goalSheet(g0, isNew, back) {
         const whole = Math.abs(v - Math.round(v)) < .01, op = Math.max(.15, 1 - Math.abs(y - 124) / 150);
         h += `<span style="top:${y.toFixed(1)}px;width:${whole ? 42 : 26}px;opacity:${op.toFixed(2)};background:rgba(17,17,21,${whole ? .2 : .1})"></span>`; }
       T.innerHTML = h; q('gTwV').textContent = fmtKg(tw); };
-    const paces = () => { const top = type === 'cut' ? 1.5 : 1, L = [];
-      for (let x = .05; x <= top + 1e-9; x += .05) L.push(Math.round(x * 100) / 100);
-      q('gPace').innerHTML = L.map(x => { const v = x * dir(); return `<button type="button" data-v="${v}"${Math.abs(v - rate) < 1e-6 ? ' class="on"' : ''}><b>${v > 0 ? '+' : '−'}${x}</b> kg/wk</button>`; }).join('');
-      const on = q('gPace').querySelector('.on'); if (on) requestAnimationFrame(() => { const P = q('gPace'); P.scrollLeft = on.offsetLeft - (P.clientWidth - on.offsetWidth) / 2; }); };
+    const paces = () => { const L = type === 'cut' ? [.25, .5, .75, 1, 1.25, 1.5] : [.1, .25, .5, .75, 1];
+      if (rate && !L.some(x => Math.abs(x - Math.abs(rate)) < 1e-6)) { L.push(Math.abs(rate)); L.sort((x, y) => x - y); }
+      const want = now * (type === 'cut' ? .007 : .0035), best = L.reduce((m, x) => Math.abs(x - want) < Math.abs(m - want) ? x : m, L[0]);
+      q('gPace').innerHTML = L.map(x => { const v = Math.round(x * dir() * 100) / 100; return `<button type="button" data-v="${v}"${Math.abs(v - rate) < 1e-6 ? ' class="on"' : ''}>${v > 0 ? '+' : '−'}${x}${x === best ? '<i></i>' : ''}</button>`; }).join(''); };
     const eta = () => { const d = tw - now, el = q('gEta');
       if (!rate || Math.sign(d) !== Math.sign(rate) || Math.abs(d) < .05) { el.textContent = Math.abs(d) < .05 ? 'You are there' : `${d > 0 ? '+' : '−'}${fmtKg(Math.abs(d))} kg · other way`; return; }
       el.textContent = `${d > 0 ? '+' : '−'}${fmtKg(Math.abs(d))} kg · ${shortDate(Date.now() + d / rate * 7 * DAY)}`; };
@@ -4599,7 +4603,7 @@ function goalSheet(g0, isNew, back) {
       const np = KS.filter(k => pin[k] != null).length; q('gSrc').textContent = np === 4 ? 'yours' : np && c0 ? src.replace('from', 'partly from') : src;
       cur = c0 ? goalMacros(type, c0, pin) : { ...pin };
       rng = {}; KS.forEach(k => { const v = cur[k], i = q(IDS[k]);
-        if (pin[k] == null) i.value = v != null ? r0(v) : ''; else if (document.activeElement !== i) i.value = r0(pin[k]);
+        if (pin[k] == null) { if (document.activeElement !== i) i.value = v != null ? r0(v) : ''; } else if (document.activeElement !== i) i.value = r0(pin[k]);
         if (v != null) rng[k] = [r0(v - RNG_W[k]), r0(v + RNG_W[k])];
         const t = i.closest('.vt'); t.classList.toggle('pin', pin[k] != null);
         let hn = t.querySelector('.h'); if (!hn) { hn = document.createElement('span'); hn.className = 'h'; t.appendChild(hn); }
@@ -4609,6 +4613,7 @@ function goalSheet(g0, isNew, back) {
       if (!lo.hidden) lo.textContent = `Below what your body burns at rest, ${r0(bmr)} kcal`;
       const w = q('gWarn'), fast = rate && Math.abs(rate) > now * .01; w.hidden = !fast;
       if (fast) w.textContent = `${rate > 0 ? '+' : '−'}${Math.abs(rate)} kg a week is more than 1% of your weight`;
+      if (!named) q('gN').value = autoName();
       q('gOk').classList.toggle('off', !(val(s, 'gK') > 0));
       s.dispatchEvent(new Event('input'));
     };
@@ -4622,13 +4627,13 @@ function goalSheet(g0, isNew, back) {
     /* type, pace */
     q('gT').addEventListener('click', e => { const bt = e.target.closest('button'); if (!bt || bt.dataset.v === type) return; haptic();
       q('gT').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === bt)); type = bt.dataset.v; layout(); });
-    ['gSex', 'gAct'].forEach(id => { const el = q(id); if (el) el.addEventListener('click', e => { const bt = e.target.closest('button'); if (!bt) return; haptic(); el.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === bt)); calc(); }); });
+    ['gSex', 'gAct'].forEach(id => { const el = q(id); if (el) el.addEventListener('click', e => { const bt = e.target.closest('button'); if (!bt) return; haptic(); el.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === bt)); if (id === 'gAct') q('gActT').textContent = ACT_T[bt.dataset.v]; calc(); }); });
     q('gPace').addEventListener('click', e => { const bt = e.target.closest('button'); if (!bt) return; haptic(); rate = +bt.dataset.v;
       q('gPace').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === bt)); eta(); calc(); });
     /* ruler drag */
     let D = null;
     q('gRul').addEventListener('pointerdown', e => { if (e.target.closest('.gr-now')) return; D = { y: e.clientY, v: tw, kg: Math.round(tw) }; q('gRul').setPointerCapture(e.pointerId); });
-    q('gRul').addEventListener('pointermove', e => { if (!D) return; tw = Math.min(250, Math.max(30, Math.round((D.v + (e.clientY - D.y) / 32) * 2) / 2));
+    q('gRul').addEventListener('pointermove', e => { if (!D) return; tw = Math.min(250, Math.max(30, Math.round(D.v + (e.clientY - D.y) / 32)));
       if (Math.round(tw) !== D.kg) { D.kg = Math.round(tw); haptic(); } drawRul(); eta(); });
     const up = () => { if (!D) return; D = null; calc(); };
     q('gRul').addEventListener('pointerup', up); q('gRul').addEventListener('pointercancel', up);
@@ -4638,6 +4643,10 @@ function goalSheet(g0, isNew, back) {
       if (['gAge', 'gH'].includes(id)) { calc(); return; }
       const k = KS.find(k => IDS[k] === id); if (!k) return;
       const v = numIn(e.target.value); if (v == null || isNaN(v)) delete pin[k]; else pin[k] = v; calc(); });
+    if (!isNew) named = q('gN').value !== autoName();
+    q('gN').addEventListener('input', () => { named = !!q('gN').value.trim(); });
+    q('gRul').addEventListener('pointermove', () => { if (!named) q('gN').value = autoName(); });
+    Object.values(IDS).forEach(id => q(id).addEventListener('blur', () => setTimeout(calc, 0)));
     q('gUse').addEventListener('click', () => { haptic(); KS.forEach(k => delete pin[k]); calc(); });
     /* close / save */
     const snap = () => JSON.stringify([type, rate, tw, now, pin, q('gN') ? q('gN').value : '', q('gBf').value, needAbout ? body() : 0]), snap0 = (layout(), snap());
@@ -4653,9 +4662,9 @@ function goalSheet(g0, isNew, back) {
       const out = { type, k: r0(val(s, 'gK')), p: r0(val(s, 'gP') || 0), f: r0(val(s, 'gF') || 0), c: r0(val(s, 'gC') || 0), rng,
         tw: ru ? tw : r1(now), rate: ru ? rate : 0, tbf: val(s, 'gBf') ?? src.tbf, sw: r1(now), pin: { ...pin } };
       s._guard = null; closeSheet(true);
-      if (isNew) { const base = typeName(type), used = new Set(S.goals.map(x => x.name)); let name = base, n = 2; while (used.has(name)) name = `${base} ${n++}`;
+      if (isNew) { const base = q('gN').value.trim() || autoName(), used = new Set(S.goals.map(x => x.name)); let name = base, n = 2; while (used.has(name)) name = `${base} ${n++}`;
         const ng = { id: uid(), name, ...out }; S.goals.push(ng); S.goalActive = ng.id; save(); renderAll(true); toast(`${name} created`); setTimeout(() => goalMenu(ng.id), 120); }
-      else { const nm = q('gN').value.trim(); Object.assign(g0, out, nm ? { name: nm } : {}); save(); renderAll(true); if (back) setTimeout(back, 120); }
+      else { const nm = q('gN').value.trim() || autoName(); Object.assign(g0, out, nm ? { name: nm } : {}); save(); renderAll(true); if (back) setTimeout(back, 120); }
     });
   }, 'ps');
 }
@@ -5912,23 +5921,28 @@ document.body.classList.add('f31');
   const REPO = 'https://github.com/redmermark-beep/kcal/issues/new';
   const ctx = () => {
     const tab = S.ui.tab || 'meal', sh = document.querySelector('.sheet.show'), mn = document.querySelector('.menu, .popup');
-    const shTitle = sh ? ((sh.querySelector('.sh-name') || {}).value || (sh.querySelector('h1,h2,h3,.sh-title') || {}).textContent || '').trim() : '';
+    const tx = el => el ? (el.value || el.textContent || '').replace(/\s+/g, ' ').trim() : '';
+    const shTitle = sh ? [tx(sh.querySelector(':scope > .ps-bar .ps-kick')), tx(sh.querySelector(':scope > .sh-name, :scope > .ps-head')) || tx(sh.querySelector('h1,h2,h3,.sh-title'))].filter(Boolean).join(' · ') : '';
+    const pgs = sh ? [...sh.querySelectorAll('.nu-pick')] : [], pg = pgs.length ? tx(pgs[pgs.length - 1].querySelector('.ps-kick, .nu-h, h3')) || 'да' : '';
+    const ae = document.activeElement, fo = ae && ae !== document.body ? (tx(ae.closest('.vt') && ae.closest('.vt').querySelector('.l')) || ae.getAttribute('aria-label') || ae.placeholder || ae.id || '') : '';
+    const mnT = mn ? tx(mn.querySelector('.mh, .head, h4')) : '';
     const lines = [
       `- Экран: ${tab}`,
       tab === 'meal' || tab === 'budget' || tab === 'nutrients' ? `- План питания: ${plan().name}${plan().tmp ? ' (Temporary mode)' : ''}` : '',
       `- План целей: ${goal().name}`,
-      sh ? `- Открыта шторка: ${shTitle || 'да'}` : '', mn ? '- Открыто меню' : '',
+      sh ? `- Открыта шторка: ${shTitle || 'да'}` : '', pg ? `- Страница в шторке: ${pg}` : '', fo ? `- В фокусе: ${fo}` : '', mn ? `- Открыто меню${mnT ? ': ' + mnT : ''}` : '',
       document.getElementById('search') && !document.getElementById('search').hidden ? '- Открыт поиск' : '',
       `- Прокрутка: ${Math.round(scrollY)} px · экран ${innerWidth}×${innerHeight}`,
       `- Версия: ${document.lastModified} · ${navigator.standalone ? 'на экране «Домой»' : 'в браузере'}`
     ].filter(Boolean).join('\n');
-    return { tab, body: `**Что не так / что хочу:**\n\n\n\n<!-- скриншот можно вставить сюда -->\n\n---\nКонтекст (заполнено само):\n${lines}\n` };
+    const where = [tab, shTitle, pg, fo].filter(Boolean).join(' → ');
+    return { tab, where, body: `**Что не так / что хочу:**\n\n\n\n<!-- скриншот можно вставить сюда -->\n\n---\nКонтекст (заполнено само):\n${lines}\n` };
   };
-  window.kcalFeedback = () => { const c = ctx(); haptic();
+  window.kcalFeedback = () => { const c = ctx(); haptic(); toast(`Feedback · ${c.where}`);
     const u = `${REPO}?labels=${encodeURIComponent(['polish', c.tab].join(','))}&title=&body=${encodeURIComponent(c.body)}`;
     // open right inside the gesture (a timer loses the user activation and Safari blocks it); if blocked anyway — a toast with Open
     let w = null; try { w = window.open(u, '_blank'); } catch (e) {}
-    if (!w) toast('Feedback', { label: 'Open', fn: () => { if (!window.open(u, '_blank')) location.href = u; } }); };
+    if (!w) toast(`Feedback · ${c.where}`, { label: 'Open', fn: () => { if (!window.open(u, '_blank')) location.href = u; } }); };
   // three fingers (2 Nov): as soon as a 2nd finger lands — stop the gesture underneath (row press, hold timers, pinch),
   // swallow the clicks it would fire, and count the tap when all fingers are up
   let t0 = 0, moved = false, max = 0, sx = 0, sy = 0, multi = false, mute = 0;
