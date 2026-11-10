@@ -2665,6 +2665,10 @@ html body .sheet.ps #msBody .vt:has(input:placeholder-shown):not(:focus-within){
 .sheet.ps .ms-opt .a{font-size:15px;font-weight:510;letter-spacing:-.15px}.sheet.ps .ms-opt .a span{display:block;margin-top:2px;font-size:11px;font-weight:400;letter-spacing:0;color:rgba(60,60,67,.6)}
 .sheet.ps .ms-opt .b{display:flex;align-items:center;gap:12px;font:400 13px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.6)}
 .sheet.ps .ms-opt .b i{width:10px;display:flex}
+/* glass stand-in until the app is native (Figma plan-basic → Tab Bar → Glass Effect, 10 Nov): white, a soft light band under the top edge, the hairline ring and the shadow */
+html body .menu,html body .menu.mp,html body .menu.ms,html body .ms-ban,html body .toast,html body.f31 .tabbar,html body.f31.pal-fresh.ma .tabbar,html body #app .tabbar{
+  background:linear-gradient(180deg,#fff 0,#f9f9f9 6px,#fff 26px)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  box-shadow:1.25px 0 0 -.75px #d0d0d0,-1.25px 0 0 -.75px #d0d0d0,0 0 0 .5px #e8e8e8,0 8px 15px rgba(0,0,0,.02)!important}
 </style>
 
 <div class="app" id="app">
