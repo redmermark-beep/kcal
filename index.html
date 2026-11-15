@@ -2665,6 +2665,48 @@ html body .sheet.ps #msBody .vt:has(input:placeholder-shown):not(:focus-within){
 .sheet.ps .ms-opt .a{font-size:15px;font-weight:510;letter-spacing:-.15px}.sheet.ps .ms-opt .a span{display:block;margin-top:2px;font-size:11px;font-weight:400;letter-spacing:0;color:rgba(60,60,67,.6)}
 .sheet.ps .ms-opt .b{display:flex;align-items:center;gap:12px;font:400 13px "SF Mono",ui-monospace,Menlo,monospace;color:rgba(60,60,67,.6)}
 .sheet.ps .ms-opt .b i{width:10px;display:flex}
+/* Measure v3 — Figma Rovno 575:1129 (16 Nov) */
+.ms3{margin:0 -16px;padding:0 0 190px}
+.ms3 .nw{white-space:nowrap}
+.ms3-tabs{margin:24px 0 0;overflow-x:auto;scrollbar-width:none}.ms3-tabs::-webkit-scrollbar{display:none}
+.ms3-tabs>div{display:flex;padding:0 16px;width:max-content}
+.ms3-tabs button{flex:none;height:40px;padding:0 14px;border:0;border-radius:48px;background:none;white-space:nowrap;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;color:#111115}
+.ms3-tabs button.on{background:rgba(17,17,21,.08)}
+.ms3-card{margin:7px 16px 0;padding:10px 0 15px;border-radius:32px;background:rgba(118,118,128,.12)}
+.ms3-per{display:flex;justify-content:center;gap:4px}
+.ms3-per button{height:22px;padding:0 6px;border:0;border-radius:16px;background:none;font:400 12px/14px -apple-system,"SF Pro Text",system-ui,sans-serif;color:rgba(60,60,67,.45)}
+.ms3-per button.on{background:rgba(118,118,128,.12);color:#111115}
+.ms3-ch{position:relative;height:150px;margin:0;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.ms3-ch svg{display:block;overflow:visible}
+.ms3-ch .ax{font:400 12px -apple-system,"SF Pro Text",system-ui,sans-serif;fill:rgba(60,60,67,.6)}
+.ms3-ch .pl{font:590 12px -apple-system,"SF Pro Text",system-ui,sans-serif;fill:#fff}
+.ms3-ch .ms2-tip{top:-6px}
+.ms3-h{margin:29px 16px 0;font:510 30px/30px -apple-system,"SF Pro Display",system-ui,sans-serif;letter-spacing:-.6px;color:#111115;text-wrap:balance}
+.ms3-h .bl{color:#2669ed}.ms3-h .rd{color:#d02c2a}
+.ms3-s{margin:8px 16px 0;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;color:rgba(17,17,21,.5);text-wrap:pretty}
+.ms3-s b{font-weight:510;color:#111115}
+.ms3-b{display:flex;gap:8px;margin:20px 16px 0}
+.ms3-b button{height:48px;padding:0 20px;border:0;border-radius:48px;background:#e7e7eb;color:#111115;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px}
+.ms3-b button.p{background:#2669ed;color:#fff}.ms3-b button.p.red{background:#d02c2a}
+.ms3-hh{display:flex;justify-content:space-between;align-items:center;margin:40px 26px 0;height:20px;font:510 18px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.36px;color:#111115}
+.ms3-hh button{border:0;background:none;padding:0;width:20px;height:20px}
+.ms3-list{margin:0}
+.ms3-wk{display:flex;justify-content:space-between;margin:32px 26px 10px;font:400 12px/14px -apple-system,"SF Pro Text",system-ui,sans-serif;color:rgba(60,60,67,.6);text-transform:uppercase}
+.ms3-wk i{font:400 12px/14px "SF Mono",ui-monospace,Menlo,monospace;font-style:normal;color:rgba(60,60,67,.6);margin-left:8px;text-transform:uppercase}
+.ms3-wk i.bl{color:#2669ed}.ms3-wk i.rd{color:#d02c2a}
+.ms3-wk span:last-child{font-family:"SF Mono",ui-monospace,Menlo,monospace}
+.ms3-list .ms2-r{height:32px;margin:0 16px}
+.ms3-list .ms2-r .rc{height:32px;border-radius:10px}
+.ms3-list .ms2-r+.ms2-r .rc::before{display:none}
+.ms3-list .ms2-r .dt{font:400 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif}
+.ms3-list .ms2-r .vv b{font:600 15px/20px "SF Mono",ui-monospace,Menlo,monospace}
+.ms3-list .ms2-r .vv{font:510 15px/20px -apple-system,system-ui,sans-serif;color:#111115}
+.ms3-list .ms2-r .del{top:-4px;width:56px;height:40px;border-radius:12px}
+.ms3-pill{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);z-index:40;height:48px;padding:0 4px 0 16px;border:0;border-radius:48px;background:#111115;color:#fff;display:flex;align-items:center;gap:8px;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;transition:opacity .25s,transform .25s}
+.ms3-pill i{width:40px;height:40px;border-radius:20px;background:#fff;display:grid;place-items:center}
+.ms3-pill.off{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
+body:not(.tab-measure) .ms3-pill{display:none}
+
 /* glass stand-in until the app is native (Figma plan-basic → Tab Bar → Glass Effect, 10 Nov): white, a soft light band under the top edge, the hairline ring and the shadow */
 html body .menu,html body .menu.mp,html body .menu.ms,html body .ms-ban,html body .toast,html body.f31 .tabbar,html body.f31.pal-fresh.ma .tabbar,html body #app .tabbar{
   background:linear-gradient(180deg,#fff 0,#f9f9f9 6px,#fff 26px)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
@@ -6301,54 +6343,66 @@ function msCheck2() {
 }
 function msHead(ck) {
   const m = msS(), g = goal(), st = m.chk && m.chk.d === ck.d ? m.chk : {}, kcal = r0(g.k), nx = msNw(`Next check ${msFmtD(ck.next)}.`);
-  const gw = (r, plan) => `${r >= 0 ? 'Gaining' : 'Losing'} <b>${msG(r)}</b> g a week`;
+  const gw = (r, cap) => `${cap ? (r >= 0 ? 'Gaining ' : 'Losing ') : ''}<b>${msG(r)}g</b> a week`;
   if (ck.kind === 'empty') return { h: 'Start weighing in', s: 'A few mornings a week. The first advice comes in two weeks.' };
   if (ck.kind === 'learn') return { h: 'Learning your trend', s: `Weigh in for <b>${ck.left}</b> more ${ck.left === 1 ? 'day' : 'days'}, then the first advice.` };
-  if (ck.kind === 'big') return { h: `Big ${ck.last < 0 ? 'drop' : 'jump'} this week`, s: `<b>${msGs(ck.last)}</b> g in a week — often it’s water. Let’s see next Monday. Food stays the same.` };
+  if (ck.kind === 'big') return { h: `Big ${ck.last < 0 ? 'drop' : 'jump'} this week`, s: `<b>${msGs(ck.last)}g</b> in a week — often it’s water. Let’s see next Monday. Food stays the same.` };
   if (st.act === 'apply') return { h: `Plan updated: ${msNw(kcal + ' kcal')} a day`, s: `Was ${st.was}. ${nx}` };
   if (ck.fresh && !st.ans) return { h: `Did you mostly eat ${msNw(r0(st.k ?? g.k) + ' kcal')} a day?`, s: 'Last week. It decides the advice.', q: true };
   if (st.ans === 'n') return { h: `Stick to ${msNw(kcal + ' kcal')} this week`, s: `Food stays the same. ${nx}` };
-  const planTxt = `plan ${g.rate >= 0 ? '' : '−'}<b>${msG(g.rate)}</b>`;
-  if (ck.kind === 'ok') return { h: 'You’re on track', s: `${gw(ck.rate)}, ${planTxt}. ${nx}` };
+  const planTxt = `plan <b>${msG(g.rate)}g</b>`;
+  if (ck.kind === 'ok') return { h: 'You’re on track', s: `${gw(ck.rate, 1)}, ${planTxt}. ${nx}` };
   const more = ck.adj > 0, c = more ? 'bl' : 'rd';
   let h;
   if (g.rate > 0) h = ck.rate < 0 ? `You’re <span class="${c}">losing</span> instead of gaining` : `You’re gaining <span class="${c}">${more ? 'slower' : 'faster'}</span> than the plan`;
   else if (g.rate < 0) h = ck.rate > 0 ? `You’re <span class="${c}">gaining</span> instead of losing` : `You’re losing <span class="${c}">${more ? 'faster' : 'slower'}</span> than the plan`;
   else h = `You’re <span class="${c}">${more ? 'losing' : 'gaining'}</span> weight`;
   const opp = g.rate && Math.sign(ck.rate) !== Math.sign(g.rate);
-  const s = `${gw(ck.rate)} instead of ${g.rate ? `${opp ? (g.rate > 0 ? 'gaining ' : 'losing ') : ''}<b>${msG(g.rate)}</b>` : 'holding'}.${st.act === 'later' ? ' ' + nx : ''}`;
+  const s = `${gw(ck.rate, opp || !g.rate)} instead of ${g.rate ? `${opp ? (g.rate > 0 ? 'gaining ' : 'losing ') : ''}<b>${msG(g.rate)}g</b>` : 'holding'}${st.act === 'later' ? '. ' + nx : ''}`;
   return { h, s, adj: st.act === 'later' ? null : ck.adj };
+}
+const msDay = t => { const d = new Date(t); return `${d.toLocaleDateString('en-GB', { weekday: 'short' })}, ${d.getDate()} ${MS_MON[d.getMonth()]}`; };
+const MS_LANE = .4;                       // the plan lane: ± kg around the planned weight
+function msSmooth(L, t0, t1) {            // gaussian smoothing of weigh-ins, σ = 4 days, one point a day
+  const out = []; for (let t = t0; t <= t1; t += DAY) { let a = 0, b = 0;
+    for (const e of L) { const dd = (e.t - t) / DAY; if (dd < -12 || dd > 12) continue; const w = Math.exp(-dd * dd / 32); a += w * e.v; b += w; }
+    if (b) out.push({ t, v: a / b }); } return out;
+}
+function msBodyHead(met) {                // the card's words on a body tab
+  const L = logSorted().map(e => ({ t: dnum(e.d), v: met.get(e) })).filter(p => p.v != null && isFinite(p.v) && p.v > 0);
+  if (L.length < 2) return { h: L.length ? `${met.lab}: ${msNw(L[0].v.toFixed(met.dp) + ' ' + met.u)}` : `No ${met.lab.toLowerCase()} yet`, s: 'Measure it again next week to see where it goes.' };
+  const g = goal(), sd = g.sd ? dnum(g.sd) : L[0].t, from = L.filter(p => p.t >= sd)[0] || L[0], last = L[L.length - 1], d = last.v - from.v, eps = met.dp ? .2 : 1;
+  const word = Math.abs(d) < eps ? 'is steady' : d < 0 ? 'is going down' : 'is going up';
+  return { h: `${met.lab} ${word}`, s: `<b>${(d >= 0 ? '+' : '−') + Math.abs(d).toFixed(met.dp)}${met.u === '%' ? '%' : ' ' + met.u}</b> since ${msDay(from.t).split(', ')[1]}` };
 }
 function msRender() {
   const sec = $('#secMeasure'); if (!sec) return;
   let root = $('#msr'); if (!root) { root = document.createElement('div'); root.id = 'msr'; sec.appendChild(root); }
-  const m = msS(), g = goal(), ck = msCheck2(), H = msHead(ck);
+  const m = msS(), g = goal(), ck = msCheck2();
   const mets = msMetrics(); if (!mets.find(x => x.k === m.tab)) m.tab = 'w';
-  const met = mets.find(x => x.k === m.tab);
+  const met = mets.find(x => x.k === m.tab), H = met.k === 'w' ? msHead(ck) : msBodyHead(met);
   let btns = '';
-  if (H.q) btns = `<div class="ms2-b"><button type="button" class="p" data-a="y">Yes</button><button type="button" data-a="n">No</button></div>`;
-  else if (H.adj) btns = `<div class="ms2-b"><button type="button" class="p${H.adj < 0 ? ' red' : ''}" data-a="apply">Eat ${Math.abs(H.adj)} kcal ${H.adj > 0 ? 'more' : 'less'}</button><button type="button" data-a="later">Later</button></div>`;
-  root.innerHTML = `<div class="ms2"><h2 class="ms2-h">${H.h}</h2><p class="ms2-s">${H.s}</p>${btns}
-    <div class="ms2-tabs" id="msTabs"><div>${mets.map(x => `<button type="button" data-k="${x.k}"${x.k === m.tab ? ' class="on"' : ''}>${x.lab}</button>`).join('')}</div></div>
-    <div class="ms2-ch" id="msChart"></div>
-    <div class="ms2-per" id="msPer">${Object.entries(MS_PER).map(([k, [l]]) => `<button type="button" data-v="${k}"${k === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</div>
-    <div class="ms2-hh"><span>History</span><button type="button" id="msAdd" aria-label="Add a past entry"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10.25" stroke="#111115" stroke-width="1.5"/><path d="M12 7.5v9M7.5 12h9" stroke="#111115" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
-    <div class="ms2-list" id="msList"></div></div>`;
+  if (met.k === 'w' && H.q) btns = `<div class="ms3-b"><button type="button" class="p" data-a="y">Yes</button><button type="button" data-a="n">No</button></div>`;
+  else if (met.k === 'w' && H.adj) btns = `<div class="ms3-b"><button type="button" class="p${H.adj < 0 ? ' red' : ''}" data-a="apply">Eat ${Math.abs(H.adj)} kcal ${H.adj > 0 ? 'more' : 'less'}</button><button type="button" data-a="later">Later</button></div>`;
+  root.innerHTML = `<div class="ms3">
+    <div class="ms3-tabs" id="msTabs"><div>${mets.map(x => `<button type="button" data-k="${x.k}"${x.k === m.tab ? ' class="on"' : ''}>${x.lab}</button>`).join('')}</div></div>
+    <div class="ms3-card">
+      <div class="ms3-per" id="msPer">${Object.entries(MS_PER).map(([k, [l]]) => `<button type="button" data-v="${k}"${k === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</div>
+      <div class="ms3-ch" id="msChart"></div>
+      <h2 class="ms3-h">${H.h}</h2><p class="ms3-s">${H.s}</p>${btns}
+    </div>
+    <div class="ms3-hh"><span>History</span><button type="button" id="msAdd" aria-label="Add a past entry"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9.25" stroke="#111115" stroke-width="1.5"/><path d="M10 6v8M6 10h8" stroke="#111115" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+    <div class="ms3-list" id="msList"></div></div>`;
   msDrawChart(); msDrawList(met);
-  // banner (unchanged)
+  // the pill above the tab bar: what today still needs; gone when nothing is left
   const td = msToday();
-  let ban = $('#msBan'); if (!ban) { ban = document.createElement('div'); ban.className = 'ms-ban'; ban.id = 'msBan'; document.body.appendChild(ban); ban.addEventListener('click', () => { haptic(); msTodaySheet(); }); }
-  let next = td.t + DAY; for (let i = 0; i < 7 && !msDayKind(next); i++) next += DAY;
-  const nday = next - td.t === DAY ? 'tomorrow' : 'on ' + new Date(next).toLocaleDateString('en-GB', { weekday: 'long' });
-  const B = td.k === 0 && !td.w ? ['NOTHING TODAY', `Next weigh-in ${nday}`, 'calm', MS_PLUS('#111115', 2)]
-    : !td.w ? ['TODAY', td.k === 2 ? 'Weigh in and measure your body' : 'Weigh in', '', MS_PLUS()]
-    : td.k === 2 && !td.b ? [`WEIGHED IN · ${msKg(td.e.w)} KG`, 'Body measurements left', '', MS_PLUS()]
-    : ['ALL DONE FOR TODAY', `Next weigh-in ${nday}`, 'calm', MS_CHK.replace('width="10" height="8"', 'width="18" height="14"').replace('stroke-width="2"', 'stroke-width="1.6"')];
-  ban.className = 'ms-ban' + (B[2] ? ' ' + B[2] : '');
-  ban.innerHTML = `<div class="tx"><span>${B[0]}</span>${B[1]}</div><button type="button" aria-label="${B[0] === 'ALL DONE FOR TODAY' ? 'Done for today, add another' : 'Measure'}">${B[3]}</button>`;
+  let ban = $('#msBan'); if (!ban) { ban = document.createElement('button'); ban.type = 'button'; ban.id = 'msBan'; document.body.appendChild(ban); ban.addEventListener('click', () => { haptic(); msTodaySheet(); }); }
+  const need = td.k && !td.w ? 'Weigh in' : td.k === 2 && !td.b ? 'Measure body' : '';
+  ban.className = 'ms3-pill' + (need ? '' : ' off');
+  ban.innerHTML = `<span>${need || 'Done'}</span><i><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5v11M2.5 8h11" stroke="#111115" stroke-width="2" stroke-linecap="round"/></svg></i>`;
   // events
   const top = $('#msHistTop'); if (top && !top._b) { top._b = 1; top.addEventListener('click', () => { haptic(); msSchedule(); }); }
-  root.querySelectorAll('.ms2-b button').forEach(b => b.addEventListener('click', () => {
+  root.querySelectorAll('.ms3-b button').forEach(b => b.addEventListener('click', () => {
     haptic(); const a = b.dataset.a, d = ck.d;
     if (a === 'y' || a === 'n') { m.chk = { d, ans: a, k: r0(g.k) }; save(); msRender(); return; }
     if (a === 'later') { m.chk = { ...(m.chk || { d }), d, act: 'later' }; save(); msRender(); return; }
@@ -6364,62 +6418,55 @@ let msPts = [];
 function msDrawChart(markT) {
   const el = $('#msChart'); if (!el) return;
   const m = msS(), g = goal(), met = msMetrics().find(x => x.k === m.tab) || msMetrics()[0], ck = msCheck2();
-  const W = el.clientWidth || 376, H = 170, X0 = 16, PW = W - 76;
+  const W = el.clientWidth || 344, H = 129, PW = W - 32, X0 = 0, Y0 = 9;    // three steps, gridlines 40 px apart (Figma 575:1129)
   const now = dnum(todayISO()), L = logSorted();
   let pts = L.map(e => ({ t: dnum(e.d), v: met.get(e), e })).filter(p => p.v != null && isFinite(p.v) && p.v > 0);
   if (!pts.length) { el.innerHTML = '<div class="ms2-none">No data yet</div>'; msPts = []; return; }
   const span = MS_PER[m.per][1], t0 = span ? now - span * DAY : Math.min(pts[0].t, now - 7 * DAY);
-  pts = pts.filter(p => p.t >= t0);
-  const isW = met.k === 'w', line = isW ? trendOf(series('w')).filter(p => p.t >= t0) : pts;
+  const all = pts; pts = pts.filter(p => p.t >= t0);
   if (!pts.length) { el.innerHTML = '<div class="ms2-none">Nothing in this period</div>'; msPts = []; return; }
-  const pf = isW ? msPlanFn(g) : null, planNow = pf ? pf(now) : null, goalV = met.k === 'fat' && g.tbf ? g.tbf : null;
-  const vals = pts.map(p => p.v).concat(line.map(p => p.v), planNow != null ? [planNow] : [], goalV != null ? [goalV] : []);
+  const isW = met.k === 'w';
+  const line = isW ? msSmooth(all.filter(p => p.t >= t0 - 14 * DAY), Math.max(t0, all[0].t), pts[pts.length - 1].t) : pts;
+  const pf = isW && ck.kind !== 'learn' && ck.kind !== 'empty' ? msPlanFn(g) : null, goalV = met.k === 'fat' && g.tbf ? g.tbf : null;
+  const lane = pf ? [] : null; if (pf) for (let t = Math.max(t0, g.sd ? dnum(g.sd) : t0); t <= now; t += DAY) { const v = pf(t); if (v != null) lane.push({ t, v }); }
+  const vals = line.map(p => p.v).concat(lane ? lane.flatMap(p => [p.v + MS_LANE, p.v - MS_LANE]) : [], goalV != null ? [goalV] : []);
   let mn = Math.min(...vals), mx = Math.max(...vals);
-  const step = met.u === 'kg' ? (mx - mn > 8 ? 2 : 1) : met.u === '%' ? (mx - mn < 3 ? .5 : 1) : (mx - mn > 8 ? 2 : 1);
-  let lo = Math.floor((mn - step * .3) / step) * step, hi = Math.ceil((mx + step * .3) / step) * step; if (hi - lo < 3 * step) hi = lo + 3 * step;
-  const X = t => X0 + (t - t0) / (now - t0) * PW, Y = v => 6 + (hi - v) / (hi - lo) * (H - 12);
-  const last = line[line.length - 1], fmt = v => met.dp ? (Math.round(v * 10) / 10).toFixed(1) : String(Math.round(v));
-  let s = `<svg width="${W}" height="${H + 26}" viewBox="0 0 ${W} ${H + 26}" aria-hidden="true">`;
-  const pills = [[Y(last.v), fmt(last.v), '#111115']]; if (planNow != null) pills.push([Y(planNow), (Math.round(planNow * 10) / 10).toFixed(1), MS_BLUE]); if (goalV != null) pills.push([Y(goalV), fmt(goalV), MS_BLUE]);
+  let step = .5, lo, hi;
+  for (const st of [.2, .5, 1, 2, 5, 10, 20]) { const l = Math.floor((mn - st * .15) / st) * st, h2 = Math.ceil((mx + st * .15) / st) * st; if (h2 - l <= 3 * st + 1e-9) { step = st; lo = l; hi = l + 3 * st; break; } }
+  if (lo == null) { step = Math.ceil((mx - mn) / 3); lo = Math.floor(mn); hi = lo + 3 * step; }
+  if (hi - mx < step * .1 && lo - (mn - (hi - mx)) >= 0) {}
+  const X = t => X0 + (t - t0) / (now - t0) * PW, Y = v => Y0 + (hi - v) / (hi - lo) * (H - Y0);
+  const fmt = v => met.dp ? (Math.round(v * 10) / 10).toFixed(1) : String(Math.round(v));
+  let s = `<svg width="${W}" height="${H + 21}" viewBox="0 0 ${W} ${H + 21}" aria-hidden="true">`;
   for (let v = lo; v <= hi + 1e-6; v += step) { const y = Y(v);
-    s += `<line x1="${X0}" x2="${X0 + PW}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(60,60,67,.09)"/>`;
-    if (!pills.some(p => Math.abs(p[0] - y) < 13)) s += `<text x="${X0 + PW + 10}" y="${(y + 4).toFixed(1)}" class="ax">${step < 1 ? v.toFixed(1) : Math.round(v)}</text>`; }
-  // the gap to the plan: above it red (eat less), below it blue (eat more); hidden while the trend is still learning
-  if (pf && ck.kind !== 'learn' && ck.kind !== 'empty') {
-    const seg = line.filter(p => pf(p.t) != null);
-    if (seg.length > 1) {
-      const tp = seg.map(p => [X(p.t), Y(pf(p.t))]), bt = seg.map(p => [X(p.t), Y(p.v)]), f = a => a.map(([x, y]) => `L${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
-      const area = `M${tp[0][0].toFixed(1)},${tp[0][1].toFixed(1)} ${f(tp.slice(1))} ${f(bt.slice().reverse())} Z`;
-      const up = `M${tp[0][0].toFixed(1)},-40 L${tp[0][0].toFixed(1)},${tp[0][1].toFixed(1)} ${f(tp.slice(1))} L${tp[tp.length - 1][0].toFixed(1)},-40 Z`;
-      const dn = `M${tp[0][0].toFixed(1)},${H + 40} L${tp[0][0].toFixed(1)},${tp[0][1].toFixed(1)} ${f(tp.slice(1))} L${tp[tp.length - 1][0].toFixed(1)},${H + 40} Z`;
-      s += `<defs><clipPath id="msUp"><path d="${up}"/></clipPath><clipPath id="msDn"><path d="${dn}"/></clipPath></defs>
-        <path d="${area}" fill="rgba(208,44,42,.13)" clip-path="url(#msUp)"/><path d="${area}" fill="rgba(38,105,237,.13)" clip-path="url(#msDn)"/>`;
-    }
+    s += `<line x1="${X0}" x2="${X0 + PW}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(60,60,67,.1)" stroke-width=".5"/>`;
+    s += `<text x="${X0 + PW + 16}" y="${(y + 4).toFixed(1)}" text-anchor="middle" class="ax">${step < 1 ? v.toFixed(1) : Math.round(v)}</text>`; }
+  if (lane && lane.length > 1) {
+    const up = lane.map(p => `${X(p.t).toFixed(1)},${Y(p.v + MS_LANE).toFixed(1)}`), dn = lane.slice().reverse().map(p => `${X(p.t).toFixed(1)},${Y(p.v - MS_LANE).toFixed(1)}`);
+    s += `<polygon points="${up.concat(dn).join(' ')}" fill="rgba(38,105,237,.16)"/>`;
   }
-  if (goalV != null) s += `<line x1="${X0}" x2="${X0 + PW + 6}" y1="${Y(goalV).toFixed(1)}" y2="${Y(goalV).toFixed(1)}" stroke="${MS_BLUE}" stroke-opacity=".35" stroke-dasharray="1 4" stroke-linecap="round"/>`;
-  if (isW) s += pts.map(p => `<circle cx="${X(p.t).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="2.5" fill="rgba(17,17,21,.18)"/>`).join('');
-  const P = line.map(p => [X(p.t), Y(p.v)]);
-  if (isW && P.length > 1) { let d = `M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
-    for (let i = 1; i < P.length; i++) { const [a, b] = P[i - 1], [c, e] = P[i], mx2 = (a + c) / 2; d += ` C${mx2.toFixed(1)},${b.toFixed(1)} ${mx2.toFixed(1)},${e.toFixed(1)} ${c.toFixed(1)},${e.toFixed(1)}`; }
-    s += `<path d="${d}" fill="none" stroke="#111115" stroke-width="2" stroke-linecap="round"/>`; }
-  if (!isW) { s += `<polyline points="${P.map(([a, b]) => `${a.toFixed(1)},${b.toFixed(1)}`).join(' ')}" fill="none" stroke="#111115" stroke-width="2" stroke-linejoin="round"/>`;
+  if (goalV != null) s += `<line x1="${X0}" x2="${X0 + PW}" y1="${Y(goalV).toFixed(1)}" y2="${Y(goalV).toFixed(1)}" stroke="${MS_BLUE}" stroke-opacity=".45" stroke-dasharray="2 4" stroke-linecap="round"/>`;
+  // the line: black inside the lane (or with no plan), blue under it, red over it
+  const side = p => { if (!pf) return 0; const v = pf(p.t); if (v == null) return 0; return p.v < v - MS_LANE ? -1 : p.v > v + MS_LANE ? 1 : 0; };
+  const P = line.map(p => [X(p.t), Y(p.v), side(p)]);
+  const path = arr => { if (arr.length < 2) return ''; let d = `M${arr[0][0].toFixed(1)},${arr[0][1].toFixed(1)}`;
+    for (let i = 1; i < arr.length; i++) { const [a, b] = arr[i - 1], [c, e] = arr[i], m2 = (a + c) / 2; d += ` C${m2.toFixed(1)},${b.toFixed(1)} ${m2.toFixed(1)},${e.toFixed(1)} ${c.toFixed(1)},${e.toFixed(1)}`; } return d; };
+  if (isW) { let run = [P[0]];
+    const col = k => k < 0 ? MS_BLUE : k > 0 ? MS_RED : '#111115';
+    for (let i = 1; i <= P.length; i++) { if (i === P.length || P[i][2] !== run[0][2]) { s += `<path d="${path(i < P.length ? run.concat([P[i]]) : run)}" fill="none" stroke="${col(run[0][2])}" stroke-width="2" stroke-linecap="round"/>`; if (i < P.length) run = [P[i]]; } else run.push(P[i]); } }
+  else { s += `<polyline points="${P.map(([a, b]) => `${a.toFixed(1)},${b.toFixed(1)}`).join(' ')}" fill="none" stroke="#111115" stroke-width="2" stroke-linejoin="round"/>`;
     s += P.slice(0, -1).map(([a, b]) => `<circle cx="${a.toFixed(1)}" cy="${b.toFixed(1)}" r="3" fill="#111115"/>`).join(''); }
-  const [lx, ly] = P[P.length - 1];
-  let ly2 = ly; pills.slice(1).forEach(p => { if (Math.abs(ly2 - p[0]) < 24) ly2 = ly2 > p[0] ? p[0] + 24 : p[0] - 24; });
-  s += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="5" fill="#111115" stroke="#f6f6fa" stroke-width="2"/>`;
-  s += `<line x1="${lx.toFixed(1)}" x2="${X0 + PW + 6}" y1="${ly.toFixed(1)}" y2="${ly2.toFixed(1)}" stroke="#111115" stroke-dasharray="2 3"/>`;
-  pills[0][0] = ly2;
-  pills.forEach(([y, t, c]) => { const w = 8 * t.length + 14; s += `<rect x="${(X0 + PW + 29 - w / 2).toFixed(1)}" y="${(y - 11).toFixed(1)}" width="${w}" height="22" rx="11" fill="${c}"/><text x="${X0 + PW + 29}" y="${(y + 4).toFixed(1)}" text-anchor="middle" class="pl">${t}</text>`; });
-  // x labels: months, every second month past 100 days, years past 400
+  const [lx, ly, ls] = P[P.length - 1], lc = ls < 0 ? MS_BLUE : ls > 0 ? MS_RED : '#111115', last = line[line.length - 1];
+  s += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="${lc}"/>`;
+  const lt = fmt(last.v), lw = 7.6 * lt.length + 12;
+  s += `<rect x="${(X0 + PW + 15 - lw / 2).toFixed(1)}" y="${(ly - 10).toFixed(1)}" width="${lw}" height="20" rx="10" fill="${lc}"/><text x="${X0 + PW + 15}" y="${(ly + 4).toFixed(1)}" text-anchor="middle" class="pl">${lt}</text>`;
   const days = (now - t0) / DAY; let dd = new Date(t0); dd = new Date(dd.getFullYear(), dd.getMonth() + 1, 1);
   if (days > 400) { for (let y = new Date(t0).getFullYear() + 1; y <= new Date(now).getFullYear(); y++) { const x = X(new Date(y, 0, 1).getTime()); if (x > X0 + 14 && x < X0 + PW - 14) s += `<text x="${x.toFixed(1)}" y="${H + 20}" text-anchor="middle" class="ax">${y}</text>`; } }
-  else { let i = 0; while (dd.getTime() <= now) { const x = X(dd.getTime()); if (i++ % (days > 100 ? 2 : 1) === 0 && x > X0 + 10 && x < X0 + PW - 10) s += `<text x="${x.toFixed(1)}" y="${H + 20}" text-anchor="middle" class="ax">${MS_MON[dd.getMonth()]}</text>`; dd = new Date(dd.getFullYear(), dd.getMonth() + 1, 1); } }
-  // the finger mark
+  else { let i = 0; while (dd.getTime() <= now) { const x = X(dd.getTime()); if (i++ % (days > 100 ? 2 : 1) === 0 && x > X0 + 12 && x < X0 + PW - 4) s += `<text x="${x.toFixed(1)}" y="${H + 19}" text-anchor="middle" class="ax">${MS_MON[dd.getMonth()]}</text>`; dd = new Date(dd.getFullYear(), dd.getMonth() + 1, 1); } }
   if (markT != null) { const p = pts.reduce((a, b) => Math.abs(b.t - markT) < Math.abs(a.t - markT) ? b : a), x = X(p.t), y = Y(p.v);
-    const lab = `${msFmtD(p.t)} · ${fmt(p.v)} ${met.u}`, w = 7 * lab.length + 22, px = Math.min(Math.max(X0 + w / 2, x), X0 + PW - w / 2);
-    s += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="0" y2="${H}" stroke="#111115" stroke-opacity=".3"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="#111115" stroke="#f6f6fa" stroke-width="2.5"/>`;
-    el.dataset.mark = p.e.d;
-    el.innerHTML = s + '</svg>' + `<span class="ms2-tip" style="left:${px.toFixed(0)}px">${lab}</span>`;
+    const lab = `${msDay(p.t)} · ${fmt(p.v)} ${met.u}`, w = 7 * lab.length + 22, px = Math.min(Math.max(X0 + w / 2, x), X0 + PW - w / 2);
+    s += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${Y0}" y2="${H}" stroke="#111115" stroke-opacity=".3"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="#111115" stroke="#e9e9ed" stroke-width="2"/>`;
+    el.dataset.mark = p.e.d; el.innerHTML = s + '</svg>' + `<span class="ms2-tip" style="left:${px.toFixed(0)}px">${lab}</span>`;
   } else { delete el.dataset.mark; el.innerHTML = s + '</svg>'; }
   msPts = pts.map(p => ({ x: X(p.t), t: p.t, d: p.e.d }));
   if (!el._b) { el._b = 1;
@@ -6432,27 +6479,28 @@ function msDrawChart(markT) {
     el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
   }
 }
+function msWkCol(dkg) {                      // a week's change against the plan: grey on it, blue short of it, red past it
+  const r = goal().rate || 0, gap = dkg - r; return Math.abs(gap) <= .15 ? '' : gap < 0 ? ' bl' : ' rd';
+}
 function msDrawList(met) {
   const el = $('#msList'); if (!el) return;
   const m = msS(), now = dnum(todayISO()), span = MS_PER[m.per][1], t0 = span ? now - span * DAY : -Infinity;
-  const row = (d, val, unit, dl) => `<div class="ms2-r" data-d="${d}"><button type="button" class="del" aria-label="Delete">${MS_TRASH}</button>
-    <div class="rc"><span class="dt">${msFmtD(dnum(d))}</span><span class="vv">${dl ? `<i>${dl}</i>` : ''}${msNw(`<b>${val}</b> ${unit}`)}</span></div></div>`;
+  const row = (d, val, unit) => `<div class="ms2-r" data-d="${d}"><button type="button" class="del" aria-label="Delete">${MS_TRASH}</button>
+    <div class="rc"><span class="dt">${msDay(dnum(d))}</span><span class="vv">${msNw(`<b>${val}</b> ${unit}`)}</span></div></div>`;
   let h = '';
   if (met.k === 'w') {
-    const L = msWLog(), tw = wkStart(now); let wk = null, buf = [];
-    const flush = () => { if (!buf.length) return; const avg = buf.reduce((a, e) => a + e.w, 0) / buf.length;
-      const lab = wk === tw ? 'This week' : wk === tw - 7 * DAY ? 'Last week' : `${shortDate(wk)} – ${shortDate(wk + 6 * DAY)}`;
-      h += `<div class="ms2-wk"><span>${lab}</span><span>average ${msNw(`<b>${msKg(avg)}</b> kg`)}</span></div>` + buf.map(e => { const i = L.indexOf(e), p = i ? L[i - 1] : null;
-        return row(e.d, msKg2(e.w), 'kg', p ? (Math.abs(e.w - p.w) < .005 ? '±0' : msGs(e.w - p.w)) + ' g' : ''); }).join(''); buf = []; };
+    const L = msWLog(), tw = wkStart(now), wks = msWeeks(); let wk = null, buf = [];
+    const flush = () => { if (!buf.length) return; const avg = buf.reduce((a, e) => a + e.w, 0) / buf.length, i = wks.findIndex(w => w.t === wk), prev = i > 0 ? wks[i - 1] : null;
+      const lab = wk === tw ? 'This week' : wk === tw - 7 * DAY ? 'Last week' : `${new Date(wk).getDate()} ${MS_MON[new Date(wk).getMonth()]} — ${new Date(wk + 6 * DAY).getDate()} ${MS_MON[new Date(wk + 6 * DAY).getMonth()]}`;
+      const dl = prev ? avg - prev.avg : null;
+      h += `<div class="ms3-wk"><span>${lab}${dl != null ? `<i class="${msWkCol(dl)}">${msGs(dl)}g</i>` : ''}</span><span>${msNw(`${msKg(avg)} kg`)}</span></div>` + buf.map(e => row(e.d, msKg2(e.w), 'kg')).join(''); buf = []; };
     [...L].reverse().filter(e => dnum(e.d) >= t0).forEach(e => { const k = wkStart(dnum(e.d)); if (k !== wk) { flush(); wk = k; } buf.push(e); }); flush();
-    if (!h) h = '<div class="ms2-wk"><span>No weigh-ins in this period</span></div>';
+    if (!h) h = '<div class="ms3-wk"><span>No weigh-ins in this period</span></div>';
     h += '<button type="button" class="ms-imb" id="hImp">Import from a table</button>';
   } else {
     const L = logSorted().filter(e => { const v = met.get(e); return v != null && isFinite(v) && v > 0; });
     const fmt = v => met.dp ? (Math.round(v * 10) / 10).toFixed(1) : String(Math.round(v));
-    h = '<div style="height:6px"></div>' + [...L].reverse().filter(e => dnum(e.d) >= t0).map(e => { const i = L.indexOf(e), p = i ? met.get(L[i - 1]) : null, v = met.get(e);
-      const dv = p != null ? Math.round((v - p) * (met.dp ? 10 : 1)) / (met.dp ? 10 : 1) : null;
-      return row(e.d, fmt(v), met.u, dv == null ? '' : dv === 0 ? '±0' : (dv > 0 ? '+' : '−') + fmt(Math.abs(dv))); }).join('') || '<div class="ms2-wk"><span>Nothing in this period</span></div>';
+    h = '<div style="height:8px"></div>' + [...L].reverse().filter(e => dnum(e.d) >= t0).map(e => row(e.d, fmt(met.get(e)), met.u)).join('') || '<div class="ms3-wk"><span>Nothing in this period</span></div>';
   }
   el.innerHTML = h;
   const im = $('#hImp'); if (im) im.addEventListener('click', () => { haptic(); msImport(); });
