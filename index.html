@@ -2204,10 +2204,10 @@ html body.f31.pal-fresh #app #secMeal #mhead.stuck::after{opacity:1}
 #mlab .ml-btns{display:flex;gap:6px;margin-top:6px}
 #mlab .ml-btns button,#mlab .ml-act button{height:36px;padding:0 14px;border-radius:18px;background:rgba(118,118,128,.12);font:510 15px/20px var(--sans);color:#111115}
 #mlab .ml-t{margin:18px 0 4px;font:590 13px/16px var(--sans);color:rgba(60,60,67,.6)}
-#mlab .ml-r{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 12px;padding:8px 0;box-shadow:inset 0 -1px 0 var(--line)}
-#mlab .ml-r span{font:400 15px/20px var(--sans)}
-#mlab .ml-r em{font:500 14px/20px var(--mono);font-style:normal;color:rgba(60,60,67,.6)}
-#mlab .ml-r input{grid-column:1/-1;width:100%;accent-color:#111115}
+#mlab .ml-r,#msSet .ml-r{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 12px;padding:8px 0;box-shadow:inset 0 -1px 0 var(--line)}
+#mlab .ml-r span,#msSet .ml-r span{font:400 15px/20px var(--sans)}
+#mlab .ml-r em,#msSet .ml-r em{font:500 14px/20px var(--mono);font-style:normal;color:rgba(60,60,67,.6)}
+#mlab .ml-r input,#msSet .ml-r input{grid-column:1/-1;width:100%;accent-color:#111115}
 #mlab .ml-e{grid-template-columns:auto 1fr}
 #mlab .ml-e .st-seg{justify-self:end}
 #mlab .ml-act{display:flex;gap:8px;margin-top:16px}
@@ -2673,6 +2673,7 @@ html body .sheet.ps #msBody .vt:has(input:placeholder-shown):not(:focus-within){
 .ms3-tabs button{flex:none;height:40px;padding:0 14px;border:0;border-radius:48px;background:none;white-space:nowrap;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;color:#111115}
 .ms3-tabs button.on{background:rgba(17,17,21,.08)}
 .ms3-card{margin:7px 16px 0;padding:10px 0 15px;border-radius:32px;background:rgba(118,118,128,.12)}
+.ms3-card.nb{padding-bottom:26px}.ms3-card{touch-action:pan-y}
 .ms3-per{display:flex;justify-content:center;gap:4px}
 .ms3-per button{height:22px;padding:0 6px;border:0;border-radius:16px;background:none;font:400 12px/14px -apple-system,"SF Pro Text",system-ui,sans-serif;color:rgba(60,60,67,.45)}
 .ms3-per button.on{background:rgba(118,118,128,.12);color:#111115}
@@ -2701,7 +2702,7 @@ html body .sheet.ps #msBody .vt:has(input:placeholder-shown):not(:focus-within){
 .ms3-list .ms2-r .dt{font:400 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif}
 .ms3-list .ms2-r .vv b{font:600 15px/20px "SF Mono",ui-monospace,Menlo,monospace}
 .ms3-list .ms2-r .vv{font:510 15px/20px -apple-system,system-ui,sans-serif;color:#111115}
-.ms3-list .ms2-r .del{top:-4px;width:56px;height:40px;border-radius:12px}
+.ms3-list .ms2-r .del{top:0;width:44px;height:32px;border-radius:10px}.ms3-list .ms2-r .del svg{width:15px;height:17px}
 .ms3-pill{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);z-index:40;height:48px;padding:0 4px 0 16px;border:0;border-radius:48px;background:#111115;color:#fff;display:flex;align-items:center;gap:8px;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;transition:opacity .25s,transform .25s}
 .ms3-pill i{width:40px;height:40px;border-radius:20px;background:#fff;display:grid;place-items:center}
 .ms3-pill.off{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
@@ -3460,6 +3461,12 @@ function renderSettings() {
       <div class="st-r"><div><b>Ruler step</b><span>Grams per notch when you hold an amount</span></div>
         <div class="st-seg">${[1, 5, 10].map(v => `<button data-step="${v}" class="${(u.step || 5) === v ? 'on' : ''}">${v} g</button>`).join('')}</div></div>
     </div>
+    <div class="st-h">Measure chart</div>
+    <div class="st-g ml" id="msSet">
+      <label class="ml-r"><span>Smoothing</span><em data-msv="sm">${(u.msSm ?? 4) ? (u.msSm ?? 4) + ' d' : '7-day average'}</em><input type="range" min="0" max="8" step=".5" value="${u.msSm ?? 4}" data-ms="msSm"></label>
+      <label class="ml-r"><span>Plan lane · ± kg</span><em data-msv="lane">${(u.msLane ?? .4).toFixed(2)}</em><input type="range" min=".1" max="1" step=".05" value="${u.msLane ?? .4}" data-ms="msLane"></label>
+      <div class="st-r"><div><b>Weigh-in dots</b><span>Each weigh-in as a grey dot under the line</span></div><button type="button" class="swt${u.msDots ? ' on' : ''}" data-msdots aria-checked="${!!u.msDots}" role="switch"><i></i></button></div>
+    </div>
     <div class="st-h">Motion lab</div>
     <div class="st-g ml" id="mlab">${mlabHTML()}</div>
     <div class="st-h">Data</div>
@@ -3494,6 +3501,9 @@ $('#secSettings').addEventListener('click', e => {
   if (act.dataset.act === 'reset') confirmSheet('Reset demo data?', 'All products, plans and measurements on this device are replaced with the demo set.', 'Reset', () => {
     ghostOff(); const th = S.ui.theme; S = seed(); S.ui.theme = th; S.ui.tab = 'settings'; applyGrams(plan()); save(); syncTabs(); renderAll(false); toast('Demo data restored'); });
 });
+$('#secSettings').addEventListener('input', e => { const r = e.target.closest('#msSet input[data-ms]'); if (!r) return; S.ui[r.dataset.ms] = +r.value; save();
+  const em = r.dataset.ms === 'msSm' ? $('[data-msv="sm"]') : $('[data-msv="lane"]'); em.textContent = r.dataset.ms === 'msSm' ? (+r.value ? r.value + ' d' : '7-day average') : (+r.value).toFixed(2); });
+$('#secSettings').addEventListener('click', e => { const b = e.target.closest('[data-msdots]'); if (!b) return; haptic(); S.ui.msDots = !S.ui.msDots; save(); renderSettings(); });
 $('#secSettings').addEventListener('change', e => {
   if (e.target.id !== 'stImport' || !e.target.files[0]) return;
   e.target.files[0].text().then(txt => {
@@ -4394,10 +4404,9 @@ function foodSheet(e, isNew) {
   const ul = u => u === 'pc' ? 'pc' : u, w0 = v => v === '' || v == null ? '' : r0(v);
   const mini = `<span class="ps-pc" id="fUwBox"${unit0 === 'pc' ? '' : ' hidden'}><span class="ps-pcl">1 pc</span><div class="vt ps-mini" data-f="fUw"><span class="l">One piece</span><b><span class="v"></span><i class="cr"></i><span class="u">g</span><input id="fUw" inputmode="decimal" enterkeyhint="next" value="${e && e.uw ? e.uw : ''}" placeholder="0" autocomplete="off" aria-label="One piece weighs, g"></b></div></span>`;
   sheet(`<div class="ps-bar"><button type="button" class="ps-c" id="fX" aria-label="Close">${PSI.x}</button>
-      ${isNew ? '<span class="ps-kick">New product</span>' : `<input class="sh-name ps-title" id="fName" value="${esc(e ? e.name : '')}" placeholder="Product name" autocomplete="off" aria-label="Product name">`}
+      <input class="sh-name ps-title" id="fName" value="${esc(e ? e.name : '')}" placeholder="${isNew ? 'New product' : 'Product name'}" autocomplete="off" aria-label="Product name">
       ${isNew ? `<button type="button" class="ps-c" id="fScan" aria-label="Scan a label or barcode">${PSI.scan}</button>` : ''}
       <button type="button" class="ps-c ps-ok off" id="fSave" aria-label="Save">${PSI.ok}</button></div>
-    ${isNew ? '<input class="sh-name ps-head" id="fName" value="" placeholder="Product name" autocomplete="off" aria-label="Product name">' : ''}
     <div class="ps-cap ps-u"><span>Per 100 g</span><span class="ps-ur">${mini}<button type="button" class="ps-unit" id="fU" data-v="${unit0}" aria-label="Counted in">${psUnitBtn(unit0)}</button></span></div>
     <div class="ps-chips">${fnum('fK', 'KCAL', isNew ? '' : w0(n.k), '', '0')}${fnum('fP', 'P', w0(n.p), 'g')}${fnum('fF', 'F', w0(n.f), 'g')}${fnum('fC', 'C', w0(n.c), 'g')}</div>
     <div class="ps-warn" id="fWarn" hidden><span class="t"></span><button type="button" class="ps-chip" id="fUse"></button></div>
@@ -6362,10 +6371,10 @@ function msHead(ck) {
   return { h, s, adj: st.act === 'later' ? null : ck.adj };
 }
 const msDay = t => { const d = new Date(t); return `${d.toLocaleDateString('en-GB', { weekday: 'short' })}, ${d.getDate()} ${MS_MON[d.getMonth()]}`; };
-const MS_LANE = .4;                       // the plan lane: ± kg around the planned weight
-function msSmooth(L, t0, t1) {            // gaussian smoothing of weigh-ins, σ = 4 days, one point a day
-  const out = []; for (let t = t0; t <= t1; t += DAY) { let a = 0, b = 0;
-    for (const e of L) { const dd = (e.t - t) / DAY; if (dd < -12 || dd > 12) continue; const w = Math.exp(-dd * dd / 32); a += w * e.v; b += w; }
+const msLaneW = () => S.ui.msLane ?? .4;   // the plan lane: ± kg around the planned weight (Settings → Measure chart)
+function msSmooth(L, t0, t1, sg = 4) {    // gaussian smoothing of weigh-ins (σ in days, Settings → Measure chart), one point a day
+  const out = [], R = sg * 3; for (let t = t0; t <= t1; t += DAY) { let a = 0, b = 0;
+    for (const e of L) { const dd = (e.t - t) / DAY; if (dd < -R || dd > R) continue; const w = Math.exp(-dd * dd / (2 * sg * sg)); a += w * e.v; b += w; }
     if (b) out.push({ t, v: a / b }); } return out;
 }
 function msBodyHead(met) {                // the card's words on a body tab
@@ -6386,7 +6395,7 @@ function msRender() {
   else if (met.k === 'w' && H.adj) btns = `<div class="ms3-b"><button type="button" class="p${H.adj < 0 ? ' red' : ''}" data-a="apply">Eat ${Math.abs(H.adj)} kcal ${H.adj > 0 ? 'more' : 'less'}</button><button type="button" data-a="later">Later</button></div>`;
   root.innerHTML = `<div class="ms3">
     <div class="ms3-tabs" id="msTabs"><div>${mets.map(x => `<button type="button" data-k="${x.k}"${x.k === m.tab ? ' class="on"' : ''}>${x.lab}</button>`).join('')}</div></div>
-    <div class="ms3-card">
+    <div class="ms3-card${btns ? '' : ' nb'}" id="msCard">
       <div class="ms3-per" id="msPer">${Object.entries(MS_PER).map(([k, [l]]) => `<button type="button" data-v="${k}"${k === m.per ? ' class="on"' : ''}>${l}</button>`).join('')}</div>
       <div class="ms3-ch" id="msChart"></div>
       <h2 class="ms3-h">${H.h}</h2><p class="ms3-s">${H.s}</p>${btns}
@@ -6412,6 +6421,12 @@ function msRender() {
   $('#msTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.k === m.tab) return; haptic(); m.tab = b.dataset.k; save(); const x = $('#msTabs').scrollLeft; msRender(); $('#msTabs').scrollLeft = x; });
   $('#msPer').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.v === m.per) return; haptic(); m.per = b.dataset.v; save(); const x = $('#msTabs').scrollLeft; msRender(); $('#msTabs').scrollLeft = x; });
   $('#msAdd').addEventListener('click', () => { haptic(); msTodaySheet(iso(dnum(todayISO()) - DAY), true); });
+  { const card = $('#msCard'); let P0 = null;
+    card.addEventListener('pointerdown', e => { P0 = { x: e.clientX, y: e.clientY, t: Date.now() }; }, true);
+    card.addEventListener('pointerup', e => { if (!P0) return; const dx = e.clientX - P0.x, dy = e.clientY - P0.y, dt = Date.now() - P0.t; P0 = null;
+      if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx) * .6 || dt > 350) return;
+      const i = mets.findIndex(x => x.k === m.tab), j = i + (dx < 0 ? 1 : -1); if (j < 0 || j >= mets.length) return;
+      haptic(); m.tab = mets[j].k; save(); msRender(); const tb = $('#msTabs .on'); if (tb) $('#msTabs').scrollLeft = Math.max(0, tb.offsetLeft - 16); }, true); }
   const on = $('#msTabs .on'); if (on && on.offsetLeft + on.offsetWidth > $('#msTabs').clientWidth) $('#msTabs').scrollLeft = on.offsetLeft - 16;
 }
 let msPts = [];
@@ -6426,10 +6441,10 @@ function msDrawChart(markT) {
   const all = pts; pts = pts.filter(p => p.t >= t0);
   if (!pts.length) { el.innerHTML = '<div class="ms2-none">Nothing in this period</div>'; msPts = []; return; }
   const isW = met.k === 'w';
-  const line = isW ? msSmooth(all.filter(p => p.t >= t0 - 14 * DAY), Math.max(t0, all[0].t), pts[pts.length - 1].t) : pts;
+  const sg = S.ui.msSm ?? 4, line = !isW ? pts : sg > 0 ? msSmooth(all.filter(p => p.t >= t0 - 30 * DAY), Math.max(t0, all[0].t), pts[pts.length - 1].t, sg) : trendOf(series('w')).filter(p => p.t >= t0);
   const pf = isW && ck.kind !== 'learn' && ck.kind !== 'empty' ? msPlanFn(g) : null, goalV = met.k === 'fat' && g.tbf ? g.tbf : null;
   const lane = pf ? [] : null; if (pf) for (let t = Math.max(t0, g.sd ? dnum(g.sd) : t0); t <= now; t += DAY) { const v = pf(t); if (v != null) lane.push({ t, v }); }
-  const vals = line.map(p => p.v).concat(lane ? lane.flatMap(p => [p.v + MS_LANE, p.v - MS_LANE]) : [], goalV != null ? [goalV] : []);
+  const vals = line.map(p => p.v).concat(lane ? lane.flatMap(p => [p.v + msLaneW(), p.v - msLaneW()]) : [], goalV != null ? [goalV] : []);
   let mn = Math.min(...vals), mx = Math.max(...vals);
   let step = .5, lo, hi;
   for (const st of [.2, .5, 1, 2, 5, 10, 20]) { const l = Math.floor((mn - st * .15) / st) * st, h2 = Math.ceil((mx + st * .15) / st) * st; if (h2 - l <= 3 * st + 1e-9) { step = st; lo = l; hi = l + 3 * st; break; } }
@@ -6442,12 +6457,17 @@ function msDrawChart(markT) {
     s += `<line x1="${X0}" x2="${X0 + PW}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(60,60,67,.1)" stroke-width=".5"/>`;
     s += `<text x="${X0 + PW + 16}" y="${(y + 4).toFixed(1)}" text-anchor="middle" class="ax">${step < 1 ? v.toFixed(1) : Math.round(v)}</text>`; }
   if (lane && lane.length > 1) {
-    const up = lane.map(p => `${X(p.t).toFixed(1)},${Y(p.v + MS_LANE).toFixed(1)}`), dn = lane.slice().reverse().map(p => `${X(p.t).toFixed(1)},${Y(p.v - MS_LANE).toFixed(1)}`);
-    s += `<polygon points="${up.concat(dn).join(' ')}" fill="rgba(38,105,237,.16)"/>`;
+    // rounded corners: shrink the shape by r, then stroke it with 2r and round joins; the group's opacity keeps the overlap flat
+    const r = Math.min(8, (Y(0) - Y(msLaneW())) * .9), x1 = X(lane[0].t) + r, x2 = X(lane[lane.length - 1].t) - r, inL = lane.filter(p => X(p.t) >= x1 && X(p.t) <= x2);
+    const pv = x => { const t = t0 + (x - X0) / PW * (now - t0); return pf(t) ?? lane[0].v; };
+    const up = [[x1, pv(x1)], ...inL.map(p => [X(p.t), p.v]), [x2, pv(x2)]].map(([x, v]) => `${x.toFixed(1)},${(Y(v + msLaneW()) + r).toFixed(1)}`);
+    const dn = [[x2, pv(x2)], ...inL.slice().reverse().map(p => [X(p.t), p.v]), [x1, pv(x1)]].map(([x, v]) => `${x.toFixed(1)},${(Y(v - msLaneW()) - r).toFixed(1)}`);
+    s += `<g opacity=".16"><polygon points="${up.concat(dn).join(' ')}" fill="#2669ed" stroke="#2669ed" stroke-width="${(2 * r).toFixed(1)}" stroke-linejoin="round"/></g>`;
   }
   if (goalV != null) s += `<line x1="${X0}" x2="${X0 + PW}" y1="${Y(goalV).toFixed(1)}" y2="${Y(goalV).toFixed(1)}" stroke="${MS_BLUE}" stroke-opacity=".45" stroke-dasharray="2 4" stroke-linecap="round"/>`;
   // the line: black inside the lane (or with no plan), blue under it, red over it
-  const side = p => { if (!pf) return 0; const v = pf(p.t); if (v == null) return 0; return p.v < v - MS_LANE ? -1 : p.v > v + MS_LANE ? 1 : 0; };
+  if (isW && S.ui.msDots) s += pts.map(p => `<circle cx="${X(p.t).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="2.5" fill="rgba(17,17,21,.2)"/>`).join('');
+  const side = p => { if (!pf) return 0; const v = pf(p.t); if (v == null) return 0; return p.v < v - msLaneW() ? -1 : p.v > v + msLaneW() ? 1 : 0; };
   const P = line.map(p => [X(p.t), Y(p.v), side(p)]);
   const path = arr => { if (arr.length < 2) return ''; let d = `M${arr[0][0].toFixed(1)},${arr[0][1].toFixed(1)}`;
     for (let i = 1; i < arr.length; i++) { const [a, b] = arr[i - 1], [c, e] = arr[i], m2 = (a + c) / 2; d += ` C${m2.toFixed(1)},${b.toFixed(1)} ${m2.toFixed(1)},${e.toFixed(1)} ${c.toFixed(1)},${e.toFixed(1)}`; } return d; };
@@ -6512,9 +6532,9 @@ function msBindRow2(r, met) {
   rc.addEventListener('click', () => { if (r._moved) { r._moved = false; return; } if (r.classList.contains('sw')) { r.classList.remove('sw'); rc.style.transform = ''; return; } haptic(); msTodaySheet(r.dataset.d); });
   rc.addEventListener('pointerdown', e => { P = { x: e.clientX, y: e.clientY, open: r.classList.contains('sw'), go: false }; r.classList.add('hl'); mark(true); });
   rc.addEventListener('pointermove', e => { if (!P) return; const dx = e.clientX - P.x; if (!P.go && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - P.y)) { P.go = true; rc.setPointerCapture(e.pointerId); rc.style.transition = 'none'; }
-    if (P.go) { const x = Math.min(0, (P.open ? -64 : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
+    if (P.go) { const ow = -(del.offsetWidth + 8), x = Math.min(0, (P.open ? ow : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
   const end = () => { r.classList.remove('hl'); mark(false); if (!P) return; const go = P.go; P = null; if (!go) return; r._moved = true; rc.style.transition = ''; const x = parseFloat((rc.style.transform.match(/-?[\d.]+/) || [0])[0]);
-    if (x < -r.offsetWidth * .6) return msDel2(r, met); if (x < -32) { r.classList.add('sw'); rc.style.transform = 'translateX(-64px)'; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
+    if (x < -r.offsetWidth * .6) return msDel2(r, met); if (x < -24) { r.classList.add('sw'); rc.style.transform = `translateX(${-(del.offsetWidth + 8)}px)`; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
   rc.addEventListener('pointerup', end); rc.addEventListener('pointercancel', end); rc.addEventListener('pointerleave', () => { if (!P) { r.classList.remove('hl'); } });
   del.addEventListener('click', () => msDel2(r, met));
 }
@@ -6695,9 +6715,9 @@ function msBindRow(r) {
   if (!del) return;
   rc.addEventListener('pointerdown', e => { P = { x: e.clientX, y: e.clientY, open: r.classList.contains('sw'), go: false }; });
   rc.addEventListener('pointermove', e => { if (!P) return; const dx = e.clientX - P.x; if (!P.go && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - P.y)) { P.go = true; rc.setPointerCapture(e.pointerId); rc.style.transition = 'none'; }
-    if (P.go) { const x = Math.min(0, (P.open ? -64 : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
+    if (P.go) { const ow = -(del.offsetWidth + 8), x = Math.min(0, (P.open ? ow : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
   const end = e => { if (!P) return; const go = P.go; P = null; if (!go) return; r._moved = true; rc.style.transition = ''; const x = parseFloat((rc.style.transform.match(/-?[\d.]+/) || [0])[0]);
-    if (x < -r.offsetWidth * .6) return msDel(r); if (x < -32) { r.classList.add('sw'); rc.style.transform = 'translateX(-64px)'; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
+    if (x < -r.offsetWidth * .6) return msDel(r); if (x < -24) { r.classList.add('sw'); rc.style.transform = `translateX(${-(del.offsetWidth + 8)}px)`; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
   rc.addEventListener('pointerup', end); rc.addEventListener('pointercancel', end);
   del.addEventListener('click', () => msDel(r));
 }
