@@ -2692,18 +2692,18 @@ html body .sheet.ps #msBody .vt:has(input:placeholder-shown):not(:focus-within){
 .ms3-hh{display:flex;justify-content:space-between;align-items:center;margin:40px 26px 0;height:20px;font:510 18px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.36px;color:#111115}
 .ms3-hh button{border:0;background:none;padding:0;width:20px;height:20px}
 .ms3-list{margin:0}
-.ms3-wk{display:flex;justify-content:space-between;margin:32px 26px 10px;font:400 12px/14px -apple-system,"SF Pro Text",system-ui,sans-serif;color:rgba(60,60,67,.6);text-transform:uppercase}
-.ms3-wk i{font:400 12px/14px "SF Mono",ui-monospace,Menlo,monospace;font-style:normal;color:rgba(60,60,67,.6);margin-left:8px;text-transform:uppercase}
+.ms3-wk{display:flex;justify-content:space-between;margin:20px 26px 4px;font:400 12px/14px -apple-system,"SF Pro Text",system-ui,sans-serif;color:rgba(60,60,67,.6);text-transform:uppercase}
+.ms3-wk i{font:400 12px/14px "SF Mono",ui-monospace,Menlo,monospace;font-style:normal;color:rgba(60,60,67,.6);margin-right:10px;text-transform:uppercase}
 .ms3-wk i.bl{color:#2669ed}.ms3-wk i.rd{color:#d02c2a}
 .ms3-wk span:last-child{font-family:"SF Mono",ui-monospace,Menlo,monospace}
-.ms3-list .ms2-r{height:32px;margin:0 16px}
-.ms3-list .ms2-r .rc{height:32px;border-radius:10px}
+.ms3-list .ms2-r{height:28px;margin:0 16px}.ms3-list>.ms3-wk:first-child{margin-top:32px}
+.ms3-list .ms2-r .rc{height:28px;border-radius:8px;background:none;gap:8px}.ms3-list .ms2-r .ld{flex:1;height:1px;background:rgba(60,60,67,.07);align-self:center}
 .ms3-list .ms2-r+.ms2-r .rc::before{display:none}
 .ms3-list .ms2-r .dt{font:400 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif}
 .ms3-list .ms2-r .vv b{font:600 15px/20px "SF Mono",ui-monospace,Menlo,monospace}
 .ms3-list .ms2-r .vv{font:510 15px/20px -apple-system,system-ui,sans-serif;color:#111115}
-.ms3-list .ms2-r .del{top:0;width:44px;height:32px;border-radius:10px}.ms3-list .ms2-r .del svg{width:15px;height:17px}
-.ms3-pill{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);z-index:40;height:48px;padding:0 4px 0 16px;border:0;border-radius:48px;background:#111115;color:#fff;display:flex;align-items:center;gap:8px;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;transition:opacity .25s,transform .25s}
+.ms3-list .ms2-r .del svg{width:10px;height:10px}.ms3-list .ms2-r .del{top:0;right:0;width:20px;height:28px;border-radius:0;background:none;display:grid;place-items:center}
+.ms3-pill{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);z-index:40;height:48px;padding:0 4px 0 16px;border:0;border-radius:48px;background:#1f1f22;color:#fff;display:flex;align-items:center;gap:8px;font:510 15px/20px -apple-system,"SF Pro Text",system-ui,sans-serif;letter-spacing:-.15px;transition:opacity .25s,transform .25s}
 .ms3-pill i{width:40px;height:40px;border-radius:20px;background:#fff;display:grid;place-items:center}
 .ms3-pill.off{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
 body:not(.tab-measure) .ms3-pill{display:none}
@@ -3662,11 +3662,13 @@ function toggleGroup(gr) {
     const h0 = el.getBoundingClientRect().height, h1 = el.querySelector('.ghead').getBoundingClientRect().height + pad;
     el.classList.remove('open'); el.style.overflow = 'hidden';
     const k = el.querySelector('.kids'); if (k) k.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-4px)' }], { duration: 160, easing: EASE, fill: 'forwards' });
-    el.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 320, easing: EASE }).onfinish = () => { gr.open = false; save(); renderList(); renderHeader(); };
+    el.style.willChange = 'height';
+    el.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 320, easing: EASE }).onfinish = () => {
+      gr.open = false; save(); if (k) { k.getAnimations().forEach(a => a.cancel()); k.innerHTML = ''; } el.style.overflow = ''; el.style.willChange = ''; };
     return;
   }
   const h0 = el && !RM ? el.getBoundingClientRect().height : 0;
-  gr.open = !gr.open; save(); renderList(); renderHeader();
+  gr.open = !gr.open; save(); renderList();
   const nel = list.querySelector(`[data-id="${gr.id}"]`); if (!nel || RM || !gr.open) return;
   const h1 = nel.getBoundingClientRect().height; nel.style.overflow = 'hidden';
   nel.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 320, easing: EASE }).onfinish = () => { nel.style.overflow = ''; };
@@ -6192,7 +6194,7 @@ document.body.classList.add('f31');
       `- Версия: ${document.lastModified} · ${navigator.standalone ? 'на экране «Домой»' : 'в браузере'}`
     ].filter(Boolean).join('\n');
     const where = [tab, shTitle, pg, fo].filter(Boolean).join(' → ');
-    return { tab, where, body: `**Что не так / что хочу:**\n\n\n\n<!-- скриншот можно вставить сюда -->\n\n---\nКонтекст (заполнено само):\n${lines}\n` };
+    return { tab, where, body: `<!-- пиши всё в заголовок; скриншот можно вставить сюда -->\n\n---\nКонтекст (заполнено само):\n${lines}\n` };
   };
   window.kcalFeedback = () => { const c = ctx(); haptic(); toast(`Feedback · ${c.where}`);
     const u = `${REPO}?labels=${encodeURIComponent(['polish', c.tab].join(','))}&title=&body=${encodeURIComponent(c.body)}`;
@@ -6415,7 +6417,7 @@ function msRender() {
     haptic(); const a = b.dataset.a, d = ck.d;
     if (a === 'y' || a === 'n') { m.chk = { d, ans: a, k: r0(g.k) }; save(); msRender(); return; }
     if (a === 'later') { m.chk = { ...(m.chk || { d }), d, act: 'later' }; save(); msRender(); return; }
-    if (a === 'apply') { const was = r0(g.k); applyKcal(H.adj); m.chk = { ...(m.chk || { d }), d, act: 'apply', was }; save(); renderHeader(); msRender();
+    if (a === 'apply') { const was = r0(g.k), wk = msWeeks().filter(w => w.t < wkStart(ck.t)).pop(); applyKcal(H.adj); if (wk) { g.sd = ck.d; g.sw = Math.round(wk.avg * 10) / 10; } m.chk = { ...(m.chk || { d }), d, act: 'apply', was }; save(); renderHeader(); msRender();
       toast(`${g.name} is now ${r0(goal().k)} kcal`, { label: 'Balance', fn: () => { switchTab('meal'); setTimeout(() => balanceSheet(), 520); } }); }
   }));
   $('#msTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || b.dataset.k === m.tab) return; haptic(); m.tab = b.dataset.k; save(); const x = $('#msTabs').scrollLeft; msRender(); $('#msTabs').scrollLeft = x; });
@@ -6444,25 +6446,25 @@ function msDrawChart(markT) {
   const sg = S.ui.msSm ?? 4, line = !isW ? pts : sg > 0 ? msSmooth(all.filter(p => p.t >= t0 - 30 * DAY), Math.max(t0, all[0].t), pts[pts.length - 1].t, sg) : trendOf(series('w')).filter(p => p.t >= t0);
   const pf = isW && ck.kind !== 'learn' && ck.kind !== 'empty' ? msPlanFn(g) : null, goalV = met.k === 'fat' && g.tbf ? g.tbf : null;
   const lane = pf ? [] : null; if (pf) for (let t = Math.max(t0, g.sd ? dnum(g.sd) : t0); t <= now; t += DAY) { const v = pf(t); if (v != null) lane.push({ t, v }); }
-  const vals = line.map(p => p.v).concat(lane ? lane.flatMap(p => [p.v + msLaneW(), p.v - msLaneW()]) : [], goalV != null ? [goalV] : []);
+  // the scale follows the line (#49); the lane only pulls in its nearer edge, so it shows but doesn't flatten the line
+  const lineMid = line.reduce((a, p) => a + p.v, 0) / line.length;
+  const vals = line.map(p => p.v).concat(lane ? lane.map(p => p.v > lineMid ? p.v - msLaneW() + .1 : p.v + msLaneW() - .1) : [], goalV != null ? [goalV] : []);
   let mn = Math.min(...vals), mx = Math.max(...vals);
-  let step = .5, lo, hi;
-  for (const st of [.2, .5, 1, 2, 5, 10, 20]) { const l = Math.floor((mn - st * .15) / st) * st, h2 = Math.ceil((mx + st * .15) / st) * st; if (h2 - l <= 3 * st + 1e-9) { step = st; lo = l; hi = l + 3 * st; break; } }
-  if (lo == null) { step = Math.ceil((mx - mn) / 3); lo = Math.floor(mn); hi = lo + 3 * step; }
-  if (hi - mx < step * .1 && lo - (mn - (hi - mx)) >= 0) {}
+  const pad = Math.max((mx - mn) * .08, met.u === 'kg' ? .15 : met.u === '%' ? .2 : .5); let lo = mn - pad, hi = mx + pad;
+  const step = [.1, .2, .25, .5, 1, 2, 5, 10, 20].find(st => (hi - lo) / st <= 4) || 50;   // 2–4 gridlines inside the range
   const X = t => X0 + (t - t0) / (now - t0) * PW, Y = v => Y0 + (hi - v) / (hi - lo) * (H - Y0);
   const fmt = v => met.dp ? (Math.round(v * 10) / 10).toFixed(1) : String(Math.round(v));
   let s = `<svg width="${W}" height="${H + 21}" viewBox="0 0 ${W} ${H + 21}" aria-hidden="true">`;
-  for (let v = lo; v <= hi + 1e-6; v += step) { const y = Y(v);
+  for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-6; v += step) { const y = Y(v);
     s += `<line x1="${X0}" x2="${X0 + PW}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(60,60,67,.1)" stroke-width=".5"/>`;
-    s += `<text x="${X0 + PW + 16}" y="${(y + 4).toFixed(1)}" text-anchor="middle" class="ax">${step < 1 ? v.toFixed(1) : Math.round(v)}</text>`; }
+    s += `<text x="${X0 + PW + 16}" y="${(y + 4).toFixed(1)}" text-anchor="middle" class="ax">${step < 1 ? (step < .25 && Math.abs(v * 10 - Math.round(v * 10)) > 1e-6 ? v.toFixed(2) : v.toFixed(1)) : Math.round(v)}</text>`; }
   if (lane && lane.length > 1) {
     // rounded corners: shrink the shape by r, then stroke it with 2r and round joins; the group's opacity keeps the overlap flat
-    const r = Math.min(8, (Y(0) - Y(msLaneW())) * .9), x1 = X(lane[0].t) + r, x2 = X(lane[lane.length - 1].t) - r, inL = lane.filter(p => X(p.t) >= x1 && X(p.t) <= x2);
+    const r = Math.min(4, (Y(0) - Y(msLaneW())) * .9), x1 = X(lane[0].t) + r, x2 = X(lane[lane.length - 1].t) - r, inL = lane.filter(p => X(p.t) >= x1 && X(p.t) <= x2);
     const pv = x => { const t = t0 + (x - X0) / PW * (now - t0); return pf(t) ?? lane[0].v; };
     const up = [[x1, pv(x1)], ...inL.map(p => [X(p.t), p.v]), [x2, pv(x2)]].map(([x, v]) => `${x.toFixed(1)},${(Y(v + msLaneW()) + r).toFixed(1)}`);
     const dn = [[x2, pv(x2)], ...inL.slice().reverse().map(p => [X(p.t), p.v]), [x1, pv(x1)]].map(([x, v]) => `${x.toFixed(1)},${(Y(v - msLaneW()) - r).toFixed(1)}`);
-    s += `<g opacity=".16"><polygon points="${up.concat(dn).join(' ')}" fill="#2669ed" stroke="#2669ed" stroke-width="${(2 * r).toFixed(1)}" stroke-linejoin="round"/></g>`;
+    s += `<defs><clipPath id="msClip"><rect x="${X0}" y="${Y0 - 4}" width="${PW}" height="${H - Y0 + 8}"/></clipPath></defs><g opacity=".16" clip-path="url(#msClip)"><polygon points="${up.concat(dn).join(' ')}" fill="#2669ed" stroke="#2669ed" stroke-width="${(2 * r).toFixed(1)}" stroke-linejoin="round"/></g>`;
   }
   if (goalV != null) s += `<line x1="${X0}" x2="${X0 + PW}" y1="${Y(goalV).toFixed(1)}" y2="${Y(goalV).toFixed(1)}" stroke="${MS_BLUE}" stroke-opacity=".45" stroke-dasharray="2 4" stroke-linecap="round"/>`;
   // the line: black inside the lane (or with no plan), blue under it, red over it
@@ -6505,15 +6507,15 @@ function msWkCol(dkg) {                      // a week's change against the plan
 function msDrawList(met) {
   const el = $('#msList'); if (!el) return;
   const m = msS(), now = dnum(todayISO()), span = MS_PER[m.per][1], t0 = span ? now - span * DAY : -Infinity;
-  const row = (d, val, unit) => `<div class="ms2-r" data-d="${d}"><button type="button" class="del" aria-label="Delete">${MS_TRASH}</button>
-    <div class="rc"><span class="dt">${msDay(dnum(d))}</span><span class="vv">${msNw(`<b>${val}</b> ${unit}`)}</span></div></div>`;
+  const row = (d, val, unit) => `<div class="ms2-r" data-d="${d}"><button type="button" class="del" aria-label="Delete"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="#d02c2a" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    <div class="rc"><span class="dt">${msDay(dnum(d))}</span><span class="ld"></span><span class="vv">${msNw(`<b>${val}</b> ${unit}`)}</span></div></div>`;
   let h = '';
   if (met.k === 'w') {
     const L = msWLog(), tw = wkStart(now), wks = msWeeks(); let wk = null, buf = [];
     const flush = () => { if (!buf.length) return; const avg = buf.reduce((a, e) => a + e.w, 0) / buf.length, i = wks.findIndex(w => w.t === wk), prev = i > 0 ? wks[i - 1] : null;
       const lab = wk === tw ? 'This week' : wk === tw - 7 * DAY ? 'Last week' : `${new Date(wk).getDate()} ${MS_MON[new Date(wk).getMonth()]} — ${new Date(wk + 6 * DAY).getDate()} ${MS_MON[new Date(wk + 6 * DAY).getMonth()]}`;
       const dl = prev ? avg - prev.avg : null;
-      h += `<div class="ms3-wk"><span>${lab}${dl != null ? `<i class="${msWkCol(dl)}">${msGs(dl)}g</i>` : ''}</span><span>${msNw(`${msKg(avg)} kg`)}</span></div>` + buf.map(e => row(e.d, msKg2(e.w), 'kg')).join(''); buf = []; };
+      h += `<div class="ms3-wk"><span>${lab}</span><span>${dl != null ? `<i class="${msWkCol(dl)}">${msGs(dl)}g</i>` : ''}${msNw(`${msKg(avg)} kg`)}</span></div>` + buf.map(e => row(e.d, msKg2(e.w), 'kg')).join(''); buf = []; };
     [...L].reverse().filter(e => dnum(e.d) >= t0).forEach(e => { const k = wkStart(dnum(e.d)); if (k !== wk) { flush(); wk = k; } buf.push(e); }); flush();
     if (!h) h = '<div class="ms3-wk"><span>No weigh-ins in this period</span></div>';
     h += '<button type="button" class="ms-imb" id="hImp">Import from a table</button>';
@@ -6532,9 +6534,9 @@ function msBindRow2(r, met) {
   rc.addEventListener('click', () => { if (r._moved) { r._moved = false; return; } if (r.classList.contains('sw')) { r.classList.remove('sw'); rc.style.transform = ''; return; } haptic(); msTodaySheet(r.dataset.d); });
   rc.addEventListener('pointerdown', e => { P = { x: e.clientX, y: e.clientY, open: r.classList.contains('sw'), go: false }; r.classList.add('hl'); mark(true); });
   rc.addEventListener('pointermove', e => { if (!P) return; const dx = e.clientX - P.x; if (!P.go && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - P.y)) { P.go = true; rc.setPointerCapture(e.pointerId); rc.style.transition = 'none'; }
-    if (P.go) { const ow = -(del.offsetWidth + 8), x = Math.min(0, (P.open ? ow : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
+    if (P.go) { const ow = -(del.offsetWidth + 2), x = Math.min(0, (P.open ? ow : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
   const end = () => { r.classList.remove('hl'); mark(false); if (!P) return; const go = P.go; P = null; if (!go) return; r._moved = true; rc.style.transition = ''; const x = parseFloat((rc.style.transform.match(/-?[\d.]+/) || [0])[0]);
-    if (x < -r.offsetWidth * .6) return msDel2(r, met); if (x < -24) { r.classList.add('sw'); rc.style.transform = `translateX(${-(del.offsetWidth + 8)}px)`; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
+    if (x < -r.offsetWidth * .6) return msDel2(r, met); if (x < -24) { r.classList.add('sw'); rc.style.transform = `translateX(${-(del.offsetWidth + 2)}px)`; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
   rc.addEventListener('pointerup', end); rc.addEventListener('pointercancel', end); rc.addEventListener('pointerleave', () => { if (!P) { r.classList.remove('hl'); } });
   del.addEventListener('click', () => msDel2(r, met));
 }
@@ -6715,9 +6717,9 @@ function msBindRow(r) {
   if (!del) return;
   rc.addEventListener('pointerdown', e => { P = { x: e.clientX, y: e.clientY, open: r.classList.contains('sw'), go: false }; });
   rc.addEventListener('pointermove', e => { if (!P) return; const dx = e.clientX - P.x; if (!P.go && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - P.y)) { P.go = true; rc.setPointerCapture(e.pointerId); rc.style.transition = 'none'; }
-    if (P.go) { const ow = -(del.offsetWidth + 8), x = Math.min(0, (P.open ? ow : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
+    if (P.go) { const ow = -(del.offsetWidth + 2), x = Math.min(0, (P.open ? ow : 0) + dx); rc.style.transform = `translateX(${x}px)`; r.classList.toggle('sw', x < -8); } });
   const end = e => { if (!P) return; const go = P.go; P = null; if (!go) return; r._moved = true; rc.style.transition = ''; const x = parseFloat((rc.style.transform.match(/-?[\d.]+/) || [0])[0]);
-    if (x < -r.offsetWidth * .6) return msDel(r); if (x < -24) { r.classList.add('sw'); rc.style.transform = `translateX(${-(del.offsetWidth + 8)}px)`; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
+    if (x < -r.offsetWidth * .6) return msDel(r); if (x < -24) { r.classList.add('sw'); rc.style.transform = `translateX(${-(del.offsetWidth + 2)}px)`; haptic(); } else { r.classList.remove('sw'); rc.style.transform = ''; } };
   rc.addEventListener('pointerup', end); rc.addEventListener('pointercancel', end);
   del.addEventListener('click', () => msDel(r));
 }
